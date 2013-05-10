@@ -1,0 +1,67 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<form class="form-horizontal" action="{{ path('my_profile_save')  }}" method="POST">
+	    <div class="control-group">
+		    <label class="control-label" for="login">Login</label>
+		    <div class="controls">
+		    	<input type="text" id="username" name="username" readonly="true" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="mail">Email</label>
+		    <div class="controls">
+		    	<input type="text" id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="avatar">Url de votre avatar</label>
+		    <div class="controls">
+		    	<input class="input-xxlarge" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ user['avatar'] }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="description">Votre description</label>
+		    <div class="controls">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
+		    	 placeholder="Votre description" rows="10">{{ user['description'] }}</textarea>
+		    </div>
+	    </div>
+	    
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+		    </div>
+	    </div>
+    </form>
+
+    <form class="form-horizontal" action="{{ path('my_profile_passwd')  }}" method="POST">
+		<h3>Changement de mot de passe</h3>
+	    <div class="control-group">
+		    <label class="control-label" for="password">Mot de passe</label>
+		    <div class="controls">
+		    	<input type="password" id="password" name="password" placeholder="Mot de passe">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
+		    <div class="controls">
+		    	<input type="password" id="password"2 name="password2" placeholder="Mot de passe">
+		    </div>
+	    </div>
+	    
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-danger">Changer le mot de passe</button>
+		    </div>
+	    </div>
+    </form>
+
+{% endblock %}

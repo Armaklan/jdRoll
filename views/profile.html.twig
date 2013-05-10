@@ -1,0 +1,35 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+    <h3>{{ user.username }}</h3>
+    <div class="container-fluid">
+    	<div class="row-fluid">
+    		<div class="span8">
+    			<img src={{ user.avatar }}>
+		    <p>
+		    	{% autoescape false%}
+		    		{{ user.description }}
+		    	{% endautoescape %}
+		    </p>
+    		</div>
+    		<div class="span4">
+    			<h4>MJ sur : </h4>
+		    	<ul>
+		    		<li></li>
+		    	</ul>
+		    	<h4>Joueur sur : </h4>
+		    	<ul>
+		    		<li></li>
+		    	</ul>
+    		</div>
+    	</div>
+    </div>	
+
+{% endblock %}

@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head> 
+	<title>jdRoll</title>
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
+	
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-1.9.1.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap.min.js"> </script>
+
+  <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
+  <script type="text/javascript">
+  tinymce.init({
+      selector: ".wysiwyg",
+      plugins: [
+         "link image lists preview hr spellchecker insertdatetime",
+         "table contextmenu template paste textcolor"
+      ],
+   });
+  </script>
+
+
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#">jdRoll</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+            	{% if (app.session.get('user') == null)  %}
+              		<a href="{{ path('login_page')  }}" class="navbar-link">Se connecter</a>
+              	{% else %}
+              		<a href="{{ path('logout')  }}" class="navbar-link">Se déconnecter</a>
+              	{% endif %}
+            </p>
+            <ul class="nav">
+              <li><a href="{{ path('homepage') }}"><i class="icon-home"></i> Accueil</a></li>
+              <li><a href="{{ path('my_profile') }}"><i class="icon-user"></i> Profil</a></li>
+              <li><a href=""><i class="icon-envelope"></i> Messagerie</a></li>
+              <li class="dropdown">
+              	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-play-circle"></i> Jouer <b class="caret"></b></a>
+              	<ul class="dropdown-menu">
+              		<li><a href="">Mes campagnes</a></li>
+                  <li class="divider"></li>
+              		<li><a href="{{ path('campagne_list') }}">Rejoindre une campagne</a></li>
+              		<li><a href="{{ path('campagne_new') }}">Créer une campagne</a></li>
+              	</ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i> Outils <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Gallerie</a></li>
+                </ul>
+              </li>
+              <li><a href=""><i class="icon-folder-open"></i> Forum</a></li>
+            </ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+
+	<div class="container-fluid" style="margin-top: 4em;">
+
+	    <div class="row-fluid">
+	    	<div class="span9">
+	    		{% block content %}
+				    Content of the page...
+				{% endblock %}
+	    	</div>
+	    	<div class="span2 offset1">
+	    	  {% block sidebar %}
+				    {% include 'sidebar.html.twig' %}
+				  {% endblock %}
+          {% block specific_sidebar %}
+            {{ render(url('sidebar_std')) }}
+          {% endblock %}
+	    	</div>
+	    </div>
+	</div>
+
+</body> 
+</html>
