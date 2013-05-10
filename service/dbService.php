@@ -28,11 +28,12 @@ class DbService {
 		$campagneTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
 		$campagneTable->addColumn("mj_id", "integer", array("unsigned" => true));
 		$campagneTable->addColumn("nb_joueurs", "integer", array("unsigned" => true));
-		$campagneTable->addColumn("nb_joueurs_actuel", "integer", array("unsigned" => true, 'default' => 0));
+		$campagneTable->addColumn("nb_joueurs_actuel", "integer", array("unsigned" => true, 'default' => '0'));
 		$campagneTable->addColumn("name", "string", array("length" => 100));
 		$campagneTable->addColumn("systeme", "string", array("length" => 100));
 		$campagneTable->addColumn("univers", "string", array("length" => 100));
 		$campagneTable->addColumn("description", "string", array("length" => 2000, 'default' => ''));
+		$campagneTable->addColumn("statut", "integer", array("unsigned" => true, 'default' => '0'));
 		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onUpdate" => "CASCADE"));
 		$campagneTable->setPrimaryKey(array("id"));
 
@@ -40,12 +41,10 @@ class DbService {
 	}
 
     public function init() {
-    	$this->db->beginTransaction();
 		$queries = $this->schema->toSql($this->db->getDatabasePlatform()); // get queries to create this schema.
 		foreach($queries as $query) {
 			 $this->db->query($query);
 		}
-		$this->db->commit();
     }
 
     public function drop() {

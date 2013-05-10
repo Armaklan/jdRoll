@@ -1,10 +1,13 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 /*
     Controller de base de données
 */
 $databaseController = $app['controllers_factory'];
-$databaseController->before($mustBeLogged);
+//$databaseController->before($mustBeLogged);
 $databaseController->get('/init', function() use($app) {
 	$dbService = $app['dbService'];
 	$dbService->init();

@@ -1,9 +1,14 @@
 <?php
+
+	use Symfony\Component\HttpFoundation\Request;
+	use Symfony\Component\HttpFoundation\Response;
+
 	/*
 	    Controller de campagne (sécurisé)
 	*/
 	$securedCampagneController = $app['controllers_factory'];
 	$securedCampagneController->before($mustBeLogged);
+
 	$securedCampagneController->get('/new', function() use($app) {
 	    $campagne = $app['campagneService']->getBlankCampagne();
 	    return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
