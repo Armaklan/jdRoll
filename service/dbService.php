@@ -37,6 +37,22 @@ class DbService {
 		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onUpdate" => "CASCADE"));
 		$campagneTable->setPrimaryKey(array("id"));
 
+		$participantTable =  $schema->createTable("campagne_participant");
+		$participantTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$participantTable->addColumn("user_id", "integer", array("unsigned" => true));
+		$participantTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$participantTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$participantTable->setPrimaryKey(array("campagne_id", "user_id"));
+
+		$persoTable =  $schema->createTable("personnages");
+		$persoTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$persoTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$persoTable->addColumn("user_id", "integer", array("unsigned" => true));
+		$persoTable->addColumn("name", "string", array("length" => 100, 'default' => ''));
+		$persoTable->addColumn("publicDescription", "string", array("length" => 5000, 'default' => ''));
+		$persoTable->addColumn("privateDescription", "string", array("length" => 5000, 'default' => ''));
+		$persoTable->addColumn("technical", "string", array("length" => 5000, 'default' => ''));
+
 		return $schema;
 	}
 

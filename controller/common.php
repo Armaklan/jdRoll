@@ -44,7 +44,9 @@ $commonController->get('/logout', function(Request $request) use($app) {
 
 $commonController->get('/sidebar/std', function() use ($app) {
     $campagnes = $app['campagneService']->getAllCampagne();
-    return $app->render('sidebar_std.html.twig', ['active_campagnes' => getActiveCampagnes($app)]);
+    $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
+    $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
+    return $app->render('sidebar_std.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);
 })->bind("sidebar_std");
 
 $app->mount('/', $commonController);

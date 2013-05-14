@@ -14,6 +14,37 @@
 	    return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
 	})->bind("campagne_new");
 
+	$securedCampagneController->get('/{id}/edit', function($id) use($app) {
+	    $campagne = $app['campagneService']->getCampagne($id);
+	    return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
+	})->bind("campagne_edit");
+
+	$securedCampagneController->get('/join/{id}', function($id) use($app) {
+		try {
+		    $campagne = $app['campagneService']->addJoueur($id, $app['session']->get('user')['id']);
+		    return $app->redirect($app->path('campagne_my_list'));
+		} catch (Exception $e) {
+			$campagnes = $app['campagneService']->getAllCampagne();
+    		return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
+		}
+	})->bind("campagne_join");
+
+	$securedCampagneController->get('/quit/{id}', function($id) use($app) {
+		try {
+		    $campagne = $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
+		    return $app->redirect($app->path('campagne_my_list'));
+		} catch (Exception $e) {
+			$campagnes = $app['campagneService']->getAllCampagne();
+    		return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
+		}
+	})->bind("campagne_quit");
+
+	$securedCampagneController->get('/my_list', function() use($app) {
+	    $campagnes = $app['campagneService']->getMyCampagnes();
+	    $campagnesPj = $app['campagneService']->getMyActivePjCampagnes();
+	    return $app->render('campagne_my_list.html.twig', ['campagnes' => $campagnes, 'campagnes_pj' => $campagnesPj, 'error' => ""]);
+	})->bind("campagne_my_list");
+
 	$securedCampagneController->post('/save', function(Request $request) use($app) {
 	    try {
 	        if ($request->get('id') == '') {

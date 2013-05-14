@@ -12,7 +12,7 @@
     	<h2>{{ campagne.name }}</h2>
     </div>
     <div align="right">
-    	<a href="" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
+    	<a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
     </div>
     <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
     <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>

@@ -5,6 +5,7 @@ require_once __DIR__.'/constante/StatutCampagn.php';
 require_once __DIR__.'/service/dbService.php';
 require_once __DIR__.'/service/userService.php';
 require_once __DIR__.'/service/campagneService.php';
+require_once __DIR__.'/service/persoService.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,14 +44,6 @@ function isLog($app) {
     return ($app['session']->get('user') != null);
 }
 
-function getActiveCampagnes($app) {
-    $active_campagnes = array();
-    if(isLog($app)) {
-        $active_campagnes = $app['campagneService']->getMyActiveCampagnes();
-    }
-    return $active_campagnes;
-}
-
 /*
     Définition des services
 */
@@ -60,8 +53,11 @@ $app['dbService'] = function ($app) {
 $app['userService'] = function ($app) {
     return new UserService($app['db'], $app['session']);
 };
+$app['persoService'] = function ($app) {
+    return new PersoService($app['db'], $app['session']);
+};
 $app['campagneService'] = function ($app) {
-    return new CampagneService($app['db'], $app['session']);
+    return new CampagneService($app['db'], $app['session'], $app['persoService']);
 };
 
 require("controller/common.php");

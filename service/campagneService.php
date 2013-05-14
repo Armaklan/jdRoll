@@ -4,11 +4,13 @@ class CampagneService {
 
 	private $db;
 	private $session;
+	private $persoService;
 
-	public function __construct($db, $session)
+	public function __construct($db, $session,$persoService)
     {
         $this->db = $db;
         $this->session = $session;
+        $this->persoService = $persoService;
     }
 
     public function getBlankCampagne() {
@@ -33,8 +35,7 @@ class CampagneService {
 		return $campagne;
     }
 
-    public function createCampagne($request) {
-    	
+    public function createCampagne($request) {	
 		$sql = "INSERT INTO campagne 
 				(name, systeme, univers, nb_joueurs, description, mj_id) 
 				VALUES
@@ -93,10 +94,123 @@ class CampagneService {
 	    return $campagne;
 	}
 
-	public function getMyActiveCampagnes() {
+	public function getMyCampagnes() {
 		$sql = "SELECT * FROM campagne WHERE mj_id = ? ORDER BY name";
 	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
 	    return $campagne;
+	}
+
+	public function getMyActiveMjCampagnes() {
+		$sql = "SELECT * FROM campagne WHERE mj_id = ? ORDER BY name";
+	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
+	    return $campagne;
+	}
+
+	public function getMyActivePjCampagnes() {
+		$sql = "SELECT 
+		campagne.*, user.username as username
+		FROM campagne
+		JOIN campagne_participant as cp
+		ON cp.campagne_id = campagne.id
+		JOIN user ON user.id = campagne.mj_id
+		WHERE cp.user_id = ? 
+		ORDER BY campagne.name";
+	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
+	    return $campagne;
+	}
+
+	private function incrementeNbJoueur($id) {
+		$sql = "UPDATE campagne 
+				SET 
+					nb_joueurs_actuel = nb_joueurs_actuel + 1
+				WHERE id = :id";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("id", $id);
+		$stmt->execute();
+	}
+
+	private function decrementeNbJoueur($id) {
+		$sql = "UPDATE campagne 
+				SET 
+					nb_joueurs_actuel = nb_joueurs_actuel - 1
+				WHERE id = :id";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("id", $id);
+		$stmt->execute();
+	}
+
+	private function insertParticipant($campagne_id, $user_id) {
+		$sql = "INSERT INTO campagne_participant 
+				(campagne_id, user_id) 
+				VALUES
+				(:campagne, :user)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("user", $user_id);
+		$stmt->execute();
+	}
+
+	private function deleteParticipant($campagne_id, $user_id) {
+		$sql = "DELETE FROM campagne_participant 
+				WHERE
+				campagne_id = :campagne
+				AND user_id = :user";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("user", $user_id);
+		$stmt->execute();
+	}
+
+	private function createPersonnage($campagne_id, $user_id) {
+		$sql = "INSERT INTO campagne_participant 
+				(campagne_id, user_id) 
+				VALUES
+				(:campagne, :user)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("user", $user_id);
+		$stmt->execute();
+	}
+
+	private function checkIfNotParticipant($campagne_id, $user_id) {
+		$sql = "SELECT count(*) FROM campagne_participant 
+				WHERE campagne_id = :campagne
+				AND   user_id = :user";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("user", $user_id);
+		$stmt->execute();
+
+		$res = $stmt->fetchColumn(0);
+		if($res > 0) {
+			throw new Exception("Vous êtes déjà inscrit");
+		}
+	}
+
+	public function addJoueur($campagne_id, $user_id) {
+		$campagne = $this->getCampagne($campagne_id);
+		if($campagne['nb_joueurs'] <= $campagne['nb_joueurs_actuel']) {
+			throw new Exception("La partie est déjà complète");
+		}
+		$this->checkIfNotParticipant($campagne_id, $user_id);
+		$this->incrementeNbJoueur($campagne_id);
+		$this->insertParticipant($campagne_id, $user_id);
+	}
+
+	public function removeJoueur($campagne_id, $user_id) {
+		try {
+			$this->checkIfNotParticipant($campagne_id, $user_id);
+			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
+		} catch (Exception $e) {
+			$this->decrementeNbJoueur($campagne_id);
+			$this->deleteParticipant($campagne_id, $user_id);	
+		}	
 	}
 }
 ?>
