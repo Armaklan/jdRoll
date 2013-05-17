@@ -18,6 +18,7 @@ class CampagneService {
 		$campagne['id'] = '';
 		$campagne['nb_joueurs'] = '4';
 		$campagne['name'] = '';
+		$campagne['banniere'] = '';
 		$campagne['systeme'] = '';
 		$campagne['univers'] = '';
 		$campagne['description'] = '';
@@ -29,6 +30,7 @@ class CampagneService {
 		$campagne['id'] = $request->get('id');
 		$campagne['nb_joueurs'] = $request->get('nb_joueurs');
 		$campagne['name'] = $request->get('name');
+		$campagne['banniere'] = $request->get('banniere');
 		$campagne['systeme'] = $request->get('systeme');
 		$campagne['univers'] = $request->get('univers');
 		$campagne['description'] = $request->get('description');
@@ -37,12 +39,13 @@ class CampagneService {
 
     public function createCampagne($request) {	
 		$sql = "INSERT INTO campagne 
-				(name, systeme, univers, nb_joueurs, description, mj_id) 
+				(name, systeme, univers, nb_joueurs, description, mj_id, banniere) 
 				VALUES
-				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id)";
+				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", $request->get('name'));
+		$stmt->bindValue("banniere", $request->get('banniere'));
 		$stmt->bindValue("systeme", $request->get('systeme'));
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
@@ -54,6 +57,7 @@ class CampagneService {
     public function updateCampagne($request) {
     	$sql = "UPDATE campagne 
     			SET name = :name,
+    				banniere = :banniere,
     				systeme = :systeme,
     				univers = :univers,
     				nb_joueurs = :nb_joueurs,
@@ -63,6 +67,7 @@ class CampagneService {
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", $request->get('name'));
+		$stmt->bindValue("banniere", $request->get('banniere'));
 		$stmt->bindValue("systeme", $request->get('systeme'));
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));

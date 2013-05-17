@@ -30,6 +30,7 @@ class DbService {
 		$campagneTable->addColumn("nb_joueurs", "integer", array("unsigned" => true));
 		$campagneTable->addColumn("nb_joueurs_actuel", "integer", array("unsigned" => true, 'default' => '0'));
 		$campagneTable->addColumn("name", "string", array("length" => 100));
+		$campagneTable->addColumn("banniere", "string", array("length" => 500, 'default' => ''));
 		$campagneTable->addColumn("systeme", "string", array("length" => 100));
 		$campagneTable->addColumn("univers", "string", array("length" => 100));
 		$campagneTable->addColumn("description", "string", array("length" => 2000, 'default' => ''));
@@ -49,9 +50,11 @@ class DbService {
 		$persoTable->addColumn("campagne_id", "integer", array("unsigned" => true));
 		$persoTable->addColumn("user_id", "integer", array("unsigned" => true));
 		$persoTable->addColumn("name", "string", array("length" => 100, 'default' => ''));
+		$persoTable->addColumn("avatar", "string", array("length" => 500, 'default' => ''));
 		$persoTable->addColumn("publicDescription", "string", array("length" => 5000, 'default' => ''));
 		$persoTable->addColumn("privateDescription", "string", array("length" => 5000, 'default' => ''));
 		$persoTable->addColumn("technical", "string", array("length" => 5000, 'default' => ''));
+		$persoTable->setPrimaryKey(array("id"));
 
 		return $schema;
 	}

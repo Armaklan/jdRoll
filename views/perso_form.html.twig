@@ -8,49 +8,44 @@
 	    </div>
     {% endif %}
 
-	<form class="form-horizontal" action="{{ path('campagne_save')  }}" method="POST">
-		<input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
+	<form class="form-horizontal" action="{{ path('perso_save', {campagne_id : campagne_id}) }}" method="POST">
 	    <div class="control-group">
 		    <label class="control-label" for="name">Nom</label>
 		    <div class="controls">
-		    	<input type="text" id="name" name="name" placeholder="Nom de la campagne" value="{{ campagne['name'] }}">
+		    	<input type="text" id="name" name="name" placeholder="Nom du personnage" value="{{ perso['name'] }}">
 		    </div>
 	    </div>
 	    <div class="control-group">
-		    <label class="control-label" for="systeme">Univers</label>
+		    <label class="control-label" for="name">Avatar</label>
 		    <div class="controls">
-		    	<input type="text" id="univers" name="univers" placeholder="Univers de jeu" value="{{ campagne['univers'] }}">
+		    	<input class="input-xxlarge" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ perso['avatar'] }}">
 		    </div>
 	    </div>
 	    <div class="control-group">
-		    <label class="control-label" for="systeme">Système</label>
+		    <label class="control-label" for="description">Votre description public</label>
 		    <div class="controls">
-		    	<input type="text" id="systeme" name="systeme" placeholder="Système de jeu utilisé" value="{{ campagne['systeme'] }}">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="publicDescription" name="publicDescription" 
+		    	 placeholder="Votre description public (visible par tous)" rows="10">{{ perso['publicDescription'] }}</textarea>
 		    </div>
 	    </div>
 	    <div class="control-group">
-		    <label class="control-label" for="nb_joueurs">Nombre de joueurs</label>
+		    <label class="control-label" for="description">Votre description privée</label>
 		    <div class="controls">
-		    	<input type="text" id="nb_joueurs" name="nb_joueurs" placeholder="Nombre de joueurs" value="{{ campagne['nb_joueurs'] }}">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="privateDescription" name="privateDescription" 
+		    	 placeholder="Votre description privée (visible par vous et le MJ)" rows="10">{{ perso['privateDescription'] }}</textarea>
 		    </div>
 	    </div>
 	    <div class="control-group">
-		    <label class="control-label" for="description">Votre description</label>
+		    <label class="control-label" for="description">Information technique</label>
 		    <div class="controls">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
-		    	 placeholder="Votre description" rows="10">{{ campagne['description'] }}</textarea>
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="technical" name="technical" 
+		    	 placeholder="Votre personnage selon les règles" rows="10">{{ perso['technical'] }}</textarea>
 		    </div>
 	    </div>
 	    
 	    <div class="control-group">
 		    <div class="controls">
-			    <button type="submit" class="btn btn-primary">
-			    {% if(campagne['id'] == '') %}
-			    	Créer la campagne
-			    {% else %}
-			    	Mettre à jour la campagne
-			    {% endif %}
-			    </button>
+			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
 		    </div>
 	    </div>
     </form>

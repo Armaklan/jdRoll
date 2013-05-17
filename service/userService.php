@@ -18,7 +18,7 @@ class UserService {
 	    if($user == null)  {
 	    	throw new Exception('Login incorrect');
 	    }
-		if($user['password'] != $password) {
+		if($user['password'] != md5($password)) {
 	    	throw new Exception('Mots de passe incorrect');
 	    }
 
@@ -69,7 +69,7 @@ class UserService {
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("username", $request->get('username'));
-		$stmt->bindValue("password", $request->get('password'));
+		$stmt->bindValue("password", md5($request->get('password')));
 		$stmt->bindValue("mail", $request->get('mail'));
 		$stmt->execute();
 	}
@@ -87,7 +87,7 @@ class UserService {
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("username", $this->session->get('user')['login']);
-		$stmt->bindValue("password", $request->get('password'));
+		$stmt->bindValue("password", md5($request->get('password')));
 		$stmt->execute();
 	}
 

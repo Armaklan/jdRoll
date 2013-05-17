@@ -24,12 +24,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-    'db.options' => array(
-        'driver'   => 'pdo_sqlite',
-        'path'     => __DIR__.'/app.db',
-    ),
-));
+require_once("config.php");
 
 $app["debug"] = true;
 
@@ -65,6 +60,7 @@ require("controller/profile.php");
 require("controller/secure_campagn.php");
 require("controller/public_campagn.php");
 require("controller/subscribe.php");
+require("controller/perso.php");
 require("controller/database.php");
 
 Request::enableHttpMethodParameterOverride();
