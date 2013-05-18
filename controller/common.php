@@ -37,6 +37,10 @@ $commonController->get('/profile/{username}', function($username) use($app) {
     return $app->render('profile.html.twig', ['error' => "", 'user' => $user]);
 })->bind("profile");
 
+$commonController->get('/about', function() use($app) {
+	return $app->render('about.html.twig');
+})->bind("about");
+
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
     return $app->redirect($app->path('homepage'));
