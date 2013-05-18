@@ -62,6 +62,7 @@ class SectionService {
 		$sql = "SELECT 
 					sections.id as section_id,
 					sections.title as section_title,
+					sections.default_collapse as default_collapse,
 					topics.id as topics_id,
 					topics.title as topics_title,
 					topics.stickable as topics_stickable,

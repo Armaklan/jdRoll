@@ -63,6 +63,7 @@ class DbService {
 		$sectionTable->addColumn("campagne_id", "integer", array("unsigned" => true));
 		$sectionTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
 		$sectionTable->addColumn("ordre", "integer", array("unsigned" => true));
+		$sectionTable->addColumn("default_collapse", "integer", array("unsigned" => true));
 		$sectionTable->setPrimaryKey(array("id"));
 		$sectionTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
 		
