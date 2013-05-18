@@ -28,3 +28,17 @@
     	</div>
     {% endif %}
     <p></p>
+    	<ul class="nav nav-tabs nav-stacked">
+		<li class='active'><a href='#'><b>Partie active (MJ)</b></a></li>
+		{% for campagne in active_campagnes %}
+			<li><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}</a></li>
+		{% endfor %}
+	</ul>
+
+	<ul class="nav nav-tabs nav-stacked">
+		<li class='active'><a href='#'><b>Partie active (PJ)</b></a></li>
+		{% for campagne in active_pj_campagnes %}
+			<li><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}</a></li>
+		{% endfor %}
+	</ul>
+    

@@ -1,0 +1,72 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	<div align="right">
+		<a href="" title="Ajouter une section" class="btn iconeBtn"><i class="icon-plus"></i></a>
+	</div>
+	<p/>
+	{% set section_id = -1 %}
+	{% set topic_id = -1 %}
+
+	{% for line in topics %}
+		{% if line.section_id != section_id %} 
+		
+			{% if section_id != -1 %} 
+					</tbody>
+				</table>
+	    	</div>
+			{% endif %}
+			
+			
+	    	<div class="categorie">
+	    		<a data-toggle="collapse" data-target="#section{{ line.section_id  }}" >
+	    		{{ line.section_title  }}
+	    		</a>
+	    	</div>
+	    	
+	    	<div class="topics collapse in" id="section{{ line.section_id  }}">
+		    	<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Titre</th>
+							<th>Dernier post</th>
+						</tr>
+					</thead>
+					<tbody>
+			{% set section_id = line.section_id %}
+		{% endif %}
+		
+		{% if line.topics_id != null %}
+		<tr>
+			<td>
+				{% if line.posts_id > line.read_post_id %}
+					Non-lu
+				{% else %}
+					Lu
+				{% endif %}
+			</td>
+			<td>{{ line.topics_title }}</td>
+			<td>
+				{% if line.posts_date != null %}
+				Le {{ line.posts_date }}
+				{% endif %}  
+				{% if line.posts_username != null %}
+					par {{ line.posts_username }}
+				{% endif %}
+			
+			</td>
+		</tr>
+		{% endif %}
+		
+	{% endfor %}
+				</tbody>
+			</table>
+    	</div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+{% endblock %}

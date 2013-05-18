@@ -14,6 +14,12 @@
 	    $perso = $app['persoService']->getPersonnage($campagne_id, $player_id);
 	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => ""]);
 	})->bind("perso_edit");
+	
+	$persoController->get('/view/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$perso = $app['persoService']->getPersonnage($campagne_id, $player_id);
+		return $app->render('perso_public.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => ""]);
+	})->bind("perso_view");
 
 	$persoController->post('/save/{campagne_id}', function($campagne_id, Request $request) use($app) {
 		$player_id = $app['session']->get('user')['id'];

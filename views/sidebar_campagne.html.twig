@@ -1,0 +1,16 @@
+
+    <div align="center">
+    	<img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
+    </div>
+
+    <p/>
+    <div align="center">
+    	<a href="{{ path('perso_edit', {campagne_id: campagne_id}) }}" class="btn iconeBtn" title="Personnages"><i class="icon-tasks"></i></a>
+		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-comment"></i></a>
+    </div>
+	<ul class="nav nav-tabs nav-stacked">
+		<li class='active'><a href='#'><b>Personnages</b></a></li>
+		{% for perso in allPerso %}
+			<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }}</a></li>
+		{% endfor %}
+	</ul>

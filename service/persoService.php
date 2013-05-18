@@ -36,6 +36,15 @@ class PersoService {
 		}
 		return $result;
 	}
+	
+	public function getPersonnagesInCampagne($campagne_id) {
+		$sql = "SELECT * FROM personnages
+				WHERE
+						campagne_id = :campagne
+				AND 	user_id IS NOT NULL";
+		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+		return $result;
+	}
 
 	public function updatePersonnage($campagne_id, $user_id, $request) {
 

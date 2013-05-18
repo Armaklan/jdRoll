@@ -19,7 +19,7 @@ class DbService {
 		$userTable->addColumn("password", "string", array("length" => 32));
 		$userTable->addColumn("mail", "string", array("length" => 100));
 		$userTable->addColumn("avatar", "string", array("length" => 500, 'default' => ''));
-		$userTable->addColumn("description", "string", array("length" => 2000, 'default' => ''));
+		$userTable->addColumn("description", "text", array('default' => ''));
 		$userTable->setPrimaryKey(array("id"));
 		$userTable->addUniqueIndex(array("username"));
 		$userTable->addUniqueIndex(array("mail"));
@@ -33,7 +33,7 @@ class DbService {
 		$campagneTable->addColumn("banniere", "string", array("length" => 500, 'default' => ''));
 		$campagneTable->addColumn("systeme", "string", array("length" => 100));
 		$campagneTable->addColumn("univers", "string", array("length" => 100));
-		$campagneTable->addColumn("description", "string", array("length" => 2000, 'default' => ''));
+		$campagneTable->addColumn("description", "text", array('default' => ''));
 		$campagneTable->addColumn("statut", "integer", array("unsigned" => true, 'default' => '0'));
 		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onUpdate" => "CASCADE"));
 		$campagneTable->setPrimaryKey(array("id"));
@@ -48,14 +48,58 @@ class DbService {
 		$persoTable =  $schema->createTable("personnages");
 		$persoTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
 		$persoTable->addColumn("campagne_id", "integer", array("unsigned" => true));
-		$persoTable->addColumn("user_id", "integer", array("unsigned" => true));
+		$persoTable->addColumn("user_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$persoTable->addColumn("name", "string", array("length" => 100, 'default' => ''));
 		$persoTable->addColumn("avatar", "string", array("length" => 500, 'default' => ''));
-		$persoTable->addColumn("publicDescription", "string", array("length" => 5000, 'default' => ''));
-		$persoTable->addColumn("privateDescription", "string", array("length" => 5000, 'default' => ''));
-		$persoTable->addColumn("technical", "string", array("length" => 5000, 'default' => ''));
+		$persoTable->addColumn("publicDescription", "text", array('default' => ''));
+		$persoTable->addColumn("privateDescription", "text", array('default' => ''));
+		$persoTable->addColumn("technical", "text", array('default' => ''));
 		$persoTable->setPrimaryKey(array("id"));
+		$persoTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$persoTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		
+		$sectionTable = $schema->createTable("sections");
+		$sectionTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$sectionTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$sectionTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
+		$sectionTable->addColumn("ordre", "integer", array("unsigned" => true));
+		$sectionTable->setPrimaryKey(array("id"));
+		$sectionTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		
+		$topicTable = $schema->createTable("topics");
+		$topicTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$topicTable->addColumn("section_id", "integer", array("unsigned" => true));
+		$topicTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
+		$topicTable->addColumn("stickable", "integer", array("unsigned" => true));
+		$topicTable->addColumn("ordre", "integer", array("unsigned" => true));
+		$topicTable->addColumn("last_post_id", "integer", array("unsigned" => true, 'notnull' => false));
+		$topicTable->setPrimaryKey(array("id"));
+		$topicTable->addForeignKeyConstraint($sectionTable, array("section_id"), array("id"), array("onUpdate" => "CASCADE"));
 
+		
+		$postTable = $schema->createTable("posts");
+		$postTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$postTable->addColumn("topic_id", "integer", array("unsigned" => true));
+		$postTable->addColumn("user_id", "integer", array("unsigned" => true, 'notnull' => false));
+		$postTable->addColumn("perso_id", "integer", array("unsigned" => true, 'notnull' => false));
+		$postTable->addColumn("content", "text", array('default' => ''));
+		$postTable->addColumn("create_date", "datetime", array('default' => 'CURRENT_TIMESTAMP'));
+		$postTable->setPrimaryKey(array("id"));
+		$postTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$postTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$postTable->addForeignKeyConstraint($persoTable, array("perso_id"), array("id"), array("onUpdate" => "CASCADE"));
+		
+		
+		$topicTable->addForeignKeyConstraint($postTable, array("last_post_id"), array("id"), array());
+		
+		$readPost = $schema->createTable("read_post");
+		$readPost->addColumn("topic_id", "integer", array("unsigned" => true));
+		$readPost->addColumn("user_id", "integer", array("unsigned" => true));
+		$readPost->addColumn("post_id", "integer", array("unsigned" => true));
+		$readPost->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array());
+		$readPost->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array());
+		$readPost->addForeignKeyConstraint($postTable, array("post_id"), array("id"), array());
+		
 		return $schema;
 	}
 

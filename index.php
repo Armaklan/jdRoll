@@ -6,6 +6,7 @@ require_once __DIR__.'/service/dbService.php';
 require_once __DIR__.'/service/userService.php';
 require_once __DIR__.'/service/campagneService.php';
 require_once __DIR__.'/service/persoService.php';
+require_once __DIR__.'/service/forum/sectionsService.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,9 @@ $app['persoService'] = function ($app) {
 $app['campagneService'] = function ($app) {
     return new CampagneService($app['db'], $app['session'], $app['persoService']);
 };
+$app['sectionService'] = function ($app) {
+	return new SectionService($app['db'], $app['session']);
+};
 
 require("controller/common.php");
 require("controller/profile.php");
@@ -62,6 +66,8 @@ require("controller/public_campagn.php");
 require("controller/subscribe.php");
 require("controller/perso.php");
 require("controller/database.php");
+require("controller/messagerie.php");
+require("controller/forum.php");
 
 Request::enableHttpMethodParameterOverride();
 $app->run();

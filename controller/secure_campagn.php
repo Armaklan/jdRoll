@@ -59,6 +59,14 @@
 	        return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => $e->getMessage()]);    
 	    }
 	})->bind("campagne_save");
+	
+	$securedCampagneController->get('/sidebar/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$perso = $app['persoService']->getPersonnage($campagne_id, $player_id);
+		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso]);
+	})->bind("sidebar_campagne");
+	
 	$app->mount('/campagne', $securedCampagneController);
 
 ?>

@@ -51,3 +51,7 @@
     </form>
 
 {% endblock %}
+
+{% block sidebar %}
+    {{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+{% endblock %}

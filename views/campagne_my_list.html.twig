@@ -21,7 +21,7 @@
 		<tbody>
 		{% for campagne in campagnes %}
 			<tr>
-				<td><a href="{{ path('campagne_edit', {id : campagne.id}) }}">{{ campagne.name }}</a></td>
+				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}}">{{ campagne.name }}</a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
@@ -44,13 +44,13 @@
 		<tbody>
 		{% for campagne in campagnes_pj %}
 			<tr>
-				<td><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}</a></td>
+				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
 				<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 				<td>
 					<a href="{{ path('perso_edit', {campagne_id: campagne.id}) }}" class="btn"><i class="icon-tasks"></i> Personnages</a>
-					<a href="" class="btn"><i class="icon-comment"></i> Forum</a>
+					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn"><i class="icon-comment"></i> Forum</a>
 					<a href="{{ path('campagne_quit', {id : campagne.id}) }}" class="btn btn-danger"><i class="icon-remove"></i> Quitter</a>
 				</td>
 			</tr>
