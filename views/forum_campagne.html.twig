@@ -48,6 +48,7 @@
 					<thead>
 						<tr>
 							<th></th>
+							<th></th>
 							<th>Titre</th>
 							<th>Dernier post</th>
 							<th></th>
@@ -61,9 +62,12 @@
 		<tr>
 			<td>
 				{% if line.posts_id > line.read_post_id %}
-					Non-lu
-				{% else %}
-					Lu
+					<i class="icon-asterisk"></i>
+				{% endif %}
+			</td>
+			<td>
+				{% if line.topics_stickable > 0 %}
+					<i class="icon-fire"></i>
 				{% endif %}
 			</td>
 			<td>{{ line.topics_title }}</td>

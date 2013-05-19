@@ -95,9 +95,9 @@ class SectionService {
 				LEFT JOIN read_post rd
 				ON 
 					topics.id = rd.topic_id
+				AND rd.user_id = :user
 				WHERE 
 					sections.campagne_id = :campagne
-				AND ( rd.user_id = :user OR rd.user_id IS NULL)
 				ORDER BY sections.ordre ASC, topics.stickable DESC, topics.ordre ASC";
 	    $campagnes = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
 	    return $campagnes;
