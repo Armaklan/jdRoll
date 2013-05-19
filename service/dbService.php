@@ -35,14 +35,14 @@ class DbService {
 		$campagneTable->addColumn("univers", "string", array("length" => 100));
 		$campagneTable->addColumn("description", "text", array('default' => ''));
 		$campagneTable->addColumn("statut", "integer", array("unsigned" => true, 'default' => '0'));
-		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onDelete" => "CASCADE"));
 		$campagneTable->setPrimaryKey(array("id"));
 
 		$participantTable =  $schema->createTable("campagne_participant");
 		$participantTable->addColumn("campagne_id", "integer", array("unsigned" => true));
 		$participantTable->addColumn("user_id", "integer", array("unsigned" => true));
-		$participantTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
-		$participantTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$participantTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
+		$participantTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
 		$participantTable->setPrimaryKey(array("campagne_id", "user_id"));
 
 		$persoTable =  $schema->createTable("personnages");
@@ -55,8 +55,8 @@ class DbService {
 		$persoTable->addColumn("privateDescription", "text", array('default' => ''));
 		$persoTable->addColumn("technical", "text", array('default' => ''));
 		$persoTable->setPrimaryKey(array("id"));
-		$persoTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
-		$persoTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$persoTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
+		$persoTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
 		
 		$sectionTable = $schema->createTable("sections");
 		$sectionTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
@@ -65,7 +65,7 @@ class DbService {
 		$sectionTable->addColumn("ordre", "integer", array("unsigned" => true));
 		$sectionTable->addColumn("default_collapse", "integer", array("unsigned" => true));
 		$sectionTable->setPrimaryKey(array("id"));
-		$sectionTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$sectionTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
 		
 		$topicTable = $schema->createTable("topics");
 		$topicTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
@@ -75,7 +75,7 @@ class DbService {
 		$topicTable->addColumn("ordre", "integer", array("unsigned" => true));
 		$topicTable->addColumn("last_post_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$topicTable->setPrimaryKey(array("id"));
-		$topicTable->addForeignKeyConstraint($sectionTable, array("section_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$topicTable->addForeignKeyConstraint($sectionTable, array("section_id"), array("id"), array("onDelete" => "CASCADE"));
 
 		
 		$postTable = $schema->createTable("posts");
@@ -84,11 +84,11 @@ class DbService {
 		$postTable->addColumn("user_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$postTable->addColumn("perso_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$postTable->addColumn("content", "text", array('default' => ''));
-		$postTable->addColumn("create_date", "datetime", array('default' => 'CURRENT_TIMESTAMP'));
+		$postTable->addColumn("create_date", "datetime");
 		$postTable->setPrimaryKey(array("id"));
-		$postTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array("onUpdate" => "CASCADE"));
-		$postTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onUpdate" => "CASCADE"));
-		$postTable->addForeignKeyConstraint($persoTable, array("perso_id"), array("id"), array("onUpdate" => "CASCADE"));
+		$postTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array("onDelete" => "CASCADE"));
+		$postTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
+		$postTable->addForeignKeyConstraint($persoTable, array("perso_id"), array("id"), array("onDelete" => "CASCADE"));
 		
 		
 		$topicTable->addForeignKeyConstraint($postTable, array("last_post_id"), array("id"), array());

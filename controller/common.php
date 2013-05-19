@@ -41,6 +41,11 @@ $commonController->get('/about', function() use($app) {
 	return $app->render('about.html.twig');
 })->bind("about");
 
+$commonController->get('/chat', function() use($app) {
+	return $app->render('tchat.html.twig');
+})->bind("chat");
+
+
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
     return $app->redirect($app->path('homepage'));

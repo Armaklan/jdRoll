@@ -1,0 +1,67 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	<table class="table table-striped table-hover" width="100%">
+		<thead>
+			<tr>
+				<th colspan="2" class="categorie"><h4>{{ topic.title }}</h4></th>
+			</tr>
+			<tr>
+				<th width="15%"><i>Auteur</i></th>
+				<th width="85%"><i>Message</i></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for post in posts %}
+				<tr>
+					<td>
+						{% if post.perso_name != null %}
+							<p><b>{{ post.perso_name }}</b></p>
+							<p><i>( {{ post.user_username }} )</i></p>
+							<p><i>{{ post.post_date }}</i></p>
+							<img src="{{ post.perso_avatar }}" width="80%" />
+						{% else %}
+							<p><b>{{ post.user_username }} (MJ) </b></p>
+							<p><i>Le {{ post.post_date }}</i></p>
+							<img src="{{ post.user_avatar }}" width="80%" />
+						{% endif %}
+					</td>
+					<td>
+						{% autoescape false %}
+							{{ post.post_content }}
+						{% endautoescape %}
+						<a name="post{{ post.post_id }}"></a>
+					</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<td>
+				</td>
+				<td>
+					<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+						<input type="hidden" name="id" value="" >
+						<input type="hidden" name="topic_id" value="{{ topic.id }}" >
+						<input type="hidden" name="perso_id" value="{{ perso.id }}" >
+					   	<div class="control-group">
+						    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+						    	 placeholder="Votre message" rows="15"></textarea>
+					    </div>
+					    <div class="control-group">
+						    <button type="submit" class="btn btn-primary">Répondre</button>
+					    </div>
+				    </form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}
+
+{% block sidebar %}
+	{% if is_mj %}
+   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
+	{% else %}
+   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+    {% endif %}
+{% endblock %}

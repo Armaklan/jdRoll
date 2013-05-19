@@ -1,0 +1,1 @@
+<div id="chats">Not chat added in this room.</div><div id="chatusers"><h4 id="onl">Online</h4>- No-one online</div>

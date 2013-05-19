@@ -81,6 +81,7 @@ class SectionService {
 					posts.id as posts_id,
 					perso.name as posts_username,
 					posts.create_date as posts_date,
+					user.username as user_username,
 					rd.post_id as read_post_id
 				FROM sections sections 
 				LEFT JOIN topics topics
@@ -89,6 +90,9 @@ class SectionService {
 				LEFT JOIN posts posts
 				ON
 					posts.id = topics.last_post_id
+				LEFT JOIN user user
+				ON
+					user.id = posts.user_id
 				LEFT JOIN personnages perso
 				ON
 					perso.id = posts.perso_id

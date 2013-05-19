@@ -25,5 +25,9 @@
 {% endblock %}
 
 {% block sidebar %}
-    {{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+	{% if is_mj %}
+   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
+	{% else %}
+   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+    {% endif %}
 {% endblock %}

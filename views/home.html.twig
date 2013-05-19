@@ -1,27 +1,12 @@
 {% extends "squelette.html.twig" %}
 
 {% block content %}
-	<h3>Dernières campagnes créées</h3>
-	<table class="table table-striped table-hover">
-		<thead>
-			<tr>
-				<th>Nom de la campagne</th>
-				<th>Univers de la campagne</th>
-				<th>Système de jeu</th>
-				<th>Nb Joueurs</th>
-				<th>MJ</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for campagne in campagnes %}
-			<tr>
-				<td><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}</a></td>
-				<td>{{ campagne.univers }}</td>
-				<td>{{ campagne.systeme }}</td>
-				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
-				<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+	<h3>Bienvenue sur la plateforme jdRoll ! </h3>
+	
+	<p></p>
+	<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrute dans <b>Jouer > Rejoindre une campagne</b></p>
+	<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
+	<p></p>
+	<p>Jouer sur les parties où vous vous êtes inscrit ? Simple, cliquez sur le nom de la partie dans votre sidebar,
+	 vous débrancherez alors dans l'espace spécifique à votre campagne.</p>
 {% endblock %}

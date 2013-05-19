@@ -1,0 +1,66 @@
+<html>
+<head>
+  <title>PHP Script Chat CoursesWeb.net</title>
+</head>
+<body>
+<center><h2>PHP Script Chat</h2></center>
+This is a simple script for Chat, made with PHP and Javascript, using OOP and Ajax technology.
+<h4>Requirements</h4>
+- PHP 5+<br/>
+- Browser with JavaScript enabled (preferable with support for CSS3).<br/><br/>
+
+This Chat script does not require database, it works with text files saved on server, so, it is fast and uses verry few server's resources.<br/>
+The user can add smiles in chat, and can format the text with Bold, Italic, an Underline., you can test it online to this link: <a href="http://coursesweb.net/php-mysql/script-chat-simple_s2" title="Script Chat Simple">Script Chat Simple</a><br>
+The nickname, chat room, and the On / Off setting for beep sound are saved in cookies (for one day), so, to the next visit they will be read and used from cookie.<br/>
+The script has been tested successfully on Mozilla Firefox, Internet Explorer, Google Chrome and Opera.<br/>
+&bull; - <i>This script is free (<b>does not provide support or personal modifications</b>).</i>
+<h4>Installation</h4>
+- After you have unzipped the archive "script_chat_simple.zip", copy on your server the file "<b>chat.php</b>", and the directories: "<b>chatfiles</b>", "<b>chattxt</b>", and "<b>chatex</b>" (with all their files, in the same directory where you have the file in which you want to include the chat). <i>The "test.php" file is for test.</i><br>
+- Set read-write-execute permissions to the directory "<b>chattxt</b>", CHMOD 0777 (or 0755). In this directory the PHP will save the TXT files with the chat for each chatroom.<br>
+- In the PHP file in which you want to include this chat script, add the following code:
+<ul><b>&lt;?php include('chat.php'); ?&gt;</b></ul>
+- <i>To have a valid HTML page, take this line of code (for CSS properties) from the beginning of the file "<b>chat.php</b>":<br/> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ <b>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;chatfiles/chatstyle.css&quot; /&gt;</b><br/>
+And move it into the HEAD section of the page where you included the script.</i><br><br>
+- This script can also be included in ".html" files, using &lt;object&gt;, or &lt;iframe&gt; tag (but the server must run PHP).<br>
+So, to add the chat script into a ".html" file (blog, forum), write /copy in that page one of the following codes.<br/>
+ - Object tag:
+<ul><b>&lt;object type=&quot;text/html&quot; data=&quot;dir/chat.php&quot; width=&quot;620&quot; height=&quot;480&quot;&gt;&lt;/object&gt;</b></ul>
+ - Or IFrame:
+<ul><b>&lt;iframe src=&quot;dir/chat.php&quot; width=&quot;100%&quot; height=&quot;480&quot; scrolling=&quot;auto&quot; frameborder=&quot;0&quot; name=&quot;frame_chat&quot;&gt; &lt;/iframe&gt;</b></ul>
+<i> - "dir/chat.php" is the path to the directory and file where you have the script. If it's in the same folder, write only "chat.php"</i>
+<h4>Admin Settings</h4>
+- In the file "setchat.php" (in "chatfiles/" directory) you can change the default settings.<br />
+- By default, the script saves and displays the last 30 rows of chat, you can change this number to the line of code:
+<ul><b>define('MAXROWS', 30);</b></ul>
+- The script allows users to add links in chat (with attribute <i>rel="nofallow"</i>), but if you want to remove this feature, replace the number 1 with 0, to the line of code:
+<ul><b>define('CHATLINK', 1);</b></ul>
+<div style="background:#ededfe;">
+- To the following line of code you can set a password used when you want to empty chat rooms (<i>replace "adminpass" with the password you want</i>):
+<ul><b>define('CADMPASS', 'adminpass');</b></ul>
+- To empty chat rooms, access in your browser the file <b>chatfiles/setchat.php</b> with <b>?mod=admin</b> in URL. For example:
+<blockquote><b>http://localhost/chatfiles/setchat.php?mod=admin</b></blockquote>
+Then select the Chat Room you want to empty, and use the password set to CADMPASS.</div><br/>
+<div style="background:yellow;">
+- If your web site has a register /login script, and you want than only the logged users to can add texts in chat, set the value of <b>CHATADD</b> to 0 . Then set <b>$_SESSION['username']</b> with the session your script uses to keep logged users; to the following code, in "setchat.php".<br>
+<i>In this case, you must add <b>session_start();</b> to the beginning of your PHP file, as you can see in "test.php" file.</i>
+<ul><b>define('CHATADD', 1);<br/>
+if(CHATADD !== 1) {<br/> &nbsp; &nbsp;
+  if(isset($_SESSION['username'])) define('CHATUSER', $_SESSION['username']);<br/>
+}</b></ul></div>
+In the directory "chatex/" there are two additional WAV files: "<b><i>beep2.wav</i></b>", and "<b><i>beep3.wav</i></b>". By default, the script uses "<b>beep1.wav</b>". In case you want to change the audio sound that is played when a new text chat is added in chat room, change in "<b>chatfunctions.js</b>" file (line 13) the value of the variable:
+<ul><b>var beepfile = 'beep1.wav';</b></ul>
+
+- The script initially contains two chat rooms: English, and Nature, if you want only one chat room, delete the line of code that contains the variable <b>$chatrooms[]</b> followed by the name of the chatroom. To change the name of the chatroom, modify the value of those variables.<br>
+If you want more chat rooms, add <b>$chatrooms[]</b> variables, with this syntax :
+<ul><b>$chatrooms[] = 'chatroom_name';</b></ul>
+The script can create automatically the text files for each chat room, but PHP must have writable permissions (CHMOD 0777, or 0755) in the "chattxt" directory.<br>
+The script can be easily changed to be used in other languages, just translate the text in the file "<b>texts.php</b>" (in "chatfiles/" folder).<br>
+If you want to modify the colors and design of the chat, edit CSS properties in "<b>chatstyle.css</b>" (or "<b>chatstyle_mini.css</b>", the mini-version), in "chatfiles/" folder.<br>
+
+The file "<b>chatstyle_mini.css</b>" can be used for a smaller graphics version of this chat script (<i>width 245 px</i>). In this version, to save space, the area with online users is not displayed.<br><br><br>
+<i>With respect,<br>
+Marius</i><br>
+<a href="http://coursesweb.net/" title="Web Programming Courses">coursesweb.net</a><br/><br/>
+</body>
+</html>

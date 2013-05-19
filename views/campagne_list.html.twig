@@ -27,7 +27,7 @@
 				<td>{{ campagne.systeme }}</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 				<td>{{ campagne.username }}</td>
-				<td><a href="" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a></td>
+				<td><a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a></td>
 			</tr>
 		{% endfor %}
 		</tbody>

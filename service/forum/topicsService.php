@@ -68,7 +68,7 @@ class TopicService {
 		$stmt->execute();
     }
     
-    public function updateLastPost($topicId, $post_id) {
+    public function updateLastPost($topic_id, $post_id) {
     	$sql = "UPDATE topics
     			SET last_post_id = :post
     			WHERE
@@ -76,7 +76,7 @@ class TopicService {
     	
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("post", $post_id);
-    	$stmt->bindValue("id", $topicId);
+    	$stmt->bindValue("id", $topic_id);
     	$stmt->execute();
     }
 

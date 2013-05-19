@@ -41,7 +41,7 @@
 
 	$securedCampagneController->get('/my_list', function() use($app) {
 	    $campagnes = $app['campagneService']->getMyCampagnes();
-	    $campagnesPj = $app['campagneService']->getMyActivePjCampagnes();
+	    $campagnesPj = $app['campagneService']->getMyPjCampagnes();
 	    return $app->render('campagne_my_list.html.twig', ['campagnes' => $campagnes, 'campagnes_pj' => $campagnesPj, 'error' => ""]);
 	})->bind("campagne_my_list");
 
@@ -49,10 +49,10 @@
 	    try {
 	        if ($request->get('id') == '') {
 	            $app['campagneService']->createCampagne($request);
-	            return $app->redirect($app->path('homepage'));
+	            return $app->redirect($app->path('campagne_my_list'));
 	        } else {
 	            $app['campagneService']->updateCampagne($request);
-	            return $app->redirect($app->path('homepage'));
+	            return $app->redirect($app->path('campagne_my_list'));
 	        }
 	    } catch (Exception $e) {
 	        $campagne = $app['campagneService']->getFormCampagne($request);
@@ -62,7 +62,7 @@
 	
 	$securedCampagneController->get('/sidebar/{campagne_id}', function(Request $request, $campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
-		$perso = $app['persoService']->getPersonnage($campagne_id, $player_id);
+		$perso = $app['persoService']->getPersonnage(true, $campagne_id, $player_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
 		return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso]);
 	})->bind("sidebar_campagne");

@@ -13,26 +13,31 @@ class PersoService {
 
 	public function createPersonnage($campagne_id, $user_id) {
 		$sql = "INSERT INTO personnages 
-				(campagne_id, user_id) 
+				(name, campagne_id, user_id) 
 				VALUES
 				(:campagne, :user)";
 
 		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("name", "NomPersonnage");
 		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("user", $user_id);
 		$stmt->execute();
 	}
 
 
-	public function getPersonnage($campagne_id, $user_id) {
+	public function getPersonnage($createIfNotExist, $campagne_id, $user_id) {
 		$sql = "SELECT * FROM personnages 
 				WHERE
 						campagne_id = :campagne
 				AND 	user_id = :user";
 		$result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
 		if(empty($result)) {
-			$this->createPersonnage($campagne_id, $user_id);
-			$result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
+			if($createIfNotExist) {
+				$this->createPersonnage($campagne_id, $user_id);
+				$result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
+			} else {
+				$result['id'] = "";
+			}
 		}
 		return $result;
 	}

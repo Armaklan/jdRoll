@@ -47,11 +47,11 @@
 		    	<table class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th></th>
-							<th></th>
+							<th width="40px"></th>
+							<th width="40px"></th>
 							<th>Titre</th>
-							<th>Dernier post</th>
-							<th></th>
+							<th width="400px">Dernier post</th>
+							<th width="40px"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -77,6 +77,10 @@
 				{% endif %}  
 				{% if line.posts_username != null %}
 					par {{ line.posts_username }}
+				{% else %}
+					{% if line.user_username != null %}
+						par {{ line.user_username }} (MJ)
+					{% endif %}
 				{% endif %}
 			
 			</td>

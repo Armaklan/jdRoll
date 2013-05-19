@@ -83,6 +83,14 @@ class CampagneService {
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}
+	
+	public function getOpenCampagne() {
+		$sql = "SELECT campagne.*, user.username as username
+				FROM campagne
+				JOIN user ON user.id = campagne.mj_id ORDER BY id desc";
+		$campagnes = $this->db->fetchAll($sql);
+		return $campagnes;
+	}
 
 	public function getLastCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
@@ -94,8 +102,8 @@ class CampagneService {
 	}
 
 	public function getCampagne($id) {
-		$sql = "SELECT * FROM campagne WHERE id = " . $id;
-	    $campagne = $this->db->fetchAssoc($sql);
+		$sql = "SELECT * FROM campagne WHERE id = ?";
+	    $campagne = $this->db->fetchAssoc($sql, array($id));
 	    return $campagne;
 	}
 	
@@ -105,14 +113,32 @@ class CampagneService {
 	}
 
 	public function getMyCampagnes() {
-		$sql = "SELECT * FROM campagne WHERE mj_id = ? ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
+		$sql = "SELECT * ,
+				( SELECT 
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM 
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id 
+				) as activity 
+				FROM campagne
+				WHERE mj_id = :user
+				ORDER BY name";
+	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 	    return $campagne;
 	}
 
 	public function getMyActiveMjCampagnes() {
-		$sql = "SELECT * FROM campagne WHERE mj_id = ? ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
+		$sql = "SELECT *
+				FROM campagne
+				WHERE mj_id = :user 
+				ORDER BY name";
+	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 	    return $campagne;
 	}
 
@@ -127,6 +153,31 @@ class CampagneService {
 		ORDER BY campagne.name";
 	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
 	    return $campagne;
+	}
+	
+	public function getMyPjCampagnes() {
+		$sql = "SELECT
+		campagne.*, user.username as username,
+				( SELECT 
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM 
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id 
+				) as activity			
+		FROM campagne
+		JOIN campagne_participant as cp
+		ON cp.campagne_id = campagne.id
+		JOIN user ON user.id = campagne.mj_id
+		WHERE cp.user_id = :user
+		ORDER BY campagne.name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
 	}
 
 	private function incrementeNbJoueur($id) {

@@ -21,12 +21,14 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {
 	$section =  $app["sectionService"]->getBlankSection($campagne_id);
-	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("section_add");
 
 $forumController->get('/{campagne_id}/section/edit/{section_id}', function($campagne_id, $section_id) use($app) {
 	$section =  $app["sectionService"]->getSection($section_id);
-	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("section_edit");
 
 $forumController->post('/{campagne_id}/section/save', function($campagne_id, Request $request) use($app) {
@@ -40,18 +42,21 @@ $forumController->post('/{campagne_id}/section/save', function($campagne_id, Req
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 	} catch(Exception $e) {
 		$section =  $app["sectionService"]->getFormSection($campagne_id, $request);
-		return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => $e->getMessage()]);
+		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
 	}
 })->bind("section_save");
 
 $forumController->get('/{campagne_id}/topic/add/{section_id}', function($campagne_id, $section_id) use($app) {
 	$topic =  $app["topicService"]->getBlankTopic($section_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("topic_add");
 
 $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne_id, $topic_id) use($app) {
 	$topic =  $app["topicService"]->getTopic($topic_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("topic_edit");
 
 $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Request $request) use($app) {
@@ -65,7 +70,8 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 	} catch(Exception $e) {
 		$topic =  $app["topicService"]->getFormSection($campagne_id, $request);
-		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage()]);
+		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
 	}
 })->bind("topic_save");
 
@@ -78,7 +84,7 @@ $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic
 		$app["postService"]->markRead($last_id, $topic_id);
 	}
 	$topic = $app["topicService"]->getTopic($topic_id);
-	$perso = $app['persoService']->getPersonnage($campagne_id, $app['session']->get('user')['id']);
+	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts, 'perso' => $perso, 'is_mj' => $is_mj]);
 })->bind("topic");
