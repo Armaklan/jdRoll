@@ -17,28 +17,38 @@ class SectionService {
 		$section['campagne_id'] = $campagne_id;
 		$section['title'] = '';
 		$section['ordre'] = '';
+		$section['default_collapse'] = '0';
 		return $section;
     }
 
-    public function getFormSection($request) {
+    public function getFormSection($campagne_id, $request) {
 		$section = array();
 		$section['id'] = $request->get('id');
-		$section['campagne_id'] = $request->get('campagne_id');
+		$section['campagne_id'] = $campagne_id;
 		$section['title'] = $request->get('title');
 		$section['ordre'] = $request->get('ordre');
+		$section['default_collapse'] = $request->get('default_collapse');
 		return $section;
     }
 
-    public function createSection($request) {	
+    public function getSection($section_id) {
+    	$sql = "SELECT * FROM sections
+				WHERE id = :section";
+    
+    	return $this->db->fetchAssoc($sql, array("section" => $section_id));
+    }
+    
+    public function createSection($request, $campagne_id) {	
 		$sql = "INSERT INTO sections 
-				(campagne_id, title, ordre) 
+				(campagne_id, title, ordre, default_collapse) 
 				VALUES
-				(:campagne,:title,:ordre,:nb_joueurs,:description,:mj_id,:banniere)";
+				(:campagne,:title,:ordre,:default_collapse)";
 
 		$stmt = $this->db->prepare($sql);
-		$stmt->bindValue("campagne", $request->get('campagne_id'));
+		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
+		$stmt->bindValue("default_collapse", $request->get('default_collapse'));
 		$stmt->execute();
     }
 
@@ -46,12 +56,14 @@ class SectionService {
     	$sql = "UPDATE sections 
     			SET title = :title,
     				ordre = :ordre,
+    				default_collapse = :default_collapse
     			WHERE
     				id = :id";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
+		$stmt->bindValue("default_collapse", $request->get('default_collapse'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }

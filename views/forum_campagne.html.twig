@@ -2,9 +2,11 @@
 
 {% block content %}
 
+	{% if is_mj %}
 	<div align="right">
-		<a href="" title="Ajouter une section" class="btn iconeBtn"><i class="icon-plus"></i></a>
+		<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-primary iconeBtn"><i class="icon-plus"></i></a>
 	</div>
+	{% endif %}
 	<p/>
 	{% set section_id = -1 %}
 	{% set topic_id = -1 %}
@@ -20,9 +22,25 @@
 			
 			
 	    	<div class="categorie">
-	    		<a data-toggle="collapse" data-target="#section{{ line.section_id  }}" >
-	    		{{ line.section_title  }}
-	    		</a>
+	    		<table width="100%">
+	    			<tr>
+	    				<td width="70%">
+	    					<a data-toggle="collapse" data-target="#section{{ line.section_id  }}" >
+				    			{{ line.section_title  }}
+				    		</a>
+				    	</td>
+	    				<td width="30%">
+		    				<div align="right">
+		    					{% if is_mj %}
+		    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn iconeBtn"><i class="icon-edit"></i></a>
+									<a href="{{ path('topic_add', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Ajouter un sujet" class="btn iconeBtn"><i class="icon-plus"></i></a>
+								{% endif %}
+							</div>
+	    				</td>
+	    			</tr>
+	    		</table>
+	    		
+	    		
 	    	</div>
 	    	
 	    	<div class="topics collapse {% if line.default_collapse == 0 %} in {% else %} out {% endif %}" id="section{{ line.section_id  }}">
@@ -32,6 +50,7 @@
 							<th></th>
 							<th>Titre</th>
 							<th>Dernier post</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -57,6 +76,11 @@
 				{% endif %}
 			
 			</td>
+			<td>
+				{% if is_mj %}
+		    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn"><i class="icon-edit"></i></a>
+				{% endif %}
+			</td>
 		</tr>
 		{% endif %}
 		
@@ -68,5 +92,9 @@
 {% endblock %}
 
 {% block sidebar %}
-    {{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+	{% if is_mj %}
+   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
+	{% else %}
+   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+    {% endif %}
 {% endblock %}

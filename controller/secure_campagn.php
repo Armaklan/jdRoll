@@ -67,6 +67,12 @@
 		return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso]);
 	})->bind("sidebar_campagne");
 	
+	$securedCampagneController->get('/sidebarmj/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
+	})->bind("sidebar_campagne_mj");
+	
 	$app->mount('/campagne', $securedCampagneController);
 
 ?>

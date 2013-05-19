@@ -98,6 +98,11 @@ class CampagneService {
 	    $campagne = $this->db->fetchAssoc($sql);
 	    return $campagne;
 	}
+	
+	public function isMj($id) {
+		$campagne = $this->getCampagne($id);
+		return $campagne['mj_id'] == $this->session->get('user')['id'];
+	}
 
 	public function getMyCampagnes() {
 		$sql = "SELECT * FROM campagne WHERE mj_id = ? ORDER BY name";

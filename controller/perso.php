@@ -15,6 +15,11 @@
 	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => ""]);
 	})->bind("perso_edit");
 	
+	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+		$perso = $app['persoService']->getPersonnage($campagne_id, $player_id);
+		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => ""]);
+	})->bind("perso_edit_mj");
+	
 	$persoController->get('/view/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$perso = $app['persoService']->getPersonnage($campagne_id, $player_id);

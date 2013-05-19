@@ -1,0 +1,44 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<form class="form-horizontal" action="{{ path('topic_save', {campagne_id : campagne_id}) }}" method="POST">
+		<input type="hidden" name="id" value="{{ topic.id }}" >
+		<input type="hidden" name="section_id" value="{{ topic.section_id }}" >
+	    <div class="control-group">
+		    <label class="control-label" for="title">Title</label>
+		    <div class="controls">
+		    	<input type="text" id="title" name="title" placeholder="Titre du sujet" value="{{ topic.title }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="ordre">N°Ordre</label>
+		    <div class="controls">
+		    	<input type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ topic.ordre }}">
+		    </div>
+	    </div>	
+	    <div class="control-group">
+		    <label class="control-label" for="stickable">Type</label>
+		    <div class="controls">
+		    	<input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard
+				<input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it
+		    </div>
+	    </div>    
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+		    </div>
+	    </div>
+    </form>
+
+{% endblock %}
+
+{% block sidebar %}
+    {{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+{% endblock %}
