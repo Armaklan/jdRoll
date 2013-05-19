@@ -70,7 +70,7 @@
 					<i class="icon-fire"></i>
 				{% endif %}
 			</td>
-			<td>{{ line.topics_title }}</td>
+			<td><a href="{{ path('topic', {campagne_id : campagne_id, topic_id : line.topics_id}) }}#post{{ line.read_post_id }}">{{ line.topics_title }}</a></td>
 			<td>
 				{% if line.posts_date != null %}
 				Le {{ line.posts_date }}

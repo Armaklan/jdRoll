@@ -67,6 +67,18 @@ class TopicService {
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
+    
+    public function updateLastPost($topicId, $post_id) {
+    	$sql = "UPDATE topics
+    			SET last_post_id = :post
+    			WHERE
+    				id = :id";
+    	
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("post", $post_id);
+    	$stmt->bindValue("id", $topicId);
+    	$stmt->execute();
+    }
 
 }
 ?>

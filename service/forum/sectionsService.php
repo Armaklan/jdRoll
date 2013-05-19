@@ -71,7 +71,7 @@ class SectionService {
     
    	public function getAllSectionInCampagne($campagne_id) {
    		$user_id = $this->session->get('user')['id'];
-		$sql = "SELECT 
+		$sql = "SELECT DISTINCT
 					sections.id as section_id,
 					sections.title as section_title,
 					sections.default_collapse as default_collapse,

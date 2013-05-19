@@ -8,6 +8,7 @@ require_once __DIR__.'/service/campagneService.php';
 require_once __DIR__.'/service/persoService.php';
 require_once __DIR__.'/service/forum/sectionsService.php';
 require_once __DIR__.'/service/forum/topicsService.php';
+require_once __DIR__.'/service/forum/postsService.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +62,9 @@ $app['sectionService'] = function ($app) {
 };
 $app['topicService'] = function ($app) {
 	return new TopicService($app['db'], $app['session']);
+};
+$app['postService'] = function ($app) {
+	return new PostService($app['db'], $app['session']);
 };
 
 require("controller/common.php");
