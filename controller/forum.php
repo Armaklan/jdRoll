@@ -89,6 +89,17 @@ $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts, 'perso' => $perso, 'is_mj' => $is_mj]);
 })->bind("topic");
 
+$forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_id, $post_id) use($app) {
+	$post =  $app["postService"]->getPost($post_id);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post, 'error' => '', 'is_mj' => $is_mj]);
+})->bind("post_edit");
+
+$forumController->get('/{campagne_id}/post/deletePost/{topic_id}/{post_id}', function($campagne_id, $topic_id, $post_id) use($app) {
+	$post =  $app["postService"]->deletePost($post_id);
+	return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id)));
+})->bind("post_delete");
+
 $forumController->post('/{campagne_id}/post/save', function(Request $request, $campagne_id) use($app) {
 	$topicId = $request->get('topic_id');
 	if ($request->get('id') == '') {

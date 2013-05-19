@@ -88,7 +88,7 @@ class PostService {
 
     public function updatePost($request) {
     	$sql = "UPDATE posts 
-    			SET content = :content,
+    			SET content = :content
     			WHERE
     				id = :id";
 
@@ -96,6 +96,16 @@ class PostService {
 		$stmt->bindValue("content", $request->get('content'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
+    }
+    
+
+    public function deletePost($post_id) {
+    	$sql = "DELETE FROM posts
+    			WHERE id = :id";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("id", $post_id);
+    	$stmt->execute();
     }
     
     public function markRead($last_id, $topic_id) {

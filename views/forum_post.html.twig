@@ -1,0 +1,26 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+		<input type="hidden" name="id" value="{{ post.id }}" >
+		<input type="hidden" name="topic_id" value="{{ post.topic_id }}" >
+		<input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
+	   	<div class="control-group">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+		    	 placeholder="Votre message" rows="15">{{ post.content }}</textarea>
+	    </div>
+	    <div class="control-group">
+		    <button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </form>
+
+{% endblock %}
+
+{% block sidebar %}
+	{% if is_mj %}
+   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
+	{% else %}
+   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+    {% endif %}
+{% endblock %}
