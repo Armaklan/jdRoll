@@ -22,3 +22,9 @@
 	    {% endif %}
 	{% endif %}
 {% endblock %}
+
+{% block specificJs %}
+	{% if campagne_id != 0 %}
+		{{ render(url("print_dicer", {campagne_id : campagne_id}) ) }}
+	{% endif %}
+{% endblock %}

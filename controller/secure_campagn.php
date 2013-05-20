@@ -73,6 +73,21 @@
 		return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
 	})->bind("sidebar_campagne_mj");
 	
+	$securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
+		$jets = $app['dicerService']->getDice($campagne_id);
+		return $app->render('dicer.html.twig', ['campagne_id' => $campagne_id, 'jets' => $jets]);
+	})->bind("print_dicer");
+	
+	$securedCampagneController->post('/dicer/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+		try {
+			$player_id = $app['session']->get('user')['id'];
+			$param = $request->get('param');
+			return $app['dicerService']->launchDice($campagne_id,$param);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
+	})->bind("dicer");
+	
 	$app->mount('/campagne', $securedCampagneController);
 
 ?>

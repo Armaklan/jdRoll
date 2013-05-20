@@ -102,6 +102,16 @@ class DbService {
 		$readPost->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array());
 		$readPost->addForeignKeyConstraint($postTable, array("post_id"), array("id"), array());
 		
+		$dicerTable = $schema->createTable("dicer");
+		$dicerTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$dicerTable->addColumn("user_id", "integer", array("unsigned" => true));
+		$dicerTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$dicerTable->addColumn("result", "string", array("length" => 500, 'default' => ''));
+		$dicerTable->addColumn("create_date", "datetime");
+		$dicerTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
+		$dicerTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
+		$dicerTable->setPrimaryKey(array("id"));
+		
 		return $schema;
 	}
 
