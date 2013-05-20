@@ -5,7 +5,20 @@
 	<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" name="id" value="{{ post.id }}" >
 		<input type="hidden" name="topic_id" value="{{ post.topic_id }}" >
-		<input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
+		{% if is_mj %}
+			<div class="control-group">
+				<label for="perso_id">Poster en tant que...</label>
+				<select name="perso_id" >
+				 <option value="">MJ</option>
+				 {% for personnage in personnages %}
+					 <option value="{{ personnage.id }}" {% if personnage.id == post.perso_id %} SELECTED="SELECTED" {% endif %}>
+					 	{{ personnage.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		{% else %}
+			<input type="hidden" name="perso_id" value="{{ perso.id }}" >
+		{% endif %}
 	   	<div class="control-group">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
 		    	 placeholder="Votre message" rows="15">{{ post.content }}</textarea>

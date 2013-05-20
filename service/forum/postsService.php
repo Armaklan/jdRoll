@@ -88,12 +88,14 @@ class PostService {
 
     public function updatePost($request) {
     	$sql = "UPDATE posts 
-    			SET content = :content
+    			SET content = :content,
+    			perso_id = :perso
     			WHERE
     				id = :id";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("content", $request->get('content'));
+		$stmt->bindValue("perso", $request->get('perso_id'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }

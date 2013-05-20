@@ -50,6 +50,14 @@ class PersoService {
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
+	
+	public function getAllPersonnagesInCampagne($campagne_id) {
+		$sql = "SELECT * FROM personnages
+				WHERE
+						campagne_id = :campagne";
+		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+		return $result;
+	}
 
 	public function updatePersonnage($campagne_id, $user_id, $request) {
 

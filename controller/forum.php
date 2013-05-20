@@ -121,16 +121,20 @@ $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic
 	$topic = $app["topicService"]->getTopic($topic_id);
 	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts, 'perso' => $perso, 'is_mj' => $is_mj]);
+	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts, 
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages]);
 })->bind("topic");
 
 $forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_id, $post_id) use($app) {
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$post =  $app["postService"]->getPost($post_id);
+	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post, 'error' => '', 'is_mj' => $is_mj]);
+	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post, 
+			'error' => '', 'is_mj' => $is_mj, 'personnages' => $personnages]);
 })->bind("post_edit");
 
 $forumController->get('/{campagne_id}/post/deletePost/{topic_id}/{post_id}', function($campagne_id, $topic_id, $post_id) use($app) {
