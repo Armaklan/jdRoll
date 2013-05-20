@@ -9,6 +9,7 @@
     {% endif %}
 
 	<form class="form-horizontal" action="{{ path('perso_save', {campagne_id : campagne_id}) }}" method="POST">
+		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
 	    <div class="control-group">
 		    <label class="control-label" for="name">Nom</label>
 		    <div class="controls">

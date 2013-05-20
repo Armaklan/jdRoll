@@ -1,0 +1,39 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+    <table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th width="10%">Avatar</th>
+				<th width="75%">Nom du personnage</th>
+				<th width="15%">
+					{% if is_mj %}
+						<a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
+					{% endif %}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for perso in persos %}
+			<tr>
+				<td><img src="{{ perso.avatar }}" width="70%"/></td>
+				<td>{{ perso.name }}</td>
+				<td>{% if is_mj %}
+						<a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
+					{% else %}
+						<a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Plus de détail..."><i class="icon-search"></i></a>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+{% endblock %}

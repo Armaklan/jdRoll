@@ -5,6 +5,7 @@
     <p/>
     <div align="center">
 		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-comment"></i></a>
+		<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>	
     	<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Notes"><i class="icon-book"></i></a>
 		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-random"></i></a>	
     </div>
@@ -12,6 +13,6 @@
 	<ul class="nav nav-tabs nav-stacked">
 		<li class='active'><a href='#'><b>Personnages</b></a></li>
 		{% for perso in allPerso %}
-			<li><a href="{{ path('perso_view', {perso_id : perso.user_id, campagne_id: campagne_id}) }}">{{ perso.name }}</a></li>
+			<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }}</a></li>
 		{% endfor %}
 	</ul>

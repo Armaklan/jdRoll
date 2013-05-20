@@ -16,7 +16,7 @@
 				<th>Univers de la campagne</th>
 				<th>Système de jeu</th>
 				<th>Nb Joueurs</th>
-				<th width="150px"></th>
+				<th width="200px"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +29,7 @@
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 				<td>
 				<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-comment"></i></a>
+				<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 				<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 				</td>
 			</tr>
@@ -44,7 +45,7 @@
 				<th>Univers de la campagne</th>
 				<th>Système de jeu</th>
 				<th>MJ</th>
-				<th width="150px"></th>
+				<th width="200px"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,6 +59,7 @@
 				<td>
 					<a href="{{ path('perso_edit', {campagne_id: campagne.id}) }}" title="Personnages" class="btn iconeBtn"><i class="icon-tasks"></i></a>
 					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" title="Forum" class="btn iconeBtn"><i class="icon-comment"></i></a>
+					<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 					<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 				</td>
 			</tr>

@@ -35,7 +35,7 @@
 						<a name="post{{ post.post_id }}"></a>
 					</td>
 					<td>
-						{% if is_mj or (post.user_id == perso.user_id) %}
+						{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
 							<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}" 
 							title="Editer" class="btn iconeBtn"><i class="icon-edit"></i></a>
 							

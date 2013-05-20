@@ -11,11 +11,24 @@ class PersoService {
         $this->session = $session;
     }
 
+    public function getBlankPnj($campagne_id) {
+    	$perso = array();
+    	$perso["name"] = "";
+    	$perso["avatar"] = "";
+    	$perso["publicDescription"] = "";
+    	$perso["privateDescription"] = "";
+    	$perso["technical"] = "";
+    	$perso["campagne_id"] = $campagne_id;
+    	$perso["id"] = "";
+    	$perso["user_id"] = null;
+    	return $perso;
+    }
+    
 	public function createPersonnage($campagne_id, $user_id) {
 		$sql = "INSERT INTO personnages 
 				(name, campagne_id, user_id) 
 				VALUES
-				(:campagne, :user)";
+				(:name, :campagne, :user)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", "NomPersonnage");
@@ -42,11 +55,28 @@ class PersoService {
 		return $result;
 	}
 	
+	public function getPersonnageById($perso_id) {
+		$sql = "SELECT * FROM personnages
+				WHERE
+						id = :perso";
+		$result = $this->db->fetchAssoc($sql, array("perso" => $perso_id));
+		return $result;
+	}
+	
 	public function getPersonnagesInCampagne($campagne_id) {
 		$sql = "SELECT * FROM personnages
 				WHERE
 						campagne_id = :campagne
 				AND 	user_id IS NOT NULL";
+		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+		return $result;
+	}
+	
+	public function getPNJInCampagne($campagne_id) {
+		$sql = "SELECT * FROM personnages
+				WHERE
+						campagne_id = :campagne
+				AND 	user_id IS NULL";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -59,7 +89,7 @@ class PersoService {
 		return $result;
 	}
 
-	public function updatePersonnage($campagne_id, $user_id, $request) {
+	public function updatePersonnage($campagne_id, $perso_id, $request) {
 
 		$sql = "UPDATE personnages 
 				SET
@@ -70,11 +100,28 @@ class PersoService {
 				technical = :technical
 				WHERE
 					campagne_id = :campagne
-				AND user_id = :user";
+				AND id = :perso";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
-		$stmt->bindValue("user", $user_id);
+		$stmt->bindValue("perso", $perso_id);
+		$stmt->bindValue("name", $request->get('name'));
+		$stmt->bindValue("avatar", $request->get('avatar'));
+		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
+		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
+		$stmt->bindValue("technical",  $request->get('technical'));
+		$stmt->execute();
+	}
+	
+	public function insertPNJ($campagne_id, $request) {
+	
+		$sql = "INSERT INTO personnages
+				(name, avatar, publicDescription, privateDescription, technical, campagne_id)
+				VALUES
+				(:name, :avatar, :publicDescription, :privateDescription, :technical, :campagne)";
+	
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("name", $request->get('name'));
 		$stmt->bindValue("avatar", $request->get('avatar'));
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
