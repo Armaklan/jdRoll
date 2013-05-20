@@ -1,8 +1,4 @@
 
-	<div align="center">
-		Des remarques, des idées, venez les 
-		<a href="http://www.armaklan.fr/mediawiki/index.php?title=JdRoll" target="_blank">inscrire par ici</a>
-	</div>
 	{% if (app.session.get('user') == null)  %}
 	<form class="" action="{{ path('login_connect')  }}" method="POST">
 	    <div class="control-group">
@@ -26,7 +22,13 @@
     	<div align="center">
     		<img src="{{ app.session.get('user')['avatar'] }}" width="150px" class="img-rounded" />
     	</div>
-
+	    <p/>
+	    <div align="center">
+			<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn"><i class="icon-star"></i></a>
+			<a href="{{ path('forum') }}" title="Forum" class="btn iconeBtn"><i class="icon-folder-open" ></i></a>
+            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn iconeBtn"><i class="icon-envelope"></i></a>
+	    </div>
+	    <p/>
 		<ul class="nav nav-tabs nav-stacked">
 			<li class='active'><a href='#'><b>Partie active (MJ)</b></a></li>
 			{% for campagne in active_campagnes %}

@@ -55,7 +55,7 @@ $app['persoService'] = function ($app) {
     return new PersoService($app['db'], $app['session']);
 };
 $app['campagneService'] = function ($app) {
-    return new CampagneService($app['db'], $app['session'], $app['persoService']);
+    return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService']);
 };
 $app['sectionService'] = function ($app) {
 	return new SectionService($app['db'], $app['session']);

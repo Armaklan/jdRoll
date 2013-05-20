@@ -20,6 +20,7 @@ class DbService {
 		$userTable->addColumn("mail", "string", array("length" => 100));
 		$userTable->addColumn("avatar", "string", array("length" => 500, 'default' => ''));
 		$userTable->addColumn("description", "text", array('default' => ''));
+		$userTable->addColumn("profil", "integer", array("unsigned" => true, 'default' => 0));
 		$userTable->setPrimaryKey(array("id"));
 		$userTable->addUniqueIndex(array("username"));
 		$userTable->addUniqueIndex(array("mail"));
@@ -60,7 +61,7 @@ class DbService {
 		
 		$sectionTable = $schema->createTable("sections");
 		$sectionTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
-		$sectionTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$sectionTable->addColumn("campagne_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$sectionTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
 		$sectionTable->addColumn("ordre", "integer", array("unsigned" => true));
 		$sectionTable->addColumn("default_collapse", "integer", array("unsigned" => true));

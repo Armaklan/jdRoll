@@ -1,4 +1,4 @@
-{% extends "squelette.html.twig" %}
+{% extends "squelette_campagne.html.twig" %}
 
 {% block content %}
 
@@ -23,7 +23,7 @@
 							<p><i>{{ post.post_date }}</i></p>
 							<img src="{{ post.perso_avatar }}" width="80%" />
 						{% else %}
-							<p><b>{{ post.user_username }} (MJ) </b></p>
+							<p><b>{{ post.user_username }}</b></p>
 							<p><i>Le {{ post.post_date }}</i></p>
 							<img src="{{ post.user_avatar }}" width="80%" />
 						{% endif %}
@@ -38,8 +38,11 @@
 						{% if is_mj or (post.user_id == perso.user_id) %}
 							<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}" 
 							title="Editer" class="btn iconeBtn"><i class="icon-edit"></i></a>
+							
+						{% endif %}
+						{% if is_mj %}
 							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}" 
-							title="Supprimer" class="btn iconeBtn"><i class="icon-remove-sign"></i></a>
+								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
 						{% endif %}
 					</td>
 				</tr>
@@ -65,12 +68,4 @@
 		</tbody>
 	</table>
 
-{% endblock %}
-
-{% block sidebar %}
-	{% if is_mj %}
-   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
-	{% else %}
-   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
-    {% endif %}
 {% endblock %}

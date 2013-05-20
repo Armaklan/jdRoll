@@ -5,12 +5,14 @@ class CampagneService {
 	private $db;
 	private $session;
 	private $persoService;
+	private $userService;
 
-	public function __construct($db, $session,$persoService)
+	public function __construct($db, $session,$persoService, $userService)
     {
         $this->db = $db;
         $this->session = $session;
         $this->persoService = $persoService;
+        $this->userService = $userService;
     }
 
     public function getBlankCampagne() {
@@ -108,8 +110,12 @@ class CampagneService {
 	}
 	
 	public function isMj($id) {
-		$campagne = $this->getCampagne($id);
-		return $campagne['mj_id'] == $this->session->get('user')['id'];
+		if($id == null) {
+			return $this->userService->getCurrentUser()['profil'] > 0;
+		} else {
+			$campagne = $this->getCampagne($id);
+			return $campagne['mj_id'] == $this->session->get('user')['id'];
+		}
 	}
 
 	public function getMyCampagnes() {
