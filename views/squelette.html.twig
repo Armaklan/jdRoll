@@ -41,9 +41,21 @@
 		    
           <a class="brand" href="#">jdRoll</a>
           <div class="nav-collapse collapse">
+          	{% if (app.session.get('user') == null)  %}
+				<ul class="nav pull-right">
+					<li class="dropdown">
+	              	<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="caret"></b></a>
+	              	<ul class="dropdown-menu">
+	              		<li><a href="{{ path('login_page')  }}">Se connecter</a></li>
+	              		<li><a href="{{ path('subscribe') }}">S'inscrire</a></li>
+	              	</ul>
+	              </li>
+				</ul>
+			{% endif %}
             <p class="navbar-text pull-right">
             	{% if (app.session.get('user') == null)  %}
               		<a href="{{ path('login_page')  }}" class="navbar-link">Se connecter</a>
+              		
               	{% else %}
               		<a href="{{ path('logout')  }}" class="navbar-link">Se déconnecter</a>
               	{% endif %}
