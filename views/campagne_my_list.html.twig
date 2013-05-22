@@ -11,6 +11,9 @@
     <table class="table table-striped table-hover">
 		<thead>
 			<tr>
+				<th colspan="6">Partie (MJ)</th>
+			</tr>
+			<tr>
 				<th width="40px"></th>
 				<th width="30%">Nom de la campagne</th>
 				<th>Univers de la campagne</th>
@@ -23,7 +26,8 @@
 		{% for campagne in campagnes %}
 			<tr>
 				<td>{% if campagne.activity > 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
-				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}}">{{ campagne.name }}</a></td>
+				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}}">{{ campagne.name }}
+					<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
@@ -40,6 +44,9 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
+				<th colspan="6">Partie (Joueur)</th>
+			</tr>
+			<tr>
 				<th width="40px"></th>
 				<th width="30%">Nom de la campagne</th>
 				<th>Univers de la campagne</th>
@@ -52,7 +59,8 @@
 		{% for campagne in campagnes_pj %}
 			<tr>
 				<td>{% if campagne.activity > 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
-				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></td>
+				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}
+					<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
 				<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>

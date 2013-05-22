@@ -1,31 +1,62 @@
 {% extends "squelette.html.twig" %}
 
 {% block content %}
-	     
+	
 	<h3>Bienvenue sur la plateforme jdRoll ! </h3>
-	
-	<div class="alert">
-	    <button type="button" class="close" data-dismiss="alert">&times;</button>
-	    <strong>Nouvelles fonctionnalitées!</strong> Le forum public vient d'être déployé :)
-    </div>
-    <div class="alert">
-	    <button type="button" class="close" data-dismiss="alert">&times;</button>
-	    <p></p>
-	    <strong>Nouvelles fonctionnalitées!</strong> Lanceur de dés déployé
-    </div>
-    <div class="alert">
-	    <button type="button" class="close" data-dismiss="alert">&times;</button>
-	    <p></p>
-	    <strong>Nouvelles fonctionnalitées!</strong> Gestion des PNJ
-    </div>
-	
-	<p></p>
-	<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrute dans <b>Jouer > Rejoindre une campagne</b></p>
-	<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
-	<p></p>
-	<p>Jouer sur les parties où vous vous êtes inscrit ? Simple, cliquez sur le nom de la partie dans votre sidebar,
-	 vous débrancherez alors dans l'espace spécifique à votre campagne.</p>
-	<p></p>
-	<p>Envie de discuter avec les autres joueurs de la communauté ? Utiliser le <b>forum</b> ou le <b>tchat</b> dans le menu <b>"Discuter"</b>.</p>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span7">
+				
+				<div class="alert">
+				    <button type="button" class="close" data-dismiss="alert">&times;</button>
+				    <strong>Nouvelles fonctionnalitées!</strong> Le forum public vient d'être déployé :)
+			    </div>
+			    <div class="alert">
+				    <button type="button" class="close" data-dismiss="alert">&times;</button>
+				    <p></p>
+				    <strong>Nouvelles fonctionnalitées!</strong> Lanceur de dés déployé
+			    </div>
+			    <div class="alert">
+				    <button type="button" class="close" data-dismiss="alert">&times;</button>
+				    <p></p>
+				    <strong>Nouvelles fonctionnalitées!</strong> Gestion des PNJ
+			    </div>
+				
+				<p></p>
+				<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrute dans <b>Jouer > Rejoindre une campagne</b></p>
+				<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
+				<p></p>
+				<p>Jouer sur les parties où vous vous êtes inscrit ? Simple, cliquez sur le nom de la partie dans votre sidebar,
+				 vous débrancherez alors dans l'espace spécifique à votre campagne.</p>
+				<p></p>
+				<p>Envie de discuter avec les autres joueurs de la communauté ? Utiliser le <b>forum</b> ou le <b>tchat</b> dans le menu <b>"Discuter"</b>.</p>
+				
+			</div>
+			<div class="span5">
+				<h5>Derniers inscrits :</h5>
+				<p>
+				{% set isFirst = true %}
+				{% for user in last_users %}
+					{% if not isFirst %}
+						,
+					{% endif %}
+					<a href="{{ path('profile',{username: user.username} ) }}">{{ user.username }}</a>
+					{% set isFirst = false %}
+				{% endfor %}
+				</p>
+				<h5>Dernières campagnes ajoutées :</h5>
+				<p>
+				{% set isFirst = true %}
+				{% for campagne in campagnes %}
+					{% if not isFirst %}
+						<br>
+					{% endif %}
+					<a href="{{ path('campagne',{id: campagne.id} ) }}">{{ campagne.name }} ({{ campagne.univers }})</a>
+					{% set isFirst = false %}
+				{% endfor %}
+				</p>
+			</div>
+		</div>
+	</div>  
 
 {% endblock %}

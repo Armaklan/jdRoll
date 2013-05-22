@@ -27,6 +27,19 @@
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		return $app->render('perso_public.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_view");
+	
+	$persoController->get('/view_all_mj/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+		$perso = $app['persoService']->getPersonnageById($perso_id);
+		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		return $app->render('perso_view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+	})->bind("perso_view_all_mj");
+	
+	$persoController->get('/view_all/{campagne_id}', function($campagne_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		$perso = $app['persoService']->getPersonnage(true,$campagne_id, $player_id);
+		return $app->render('perso_view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+	})->bind("perso_view_all");
 
 	$persoController->post('/save/{campagne_id}', function($campagne_id, Request $request) use($app) {
 		$player_id = $app['session']->get('user')['id'];

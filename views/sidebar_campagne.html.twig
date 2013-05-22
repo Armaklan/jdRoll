@@ -1,14 +1,16 @@
-
+	<div align="center">
+		<h3>{{ campagne.name }}</h3>
+	</div>
     <div align="center">
     	<img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
     </div>
 
     <p/>
     <div align="center">
-		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-comment"></i></a>
-    	<a href="{{ path('perso_edit', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Personnages"><i class="icon-tasks"></i></a>
-    	<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
-    	<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Notes"><i class="icon-book"></i></a>
+		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink1" title="Forum"><i class="icon-comment"></i></a>
+    	<a href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2" title="Personnages"><i class="icon-tasks"></i></a>
+    	<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn3" title="Galerie des PNJ"><i class="icon-user"></i></a>
+    	<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink4" title="Notes"><i class="icon-book"></i></a>
 		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-random"></i></a>
     </div>
     <p/>

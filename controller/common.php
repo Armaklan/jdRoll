@@ -9,8 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 $commonController = $app['controllers_factory'];
 
 $commonController->get('/', function() use ($app) {
-    $campagnes = $app['campagneService']->getAllCampagne();
-    return $app->render('home.html.twig', ['campagnes' => $campagnes]);
+    $campagnes = $app['campagneService']->getLastCampagne();
+    $last_users = $app['userService']->getLastSubscribe();
+    return $app->render('home.html.twig', ['campagnes' => $campagnes, 'last_users' => $last_users]);
 })->bind("homepage");
 
 $commonController->get('/login', function() use($app) {

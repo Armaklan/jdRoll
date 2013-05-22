@@ -13,6 +13,7 @@
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-1.9.1.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap.min.js"> </script>
+		<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
 
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
   <script type="text/javascript">
@@ -22,13 +23,23 @@
          "link image lists preview hr spellchecker insertdatetime",
          "table contextmenu template paste textcolor"
       ],
+      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor | preview",
+      style_formats: [
+                      {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
+                      {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
+                      {title: 'Hrp', inline: 'span', classes: 'hrp', styles : {color : 'grey'}},
+                      {title: 'Titre 1', block : 'h1'},
+                      {title: 'Titre 2', block : 'h2'},
+                      {title: 'Titre 3', block : 'h3'},
+                      {title: 'Spoiler', block : 'div'},
+                  ], 
    });
   </script>
 
 </head>
 <body>  
 
-
+	<a name="top"></a>
 	<div class="navbar navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
@@ -115,5 +126,10 @@
 	{% block specificJs %}
 	
 	{% endblock %}
+	<script>
+
+
+
+	</script>
 </body> 
 </html>

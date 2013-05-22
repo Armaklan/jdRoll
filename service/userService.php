@@ -96,5 +96,13 @@ class UserService {
 	    $user = $this->db->fetchAssoc($sql, array($username));
 	    return $user;
 	}
+	
+	public function getLastSubscribe() {
+		$sql = "SELECT *
+			FROM user
+			ORDER BY user.id desc LIMIT 0,5";
+		$users = $this->db->fetchAll($sql);
+		return $users;
+	}
 }
 ?>

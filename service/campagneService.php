@@ -95,10 +95,10 @@ class CampagneService {
 	}
 
 	public function getLastCampagne() {
-		$sql = "SELECT campagne.*, user.username as username
+		$sql = "SELECT campagne.*
 				FROM campagne 
-				JOIN user ON user.id = campagne.mj_id
-				ORDER BY campagne.id desc TOP 5";
+				ORDER BY campagne.id desc 
+				LIMIT 0, 5";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}

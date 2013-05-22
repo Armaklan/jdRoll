@@ -10,3 +10,39 @@
 	font-weight: bold;
 	padding: 0.5em;
 }
+
+blockquote p {
+	font-weight: 100;
+	font-size: 1em;
+}
+
+
+.dialogue {
+    color: #4488CC;
+    font-weight: bold;
+}
+
+
+.pensee {
+    color: #8844CC;
+    font-weight: bold;
+    font-style:italic;
+}
+
+
+.hrp {
+    background: none repeat scroll 0 0 #F7F5F2;
+    border-bottom: 2px solid #999999;
+    border-top: 2px solid #999999;
+    display: block;
+    font-family: "dejavu sans mono","monaco","lucida console","courier new",monospace;
+    font-size: x-small;
+    line-height: 1.5em;
+    max-height: 24em;
+    padding: 3px 1em;
+    color: black !important;
+}
+
+.spoiler {
+	
+}

@@ -50,10 +50,10 @@ class PostService {
     				perso.name AS perso_name,
     				perso.avatar AS perso_avatar
     			FROM posts post
-    			JOIN user user
-    				ON user.id = post.user_id
     			JOIN topics topic
     				ON topic.id = post.topic_id
+    			LEFT JOIN user user
+    				ON user.id = post.user_id
     			LEFT JOIN personnages perso
     				ON perso.id = post.perso_id
 				WHERE topic_id = :topic
@@ -85,6 +85,23 @@ class PostService {
 				WHERE topic_id = :topic_id";
 		return $this->db->fetchColumn($sql, array("topic_id" => $request->get('topic_id')), 0);
     }
+    
+    public function createDicerPost($topic_id, $content) {
+    	$sql = "INSERT INTO posts
+				(topic_id, content)
+				VALUES
+				(:topic, :content)";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("topic", $topic_id);
+    	$stmt->bindValue("content", $content);
+    	$stmt->execute();
+    
+    	$sql = "SELECT max(id)
+				FROM posts
+				WHERE topic_id = :topic_id";
+    	return $this->db->fetchColumn($sql, array("topic_id" => $topic_id), 0);
+    }
 
     public function updatePost($request) {
     	$sql = "UPDATE posts 
@@ -95,7 +112,11 @@ class PostService {
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("content", $request->get('content'));
-		$stmt->bindValue("perso", $request->get('perso_id'));
+		if ($request->get('perso_id') != "") {
+			$stmt->bindValue("perso", $request->get('perso_id'));
+		} else {
+			$stmt->bindValue("perso", null);
+		}
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }

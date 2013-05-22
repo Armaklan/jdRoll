@@ -1,0 +1,42 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+    <table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th colspan="2" style="text-align: right">
+						{% if is_mj %}
+							<a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i></a>
+						{% else %}
+							<a href="{{ path('perso_edit', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i></a>
+						{% endif %}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Nom</td>
+				<td>{{ perso.name }}</td>
+			</tr>
+			<tr>
+				<td>Avatar</td>
+				<td><img src="{{ perso.avatar }}" width="150px" /></td>
+			</tr>
+			<tr>
+				<td>Description public</td>
+				<td>{% autoescape false %}{{ perso.publicDescription }}{% endautoescape %}</td>
+			</tr>
+			<tr>
+				<td>Description privée</td>
+				<td>{% autoescape false %}{{ perso.privateDescription }}{% endautoescape %}</td>
+			</tr>
+			<tr>
+				<td>Description technique</td>
+				<td>{% autoescape false %}{{ perso.technical }}{% endautoescape %}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+{% endblock %}
+	

@@ -64,13 +64,15 @@
 		$player_id = $app['session']->get('user')['id'];
 		$perso = $app['persoService']->getPersonnage(true, $campagne_id, $player_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-		return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso]);
+		$campagne = $app['campagneService']->getCampagne($campagne_id);
+		return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso, 'campagne' => $campagne]);
 	})->bind("sidebar_campagne");
 	
 	$securedCampagneController->get('/sidebarmj/{campagne_id}', function(Request $request, $campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-		return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
+		$campagne = $app['campagneService']->getCampagne($campagne_id);
+		return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso, 'campagne' => $campagne]);
 	})->bind("sidebar_campagne_mj");
 	
 	$securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
@@ -78,11 +80,17 @@
 		return $app->render('dicer.html.twig', ['campagne_id' => $campagne_id, 'jets' => $jets]);
 	})->bind("print_dicer");
 	
-	$securedCampagneController->post('/dicer/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+	$securedCampagneController->post('/dicer/{campagne_id}/{topic_id}', function(Request $request, $campagne_id, $topic_id) use($app) {
 		try {
 			$player_id = $app['session']->get('user')['id'];
 			$param = $request->get('param');
-			return $app['dicerService']->launchDice($campagne_id,$param);
+			$result = $app['dicerService']->launchDice($campagne_id,$param);
+			if($topic_id != 0) {
+				$player = $app['userService']->getCurrentUser();
+				$name = $player['username'];
+				$post_id = $app['postService']->createDicerPost($topic_id, " $name a lancé $param et a obtenu : $result ");
+			} 
+			return $result;
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}

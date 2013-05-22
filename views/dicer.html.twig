@@ -11,6 +11,7 @@
 			    	
 			    </span>
 			    <p/>
+			    <p><i>Les lancés effectués via cette popup ne crée par de post dans le sujet de jeu.</i></p>
 			    <p><i>Les résultats ci-dessous sont réactualisés uniquement lors du rechargement de la page.</p>
 			    <p/>
 			    <table class="table table-striped table-hover">
@@ -44,7 +45,7 @@ function callLaunchDice() {
 	param=$('#dicerParam').val();
 	$.ajax({
 		type: "POST",
-		url: "{{ path('dicer', {"campagne_id" : campagne_id}) }}",
+		url: "{{ path('dicer', {"campagne_id" : campagne_id, "topic_id" : 0}) }}",
 		data: {param: param},
 		error: function() { alert("Jet de dé impossible"); },
 		success: function(retour){

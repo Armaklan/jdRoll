@@ -1,7 +1,7 @@
 {% extends "squelette_campagne.html.twig" %}
 
 {% block content %}
-
+	
 	<table class="table table-striped table-hover" width="100%">
 		<thead>
 			<tr>
@@ -9,8 +9,8 @@
 			</tr>
 			<tr>
 				<th width="15%"><i>Auteur</i></th>
-				<th width="75%"><i>Message</i></th>
-				<th width="10%"></th>
+				<th width="65%"><i>Message</i></th>
+				<th width="20%"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,39 +18,60 @@
 				<tr>
 					<td>
 						{% if post.perso_name != null %}
-							<p><b>{{ post.perso_name }}</b></p>
+							<p><a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: post.perso_id}) }}"><b>{{ post.perso_name }}</b></a></p>
 							<p><i>( {{ post.user_username }} )</i></p>
 							<p><i>{{ post.post_date }}</i></p>
 							<img src="{{ post.perso_avatar }}" width="80%" />
-						{% else %}
-							<p><b>{{ post.user_username }}</b></p>
+						{% elseif  post.user_username != null %}
+							<p><a href="{{ path('profile', {username: post.user_username}) }}"><b>{{ post.user_username }}</b></a></p>
 							<p><i>Le {{ post.post_date }}</i></p>
 							<img src="{{ post.user_avatar }}" width="80%" />
 						{% endif %}
 					</td>
 					<td>
+						<div id="contentDiv{{ post.post_id }}">
 						{% autoescape false %}
 							{{ post.post_content }}
 						{% endautoescape %}
+						</div>
 						<a name="post{{ post.post_id }}"></a>
 					</td>
-					<td>
+					<td align="right">
+						<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-share-alt"></i></a>
 						{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
 							<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}" 
-							title="Editer" class="btn iconeBtn"><i class="icon-edit"></i></a>
+							title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
 							
 						{% endif %}
 						{% if is_mj %}
 							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}" 
 								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
 						{% endif %}
+						<a title="Aller au début de la page" href="#top" style="margin-left: 2em"><i class="icon-arrow-up"></i></a>
 					</td>
 				</tr>
 			{% endfor %}
+			{% if campagne_id != 0 %}
 			<tr>
 				<td>
 				</td>
 				<td>
+					<b>Lancer les dés</b>
+					<form class="form-inline">
+					    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
+					    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
+					    <span id="resultatDicerQuick">
+					    	
+			   			 </span>
+			   		</form>
+			   	</td>
+			</tr>
+			{% endif %}
+			<tr>
+				<td>
+				</td>
+				<td>
+					<b>Poster une réponse</b>
 					<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
 						<input type="hidden" name="id" value="" >
 						<input type="hidden" name="topic_id" value="{{ topic.id }}" >
@@ -79,5 +100,26 @@
 			</tr>
 		</tbody>
 	</table>
-
+	
+<script language="javascript">
+						
+function quote(id) {
+	text = "<blockquote><p>" + $('#contentDiv' + id).html().trim() + "</blockquote></p><p></p>";
+	tinyMCE.get('content').setContent(tinyMCE.get('content').getContent() + text);
+}
+						
+function callLaunchDiceQuick() {
+	param=$('#dicerParamQuick').val();
+	$.ajax({
+		type: "POST",
+		url: "{{ path('dicer', {"campagne_id" : campagne_id, "topic_id" : topic.id}) }}",
+		data: {param: param},
+		error: function() { alert("Jet de dé impossible"); },
+		success: function(retour){
+			$('#resultatDicerQuick').html(retour);
+		}
+	});
+	return false;
+}
+</script>
 {% endblock %}

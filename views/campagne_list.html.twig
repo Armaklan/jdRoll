@@ -22,7 +22,8 @@
 		<tbody>
 		{% for campagne in campagnes %}
 			<tr>
-				<td><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}</a></td>
+				<td><a href="{{ path('campagne', {id : campagne.id}) }}">{{ campagne.name }}
+								<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
