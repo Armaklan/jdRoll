@@ -96,6 +96,7 @@ class CampagneService {
 				FROM campagne
 				JOIN user ON user.id = campagne.mj_id
 				WHERE STATUT < 2
+				AND nb_joueurs_actuel < nb_joueurs
 				ORDER BY id desc";
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
