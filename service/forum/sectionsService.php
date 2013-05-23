@@ -17,6 +17,7 @@ class SectionService {
 		$section['campagne_id'] = $campagne_id;
 		$section['title'] = '';
 		$section['ordre'] = '';
+		$section['banniere'] = '';
 		$section['default_collapse'] = '0';
 		return $section;
     }
@@ -27,6 +28,7 @@ class SectionService {
 		$section['campagne_id'] = $campagne_id;
 		$section['title'] = $request->get('title');
 		$section['ordre'] = $request->get('ordre');
+		$section['banniere'] = $request->get('banniere');
 		$section['default_collapse'] = $request->get('default_collapse');
 		return $section;
     }
@@ -40,14 +42,15 @@ class SectionService {
     
     public function createSection($request, $campagne_id) {	
 		$sql = "INSERT INTO sections 
-				(campagne_id, title, ordre, default_collapse) 
+				(campagne_id, title, ordre, default_collapse, banniere) 
 				VALUES
-				(:campagne,:title,:ordre,:default_collapse)";
+				(:campagne,:title,:ordre,:default_collapse,:banniere)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
+		$stmt->bindValue("banniere", $request->get('banniere'));
 		$stmt->bindValue("default_collapse", $request->get('default_collapse'));
 		$stmt->execute();
     }
@@ -56,13 +59,15 @@ class SectionService {
     	$sql = "UPDATE sections 
     			SET title = :title,
     				ordre = :ordre,
-    				default_collapse = :default_collapse
+    				default_collapse = :default_collapse,
+    				banniere = :banniere
     			WHERE
     				id = :id";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
+		$stmt->bindValue("banniere", $request->get('banniere'));
 		$stmt->bindValue("default_collapse", $request->get('default_collapse'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
@@ -74,10 +79,12 @@ class SectionService {
 		$sql = "SELECT DISTINCT
 					sections.id as section_id,
 					sections.title as section_title,
+					sections.banniere as section_banniere,
 					sections.default_collapse as default_collapse,
 					topics.id as topics_id,
 					topics.title as topics_title,
 					topics.stickable as topics_stickable,
+					topics.is_closed as topics_is_closed,
 					posts.id as posts_id,
 					perso.name as posts_username,
 					posts.create_date as posts_date,

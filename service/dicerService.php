@@ -31,7 +31,7 @@ class DicerService {
         $this->session = $session;
     }
 
-	public function launchDice($campagne_id, $param) {
+	public function launchDice($campagne_id, $param, $description) {
 		$result = "";
 		if($param == '') {
 			throw new Exception("Aucun jet demandé");
@@ -65,7 +65,7 @@ class DicerService {
 			$result = $result . " " . $jet->toStr();
 		}
 		$result = $result . " = " . $sommeJet;
-		$this->insertDice($campagne_id, $result);
+		$this->insertDice($campagne_id, $result, $description);
 		return $result;
 	}
 	
@@ -82,15 +82,16 @@ class DicerService {
 		return $campagne;
 	}
 	
-	public function insertDice($campagne_id, $result) {
+	public function insertDice($campagne_id, $result, $description) {
 		$sql = "INSERT INTO dicer
-				(user_id, campagne_id, result)
+				(user_id, campagne_id, result, description)
 				VALUES
-				(:user_id,:campagne_id,:result)";
+				(:user_id,:campagne_id,:result, :description)";
 		
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("result", $result);
 		$stmt->bindValue("campagne_id", $campagne_id);
+		$stmt->bindValue("description", $description);
 		$stmt->bindValue("user_id", $this->session->get('user')['id']);
 		$stmt->execute();
 	}

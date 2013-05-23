@@ -6,6 +6,7 @@
     <div class="modal-body">
     	    <form class="form-inline">
 			    <input type="text" class="input-small" id="dicerParam" name="dicerParam" placeholder="Ex : 1d6 + 1d4">
+			    <input type="text" class="input-medium" id="dicerDescription" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 			    <button type="submit" class="btn" onClick="return callLaunchDice();">Lancer les dés</button>
 			    <span id="resultatDicer">
 			    	
@@ -19,6 +20,7 @@
 						<tr>
 							<th>Joueur</th>
 							<th>Date</th>
+							<th>Description</th>
 							<th>Result</th>
 						</tr>
 					</thead>
@@ -27,6 +29,7 @@
 						<tr>
 							<td>{{ jet.username }}</td>
 							<td>{{ jet.create_date }}</td>
+							<td>{{ jet.description }}</td>
 							<td>{{ jet.result }}</td>
 						</tr>
 					{% endfor %}
@@ -43,10 +46,11 @@
 <script language="javascript">
 function callLaunchDice() {
 	param=$('#dicerParam').val();
+	description=$('#dicerDescription').val();
 	$.ajax({
 		type: "POST",
 		url: "{{ path('dicer', {"campagne_id" : campagne_id, "topic_id" : 0}) }}",
-		data: {param: param},
+		data: {param: param, description: description},
 		error: function() { alert("Jet de dé impossible"); },
 		success: function(retour){
 			$('#resultatDicer').html(retour);

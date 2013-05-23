@@ -29,7 +29,14 @@
 		    	<input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard
 				<input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it
 		    </div>
-	    </div>    
+	    </div>  
+	    <div class="control-group">
+		    <label class="control-label" for="is_closed">Etat</label>
+		    <div class="controls">
+		    	<input type="radio" name="is_closed" value="0" {% if topic.is_closed == 0 %} checked {% endif %}> Ouvert
+				<input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouiller
+		    </div>
+	    </div>   
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>

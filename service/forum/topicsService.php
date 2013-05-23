@@ -18,6 +18,7 @@ class TopicService {
 		$section['title'] = '';
 		$section['ordre'] = '';
 		$section['stickable'] = '0';
+		$section['is_closed'] = '0';
 		return $section;
     }
 
@@ -27,7 +28,8 @@ class TopicService {
 		$section['section_id'] = $request->get('section_id');
 		$section['title'] = $request->get('title');
 		$section['ordre'] = $request->get('ordre');
-		$section['stickable'] = $request->get('default_collapse');
+		$section['stickable'] = $request->get('stickable');
+		$section['is_closed'] = $request->get('is_closed');
 		return $section;
     }
 
@@ -40,15 +42,16 @@ class TopicService {
     
     public function createTopic($request) {	
 		$sql = "INSERT INTO topics 
-				(section_id, title, ordre, stickable) 
+				(section_id, title, ordre, stickable, is_closed) 
 				VALUES
-				(:section,:title,:ordre,:stickable)";
+				(:section,:title,:ordre,:stickable, :is_closed)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("section", $request->get('section_id'));
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
 		$stmt->bindValue("stickable", $request->get('stickable'));
+		$stmt->bindValue("is_closed", $request->get('is_closed'));
 		$stmt->execute();
     }
 
@@ -56,7 +59,8 @@ class TopicService {
     	$sql = "UPDATE topics 
     			SET title = :title,
     				ordre = :ordre,
-    				stickable = :stickable
+    				stickable = :stickable,
+    				is_closed = :is_closed
     			WHERE
     				id = :id";
 
@@ -64,6 +68,7 @@ class TopicService {
 		$stmt->bindValue("title", $request->get('title'));
 		$stmt->bindValue("ordre", $request->get('ordre'));
 		$stmt->bindValue("stickable", $request->get('stickable'));
+		$stmt->bindValue("is_closed", $request->get('is_closed'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }

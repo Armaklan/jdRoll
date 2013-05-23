@@ -7,8 +7,13 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-
-    <table class="table table-striped table-hover">
+    
+    <div align="right">
+	    <form class="form-search">
+	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','#persoTable')"  class="input-medium search-query">
+	    </form>
+    </div>
+    <table class="table table-striped table-hover" id="persoTable">
 		<thead>
 			<tr>
 				<th width="10%">Avatar</th>
@@ -17,6 +22,7 @@
 					{% if is_mj %}
 						<a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
 					{% endif %}
+					<input type="hidden" class="filterIndex" value="HEADER">
 				</th>
 			</tr>
 		</thead>
@@ -30,6 +36,7 @@
 					{% else %}
 						<a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Plus de détail..."><i class="icon-search"></i></a>
 					{% endif %}
+					<input type="hidden" class="filterIndex" value="{{ perso.name }}{{ perso.publicDescription }}">
 				</td>
 			</tr>
 			{% endfor %}

@@ -63,6 +63,7 @@ class DbService {
 		$sectionTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
 		$sectionTable->addColumn("campagne_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$sectionTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
+		$sectionTable->addColumn("banniere", "string", array("length" => 500, 'default' => ''));
 		$sectionTable->addColumn("ordre", "integer", array("unsigned" => true));
 		$sectionTable->addColumn("default_collapse", "integer", array("unsigned" => true));
 		$sectionTable->setPrimaryKey(array("id"));
@@ -106,6 +107,7 @@ class DbService {
 		$dicerTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
 		$dicerTable->addColumn("user_id", "integer", array("unsigned" => true));
 		$dicerTable->addColumn("campagne_id", "integer", array("unsigned" => true));
+		$dicerTable->addColumn("description", "string", array("length" => 100));
 		$dicerTable->addColumn("result", "string", array("length" => 500, 'default' => ''));
 		$dicerTable->addColumn("create_date", "datetime");
 		$dicerTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));

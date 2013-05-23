@@ -126,10 +126,21 @@
 	{% block specificJs %}
 	
 	{% endblock %}
-	<script>
 
-
-
-	</script>
+    <script>
+    	function filterTable(idFilter, idTable) {
+        	searchText = $(idFilter).val().toLowerCase();
+			$(idTable + " tr ").each(function(i){
+				currentSearchIndex = $(this).find('.filterIndex').val().toLowerCase();
+				if(currentSearchIndex != "header") {
+					if( currentSearchIndex.contains(searchText)) {
+						$(this).css("display", "");
+					} else {
+						$(this).css("display", "none");
+					}
+				}
+			});
+        }
+    </script>
 </body> 
 </html>

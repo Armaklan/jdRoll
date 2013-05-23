@@ -84,11 +84,12 @@
 		try {
 			$player_id = $app['session']->get('user')['id'];
 			$param = $request->get('param');
-			$result = $app['dicerService']->launchDice($campagne_id,$param);
+			$description = $request->get('description');
+			$result = $app['dicerService']->launchDice($campagne_id,$param, $description);
 			if($topic_id != 0) {
 				$player = $app['userService']->getCurrentUser();
 				$name = $player['username'];
-				$post_id = $app['postService']->createDicerPost($topic_id, " $name a lancé $param et a obtenu : $result ");
+				$post_id = $app['postService']->createDicerPost($topic_id, " $name a lancé $param et a obtenu : $result . <br> Description : $description ");
 			} 
 			return $result;
 		} catch (Exception $e) {

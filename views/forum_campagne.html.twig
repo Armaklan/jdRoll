@@ -27,9 +27,12 @@
 	    				<td width="70%">
 	    					<a data-toggle="collapse" data-target="#section{{ line.section_id  }}">
 				    			{{ line.section_title  }}
+				    			{% if (line.section_banniere != null) and (line.section_banniere != "") %}
+				    				<br><img src="{{ line.section_banniere }}" width="500px" style="max-height: 200px" />
+				    			{% endif %}
 				    		</a>
 				    	</td>
-	    				<td width="30%">
+	    				<td width="30%" style="vertical-align: top">
 		    				<div align="right">
 		    					{% if is_mj %}
 		    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn iconeBtn"><i class="icon-edit"></i></a>
@@ -47,7 +50,7 @@
 		    	<table class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th width="40px"></th>
+							<th width="60px"></th>
 							<th width="40px"></th>
 							<th>Titre</th>
 							<th width="400px">Dernier post</th>
@@ -63,6 +66,9 @@
 			<td>
 				{% if line.posts_id > line.read_post_id %}
 					<i class="icon-asterisk"></i>
+				{% endif %}
+				{% if line.topics_is_closed > 0 %}
+					<i class="icon-lock"></i>
 				{% endif %}
 			</td>
 			<td>
