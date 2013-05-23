@@ -97,7 +97,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 	$topicId = $request->get('id');
 	try {
 		if($topicId == '') {
-			$app["topicService"]->createTopic($request);
+			$topicId = $app["topicService"]->createTopic($request);
 		} else {
 			$app["topicService"]->updateTopic($request);
 		}
@@ -107,7 +107,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 		$campagne_id = getExterneCampagneNumber($campagne_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 	} catch(Exception $e) {
-		$topic =  $app["topicService"]->getFormSection($campagne_id, $request);
+		$topic =  $app["topicService"]->getFormTopic($request);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$campagne_id = getExterneCampagneNumber($campagne_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);

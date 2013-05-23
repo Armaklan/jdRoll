@@ -56,7 +56,13 @@ class TopicService {
 		$stmt->bindValue("ordre", $request->get('ordre'));
 		$stmt->bindValue("stickable", $request->get('stickable'));
 		$stmt->bindValue("is_closed", $request->get('is_closed'));
+		$stmt->bindValue("is_private", $request->get('is_private'));
 		$stmt->execute();
+		
+		$sql = "SELECT id FROM topics
+				ORDER BY id DESC LIMIT 0,1";
+		
+		return $this->db->fetchColumn($sql, array(),0);
     }
 
     public function updateTopic($request) {
