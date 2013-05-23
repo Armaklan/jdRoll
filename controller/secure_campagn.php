@@ -24,7 +24,7 @@
 		    $campagne = $app['campagneService']->addJoueur($id, $app['session']->get('user')['id']);
 		    return $app->redirect($app->path('campagne_my_list'));
 		} catch (Exception $e) {
-			$campagnes = $app['campagneService']->getAllCampagne();
+			$campagnes = $app['campagneService']->getOpenCampagne();
     		return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
 		}
 	})->bind("campagne_join");
@@ -34,7 +34,7 @@
 		    $campagne = $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
 		    return $app->redirect($app->path('campagne_my_list'));
 		} catch (Exception $e) {
-			$campagnes = $app['campagneService']->getAllCampagne();
+			$campagnes = $app['campagneService']->getOpenCampagne();
     		return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
 		}
 	})->bind("campagne_quit");
@@ -42,7 +42,10 @@
 	$securedCampagneController->get('/my_list', function() use($app) {
 	    $campagnes = $app['campagneService']->getMyCampagnes();
 	    $campagnesPj = $app['campagneService']->getMyPjCampagnes();
-	    return $app->render('campagne_my_list.html.twig', ['campagnes' => $campagnes, 'campagnes_pj' => $campagnesPj, 'error' => ""]);
+	    $campagnesMjArchive = $app['campagneService']->getMyMjArchiveCampagnes();
+	    $campagnesPjArchive = $app['campagneService']->getMyPjArchiveCampagnes();
+	    return $app->render('campagne_my_list.html.twig', ['campagnes' => $campagnes, 'campagnes_pj' => $campagnesPj, 
+	    		'campagnes_mj_archive' => $campagnesMjArchive, 'campagnes_pj_archive' => $campagnesPjArchive, 'error' => ""]);
 	})->bind("campagne_my_list");
 
 	$securedCampagneController->post('/save', function(Request $request) use($app) {

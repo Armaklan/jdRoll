@@ -41,6 +41,14 @@
 		    </div>
 	    </div>
 	    <div class="control-group">
+		    <label class="control-label" for="statut">Statut</label>
+		    <div class="controls">
+		    	<input type="radio" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %}> Ouverte
+				<input type="radio" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %}> En Pause
+				<input type="radio" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %}> Archivé
+		    </div>
+	    </div>
+	    <div class="control-group">
 		    <label class="control-label" for="description">Votre description</label>
 		    <div class="controls">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 

@@ -20,6 +20,7 @@
 				<th>Nom de la campagne</th>
 				<th>Univers de la campagne</th>
 				<th>Système de jeu</th>
+				<th>Statut</th>
 				<th>Nb Joueurs</th>
 				<th>MJ</th>
 				<th><input type="hidden" class="filterIndex" value="HEADER"></th>
@@ -32,10 +33,19 @@
 								<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>
+				<td>
+					{% if campagne.statut == 0 %}
+						En Cours
+					{% elseif campagne.statut == 1 %}
+						En Pause
+					{% elseif campagne.statut == 2 %}
+						Archivé
+					{% endif %}
+				</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 				<td>{{ campagne.username }}</td>
 				<td><a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
-				<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
+				<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}{{ campagne.statut }}">
 				
 				</td>
 			</tr>

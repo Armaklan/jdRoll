@@ -24,6 +24,7 @@ class CampagneService {
 		$campagne['systeme'] = '';
 		$campagne['univers'] = '';
 		$campagne['description'] = '';
+		$campagne['statut'] = 0;
 		return $campagne;
     }
 
@@ -36,14 +37,15 @@ class CampagneService {
 		$campagne['systeme'] = $request->get('systeme');
 		$campagne['univers'] = $request->get('univers');
 		$campagne['description'] = $request->get('description');
+		$campagne['statut'] = $request->get('statut');
 		return $campagne;
     }
 
     public function createCampagne($request) {	
 		$sql = "INSERT INTO campagne 
-				(name, systeme, univers, nb_joueurs, description, mj_id, banniere) 
+				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut) 
 				VALUES
-				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere)";
+				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", $request->get('name'));
@@ -52,6 +54,7 @@ class CampagneService {
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
+		$stmt->bindValue("statut", $request->get('statut'));
 		$stmt->bindValue("mj_id", $this->session->get('user')['id']);
 		$stmt->execute();
     }
@@ -63,7 +66,8 @@ class CampagneService {
     				systeme = :systeme,
     				univers = :univers,
     				nb_joueurs = :nb_joueurs,
-    				description = :description
+    				description = :description,
+    				statut = :statut
     			WHERE
     				id = :id";
 
@@ -72,6 +76,7 @@ class CampagneService {
 		$stmt->bindValue("banniere", $request->get('banniere'));
 		$stmt->bindValue("systeme", $request->get('systeme'));
 		$stmt->bindValue("univers", $request->get('univers'));
+		$stmt->bindValue("statut", $request->get('statut'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("id", $request->get('id'));
@@ -89,7 +94,9 @@ class CampagneService {
 	public function getOpenCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
 				FROM campagne
-				JOIN user ON user.id = campagne.mj_id ORDER BY id desc";
+				JOIN user ON user.id = campagne.mj_id
+				WHERE STATUT < 2
+				ORDER BY id desc";
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
 	}
@@ -97,6 +104,7 @@ class CampagneService {
 	public function getLastCampagne() {
 		$sql = "SELECT campagne.*
 				FROM campagne 
+				WHERE STATUT = 0
 				ORDER BY campagne.id desc 
 				LIMIT 0, 5";
 	    $campagnes = $this->db->fetchAll($sql);
@@ -118,41 +126,11 @@ class CampagneService {
 		}
 	}
 
-	public function getMyCampagnes() {
-		$sql = "SELECT * ,
-				( SELECT 
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM 
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id 
-					AND (
-						(topics.is_private = 0)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-				) as activity 
-				FROM campagne
-				WHERE mj_id = :user
-				ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-	    return $campagne;
-	}
-
 	public function getMyActiveMjCampagnes() {
 		$sql = "SELECT *
 				FROM campagne
 				WHERE mj_id = :user 
+				AND statut = 0
 				ORDER BY name";
 	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 	    return $campagne;
@@ -166,9 +144,42 @@ class CampagneService {
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
 		WHERE cp.user_id = ? 
+		AND statut = 0
 		ORDER BY campagne.name";
 	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
 	    return $campagne;
+	}
+	
+	public function getMyCampagnes() {
+		$sql = "SELECT * ,
+				( SELECT
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id
+					AND (
+						(topics.is_private = 0)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
+				) as activity
+				FROM campagne
+				WHERE mj_id = :user
+				AND statut < 2
+				ORDER BY name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
 	}
 	
 	public function getMyPjCampagnes() {
@@ -191,11 +202,70 @@ class CampagneService {
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
 		WHERE cp.user_id = :user
+		AND statut < 2
 		ORDER BY campagne.name";
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
 
+	public function getMyMjArchiveCampagnes() {
+		$sql = "SELECT * ,
+				( SELECT
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id
+					AND (
+						(topics.is_private = 0)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
+				) as activity
+				FROM campagne
+				WHERE mj_id = :user
+				AND statut = 2
+				ORDER BY name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
+	}
+	
+	public function getMyPjArchiveCampagnes() {
+		$sql = "SELECT
+		campagne.*, user.username as username,
+				( SELECT
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id
+				) as activity
+		FROM campagne
+		JOIN campagne_participant as cp
+		ON cp.campagne_id = campagne.id
+		JOIN user ON user.id = campagne.mj_id
+		WHERE cp.user_id = :user
+		AND campagne.statut = 2
+		ORDER BY campagne.name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
+	}
+	
 	private function incrementeNbJoueur($id) {
 		$sql = "UPDATE campagne 
 				SET 
