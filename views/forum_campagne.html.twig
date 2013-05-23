@@ -62,40 +62,42 @@
 		{% endif %}
 		
 		{% if line.topics_id != null %}
-		<tr>
-			<td>
-				{% if line.posts_id > line.read_post_id %}
-					<i class="icon-asterisk"></i>
-				{% endif %}
-				{% if line.topics_is_closed > 0 %}
-					<i class="icon-lock"></i>
-				{% endif %}
-			</td>
-			<td>
-				{% if line.topics_stickable > 0 %}
-					<i class="icon-leaf"></i>
-				{% endif %}
-			</td>
-			<td><a href="{{ path('topic', {campagne_id : campagne_id, topic_id : line.topics_id}) }}#post{{ line.read_post_id }}">{{ line.topics_title }}</a></td>
-			<td>
-				{% if line.posts_date != null %}
-				Le {{ line.posts_date }}
-				{% endif %}  
-				{% if line.posts_username != null %}
-					par {{ line.posts_username }}
-				{% else %}
-					{% if line.user_username != null %}
-						par {{ line.user_username }}
-					{% endif %}
-				{% endif %}
-			
-			</td>
-			<td>
-				{% if is_mj %}
-		    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn"><i class="icon-edit"></i></a>
-				{% endif %}
-			</td>
-		</tr>
+			{% if (line.topics_is_private == 0) or is_mj or (line.cr_topic_id != null) %}
+				<tr>
+					<td>
+						{% if line.posts_id > line.read_post_id %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+						{% if line.topics_is_closed > 0 %}
+							<i class="icon-lock"></i>
+						{% endif %}
+					</td>
+					<td>
+						{% if line.topics_stickable > 0 %}
+							<i class="icon-leaf"></i>
+						{% endif %}
+					</td>
+					<td><a href="{{ path('topic', {campagne_id : campagne_id, topic_id : line.topics_id}) }}#post{{ line.read_post_id }}">{{ line.topics_title }}</a></td>
+					<td>
+						{% if line.posts_date != null %}
+						Le {{ line.posts_date }}
+						{% endif %}  
+						{% if line.posts_username != null %}
+							par {{ line.posts_username }}
+						{% else %}
+							{% if line.user_username != null %}
+								par {{ line.user_username }}
+							{% endif %}
+						{% endif %}
+					
+					</td>
+					<td>
+						{% if is_mj %}
+				    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn"><i class="icon-edit"></i></a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endif %}
 		{% endif %}
 		
 	{% endfor %}

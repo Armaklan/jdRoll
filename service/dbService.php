@@ -74,6 +74,8 @@ class DbService {
 		$topicTable->addColumn("section_id", "integer", array("unsigned" => true));
 		$topicTable->addColumn("title", "string", array("length" => 500, 'default' => ''));
 		$topicTable->addColumn("stickable", "integer", array("unsigned" => true));
+		$topicTable->addColumn("is_closed", "integer", array("unsigned" => true));
+		$topicTable->addColumn("is_privated", "integer", array("unsigned" => true));
 		$topicTable->addColumn("ordre", "integer", array("unsigned" => true));
 		$topicTable->addColumn("last_post_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$topicTable->setPrimaryKey(array("id"));
@@ -90,7 +92,6 @@ class DbService {
 		$postTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array("onDelete" => "CASCADE"));
 		$postTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
 		$postTable->addForeignKeyConstraint($persoTable, array("perso_id"), array("id"), array("onDelete" => "CASCADE"));
-		
 		$topicTable->addForeignKeyConstraint($postTable, array("last_post_id"), array("id"), array());
 		
 		$readPost = $schema->createTable("read_post");
@@ -99,6 +100,12 @@ class DbService {
 		$readPost->addColumn("post_id", "integer", array("unsigned" => true));
 		$readPost->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array());
 		$readPost->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array());
+		
+		$canReadTable = $schema->createTable("can_read");
+		$canReadTable->addColumn("topic_id", "integer", array("unsigned" => true));
+		$canReadTable->addColumn("user_id", "integer", array("unsigned" => true));
+		$canReadTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array());
+		$canReadTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array());
 		
 		$dicerTable = $schema->createTable("dicer");
 		$dicerTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));

@@ -30,6 +30,10 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS")));
 require_once("config.php");
 
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+		'monolog.logfile' => __DIR__.'/development.log',
+));
+
 $app["debug"] = true;
 
 
@@ -62,7 +66,7 @@ $app['sectionService'] = function ($app) {
 	return new SectionService($app['db'], $app['session']);
 };
 $app['topicService'] = function ($app) {
-	return new TopicService($app['db'], $app['session']);
+	return new TopicService($app['db'], $app['session'], $app['monolog']);
 };
 $app['postService'] = function ($app) {
 	return new PostService($app['db'], $app['session']);

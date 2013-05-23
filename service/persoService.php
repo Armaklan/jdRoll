@@ -73,6 +73,19 @@ class PersoService {
 		return $result;
 	}
 	
+	public function getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id) {
+		$sql = "SELECT personnages.*, user.username as username, can_read.user_id as cr_user FROM personnages
+				JOIN user ON user.id = personnages.user_id
+				LEFT JOIN can_read 
+				ON user.id = can_read.user_id
+				AND can_read.topic_id = :topic
+				WHERE
+						personnages.campagne_id = :campagne
+				AND 	personnages.user_id IS NOT NULL";
+		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "topic" => $topic_id));
+		return $result;
+	}
+	
 	public function getPNJInCampagne($campagne_id) {
 		$sql = "SELECT * FROM personnages
 				WHERE

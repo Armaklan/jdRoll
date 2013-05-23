@@ -85,11 +85,13 @@ class SectionService {
 					topics.title as topics_title,
 					topics.stickable as topics_stickable,
 					topics.is_closed as topics_is_closed,
+					topics.is_private as topics_is_private,
 					posts.id as posts_id,
 					perso.name as posts_username,
 					posts.create_date as posts_date,
 					user.username as user_username,
-					rd.post_id as read_post_id
+					rd.post_id as read_post_id,
+					cr.topic_id as cr_topic_id
 				FROM sections sections 
 				LEFT JOIN topics topics
 				ON
@@ -107,6 +109,10 @@ class SectionService {
 				ON 
 					topics.id = rd.topic_id
 				AND rd.user_id = :user
+				LEFT JOIN can_read cr
+				ON 
+					topics.id = cr.topic_id
+				AND cr.user_id = :user
 				WHERE 
 					(:campagne IS NULL and sections.campagne_id IS NULL)
 					OR (sections.campagne_id = :campagne)

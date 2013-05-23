@@ -78,8 +78,9 @@ $forumController->get('/{campagne_id}/topic/add/{section_id}', function($campagn
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topic =  $app["topicService"]->getBlankTopic($section_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, 0);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj]);
+	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_add");
 
 $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne_id, $topic_id) use($app) {
@@ -87,7 +88,8 @@ $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne
 	$topic =  $app["topicService"]->getTopic($topic_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj]);
+	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
+	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_edit");
 
 $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Request $request) use($app) {
@@ -99,13 +101,17 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 		} else {
 			$app["topicService"]->updateTopic($request);
 		}
+		if($request->get('is_private') != 0) {
+			$app["topicService"]->updateCanRead($topicId, $request);
+		}
 		$campagne_id = getExterneCampagneNumber($campagne_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 	} catch(Exception $e) {
 		$topic =  $app["topicService"]->getFormSection($campagne_id, $request);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$campagne_id = getExterneCampagneNumber($campagne_id);
-		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
+		$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
+		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'persos' => $allPerso]);
 	}
 })->bind("topic_save");
 

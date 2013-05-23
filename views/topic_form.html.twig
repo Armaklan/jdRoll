@@ -36,7 +36,29 @@
 		    	<input type="radio" name="is_closed" value="0" {% if topic.is_closed == 0 %} checked {% endif %}> Ouvert
 				<input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouiller
 		    </div>
-	    </div>   
+	    </div>
+	    <fieldset>
+	    <legend>Accessibilité</legend>
+	  	<div class="control-group">
+		    <label class="control-label" for="is_private">Accessibilité du sujet</label>
+		    <div class="controls">
+		    	<input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Public
+				<input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Privée
+		    </div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+			    <select multiple name="list_user[]" />
+			    {% for perso in persos %}
+			    		<option value="{{ perso.user_id }}" {% if perso.cr_user != null %} SELECTED="SELECTED" {% endif %}>
+			    			{{ perso.name }} ({{ perso.username }})
+			    		</option>
+			    {% endfor %}
+			    </select>
+		    </div>
+	    </div>  
+	    </fieldset> 
+	       
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>

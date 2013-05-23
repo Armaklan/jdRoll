@@ -129,8 +129,18 @@ class CampagneService {
 					LEFT JOIN read_post
 					ON read_post.topic_id = topics.id
 					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id 
+					AND (
+						(topics.is_private = 0)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
 				) as activity 
 				FROM campagne
 				WHERE mj_id = :user
