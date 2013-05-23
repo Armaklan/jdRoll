@@ -31,7 +31,7 @@
 		{% for campagne in campagnes %}
 			<tr>
 				<td>{% if campagne.activity > 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
-				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}}">{{ campagne.name }}
+				<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}
 					<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 				<td>{{ campagne.univers }}</td>
 				<td>{{ campagne.systeme }}</td>

@@ -27,7 +27,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS")));
 require_once("config.php");
 
 $app["debug"] = true;

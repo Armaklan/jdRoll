@@ -78,7 +78,6 @@ class DbService {
 		$topicTable->addColumn("last_post_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$topicTable->setPrimaryKey(array("id"));
 		$topicTable->addForeignKeyConstraint($sectionTable, array("section_id"), array("id"), array("onDelete" => "CASCADE"));
-
 		
 		$postTable = $schema->createTable("posts");
 		$postTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));
@@ -91,7 +90,6 @@ class DbService {
 		$postTable->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array("onDelete" => "CASCADE"));
 		$postTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
 		$postTable->addForeignKeyConstraint($persoTable, array("perso_id"), array("id"), array("onDelete" => "CASCADE"));
-		
 		
 		$topicTable->addForeignKeyConstraint($postTable, array("last_post_id"), array("id"), array());
 		
