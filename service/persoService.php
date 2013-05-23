@@ -64,10 +64,11 @@ class PersoService {
 	}
 	
 	public function getPersonnagesInCampagne($campagne_id) {
-		$sql = "SELECT * FROM personnages
+		$sql = "SELECT personnages.*, user.username as username FROM personnages
+				JOIN user ON user.id = personnages.user_id
 				WHERE
-						campagne_id = :campagne
-				AND 	user_id IS NOT NULL";
+						personnages.campagne_id = :campagne
+				AND 	personnages.user_id IS NOT NULL";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
