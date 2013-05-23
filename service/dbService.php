@@ -101,7 +101,6 @@ class DbService {
 		$readPost->addColumn("post_id", "integer", array("unsigned" => true));
 		$readPost->addForeignKeyConstraint($topicTable, array("topic_id"), array("id"), array());
 		$readPost->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array());
-		$readPost->addForeignKeyConstraint($postTable, array("post_id"), array("id"), array());
 		
 		$dicerTable = $schema->createTable("dicer");
 		$dicerTable->addColumn("id", "integer", array("unsigned" => true, 'autoincrement' => true));

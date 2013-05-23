@@ -85,5 +85,22 @@ class TopicService {
     	$stmt->execute();
     }
 
+    public function backwardLastPost($topic_id, $post_id) {
+    	$sql = "UPDATE topics
+    			SET last_post_id = (
+					SELECT max(id)
+					FROM posts
+					WHERE topic_id = :id
+    				AND last_post_id <> :post
+    			)
+    			WHERE
+    				id = :id";
+    	 
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("post", $post_id);
+    	$stmt->bindValue("id", $topic_id);
+    	$stmt->execute();
+    }
+    
 }
 ?>

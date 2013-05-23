@@ -139,6 +139,7 @@ $forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_i
 
 $forumController->get('/{campagne_id}/post/deletePost/{topic_id}/{post_id}', function($campagne_id, $topic_id, $post_id) use($app) {
 	$campagne_id = getInterneCampagneNumber($campagne_id);
+	$app["topicService"]->backwardLastPost($topic_id, $post_id);
 	$post =  $app["postService"]->deletePost($post_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id)));
