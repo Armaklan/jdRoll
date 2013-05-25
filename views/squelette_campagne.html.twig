@@ -1,7 +1,13 @@
 {% extends "squelette.html.twig" %}
 
-{% block content %}
+{% block precontent %}
+<div align="center" width="60%" class="logo_campagne"></div>
+{% endblock %}
 
+{% block content %}
+	
+
+	</div>
 	{% if (msg != "") %}
 	    <div class="alert alert-error">
 	    	{{ msg }}
@@ -11,6 +17,12 @@
 {% endblock %}
 
 
+{% block specificHeader %}
+	{% if campagne_id != 0 %}
+		{{ render(url("campagne_config", {id : campagne_id}) ) }}
+	{% endif %}
+{% endblock %}
+
 {% block sidebar %}
 	{% if campagne_id == 0 %}
 		{{ render(url('sidebar_std')) }}
@@ -19,6 +31,18 @@
 	   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
 		{% else %}
 	   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
+	    {% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block sidebar_large %}
+	{% if campagne_id == 0 %}
+		{{ render(url('sidebar_std_large')) }}
+	{% else %}
+		{% if is_mj %}
+	   		{{ render(url('sidebar_campagne_mj_large', {campagne_id : campagne_id})) }}	
+		{% else %}
+	   		{{ render(url('sidebar_campagne_large', {campagne_id : campagne_id})) }}
 	    {% endif %}
 	{% endif %}
 {% endblock %}

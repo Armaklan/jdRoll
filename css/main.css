@@ -3,6 +3,17 @@
 	padding: 1em;
 	border-radius: 15px;
 	min-height: 500px !important;
+	position: fixed;
+	right: 15px;
+	top: 50px;
+	font-size: 0.9em;
+}
+
+.sidebarTop {
+	background-color: #DDDDDD;
+	padding: 1em;
+	border-radius: 15px;
+	font-size: 0.9em;
 }
 
 .categorie {
@@ -46,4 +57,8 @@ blockquote p {
 
 .spoiler {
 	
+}
+
+.postContent {
+	text-align: justify;
 }

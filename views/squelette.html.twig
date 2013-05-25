@@ -35,7 +35,9 @@
                   ], 
    });
   </script>
-
+	{% block specificHeader %}
+	
+	{% endblock %}
 </head>
 <body>  
 
@@ -85,13 +87,8 @@
               		<li><a href="{{ path('campagne_list_all') }}">Voir toutes les campagnes</a></li>
               	</ul>
               </li>
-              <li class="dropdown">
-              	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-glass"></i> Discuter <b class="caret"></b></a>
-              	<ul class="dropdown-menu">
-              		<li><a href="{{ path('forum') }}">Forum</a></li>
-             		 <li><a href="{{app.request.baseUrl}}/tchat/chat.php" target="_blank">Tchat</a></li>
-              	</ul>
-              </li>
+              <li><a href="{{ path('forum') }}"><i class="icon-user"></i> Forum</a></li>
+              <li><a href="{{app.request.baseUrl}}/tchat/chat.php" target="_blank"><i class="icon-user"></i> Tchat</a></li>
               <li><a href="{{ path('about') }}"><i class="icon-question-sign"></i> About</a></li>
             </ul>
 
@@ -106,12 +103,19 @@
 	<div class="container-fluid" style="margin-top: 4em;">
 
 	    <div class="row-fluid">
-	    	<div class="span9">
+	    	<div class="span10">
+	    		{% block sidebar_large %}
+					{{ render(url('sidebar_std_large')) }}
+				{% endblock %}
+
+          {% block precontent %}
+          {% endblock %}
+          <p></p>
 	    		{% block content %}
 				    Content of the page...
 				{% endblock %}
 	    	</div>
-	    	<div class="span3 sidebar hidden-phone">
+	    	<div class="span2 sidebar visible-desktop">
   	    	  {% block sidebar %}
               		{{ render(url('sidebar_std')) }}
   			  {% endblock %}
@@ -145,5 +149,19 @@
     </script>
 
     <a name="bottom"></a>
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41202193-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body> 
 </html>

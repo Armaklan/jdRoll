@@ -26,9 +26,10 @@
 	    			<tr>
 	    				<td width="70%">
 	    					<a data-toggle="collapse" data-target="#section{{ line.section_id  }}">
-				    			{{ line.section_title  }}
 				    			{% if (line.section_banniere != null) and (line.section_banniere != "") %}
-				    				<br><img src="{{ line.section_banniere }}" width="500px" style="max-height: 200px" />
+				    				<img src="{{ line.section_banniere }}" width="500px" style="max-height: 200px" />
+				    			{% else %}
+				    				{{ line.section_title  }}
 				    			{% endif %}
 				    		</a>
 				    	</td>

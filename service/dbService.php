@@ -38,6 +38,16 @@ class DbService {
 		$campagneTable->addColumn("statut", "integer", array("unsigned" => true, 'default' => '0'));
 		$campagneTable->addForeignKeyConstraint($userTable, array("mj_id"), array("id"), array("onDelete" => "CASCADE"));
 		$campagneTable->setPrimaryKey(array("id"));
+		
+		$campagneConfigTable =  $schema->createTable("campagne_config");
+		$campagneConfigTable->addColumn("campagne_id", "integer", array("unsigned" => true, 'autoincrement' => true));
+		$campagneConfigTable->addColumn("banniere", "string", array("length" => 500, 'default' => ''));
+		$campagneConfigTable->addColumn("hr", "string", array("length" => 500, 'default' => ''));
+		$campagneConfigTable->addColumn("odd_line_color", "string", array("length" => 10, 'default' => ''));
+		$campagneConfigTable->addColumn("even_line_color", "string", array("length" => 10, 'default' => ''));
+		$campagneConfigTable->addColumn("sidebar_color", "string", array("length" => 10, 'default' => ''));
+		$campagneConfigTable->addColumn("link_color", "string", array("length" => 10, 'default' => ''));
+		$participantTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
 
 		$participantTable =  $schema->createTable("campagne_participant");
 		$participantTable->addColumn("campagne_id", "integer", array("unsigned" => true));
@@ -51,6 +61,7 @@ class DbService {
 		$persoTable->addColumn("campagne_id", "integer", array("unsigned" => true));
 		$persoTable->addColumn("user_id", "integer", array("unsigned" => true, 'notnull' => false));
 		$persoTable->addColumn("name", "string", array("length" => 100, 'default' => ''));
+		$persoTable->addColumn("concept", "string", array("length" => 200, 'default' => ''));
 		$persoTable->addColumn("avatar", "string", array("length" => 500, 'default' => ''));
 		$persoTable->addColumn("publicDescription", "text", array('default' => ''));
 		$persoTable->addColumn("privateDescription", "text", array('default' => ''));

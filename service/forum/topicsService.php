@@ -38,8 +38,11 @@ class TopicService {
     }
 
     public function getTopic($topic_id) {
-    	$sql = "SELECT * FROM topics
-				WHERE id = :topic";
+    	$sql = "SELECT topics.*, sections.title as section_title 
+    			FROM topics
+    			JOIN sections
+    			ON topics.section_id = sections.id
+				WHERE topics.id = :topic";
     
     	return $this->db->fetchAssoc($sql, array("topic" => $topic_id));
     }

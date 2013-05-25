@@ -15,6 +15,8 @@
 			    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
     		</div>
     		<div class="span10">
+    			<p><b>Concept : </b>{{ perso['concept'] }}</p>
+    			<p><b>Description : </b></p>
     			{% autoescape false %}
 			    	<p>{{ perso.publicDescription }}</p>
 			    {% endautoescape %}

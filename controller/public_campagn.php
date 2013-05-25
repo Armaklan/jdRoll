@@ -22,6 +22,12 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
     $campagne = $app['campagneService']->getCampagne($id);
     return $app->render('campagne.html.twig', ['campagne' => $campagne, 'error' => ""]);
 })->bind("campagne");
+
+$publicCampagneController->get('/config/{id}', function($id) use($app) {
+	$campagne = $app['campagneService']->getCampagneConfig($id);
+	return $app->render('campagne_config.html.twig', ['campagne_config' => $campagne, 'error' => ""]);
+})->bind("campagne_config");
+
 $app->mount('/campagne', $publicCampagneController);
 
 ?>

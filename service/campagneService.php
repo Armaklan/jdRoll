@@ -118,6 +118,12 @@ class CampagneService {
 	    return $campagne;
 	}
 	
+	public function getCampagneConfig($id) {
+		$sql = "SELECT * FROM campagne_config WHERE campagne_id = ?";
+		$campagne = $this->db->fetchAssoc($sql, array($id));
+		return $campagne;
+	}
+	
 	public function isMj($id) {
 		if($id == null) {
 			return $this->userService->getCurrentUser()['profil'] > 0;
@@ -162,18 +168,8 @@ class CampagneService {
 					LEFT JOIN read_post
 					ON read_post.topic_id = topics.id
 					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private = 0)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
 				) as activity
 				FROM campagne
 				WHERE mj_id = :user
@@ -195,8 +191,18 @@ class CampagneService {
 					LEFT JOIN read_post
 					ON read_post.topic_id = topics.id
 					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id 
+					AND (
+						(topics.is_private = 0)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
 				) as activity			
 		FROM campagne
 		JOIN campagne_participant as cp
@@ -253,8 +259,18 @@ class CampagneService {
 					LEFT JOIN read_post
 					ON read_post.topic_id = topics.id
 					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id
+					AND (
+						(topics.is_private = 0)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
 				) as activity
 		FROM campagne
 		JOIN campagne_participant as cp

@@ -15,6 +15,7 @@ class PersoService {
     	$perso = array();
     	$perso["name"] = "";
     	$perso["avatar"] = "";
+    	$perso["concept"] = "";
     	$perso["publicDescription"] = "";
     	$perso["privateDescription"] = "";
     	$perso["technical"] = "";
@@ -109,6 +110,7 @@ class PersoService {
 				SET
 				name = :name,
 				avatar = :avatar,
+				concept = :concept,
 				publicDescription = :publicDescription,
 				privateDescription = :privateDescription,
 				technical = :technical
@@ -121,6 +123,7 @@ class PersoService {
 		$stmt->bindValue("perso", $perso_id);
 		$stmt->bindValue("name", $request->get('name'));
 		$stmt->bindValue("avatar", $request->get('avatar'));
+		$stmt->bindValue("concept", $request->get('concept'));
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
 		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
 		$stmt->bindValue("technical",  $request->get('technical'));
@@ -130,14 +133,15 @@ class PersoService {
 	public function insertPNJ($campagne_id, $request) {
 	
 		$sql = "INSERT INTO personnages
-				(name, avatar, publicDescription, privateDescription, technical, campagne_id)
+				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id)
 				VALUES
-				(:name, :avatar, :publicDescription, :privateDescription, :technical, :campagne)";
+				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne)";
 	
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("name", $request->get('name'));
 		$stmt->bindValue("avatar", $request->get('avatar'));
+		$stmt->bindValue("concept", $request->get('concept'));
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
 		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
 		$stmt->bindValue("technical",  $request->get('technical'));

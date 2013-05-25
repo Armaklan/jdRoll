@@ -78,6 +78,21 @@
 		return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso, 'campagne' => $campagne]);
 	})->bind("sidebar_campagne_mj");
 	
+	$securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$perso = $app['persoService']->getPersonnage(true, $campagne_id, $player_id);
+		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		$campagne = $app['campagneService']->getCampagne($campagne_id);
+		return $app->render('sidebar_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'allPerso' => $allPerso, 'campagne' => $campagne]);
+	})->bind("sidebar_campagne_large");
+	
+	$securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+		$player_id = $app['session']->get('user')['id'];
+		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		$campagne = $app['campagneService']->getCampagne($campagne_id);
+		return $app->render('sidebar_mj_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso, 'campagne' => $campagne]);
+	})->bind("sidebar_campagne_mj_large");
+	
 	$securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
 		$jets = $app['dicerService']->getDice($campagne_id);
 		return $app->render('dicer.html.twig', ['campagne_id' => $campagne_id, 'jets' => $jets]);
