@@ -9,12 +9,17 @@
 		
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-fileupload.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
+	
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-1.9.1.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap.min.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
-
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-fileupload.min.js"> </script>
+	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
   <script type="text/javascript">
   tinymce.init({
@@ -147,9 +152,28 @@
 				}
 			});
         }
+
+
+
+    	$(function () {
+    		$(".btn-danger").click(function(e) {
+    		    e.preventDefault();
+    		    var location = $(this).attr('href');
+    		    bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
+    		        if(confirmed) {
+    		        window.location.replace(location);
+    		        }
+    		    });
+    		});     
+    	});
+
+		
     </script>
 
     <a name="bottom"></a>
+   
+
+    {% include('uploader.html.twig') %}
     
 <script type="text/javascript">
 

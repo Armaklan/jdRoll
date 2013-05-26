@@ -4,7 +4,7 @@ class PostService {
 
 	private $db;
 	private $session;
-	private $page_size = 5;
+	private $page_size = 15;
 	private $logger;
 
 	public function __construct($db, $session, $logger)
@@ -71,9 +71,7 @@ class PostService {
     }
     
     public function getPostsInTopic($topic_id, $page) {
-    	$this->logger->addInfo("Read page : " . $page);
     	$debutPage = ( $page - 1) * $this->page_size;
-    	$this->logger->addInfo("Debut page : " . $debutPage);
     	$sql = "SELECT 
     				post.id AS post_id,
     				post.content AS post_content,
@@ -195,7 +193,8 @@ class PostService {
     			SET post_id = :post
     			WHERE
     				topic_id = :topic
-    			AND user_id = :user";
+    			AND user_id = :user
+    			AND post_id < :post";
     
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("post", $last_id);

@@ -66,6 +66,17 @@ $commonController->get('/sidebar/std_large', function() use ($app) {
 	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);
 })->bind("sidebar_std_large");
 
+$commonController->post('/upload', function(Request $request) use ($app) {
+	$file = $request->files->get("uploadFile");
+	$filename = $request->get('filename');
+	if($filename == null || $filename == "") {
+		$filename = $file->getClientOriginalName();
+	}
+	$file->move(__DIR__.'/../files', $filename);
+	return $app->path('homepage') . "files/" . $filename;
+})->bind("upload");
+
+
 $app->mount('/', $commonController);
 
 ?>

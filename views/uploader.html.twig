@@ -1,0 +1,52 @@
+<div id="uploaderModal" class="modal hide fade">
+    <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Uploader un fichier</h3>
+    </div>
+    <div class="modal-body">			   
+		<div class="fileupload fileupload-new" data-provides="fileupload">
+			<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
+			<div>
+				<form enctype="multipart/form-data" id="uploaderForm" action="{{ path('upload') }}" method="post">
+					<span class="btn btn-file"><span class="fileupload-new">Choisir une image</span><span class="fileupload-exists">Changer</span>
+					<input type="file" name="uploadFile" /></span>
+					<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Enlever</a>
+					<button type="submit" class="btn" class="fileupload-exist">Envoyer</button>
+				</form>
+			</div>
+		</div>
+		Url à recopier : <input type="text" id="urlUploader"/>
+	    
+    </div>
+    <div class="modal-footer">
+    	<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+    </div>
+</div>
+
+    <script> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+        
+            // bind 'myForm' and provide a simple callback function 
+            $('#uploaderForm').ajaxForm(function(responseText, statusText, xhr, $form) { 
+                $('#urlUploader').val(responseText);
+            }); 
+        }); 
+    </script>
+    
+
+<script language="javascript">
+function callUpload() {
+	uploadFile=$('uploadFile').val();
+	$.ajax({
+		type: "POST",
+		url: "{{ path('upload') }}",
+		data: {uploadFile: uploadFile},
+		error: function() { alert("Jet de dé impossible"); },
+		success: function(retour){
+			$('#urlUploader').val(retour);
+		}
+	});
+	return false;
+}
+</script>

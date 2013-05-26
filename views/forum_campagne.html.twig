@@ -81,7 +81,7 @@
 					<td><a href="{{ path('topic', {campagne_id : campagne_id, topic_id : line.topics_id}) }}#post{{ line.read_post_id }}">{{ line.topics_title }}</a></td>
 					<td width="400px">
 						{% if line.posts_date != null %}
-						Dernier post le {{ line.posts_date }}
+						Dernier post le {{ line.posts_date|date("d/m/y h:i") }}
 						{% endif %}  
 						{% if line.posts_username != null %}
 							par {{ line.posts_username }}

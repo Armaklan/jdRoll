@@ -173,6 +173,7 @@ class TopicService {
     	$stmt->execute();
     }
 
+        
     public function backwardLastPost($topic_id, $post_id) {
     	$sql = "UPDATE topics
     			SET last_post_id = (
