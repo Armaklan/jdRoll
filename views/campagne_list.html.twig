@@ -44,7 +44,10 @@
 				</td>
 				<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 				<td>{{ campagne.username }}</td>
-				<td><a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
+				<td>
+				{% if (campagne.statut < 2) and (campagne.nb_joueurs > campagne.nb_joueurs_actuel) %}
+					<a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
+				{% endif %}
 				<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}{{ campagne.statut }}">
 				
 				</td>
