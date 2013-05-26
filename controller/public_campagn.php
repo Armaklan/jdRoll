@@ -20,7 +20,9 @@ $publicCampagneController->get('/list/all', function() use($app) {
 
 $publicCampagneController->get('/{id}', function($id) use($app) {
     $campagne = $app['campagneService']->getCampagne($id);
-    return $app->render('campagne.html.twig', ['campagne' => $campagne, 'error' => ""]);
+    $is_mj = $app["campagneService"]->isMj($id);
+    $participants = $app["campagneService"]->getParticipant($id);
+    return $app->render('campagne.html.twig', ['campagne' => $campagne, 'participants' => $participants, 'is_mj' => $is_mj, 'error' => ""]);
 })->bind("campagne");
 
 $publicCampagneController->get('/config/{id}', function($id) use($app) {

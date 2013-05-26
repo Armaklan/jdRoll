@@ -127,11 +127,15 @@ class CampagneService {
 	}
 	
 	public function isMj($id) {
-		if($id == null) {
-			return $this->userService->getCurrentUser()['profil'] > 0;
+		if($this->session->get('user') != null) {
+			if($id == null) {
+				return $this->userService->getCurrentUser()['profil'] > 0;
+			} else {
+				$campagne = $this->getCampagne($id);
+				return $campagne['mj_id'] == $this->session->get('user')['id'];
+			}
 		} else {
-			$campagne = $this->getCampagne($id);
-			return $campagne['mj_id'] == $this->session->get('user')['id'];
+			return false;
 		}
 	}
 
