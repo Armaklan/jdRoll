@@ -304,6 +304,17 @@ class CampagneService {
 		$stmt->bindValue("id", $id);
 		$stmt->execute();
 	}
+	
+	public function getParticipant($campagne_id) {
+		$sql = "SELECT user.* 
+				FROM campagne_participant cp
+				JOIN
+				user
+				ON user.id = cp.user_id
+				WHERE
+				cp.campagne_id = :campagne";
+		return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
+	}
 
 	private function insertParticipant($campagne_id, $user_id) {
 		$sql = "INSERT INTO campagne_participant 
@@ -373,7 +384,8 @@ class CampagneService {
 			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
 		} catch (Exception $e) {
 			$this->decrementeNbJoueur($campagne_id);
-			$this->deleteParticipant($campagne_id, $user_id);	
+			$this->deleteParticipant($campagne_id, $user_id);
+			$this->persoService->detachPersonnage($campagne_id, $user_id);
 		}	
 	}
 }

@@ -1,0 +1,27 @@
+
+	<div class="container-fluid hidden-desktop sidebarTop">
+		<div align="center">
+			<h5>{{ campagne.name }}</h5>
+		</div>
+	    <div class="row-fluid">
+	    	<div class="span4">
+	    		<div align="center">
+    				<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
+    			</div><p/>
+    			    <div align="center">
+    			    	<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-star"></i></a>
+						<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-globe"></i></a>
+						<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>	
+						<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-random"></i></a>	
+				    </div><p/>
+	    	</div>
+	    	<div class="span8">
+				<ul class="nav nav-tabs nav-stacked">
+					<li class='active'><a href='#'><b>Personnages</b></a></li>
+					{% for perso in allPerso %}
+						<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+	    </div>
+	</div>

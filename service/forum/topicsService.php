@@ -74,7 +74,8 @@ class TopicService {
     				ordre = :ordre,
     				stickable = :stickable,
     				is_closed = :is_closed,
-    				is_private = :is_private
+    				is_private = :is_private,
+    				section_id = :section
     			WHERE
     				id = :id";
 
@@ -84,19 +85,68 @@ class TopicService {
 		$stmt->bindValue("stickable", $request->get('stickable'));
 		$stmt->bindValue("is_closed", $request->get('is_closed'));
 		$stmt->bindValue("is_private", $request->get('is_private'));
+		$stmt->bindValue("section", $request->get('section_id'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
+
+    public function deleteTopic($topic_id) {
+    	$this->deleteCanRead($topic_id);
+    	$this->deleteReadPost($topic_id);
+    	$this->clearLastPost($topic_id);
+    	$this->deletePosts($topic_id);
+    	$sql = "DELETE FROM topics
+    			WHERE
+    				id = :id";
     
-    public function updateCanRead($topic_id, $request) {
-    	
-    	$sql = "DELETE FROM can_read 
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("id", $topic_id);
+    	$stmt->execute();
+    }
+    
+    private function clearLastPost($topic_id) {
+    	$sql = "UPDATE topics
+    			SET last_post_id = NULL
+    			WHERE
+    				id = :topic";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("topic", $topic_id);
+    	$stmt->execute();
+    }
+    
+    private function deletePosts($topic_id) {
+    	$sql = "DELETE FROM posts
     			WHERE
     				topic_id = :topic";
-
-		$stmt = $this->db->prepare($sql);
-		$stmt->bindValue("topic", $topic_id);
-		$stmt->execute();
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("topic", $topic_id);
+    	$stmt->execute();
+    }
+    
+    private function deleteReadPost($topic_id) {
+    	$sql = "DELETE FROM read_post
+    			WHERE
+    				topic_id = :topic";
+    	 
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("topic", $topic_id);
+    	$stmt->execute();
+    }
+    
+    private function deleteCanRead($topic_id) {
+    	$sql = "DELETE FROM can_read
+    			WHERE
+    				topic_id = :topic";
+    	
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("topic", $topic_id);
+    	$stmt->execute();
+    }
+    
+    public function updateCanRead($topic_id, $request) {
+    	$this->deleteCanRead($topic_id);
     	foreach($request->get('list_user') as $user) {
     		$this->logger->addInfo("Update can read : " . $user);
 			$sql = "INSERT INTO can_read
@@ -129,7 +179,7 @@ class TopicService {
 					SELECT max(id)
 					FROM posts
 					WHERE topic_id = :id
-    				AND last_post_id <> :post
+    				AND id <> :post
     			)
     			WHERE
     				id = :id";

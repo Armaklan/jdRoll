@@ -91,7 +91,8 @@ class PersoService {
 		$sql = "SELECT * FROM personnages
 				WHERE
 						campagne_id = :campagne
-				AND 	user_id IS NULL";
+				AND 	user_id IS NULL
+				AND     statut = 0";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -99,7 +100,8 @@ class PersoService {
 	public function getAllPersonnagesInCampagne($campagne_id) {
 		$sql = "SELECT * FROM personnages
 				WHERE
-						campagne_id = :campagne";
+						campagne_id = :campagne
+				AND statut = 0";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -145,6 +147,56 @@ class PersoService {
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
 		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
 		$stmt->bindValue("technical",  $request->get('technical'));
+		$stmt->execute();
+	}
+	
+	public function deletePersonnage($perso_id) {
+		$perso = $this->getPersonnageById($perso_id);
+		if($perso["user_id"] != null) {
+			throw new Exception("Impossible de supprimer un PNJ existant");
+		} 
+		
+		$sql = "UPDATE personnages 
+				SET
+				statut = 1
+				WHERE
+				id = :perso";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("perso", $perso_id);
+		$stmt->execute();
+		
+	}
+	
+	public function detachPersonnage($campagne_id, $user_id) {
+		$sql = "UPDATE personnages
+				SET
+				user_id = NULL
+				WHERE
+				user_id = :user
+				AND campagne_id = :campagne";
+	
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("user", $user_id);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->execute();
+	
+	}
+	
+	public function attachPersonnage($campagne_id, $user_id, $perso_id) {
+		$this->detachPersonnage($campagne_id, $user_id);
+		
+		$sql = "UPDATE personnages
+				SET
+				user_id = :user
+				WHERE
+				id = :perso
+				AND campagne_id = :campagne";
+		
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("user", $user_id);
+		$stmt->bindValue("perso", $perso_id);
+		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->execute();
 	}
 

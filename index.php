@@ -69,7 +69,7 @@ $app['topicService'] = function ($app) {
 	return new TopicService($app['db'], $app['session'], $app['monolog']);
 };
 $app['postService'] = function ($app) {
-	return new PostService($app['db'], $app['session']);
+	return new PostService($app['db'], $app['session'], $app['monolog']);
 };
 $app['dicerService'] = function ($app) {
 	return new DicerService($app['db'], $app['session']);

@@ -21,9 +21,10 @@
       selector: ".wysiwyg",
       plugins: [
          "link image lists preview hr spellchecker insertdatetime",
-         "table contextmenu template paste textcolor"
+         "table contextmenu template paste textcolor fullscreen"
       ],
-      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor | preview",
+      menubar : false,
+      toolbar: "styleselect | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",
       style_formats: [
                       {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                       {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},

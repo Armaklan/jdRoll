@@ -40,6 +40,13 @@ class SectionService {
     	return $this->db->fetchAssoc($sql, array("section" => $section_id));
     }
     
+    public function getNbTopicInSection($section_id) {
+    	$sql = "SELECT count(*) as nb FROM topics
+				WHERE section_id = :section";
+    
+    	return $this->db->fetchColumn($sql, array("section" => $section_id), 0);
+    }
+    
     public function createSection($request, $campagne_id) {	
 		$sql = "INSERT INTO sections 
 				(campagne_id, title, ordre, default_collapse, banniere) 
@@ -72,7 +79,18 @@ class SectionService {
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
-   
+    
+    public function deleteSection($section_id) {
+    	$sql = "DELETE FROM sections WHERE id = :id";
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("id", $section_id);
+    	$stmt->execute();
+    }
+
+    public function getSections($campagne_id) {
+    	$sql = "SELECT * FROM sections WHERE campagne_id = :campagne";
+    	return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
+    }
     
    	public function getAllSectionInCampagne($campagne_id) {
    		$user_id = $this->session->get('user')['id'];

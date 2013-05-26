@@ -4,11 +4,14 @@ class PostService {
 
 	private $db;
 	private $session;
+	private $page_size = 5;
+	private $logger;
 
-	public function __construct($db, $session)
+	public function __construct($db, $session, $logger)
     {
         $this->db = $db;
         $this->session = $session;
+        $this->logger = $logger;
     }
     
     public function getBlankTopic($topic_id, $perso_id) {
@@ -35,8 +38,42 @@ class PostService {
     
     	return $this->db->fetchAssoc($sql, array("post" => $post_id));
     }
+
+    public function getPageOfPost($topic_id, $post_id) {
+    	$sql = "SELECT ( (posts.num_post - 1) DIV :page_size) as page
+				FROM
+				(
+					SELECT @i := @i+1 as num_post, post.id as id
+					FROM
+					posts as post, 
+					(SELECT @i := 0) as it
+					WHERE post.topic_id = :topic_id
+					ORDER BY id
+				) as posts
+    			WHERE post.id = :post_id";
+    	
+    	return $this->db->fetchColumn($sql, array("topic_id" => $topic_id, "post_id" => $post_id, "page_size" => $this->page_size));
+    }
     
-    public function getPostsInTopic($topic_id) {
+    public function getLastPageOfPost($topic_id) {
+    	$sql = "SELECT IFNULL( (MAX(posts.num_post) - 1) DIV :page_size, 0) + 1 as page
+				FROM
+				(
+					SELECT @i := @i+1 as num_post, post.id as id
+					FROM
+					posts as post,
+					(SELECT @i := 0) as it
+					WHERE post.topic_id = :topic_id
+					ORDER BY id
+				) as posts";
+    	 
+    	return $this->db->fetchColumn($sql, array("topic_id" => $topic_id, "page_size" => $this->page_size));
+    }
+    
+    public function getPostsInTopic($topic_id, $page) {
+    	$this->logger->addInfo("Read page : " . $page);
+    	$debutPage = ( $page - 1) * $this->page_size;
+    	$this->logger->addInfo("Debut page : " . $debutPage);
     	$sql = "SELECT 
     				post.id AS post_id,
     				post.content AS post_content,
@@ -57,9 +94,12 @@ class PostService {
     			LEFT JOIN personnages perso
     				ON perso.id = post.perso_id
 				WHERE topic_id = :topic
-    			ORDER BY post.id ASC";
-    
-    	return $this->db->fetchAll($sql, array("topic" => $topic_id));
+    			ORDER BY post.id ASC
+    			LIMIT ". $debutPage . ", " . $this->page_size;
+    			
+    	return $this->db->fetchAll($sql, 
+    			array("topic" => $topic_id)
+    		);
     }
     
     

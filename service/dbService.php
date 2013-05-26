@@ -66,6 +66,7 @@ class DbService {
 		$persoTable->addColumn("publicDescription", "text", array('default' => ''));
 		$persoTable->addColumn("privateDescription", "text", array('default' => ''));
 		$persoTable->addColumn("technical", "text", array('default' => ''));
+		$persoTable->addColumn("statut", "integer", array("unsigned" => true, 'default' => 0));
 		$persoTable->setPrimaryKey(array("id"));
 		$persoTable->addForeignKeyConstraint($userTable, array("user_id"), array("id"), array("onDelete" => "CASCADE"));
 		$persoTable->addForeignKeyConstraint($campagneTable, array("campagne_id"), array("id"), array("onDelete" => "CASCADE"));
