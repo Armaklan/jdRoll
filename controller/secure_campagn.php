@@ -38,6 +38,11 @@
     		return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
 		}
 	})->bind("campagne_quit");
+	
+	$securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
+		$campagne = $app['campagneService']->removeJoueur($id, $user_id);
+		return $app->redirect($app->path('campagne', array('id' => $id )));
+	})->bind("campagne_ban");
 
 	$securedCampagneController->get('/my_list', function() use($app) {
 	    $campagnes = $app['campagneService']->getMyCampagnes();

@@ -38,7 +38,11 @@
 				{% for participant in participants %}
 				<tr>
 					<td>{{ participant.username }}</td>
-					<td></td>
+					<td width="60px" >
+					{% if is_mj %}
+						<a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Désinscrire" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+					{% endif %}
+					</td>
 				<tr>
 				{% endfor %}
 			</tbody>
