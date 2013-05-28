@@ -39,7 +39,8 @@ $app["debug"] = true;
 
 $mustBeLogged = function (Request $request) use ($app) {
     if (!isLog($app)) {
-        return $app->redirect($app->path('login_page'));
+    	$url =  str_replace('/', '!', $request->getUri());
+        return $app->redirect($app->path('login_page', array('url' =>  $url)));
     }
 };
 

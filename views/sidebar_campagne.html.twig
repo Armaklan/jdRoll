@@ -7,7 +7,23 @@
 
     <p/>
     <div align="center">
-    	<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-star"></i></a>
+        <div class="btn-group">
+    		<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-star"></i></a>
+    		<button class="btn dropdown-toggle" data-toggle="dropdown">
+		    	<span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu pull-right">
+				 <li>Partie MJ</li>
+					{% for campagne in active_campagnes %}
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+					{% endfor %}
+				 <li class="divider"></li>
+				 <li>Partie joueurs</li>
+					{% for campagne in active_pj_campagnes %}
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+					{% endfor %}
+			</ul>
+		</div>
 		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink1" title="Forum"><i class="icon-globe"></i></a>
     	<a href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2" title="Personnages"><i class="icon-tasks"></i></a>
     	<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn3" title="Galerie des PNJ"><i class="icon-user"></i></a>

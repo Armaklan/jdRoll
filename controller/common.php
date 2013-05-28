@@ -14,22 +14,26 @@ $commonController->get('/', function() use ($app) {
     return $app->render('home.html.twig', ['campagnes' => $campagnes, 'last_users' => $last_users]);
 })->bind("homepage");
 
-$commonController->get('/login', function() use($app) {
-    return $app->render('login.html.twig', ['error' => ""]);
+$commonController->get('/login/{url}', function($url) use($app) {
+    return $app->render('login.html.twig', ['error' => "", 'url' => $url]);
 })->bind("login_page");
 
 $commonController->post('/login', function(Request $request) use($app) {
 
 	$login = $request->get('login');
 	$password = $request->get('pass');
+	$url = $request->get('url');
 
     try {
         $app["userService"]->login($login, $password);
     } catch (Exception $e) {
-        return $app->render('login.html.twig', ['error' => $e->getMessage()]);
+        return $app->render('login.html.twig', ['error' => $e->getMessage(), 'url' => $url]);
     }
-
-    return $app->redirect($app->path('homepage'));
+	$finalUrl = str_replace('!', '/', $url);
+	if ($finalUrl == "/") {
+		$finalUrl = $app->path('homepage');
+	}
+    return $app->redirect($finalUrl);
 
 })->bind("login_connect");
 

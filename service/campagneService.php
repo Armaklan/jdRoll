@@ -138,6 +138,20 @@ class CampagneService {
 			return false;
 		}
 	}
+	
+	public function isParticipant($id) {
+		if($this->session->get('user') != null) {
+			$sql = "SELECT user_id 
+					FROM campagne_participant
+					WHERE 
+					campagne_id = :campagne
+					AND user_id = :user";
+			$result = $this->db->fetchColumn($sql, array('user' => $this->session->get('user')['id'], 'campagne' => $id ), 0);
+			return ($result != null);
+		} else {
+			return false;
+		}
+	}
 
 	public function getMyActiveMjCampagnes() {
 		$sql = "SELECT *

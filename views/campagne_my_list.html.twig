@@ -30,20 +30,21 @@
 					<th>Univers de la campagne</th>
 					<th>Système de jeu</th>
 					<th>Nb Joueurs</th>
-					<th width="200px"><input type="hidden" class="filterIndex" value="HEADER"></th>
+					<th width="230px"><input type="hidden" class="filterIndex" value="HEADER"></th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for campagne in campagnes %}
 				<tr>
 					<td>{% if campagne.activity > 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
-					<td><a href="{{ path('campagne', {id: campagne.id}) }}">{{ campagne.name }}
+					<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}
 						<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 					<td>{{ campagne.univers }}</td>
 					<td>{{ campagne.systeme }}</td>
 					<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 					<td>
-					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-comment"></i></a>
+					<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-globe"></i></a>
 					<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 					<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
@@ -64,21 +65,22 @@
 					<th>Univers de la campagne</th>
 					<th>Système de jeu</th>
 					<th>MJ</th>
-					<th width="200px"><input type="hidden" class="filterIndex" value="HEADER"></th>
+					<th width="230px"><input type="hidden" class="filterIndex" value="HEADER"></th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for campagne in campagnes_pj %}
 				<tr>
 					<td>{% if campagne.activity > 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
-					<td><a href="{{ path('campagne', {id: campagne.id}) }}">{{ campagne.name }}
+					<td><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}
 						<br><img src="{{ campagne.banniere }}" width="150px" style="max-width: 150px"/></a></td>
 					<td>{{ campagne.univers }}</td>
 					<td>{{ campagne.systeme }}</td>
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
+						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
 						<a href="{{ path('perso_edit', {campagne_id: campagne.id}) }}" title="Personnages" class="btn iconeBtn"><i class="icon-tasks"></i></a>
-						<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" title="Forum" class="btn iconeBtn"><i class="icon-comment"></i></a>
+						<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" title="Forum" class="btn iconeBtn"><i class="icon-globe"></i></a>
 						<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 						<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 						<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
@@ -106,7 +108,7 @@
 					<th>Univers de la campagne</th>
 					<th>Système de jeu</th>
 					<th>Nb Joueurs</th>
-					<th width="200px"><input type="hidden" class="filterIndex" value="HEADER"></th>
+					<th width="230px"><input type="hidden" class="filterIndex" value="HEADER"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -119,7 +121,8 @@
 					<td>{{ campagne.systeme }}</td>
 					<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 					<td>
-					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-comment"></i></a>
+					<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-globe"></i></a>
 					<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 					<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
@@ -140,7 +143,7 @@
 					<th>Univers de la campagne</th>
 					<th>Système de jeu</th>
 					<th>MJ</th>
-					<th width="200px"><input type="hidden" class="filterIndex" value="HEADER"></th>
+					<th width="230px"><input type="hidden" class="filterIndex" value="HEADER"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -153,8 +156,9 @@
 					<td>{{ campagne.systeme }}</td>
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
+						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
 						<a href="{{ path('perso_edit', {campagne_id: campagne.id}) }}" title="Personnages" class="btn iconeBtn"><i class="icon-tasks"></i></a>
-						<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" title="Forum" class="btn iconeBtn"><i class="icon-comment"></i></a>
+						<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" title="Forum" class="btn iconeBtn"><i class="icon-globe"></i></a>
 						<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 						<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 						<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
