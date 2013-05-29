@@ -18,6 +18,22 @@
 	    $campagne = $app['campagneService']->getCampagne($id);
 	    return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
 	})->bind("campagne_edit");
+	
+	$securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
+		$campagne = $app['campagneService']->getCampagneConfig($campagne_id);
+		return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 'is_mj' => true, 'error' => "" ]);
+	})->bind("campagne_config_edit");
+	
+	$securedCampagneController->post('/config/save', function(Request $request) use($app) {
+		try {
+			$app['campagneService']->updateCampagneConfig($request);
+			return $app->redirect($app->path('campagne_config_edit', array('campagne_id' => $request->get('campagne_id') )));
+		} catch (Exception $e) {
+			$campagne = $app['campagneService']->getFormCampagneConfig($request);
+			return $app->render('campagne_config_form.html.twig', ['campagne_id' => $request->get('campagne_id'), 'campagne' => $campagne, 'is_mj' => true, 'error' => $e->getMessage()]);
+		}
+	})->bind("campagne_config_save");
+	
 
 	$securedCampagneController->get('/join/{id}', function($id) use($app) {
 		try {
@@ -56,7 +72,8 @@
 	$securedCampagneController->post('/save', function(Request $request) use($app) {
 	    try {
 	        if ($request->get('id') == '') {
-	            $app['campagneService']->createCampagne($request);
+	            $campagne_id = $app['campagneService']->createCampagne($request);
+	            $app['campagneService']->createCampagneConfig($campagne_id);
 	            return $app->redirect($app->path('campagne_my_list'));
 	        } else {
 	            $app['campagneService']->updateCampagne($request);

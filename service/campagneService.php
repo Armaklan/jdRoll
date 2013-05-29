@@ -40,6 +40,19 @@ class CampagneService {
 		$campagne['statut'] = $request->get('statut');
 		return $campagne;
     }
+    
+    public function getFormCampagneConfig($request) {
+    	$campagne = array();
+    	$campagne['campagne_id'] = $request->get('campagne_id');
+    	$campagne['banniere'] = $request->get('banniere');
+    	$campagne['hr'] = $request->get('hr');
+    	$campagne['odd_line_color'] = $request->get('odd_line_color');
+    	$campagne['even_line_color'] = $request->get('even_line_color');
+    	$campagne['sidebar_color'] = $request->get('sidebar_color');
+    	$campagne['link_color'] = $request->get('link_color');
+    	$campagne['template'] = $request->get('template');
+    	return $campagne;
+    }
 
     public function createCampagne($request) {	
 		$sql = "INSERT INTO campagne 
@@ -57,6 +70,44 @@ class CampagneService {
 		$stmt->bindValue("statut", $request->get('statut'));
 		$stmt->bindValue("mj_id", $this->session->get('user')['id']);
 		$stmt->execute();
+		
+		return $this->db->lastInsertId();
+    }
+    
+    public function createCampagneConfig($campagne) {
+    	$sql = "INSERT INTO campagne_config
+				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_color, template)
+				VALUES
+				(:campagne, '', '', '', '', '', '', '')";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $campagne);
+    	$stmt->execute();
+    }
+    
+    public function updateCampagneConfig($request) {
+    	$sql = "UPDATE campagne_config
+    			SET
+    			banniere = :banniere,
+    			hr = :hr,
+    			odd_line_color = :odd_line_color,
+    			even_line_color = :even_line_color,
+    			sidebar_color = :sidebar_color,
+    			link_color = :link_color,
+    			template = :template
+    			WHERE
+    			campagne_id = :campagne";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $request->get('campagne_id'));
+    	$stmt->bindValue("banniere", $request->get('banniere'));
+    	$stmt->bindValue("hr", $request->get('hr'));
+    	$stmt->bindValue("odd_line_color", $request->get('odd_line_color'));
+    	$stmt->bindValue("even_line_color", $request->get('even_line_color'));
+    	$stmt->bindValue("sidebar_color", $request->get('sidebar_color'));
+    	$stmt->bindValue("link_color", $request->get('link_color'));
+    	$stmt->bindValue("template", $request->get('template'));
+    	$stmt->execute();
     }
 
     public function updateCampagne($request) {

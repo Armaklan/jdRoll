@@ -11,6 +11,7 @@
     
 	{% if is_mj %}
 	<div align="right">
+		<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn"><i class="icon-wrench"></i></a>
 		<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-primary iconeBtn"><i class="icon-plus"></i></a>
 	</div>
 	{% endif %}
