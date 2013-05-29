@@ -46,6 +46,7 @@
 					<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
 					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-globe"></i></a>
 					<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
+					<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn"><i class="icon-wrench"></i></a>
 					<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
 					</td>
@@ -124,6 +125,7 @@
 					<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
 					<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Forum"><i class="icon-globe"></i></a>
 					<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
+					<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn"><i class="icon-wrench"></i></a>
 					<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
 					</td>
