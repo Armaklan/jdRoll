@@ -1,3 +1,4 @@
+
 <style type="text/css">
 	{% if campagne_config != null %}
 	
@@ -36,6 +37,10 @@
 		
 		{% if campagne_config.sidebar_color != '' %}
 			.sidebar {
+				background-color: {{ campagne_config.sidebar_color }};
+			}
+			
+			.sidebarTop {
 				background-color: {{ campagne_config.sidebar_color }};
 			}
 

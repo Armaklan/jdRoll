@@ -44,9 +44,10 @@
 	    <div class="control-group">
 		    <label class="control-label" for="statut">Statut</label>
 		    <div class="controls">
-		    	<input type="radio" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %}> Ouverte
-				<input type="radio" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %}> En Pause
-				<input type="radio" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %}> Archivé
+		    	<input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation
+		    	<input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte
+				<input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause
+				<input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé
 		    </div>
 	    </div>
 	    <div class="control-group">

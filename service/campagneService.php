@@ -24,7 +24,7 @@ class CampagneService {
 		$campagne['systeme'] = '';
 		$campagne['univers'] = '';
 		$campagne['description'] = '';
-		$campagne['statut'] = 0;
+		$campagne['statut'] = 3;
 		return $campagne;
     }
 
@@ -88,6 +88,7 @@ class CampagneService {
 				FROM campagne 
 				JOIN user 
 				ON user.id = campagne.mj_id 
+				WHERE statut < 3
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
@@ -157,7 +158,7 @@ class CampagneService {
 		$sql = "SELECT *
 				FROM campagne
 				WHERE mj_id = :user 
-				AND statut = 0
+				AND statut IN (0, 3)
 				ORDER BY name";
 	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 	    return $campagne;
@@ -193,7 +194,7 @@ class CampagneService {
 				) as activity
 				FROM campagne
 				WHERE mj_id = :user
-				AND statut < 2
+				AND statut <> 2
 				ORDER BY name";
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
@@ -229,7 +230,7 @@ class CampagneService {
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
 		WHERE cp.user_id = :user
-		AND statut < 2
+		AND statut <> 2
 		ORDER BY campagne.name";
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;

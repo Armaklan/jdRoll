@@ -146,7 +146,7 @@
 <script language="javascript">
 						
 function quote(id) {
-	text = "<blockquote><p>" + $('#contentDiv' + id).html().trim() + "</blockquote></p><p></p>";
+	text = "<blockquote style='color: #339966'><p>" + $('#contentDiv' + id).html().trim() + "</blockquote></p><p></p>";
 	tinyMCE.get('content').setContent(tinyMCE.get('content').getContent() + text);
 }
 						
