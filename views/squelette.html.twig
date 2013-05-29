@@ -3,22 +3,26 @@
 <head> 
 	<title>jdRoll</title>
 	
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-fileupload.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
-	
 
+	
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-1.9.1.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-fileupload.min.js"> </script>
 	<script src="http://malsup.github.com/jquery.form.js"></script> 
+		
+	<!--[if lt IE 9]>
+	    <script src="{{app.request.baseUrl}}/js/css3-mediaqueries.js"></script>
+	<![endif]-->
 	
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
   <script type="text/javascript">
@@ -29,7 +33,7 @@
          "table contextmenu template paste textcolor fullscreen"
       ],
       menubar : false,
-      toolbar: "styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",
+      toolbar: "styleselect 'Dialogue' removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",
       style_formats: [
                       {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                       {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -38,7 +42,7 @@
                       {title: 'Titre 2', block : 'h2'},
                       {title: 'Titre 3', block : 'h3'},
                       {title: 'Spoiler', block : 'div'},
-                  ], 
+                  ]
    });
   </script>
 	{% block specificHeader %}
@@ -93,8 +97,8 @@
               		<li><a href="{{ path('campagne_list_all') }}">Voir toutes les campagnes</a></li>
               	</ul>
               </li>
-              <li><a href="{{ path('forum') }}"><i class="icon-user"></i> Forum</a></li>
-              <li><a href="{{app.request.baseUrl}}/tchat/chat.php" target="_blank"><i class="icon-user"></i> Tchat</a></li>
+              <li><a href="{{ path('forum') }}"><i class="icon-folder-open"></i> Forum</a></li>
+              <li><a href="{{app.request.baseUrl}}/tchat/chat.php" target="_blank"><i class="icon-glass"></i> Tchat</a></li>
               <li><a href="{{ path('about') }}"><i class="icon-question-sign"></i> About</a></li>
             </ul>
 

@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /*
     Page globale (Index, Authentification, ...)
@@ -75,8 +76,10 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 	$filename = $request->get('filename');
 	if($filename == null || $filename == "") {
 		$filename = $file->getClientOriginalName();
+		$ext = explode("/",$file->getClientMimeType())[1];
+		$filename = sha1($filename . microtime()) . "." . $ext;
+		$file->move(__DIR__.'/../files', $filename);
 	}
-	$file->move(__DIR__.'/../files', $filename);
 	return $app->path('homepage') . "files/" . $filename;
 })->bind("upload");
 

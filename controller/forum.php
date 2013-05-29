@@ -89,9 +89,9 @@ $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topic =  $app["topicService"]->getTopic($topic_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
-	$campagne_id = getExterneCampagneNumber($campagne_id);
 	$sections =  $app["sectionService"]->getSections($campagne_id);
 	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
+	$campagne_id = getExterneCampagneNumber($campagne_id);
 	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 
 			'sections' => $sections, 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_edit");

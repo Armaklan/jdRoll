@@ -3,3 +3,5 @@ vendor/*
 */logs/*
 */cache/*
 *.db
+files/*
+*.logs

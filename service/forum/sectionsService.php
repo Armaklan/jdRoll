@@ -88,7 +88,7 @@ class SectionService {
     }
 
     public function getSections($campagne_id) {
-    	$sql = "SELECT * FROM sections WHERE campagne_id = :campagne";
+    	$sql = "SELECT * FROM sections WHERE campagne_id = :campagne OR (:campagne IS NULL AND campagne_id IS NULL)";
     	return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
     }
     
