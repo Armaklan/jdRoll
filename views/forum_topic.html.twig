@@ -39,10 +39,17 @@
 						{% endif %}
 					</td>
 					<td>
-						<div id="contentDiv{{ post.post_id }}" class="postContent">
+						<div class="postContent">
 						{% autoescape false %}
 							{{ post.post_content }}
 						{% endautoescape %}
+						</div>
+						<div style="display: none;" id="contentDiv{{ post.post_id }}">
+							{% autoescape false %}
+								<b>Posté par {% if post.perso_name != null %} {{ post.perso_name }} {% elseif  post.user_username != null %} {{ post.user_username }} {% endif %}</b>
+						 		<br>
+								{{ post.post_content }}
+							{% endautoescape %}
 						</div>
 						<a name="post{{ post.post_id }}"></a>
 					</td>
