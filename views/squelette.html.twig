@@ -2,7 +2,7 @@
 <html lang="fr"> 
 <head> 
 	<title>jdRoll</title>
-	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
@@ -18,11 +18,7 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-fileupload.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.form.js"></script> 
-		
-	<!--[if lt IE 9]>
-	    <script src="{{app.request.baseUrl}}/js/css3-mediaqueries.js"></script>
-	<![endif]-->
-	
+
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
   <script type="text/javascript">
   tinymce.init({
@@ -32,16 +28,19 @@
          "table contextmenu template paste textcolor fullscreen"
       ],
       menubar : false,
-      toolbar: "styleselect 'Dialogue' removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",
+      toolbar: "styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",		
       style_formats: [
                       {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                       {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
                       {title: 'Hrp', inline: 'span', classes: 'hrp', styles : {color : 'grey'}},
                       {title: 'Titre 1', block : 'h1'},
                       {title: 'Titre 2', block : 'h2'},
-                      {title: 'Titre 3', block : 'h3'},
-                      {title: 'Spoiler', block : 'div'},
-                  ]
+                      {title: 'Titre 3', block : 'h3'}
+                  ],
+      autosave_ask_before_unload: false,
+      max_height: 200,
+      min_height: 160,
+      height : 180
    });
   </script>
 	{% block specificHeader %}
