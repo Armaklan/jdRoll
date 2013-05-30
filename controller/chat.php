@@ -4,10 +4,9 @@
 	use Symfony\Component\HttpFoundation\Response;
 
 	/*
-	    Controller de campagne (sécurisé)
+	    Controller de chat
 	*/
 	$chatController = $app['controllers_factory'];
-	$chatController->before($mustBeLogged);
 
 	$chatController->get('/', function() use($app) {
 	    $last_msg = $app['chatService']->getLastMsg();
@@ -17,7 +16,7 @@
 	$chatController->post('/post', function(Request $request) use($app) {
 		$app['chatService']->postMsg($request->get('user'), $request->get('message'));
 		return "ok";
-	})->bind("chat_post");
+	})->bind("chat_post")->before($mustBeLogged);
 	
 	$app->mount('/chat', $chatController);
 

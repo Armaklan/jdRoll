@@ -53,9 +53,10 @@
 				</p>
 			</div>
 		</div>
-		{% if (app.session.get('user') != null)  %}
+
 		<div class="row-fluid" style="margin-top: 1em;">
 			<div class="span10 offset1 chatbox">
+				<h5 class="categorie">Chat</h5>
 		        <div id="text" style="height: 250px; overflow: auto;">
 		            <div id="loading">
 		                <center>
@@ -64,8 +65,9 @@
 		                </center>
 		            </div>
 		        </div>
-		        <div style="text-align: center; margin-top: 1em;">
 		        
+		        <div style="text-align: center; margin-top: 1em;">
+		        	{% if (app.session.get('user') != null)  %}
 			        <form class="form-inline" onsubmit="postMessage(); return false;">
 				        <div class="input-append">
 						  <input class="input-xxlarge" id="messageChat" type="text">
@@ -73,8 +75,31 @@
 						</div>
 						
 					</form>
+					
+					<script>
+					function postMessage() {
+						textMsg=$('#messageChat').val();
+						$('#messageChat').val('');
+						user="{{ app.session.get('user')['login'] }}";
+						$.ajax({
+						    type: "POST",
+						    url: "{{ path('chat_post') }}",
+						    data: {message: textMsg, user: user},
+						    success: function(msg){
+						    	
+						    },
+						    error: function(msg) {
+						    	$('#messageChat').val(textMsg);
+							}
+						});
+					}
+					</script>
+					{% else %}
+		        		Il est nécessaire d'être authentifier pour poster un message		        		
+		        	{% endif %}
 
 		        </div>
+		        
 		        
 			</div>
 		</div>
@@ -94,7 +119,7 @@
 		                var height = content.height()-250;
 		                var toBottom;
 		 
-		                if(container.scrollTop == height)
+		                if(container[0].scrollTop == height)
 		                    toBottom = true;
 		                else
 		                    toBottom = false;
@@ -105,10 +130,10 @@
 		                height = content.height()-250;
 		                 
 		                if(toBottom == true)
-		                	container.animate({scrollTop: $("#text")[0].scrollHeight},3000);
+		                	container[0].scrollTop = container[0].scrollHeight
 
 		                if(scrollBar != true) {
-		                	container.animate({scrollTop: $("#text")[0].scrollHeight},3000);
+		                	container.animate({scrollTop: container[0].scrollHeight},3000);
 		                    scrollBar = true;
 		                }   
 
@@ -119,31 +144,14 @@
 			});
 		}
 
-		function postMessage() {
-			textMsg=$('#messageChat').val();
-			$('#messageChat').val('');
-			user="{{ app.session.get('user')['login'] }}";
-			$.ajax({
-			    type: "POST",
-			    url: "{{ path('chat_post') }}",
-			    data: {message: textMsg, user: user},
-			    success: function(msg){
-			    	
-			    },
-			    error: function(msg) {
-			    	$('#messageChat').val(textMsg);
-				}
-			});
-		}
+	
 
 		$(document).ready(function() {
-		    if(document.getElementById('messageChat')) {
-		        window.setInterval(getMessages, reloadTime);
-		    }
+			 window.setInterval(getMessages, reloadTime);
 		});
 			
 		</script>
-		{% endif %}
+		
 	</div>  
 		
 
