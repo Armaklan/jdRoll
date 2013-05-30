@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-fileupload.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-colorpicker.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
 	
@@ -17,6 +18,7 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-fileupload.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-colorpicker.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.form.js"></script> 
 
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
@@ -132,6 +134,7 @@
 
 	<script>
 		$('.iconeBtn').tooltip();
+		$('.colorpicker').colorpicker();
 	</script>
 	
 	{% block specificJs %}
