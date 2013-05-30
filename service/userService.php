@@ -108,22 +108,24 @@ class UserService {
 	
 
 	public function updateLastActionTime() {
-		$sql = "UPDATE last_action
-				SET
-					time = CURRENT_TIMESTAMP
-				WHERE user_id = ?";
-		
-		$nbUpdatedRow = $this->db->executeUpdate($sql, array($this->session->get('user')['id']));
-		if($nbUpdatedRow == 0) {
+		try {
 			$sql = "INSERT INTO last_action
 				(time, user_id)
 				VALUES
 				(CURRENT_TIMESTAMP, :username)";
-			
+				
 			$stmt = $this->db->prepare($sql);
 			$stmt->bindValue("username", $this->session->get('user')['id']);
 			$stmt->execute();
+		} catch (Exception $e) {
+			$sql = "UPDATE last_action
+				SET
+					time = CURRENT_TIMESTAMP
+				WHERE user_id = ?";
+			
+			$this->db->executeUpdate($sql, array($this->session->get('user')['id']));
 		}
+
 	}
 	
 	public function getConnected() {
