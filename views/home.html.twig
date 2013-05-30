@@ -42,6 +42,98 @@
 				</p>
 			</div>
 		</div>
+		{% if (app.session.get('user') != null)  %}
+		<div class="row-fluid" style="margin-top: 1em;">
+			<div class="span10 offset1 chatbox">
+		        <div id="text" style="height: 250px; overflow: auto;">
+		            <div id="loading">
+		                <center>
+		                <span class="info" id="info">Chargement du chat en cours...</span><br />
+		                <img src="{{app.request.baseUrl}}/img/ajax-loader.gif" alt="patientez...">
+		                </center>
+		            </div>
+		        </div>
+		        <div style="text-align: center; margin-top: 1em;">
+		        
+			        <form class="form-inline" onsubmit="postMessage(); return false;">
+				        <div class="input-append">
+						  <input class="input-xxlarge" id="messageChat" type="text">
+						  <input type="submit" class="btn">Envoyer</button>
+						</div>
+						
+					</form>
+
+		        </div>
+		        
+			</div>
+		</div>
+		<script>
+
+		var reloadTime = 1000;
+		var scrollBar = false;
+
+		function getMessages() {
+			$.ajax({
+			    type: "GET",
+			    url: "{{ path('chat_last_msg') }}",
+			    success: function(msg){
+
+			    	 	var container = $('#text');
+		                var content = $('#messageContent');
+		                var height = content.height()-250;
+		                var toBottom;
+		 
+		                if(container.scrollTop == height)
+		                    toBottom = true;
+		                else
+		                    toBottom = false;
+
+		                $("#text").html(msg);
+		 
+		                content = $('#messages_content');
+		                height = content.height()-250;
+		                 
+		                if(toBottom == true)
+		                	container.animate({scrollTop: $("#text")[0].scrollHeight},3000);
+
+		                if(scrollBar != true) {
+		                	container.animate({scrollTop: $("#text")[0].scrollHeight},3000);
+		                    scrollBar = true;
+		                }   
+
+			    },
+			    error: function(msg) {
+			    	
+				}
+			});
+		}
+
+		function postMessage() {
+			textMsg=$('#messageChat').val();
+			$('#messageChat').val('');
+			user="{{ app.session.get('user')['login'] }}";
+			$.ajax({
+			    type: "POST",
+			    url: "{{ path('chat_post') }}",
+			    data: {message: textMsg, user: user},
+			    success: function(msg){
+			    	
+			    },
+			    error: function(msg) {
+			    	$('#messageChat').val(textMsg);
+				}
+			});
+		}
+
+		$(document).ready(function() {
+		    if(document.getElementById('messageChat')) {
+		        window.setInterval(getMessages, reloadTime);
+		    }
+		});
+			
+		</script>
+		{% endif %}
 	</div>  
+		
 
 {% endblock %}

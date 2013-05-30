@@ -10,6 +10,7 @@ require_once __DIR__.'/service/forum/sectionsService.php';
 require_once __DIR__.'/service/forum/topicsService.php';
 require_once __DIR__.'/service/forum/postsService.php';
 require_once __DIR__.'/service/dicerService.php';
+require_once __DIR__.'/service/chatService.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +76,10 @@ $app['postService'] = function ($app) {
 $app['dicerService'] = function ($app) {
 	return new DicerService($app['db'], $app['session']);
 };
+$app['chatService'] = function ($app) {
+	return new ChatService($app['db'], $app['session']);
+};
+
 
 require("controller/common.php");
 require("controller/profile.php");
@@ -85,6 +90,7 @@ require("controller/perso.php");
 require("controller/database.php");
 require("controller/messagerie.php");
 require("controller/forum.php");
+require("controller/chat.php");
 
 Request::enableHttpMethodParameterOverride();
 $app->run();

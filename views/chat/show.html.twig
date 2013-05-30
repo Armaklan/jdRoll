@@ -1,0 +1,19 @@
+<div id="messageContent">
+	<table class="table-striped table-condensed table-bordered" width="100%">
+		<tr>
+			<th colspan="3">Chat</th>
+		</tr>
+		<tr>
+			<th width="130px">Auteur</th>
+			<th width="150px">Date</th>
+			<th>Message</th>
+		</tr>
+		{% for msg in msgs %} 
+			<tr>
+				<td>{{ msg.username }}</td>
+				<td>{{ msg.time }}</td>
+				<td>{{ msg.message }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
