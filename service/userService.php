@@ -23,6 +23,7 @@ class UserService {
 	    }
 
 	    $this->session->set('user', array('id' => $user['id'], 'login' => $login, 'avatar' => $user['avatar']));
+	    $this->updateLastActionTime();
 	}
 
 	public function logout() {
@@ -101,6 +102,38 @@ class UserService {
 		$sql = "SELECT *
 			FROM user
 			ORDER BY user.id desc LIMIT 0,5";
+		$users = $this->db->fetchAll($sql);
+		return $users;
+	}
+	
+
+	public function updateLastActionTime() {
+		$sql = "UPDATE last_action
+				SET
+					time = CURRENT_TIMESTAMP
+				WHERE user_id = ?";
+		
+		$nbUpdatedRow = $this->db->executeUpdate($sql, array($this->session->get('user')['id']));
+		if($nbUpdatedRow == 0) {
+			$sql = "INSERT INTO last_action
+				(time, user_id)
+				VALUES
+				(CURRENT_TIMESTAMP, :username)";
+			
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindValue("username", $this->session->get('user')['id']);
+			$stmt->execute();
+		}
+	}
+	
+	public function getConnected() {
+		$sql = "SELECT *
+				FROM last_action
+				JOIN user
+				ON last_action.user_id = user.id
+				WHERE
+				time > DATE_SUB(now(), INTERVAL 5 MINUTE)";
+		
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}

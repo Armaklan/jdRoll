@@ -37,18 +37,6 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 
 $app["debug"] = true;
 
-
-$mustBeLogged = function (Request $request) use ($app) {
-    if (!isLog($app)) {
-    	$url =  str_replace('/', '!', $request->getUri());
-        return $app->redirect($app->path('login_page', array('url' =>  $url)));
-    }
-};
-
-function isLog($app) {
-    return ($app['session']->get('user') != null);
-}
-
 /*
     Définition des services
 */
@@ -79,6 +67,22 @@ $app['dicerService'] = function ($app) {
 $app['chatService'] = function ($app) {
 	return new ChatService($app['db'], $app['session']);
 };
+
+
+
+$mustBeLogged = function (Request $request) use ($app) {
+	if (!isLog($app)) {
+		$url =  str_replace('/', '!', $request->getUri());
+		return $app->redirect($app->path('login_page', array('url' =>  $url)));
+	} else {
+		$app['userService']->updateLastActionTime();
+	}
+};
+
+function isLog($app) {
+	return ($app['session']->get('user') != null);
+}
+
 
 
 require("controller/common.php");
