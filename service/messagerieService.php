@@ -75,11 +75,12 @@ class MessagerieService {
     }
     
     public function getReceiveMessages() {
-    	$sql = "SELECT messages.*
+    	$sql = "SELECT messages.*, mt.statut statut_read
     			FROM messages
     			JOIN messages_to mt
     			ON messages.id = mt.id_message
     			WHERE mt.to_id = :id
+    			AND mt.statut < 2
     			ORDER BY time DESC";
     	
     	return $this->db->fetchAll($sql, array('id' => $this->session->get('user')['id']));
@@ -92,12 +93,57 @@ class MessagerieService {
     			JOIN messages_to mt
     			ON messages.id = mt.id_message
     			WHERE messages.from_id = :id
+    			AND messages.statut < 2
     			GROUP BY
     				messages.id, messages.from_id, messages.from_username,
     			 	messages.title, messages.time
     			ORDER BY time DESC";
     	 
     	return $this->db->fetchAll($sql, array('id' => $this->session->get('user')['id']));
+    }
+    
+    public function getNbNewMessages() {
+    	$sql = "SELECT count(messages.id)
+    			FROM messages
+    			JOIN messages_to mt
+    			ON messages.id = mt.id_message
+    			WHERE mt.to_id = :id
+    			AND mt.statut = 0
+    			ORDER BY time DESC";
+    	 
+    	return $this->db->fetchColumn($sql, array('id' => $this->session->get('user')['id']), 0);
+    }
+    
+    public function markRead($id) {
+    	$this->updateStatut($id, 1);
+    }
+    
+    public function markDelete($id) {
+    	$this->updateStatut($id, 2);
+    }
+    
+    public function markDeleteMyMsg($id) {
+    	$sql = "UPDATE messages
+    			SET statut = :statut
+    			WHERE 
+    			id = :id_message";
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("id_message", $id);
+    	$stmt->bindValue("statut", 3);
+    	$stmt->execute();
+    }
+    
+    private function updateStatut($id, $statut) {
+    	$sql = "UPDATE messages_to
+    			SET statut = :statut
+    			WHERE 
+    			id_message = :id_message
+    			AND to_id = :to_id";
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("to_id", $this->session->get('user')['id']);
+    	$stmt->bindValue("id_message", $id);
+    	$stmt->bindValue("statut", $statut);
+    	$stmt->execute();
     }
     
     public function getMessage($id) {

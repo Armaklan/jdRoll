@@ -1,0 +1,22 @@
+<script>
+		
+	function getCountMessagerie() {
+		$.ajax({
+		    type: "GET",
+		    url: "{{ path('messagerie_unread') }}",
+		    success: function(msg){
+		    	 	$("#msgTitle").html(msg);
+
+		    },
+		    error: function(msg) {
+		    	
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		 getCountMessagerie();
+		 window.setInterval(getCountMessagerie, 30000);
+	});
+
+</script>

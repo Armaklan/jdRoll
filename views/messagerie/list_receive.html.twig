@@ -1,20 +1,24 @@
 	<table class="table-striped table-condensed table-bordered messageTable" width="100%">
 		<tr>
+			<th width="20px"></th>
 			<th>
 				Sujet
 				<input type="hidden" class="filterIndex" value="HEADER">
 			</th>
 			<th width="130px">Auteur</th>
 			<th width="150px">Date</th>
+			<th width="20px"></th>
 		</tr>
 		{% for msg in messages %} 
 			<tr>
+				<td>{% if msg.statut_read == 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
 				<td>
 					<a href="{{ path('messagerie_detail', {'id' : msg.id}) }}">{{ msg.title }}</a>
 					<input type="hidden" class="filterIndex" value="{{ msg.title }}{{ msg.from_username }}">
 				</td>
 				<td>{{ msg.from_username }}</td>
 				<td>{{ msg.time }}</td>
+				<td><a href="{{ path('messagerie_delete', {'id' : msg.id}) }}" class="btn btn-danger"><i class="icon-remove"></i></a></td>
 			</tr>
 		{% endfor %}
 	</table>

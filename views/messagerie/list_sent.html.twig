@@ -6,6 +6,7 @@
 			</th>
 			<th width="260px">Destinataires</th>
 			<th width="150px">Date</th>
+			<th width="20px"></th>
 		</tr>
 		{% for msg in sent_messages %} 
 			<tr>
@@ -15,6 +16,7 @@
 				</td>
 				<td>{{ msg.to_usernames }}</td>
 				<td>{{ msg.time }}</td>
+				<td><a href="{{ path('messagerie_delete_my', {'id' : msg.id}) }}" class="btn btn-danger"><i class="icon-remove"></i></a></td>
 			</tr>
 		{% endfor %}
 	</table>
