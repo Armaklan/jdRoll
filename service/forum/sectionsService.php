@@ -138,6 +138,33 @@ class SectionService {
 	    $campagnes = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
 	    return $campagnes;
 	}
+	
+	public function getLastPostInForum() {
+		$sql = "SELECT DISTINCT
+					sections.title as section_title,
+					topics.id as topics_id,
+					topics.title as topics_title,
+					posts.id as posts_id,
+					posts.create_date as posts_date,
+					user.username as user_username
+				FROM sections sections
+				LEFT JOIN topics topics
+				ON
+					sections.id = topics.section_id
+				LEFT JOIN posts posts
+				ON
+					posts.id = topics.last_post_id
+				LEFT JOIN user user
+				ON
+					user.id = posts.user_id
+				WHERE
+					topics.is_private = 0
+				AND sections.campagne_id IS NULL
+				ORDER BY posts.id DESC
+				LIMIT 0, 5";
+		$posts = $this->db->fetchAll($sql);
+		return $posts;
+	}
 
 }
 ?>

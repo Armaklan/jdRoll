@@ -9,15 +9,11 @@
 				  <h1>Bienvenue sur jdRoll ! <small>Du jeu, du rôle, du Roll !</small></h1>
 				</div>
 				<p></p>
-				<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrute dans <b>Jouer > Rejoindre une campagne</b></p>
+				<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrutent dans <b>Jouer > Rejoindre une campagne</b></p>
 				<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
 				<p></p>
-				<p>Jouer sur les parties où vous vous êtes inscrit ? Simple, cliquez sur le nom de la partie dans votre sidebar,
-				 vous débrancherez alors dans l'espace spécifique à votre campagne.</p>
-				<p></p>
-				<p>Envie de discuter avec les autres joueurs de la communauté ? Utiliser le <b>forum</b> ou le <b>tchat</b> dans le menu <b>"Discuter"</b>.</p>
-
-				<div class="container-fluid">
+				<p>D'autres questions ? Envie de partager vos expériences ? Rejoignez la communauté via le <b>Tchat</b> ou le <b>Forum</b></p>
+				<div class="container-fluid" style="margin-top: 1em">
 					<div class="row-fluid">
 						<div class="span10 offset1">
 							{{ include('composant/partie_carrousel.html.twig') }}
@@ -26,7 +22,8 @@
 				</div>
 			</div>
 			<div class="span5">
-				<div class="well">
+				{% include('composant/last_post.html.twig') %}
+				<div class="well" style="margin-top: 3em">
 					<h5>Derniers inscrits :</h5>
 					<p>
 					{% set isFirst = true %}

@@ -24,11 +24,9 @@
 	 			
 	 			<div class="carousel-caption">
 	 			<a href="{{ path('campagne',{id: campagne.id} ) }}">
-		 			<p><i>
-		 			{% autoescape false %}
-		 				{{ campagne.description|slice(0, 200) }} ...
-		 			{% endautoescape %}
-		 			</i></p>
+	 				<h4>{{ campagne.name }}</h4>
+		 			<p>Dans l'univers de {{ campagne.univers }} avec le système {{ campagne.systeme }}.</p>
+		 			<p><i>Proposé par {{ campagne.username }}</i></p>
 	 			</a>
 	 			</div>
  			

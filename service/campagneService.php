@@ -144,6 +144,18 @@ class CampagneService {
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}
+
+	
+	public function getLastCampagne() {
+		$sql = "SELECT campagne.*, user.username as username
+				FROM campagne
+				JOIN user ON user.id = campagne.mj_id
+				WHERE STATUT = 0
+				ORDER BY campagne.id desc
+				LIMIT 0, 5";
+		$campagnes = $this->db->fetchAll($sql);
+		return $campagnes;
+	}
 	
 	public function getOpenCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
@@ -154,16 +166,6 @@ class CampagneService {
 				ORDER BY campagne.name ASC";
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
-	}
-
-	public function getLastCampagne() {
-		$sql = "SELECT campagne.*
-				FROM campagne 
-				WHERE STATUT = 0
-				ORDER BY campagne.id desc 
-				LIMIT 0, 5";
-	    $campagnes = $this->db->fetchAll($sql);
-	    return $campagnes;
 	}
 
 	public function getCampagne($id) {
