@@ -134,8 +134,20 @@ class UserService {
 				JOIN user
 				ON last_action.user_id = user.id
 				WHERE
-				time > DATE_SUB(now(), INTERVAL 5 MINUTE)";
+				time > DATE_SUB(now(), INTERVAL 15 MINUTE)";
 		
+		$users = $this->db->fetchAll($sql);
+		return $users;
+	}
+	
+	public function getConnectedIn24H() {
+		$sql = "SELECT *
+				FROM last_action
+				JOIN user
+				ON last_action.user_id = user.id
+				WHERE
+				time > DATE_SUB(now(), INTERVAL 15 HOUR)";
+	
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}

@@ -13,7 +13,9 @@ $commonController->get('/', function() use ($app) {
     $campagnes = $app['campagneService']->getLastCampagne();
     $last_users = $app['userService']->getLastSubscribe();
     $connected_users = $app['userService']->getConnected();
-    return $app->render('home.html.twig', ['campagnes' => $campagnes, 'last_users' => $last_users, 'connected_users' => $connected_users]);
+    $connected_24H_users = $app['userService']->getConnectedIn24H();
+    return $app->render('home.html.twig', ['campagnes' => $campagnes, 'last_users' => $last_users, 
+    		'connected_users' => $connected_users, 'connected_24H_users' => $connected_24H_users]);
 })->bind("homepage");
 
 $commonController->get('/login/{url}', function($url) use($app) {

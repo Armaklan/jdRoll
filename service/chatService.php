@@ -12,10 +12,11 @@ class ChatService {
     }
     
     public function getLastMsg() {
-    	$sql = "SELECT * 
+    	$sql = "SELECT * FROM (SELECT * 
     			FROM chat
-    			ORDER BY time ASC 
-    			LIMIT 0, 100";
+    			ORDER BY time DESC 
+    			LIMIT 0, 100) chat 
+    			ORDER BY time ASC";
     	return $this->db->fetchAll($sql);
     }
     

@@ -40,6 +40,17 @@
 					{% set isFirst = false %}
 				{% endfor %}
 				</p>
+				<h5>Se sont connectés durant les 24 dernières heures :</h5>
+				<p>
+				{% set isFirst = true %}
+				{% for user in connected_24H_users %}
+					{% if not isFirst %}
+						,
+					{% endif %}
+					<a href="{{ path('profile',{username: user.username} ) }}" {% if user.profil > 0 %} style="color: red" {% endif %}>{{ user.username }}</a>
+					{% set isFirst = false %}
+				{% endfor %}
+				</p>
 				<h5>Actuellement en ligne :</h5>
 				<p>
 				{% set isFirst = true %}
@@ -133,7 +144,7 @@
 		                	container[0].scrollTop = container[0].scrollHeight
 
 		                if(scrollBar != true) {
-		                	container.animate({scrollTop: container[0].scrollHeight},3000);
+		                	container.animate({scrollTop: container[0].scrollHeight},2000);
 		                    scrollBar = true;
 		                }   
 
