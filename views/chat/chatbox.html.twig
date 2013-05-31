@@ -1,0 +1,122 @@
+<div class="row-fluid" style="margin-top: 1em;">
+			<div class="span10 chatbox">
+				<h5 class="categorie">Chat</h5>
+		        <div id="text" style="height: 250px; overflow: auto;">
+		            <div id="loading">
+		                <center>
+		                <span class="info" id="info">Chargement du chat en cours...</span><br />
+		                <img src="{{app.request.baseUrl}}/img/ajax-loader.gif" alt="patientez...">
+		                </center>
+		            </div>
+		        </div>
+		        
+		        <div style="text-align: center; margin-top: 1em;">
+		        	{% if (app.session.get('user') != null)  %}
+			        <form class="form-inline" onsubmit="postMessage(); return false;">
+				        <div class="input-append">
+						  <input class="input-xxlarge" id="messageChat" type="text">
+						  <input type="submit" class="btn" value="Envoyer">
+						</div>
+						
+					</form>
+					
+					<script>
+					function postMessage() {
+						textMsg=$('#messageChat').val();
+						$('#messageChat').val('');
+						user="{{ app.session.get('user')['login'] }}";
+						$.ajax({
+						    type: "POST",
+						    url: "{{ path('chat_post') }}",
+						    data: {message: textMsg, user: user},
+						    success: function(msg){
+						    	
+						    },
+						    error: function(msg) {
+						    	$('#messageChat').val(textMsg);
+							}
+						});
+					}
+					</script>
+					{% else %}
+		        		Il est nécessaire d'être authentifier pour poster un message		        		
+		        	{% endif %}
+
+		        </div>
+		        
+		        
+			</div>
+			<div class="span2 chatbox">
+				<h5 class="categorie">En ligne</h5>
+				<div style="height: 250px; overflow: auto;" id="onlineUsers">
+		            <div id="loading">
+		                <center>
+		                <span class="info" id="info">Chargement du chat en cours...</span><br />
+		                <img src="{{app.request.baseUrl}}/img/ajax-loader.gif" alt="patientez...">
+		                </center>
+		            </div>
+				</div>
+			</div>
+		</div>
+		<script>
+
+		var reloadTime = 1000;
+		var scrollBar = false;
+
+		function getMessages() {
+			$.ajax({
+			    type: "GET",
+			    url: "{{ path('chat_last_msg') }}",
+			    success: function(msg){
+
+			    	 	var container = $('#text');
+		                var content = $('#messageContent');
+		                var height = content.height()-250;
+		                var toBottom;
+		 
+		                if(container[0].scrollTop == height)
+		                    toBottom = true;
+		                else
+		                    toBottom = false;
+
+		                $("#text").html(msg);
+		 
+		                content = $('#messages_content');
+		                height = content.height()-250;
+		                 
+		                if(toBottom == true)
+		                	container[0].scrollTop = container[0].scrollHeight
+
+		                if(scrollBar != true) {
+		                	container.animate({scrollTop: container[0].scrollHeight},2000);
+		                    scrollBar = true;
+		                }   
+
+			    },
+			    error: function(msg) {
+			    	
+				}
+			});
+		}
+
+		function getOnline() {
+			$.ajax({
+			    type: "GET",
+			    url: "{{ path('chat_in_line') }}",
+			    success: function(msg){
+			    	 	$("#onlineUsers").html(msg);
+
+			    },
+			    error: function(msg) {
+			    	
+				}
+			});
+		}
+	
+
+		$(document).ready(function() {
+			 window.setInterval(getMessages, reloadTime);
+			 window.setInterval(getOnline, 5000);
+		});
+			
+		</script>

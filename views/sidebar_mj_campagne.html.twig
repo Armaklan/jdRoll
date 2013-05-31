@@ -15,8 +15,8 @@
 		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>	
     </div>
     <p/>
-	<ul class="nav nav-tabs nav-stacked">
-		<li class='active'><a href='#'><b>Personnages</b></a></li>
+	<ul class="nav nav-list nav-stacked">
+		<li class='nav-header'><b>Personnages</b></li>
 		{% for perso in allPerso %}
 			<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 		{% endfor %}

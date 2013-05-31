@@ -87,7 +87,7 @@
 	
 	$securedCampagneController->get('/sidebar/{campagne_id}', function(Request $request, $campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
-		$perso = $app['persoService']->getPersonnage(true, $campagne_id, $player_id);
+		$perso = $app['persoService']->getPersonnage(false, $campagne_id, $player_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
 		$campagne = $app['campagneService']->getCampagne($campagne_id);
 		$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
@@ -108,7 +108,7 @@
 	
 	$securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
-		$perso = $app['persoService']->getPersonnage(true, $campagne_id, $player_id);
+		$perso = $app['persoService']->getPersonnage(false, $campagne_id, $player_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
 		$campagne = $app['campagneService']->getCampagne($campagne_id);
 		$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();

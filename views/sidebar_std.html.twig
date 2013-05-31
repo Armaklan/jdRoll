@@ -30,15 +30,15 @@
             <a href="{{ path('messagerie') }}" title="Messagerie" class="btn iconeBtn quickLink3"><i class="icon-envelope"></i></a>
 	    </div>
 	    <p/>
-		<ul class="nav nav-tabs nav-stacked">
-			<li class='active'><a href='#'><b>Partie active (MJ)</b></a></li>
+		<ul class="nav nav-list nav-stacked">
+			<li class='nav-header'><b>Partie active (MJ)</b></li>
 			{% for campagne in active_campagnes %}
 				<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
 			{% endfor %}
 		</ul>
 	
-		<ul class="nav nav-tabs nav-stacked">
-			<li class='active'><a href='#'><b>Partie active (PJ)</b></a></li>
+		<ul class="nav nav-list nav-stacked">
+			<li class='nav-header'><b>Partie active (PJ)</b></li>
 			{% for campagne in active_pj_campagnes %}
 				<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
 			{% endfor %}
