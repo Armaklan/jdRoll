@@ -1,0 +1,52 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<form class="form-horizontal" action="{{ path('messagerie_send')  }}" method="POST">
+		<input type="hidden" name="id" value="{{ message.id }}">
+		<input type="hidden" name="from_id" value="{{ message.from_id }}">
+		<input type="hidden" name="from_username" value="{{ message.from_username }}">
+	    <div class="control-group">
+		    <label class="control-label" for="to_usernames">Destinataires :</label>
+		    <div class="controls">
+		    	<input type="text" id="to" name="to_usernames" placeholder="" value="{{ message.to_usernames }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="title">Titre :</label>
+		    <div class="controls">
+		    	<input type="text" class="input-xxlarge" name="title" placeholder="Le titre de votre message" value="{{ message.title }}">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="content">Content :</label>
+		    <div class="controls">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+		    		 placeholder="Texte de votre message" rows="10">{{ message.title }}</textarea>
+		    </div>
+	    </div>
+	       
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-primary">Envoyer</button>
+		    </div>
+	    </div>
+    </form>
+
+    <script>
+
+    	$('#to').magicSuggest({
+    	    resultAsString: true,
+    	    width: 500,
+    	    value: [ {{ message.to_usernames }} ],
+    	    data: '{{ list_username }}'
+    	});
+         
+    </script>
+{% endblock %}

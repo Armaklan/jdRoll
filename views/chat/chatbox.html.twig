@@ -115,6 +115,8 @@
 	
 
 		$(document).ready(function() {
+			 getMessages();
+			 getOnline();
 			 window.setInterval(getMessages, reloadTime);
 			 window.setInterval(getOnline, 5000);
 		});

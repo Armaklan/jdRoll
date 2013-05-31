@@ -128,6 +128,17 @@ class UserService {
 
 	}
 	
+	public function getUsernamesList() {
+		$sql = "SELECT username
+				FROM user";
+		$usersData = $this->db->fetchAll($sql,array(),  0);
+		$users = array();
+		foreach($usersData as $user) {
+			$users[count($users)] = $user['username'];
+		}
+		return implode(',', $users);
+	}
+	
 	public function getConnected() {
 		$sql = "SELECT *
 				FROM last_action

@@ -1,16 +1,17 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/constante/StatutCampagn.php';
-require_once __DIR__.'/service/dbService.php';
-require_once __DIR__.'/service/userService.php';
-require_once __DIR__.'/service/campagneService.php';
-require_once __DIR__.'/service/persoService.php';
-require_once __DIR__.'/service/forum/sectionsService.php';
-require_once __DIR__.'/service/forum/topicsService.php';
-require_once __DIR__.'/service/forum/postsService.php';
-require_once __DIR__.'/service/dicerService.php';
-require_once __DIR__.'/service/chatService.php';
+require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/constante/StatutCampagn.php';
+require __DIR__.'/service/dbService.php';
+require __DIR__.'/service/userService.php';
+require __DIR__.'/service/campagneService.php';
+require __DIR__.'/service/persoService.php';
+require __DIR__.'/service/forum/sectionsService.php';
+require __DIR__.'/service/forum/topicsService.php';
+require __DIR__.'/service/forum/postsService.php';
+require __DIR__.'/service/dicerService.php';
+require __DIR__.'/service/chatService.php';
+require __DIR__.'/service/messagerieService.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,6 +67,9 @@ $app['dicerService'] = function ($app) {
 };
 $app['chatService'] = function ($app) {
 	return new ChatService($app['db'], $app['session']);
+};
+$app['messagerieService'] = function ($app) {
+	return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService']);
 };
 
 

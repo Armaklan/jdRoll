@@ -1,0 +1,20 @@
+	<table class="table-striped table-condensed table-bordered messageTable" width="100%">
+		<tr>
+			<th>
+				Sujet
+				<input type="hidden" class="filterIndex" value="HEADER">
+			</th>
+			<th width="130px">Auteur</th>
+			<th width="150px">Date</th>
+		</tr>
+		{% for msg in messages %} 
+			<tr>
+				<td>
+					<a href="{{ path('messagerie_detail', {'id' : msg.id}) }}">{{ msg.title }}</a>
+					<input type="hidden" class="filterIndex" value="{{ msg.title }}{{ msg.from_username }}">
+				</td>
+				<td>{{ msg.from_username }}</td>
+				<td>{{ msg.time }}</td>
+			</tr>
+		{% endfor %}
+	</table>

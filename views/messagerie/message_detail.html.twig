@@ -1,0 +1,51 @@
+{% extends 'squelette.html.twig' %}
+
+{% block content %}
+
+	<table class="table table-striped" width="100%">
+			<tr>
+				<td width="100px">De</td>
+				<td>{{ message.from_username }}</td>
+			</tr>
+			<tr>
+				<td width="100px">A</td>
+				<td>{{ message.to_usernames }}</td>
+			</tr>
+			<tr>
+				<td width="100px">Sujet</td>
+				<td>{{ message.title }}</td>
+			</tr>
+			<tr>
+				<td width="100px">Contenu</td>
+				<td>
+				{% autoescape false %}
+					{{ message.content }}
+				{% endautoescape %}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<form class="form-horizontal" action="{{ path('messagerie_send')  }}" method="POST">
+					<div class="control-group">
+					    <div class="controls">
+					    	<input type="hidden" name="id" value="">
+							<input type="hidden" name="from_id" value="{{ app.session.get('user').id }}">
+							<input type="hidden" name="from_username" value="{{ app.session.get('user').login }}">
+							<input type="hidden" id="to" name="to_usernames" value="[{{ message.to_usernames_form }}]">
+							<input type="hidden"  name="title" value="{{ message.title }}">
+					    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+					    		 placeholder="Texte de votre message" rows="10"></textarea>
+					    </div>
+				    </div>
+				       
+				    <div class="control-group">
+					    <div class="controls">
+						    <button type="submit" class="btn btn-primary">Répondre</button>
+					    </div>
+				    </div>
+				</form>
+				</td>
+			</tr>
+	</table>
+
+{% endblock %}

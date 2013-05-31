@@ -1,0 +1,26 @@
+{% extends 'squelette.html.twig' %}
+
+{% block content %}
+
+    <div align="right">
+	    <form class="form-search">
+	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.messageTable')"  class="input-medium search-query">
+	    	<a href="{{ path('messagerie_new') }}" class="btn btn-primary">Nouveau message</a>
+	    </form>
+    </div>
+	<div class="tabbable tabs-left">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tabReceive" data-toggle="tab">Boite de réception</a></li>
+			<li><a href="#tabSend" data-toggle="tab">Messages envoyés</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tabReceive">
+				{% include('messagerie/list_receive.html.twig') %}
+			</div>
+			<div class="tab-pane" id="tabSend">
+	        	{% include('messagerie/list_sent.html.twig') %}
+	        </div>						
+		</div>
+	</div>
+
+{% endblock %}
