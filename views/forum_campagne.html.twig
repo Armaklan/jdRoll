@@ -107,5 +107,11 @@
 				</tbody>
 			</table>
     	</div>
+    	
+    	{% if campagne_id == 0 %}
+    	
+    			{% include('chat/chatbox.html.twig') %}
+    			
+    	{% endif %}
 
 {% endblock %}

@@ -1,0 +1,43 @@
+{% if campagnes is not empty %}
+<p></p>
+<div class="carouseltitle" style="text-align: center">
+<h5>Recrutement en cours </h5>
+</div>
+<p></p>
+<div id="myCarousel" class="carousel slide">
+  <!-- Carousel items -->  
+  <div class="carousel-inner">
+  	{% set isFirst = true %}
+ 	{% for campagne in campagnes %}
+ 		
+ 		<div class="{% if isFirst %} active {% endif %}item" style="height: 250px">
+ 				
+	 				<div align="center">
+	 					<a href="{{ path('campagne',{id: campagne.id} ) }}">
+			 			{% if campagne.banniere != "" %}
+			 				<img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 250px;">
+			 			{% else %}
+			 				<h5>{{ campagne.title }}</h5>
+			 			{% endif %}
+			 			</a>
+		 			</div>
+	 			
+	 			<div class="carousel-caption">
+	 			<a href="{{ path('campagne',{id: campagne.id} ) }}">
+		 			<p><i>
+		 			{% autoescape false %}
+		 				{{ campagne.description|slice(0, 200) }} ...
+		 			{% endautoescape %}
+		 			</i></p>
+	 			</a>
+	 			</div>
+ 			
+ 		</div>
+ 		{% set isFirst = false %}
+ 	{% endfor %}
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+{% endif %}
