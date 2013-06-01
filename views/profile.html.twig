@@ -8,21 +8,23 @@
 	    </div>
     {% endif %}
 
-    <h3>{{ user.username }}</h3>
+    <center><h3>{{ user.username }}</h3></center>
     <div class="container-fluid">
     	<div class="row-fluid" style="text-align: right">
     		<a href="{{ path('messagerie_new_to', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-reply-all"></i> Envoyer un MP</a>
     	</div>
     	<div class="row-fluid">
-    		<div class="span8">
-    			<img src="{{ user.avatar }}" width="130px">
+    		<div class="span2">
+    			<img src="{{ user.avatar }}" style="max-width: 130px">
+    		</div>
+    		<div class="span6">
 		    <p>
 		    	{% autoescape false%}
 		    		{{ user.description }}
 		    	{% endautoescape %}
 		    </p>
     		</div>
-    		<div class="span4">
+    		<div class="span3">
 		    	<ul class="nav nav-pills nav-stacked">
 					<li class="nav-header"><b>MJ sur :</b></li>
 		    		{% for campagne in mj_campagnes %}
