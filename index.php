@@ -16,6 +16,7 @@ require __DIR__.'/service/messagerieService.php';
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 class MyApplication extends Silex\Application
 {
@@ -23,14 +24,35 @@ class MyApplication extends Silex\Application
     use Application\UrlGeneratorTrait;
 }
 
+
+
 $app = new MyApplication();
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
+require_once("config.php");
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS", 'gc_maxlifetime' => 432000)));
-require_once("config.php");
+
+
+$app['session.db_options'] = array(
+		'db_table'      => 'session',
+		'db_id_col'     => 'session_id',
+		'db_data_col'   => 'session_value',
+		'db_time_col'   => 'session_time',
+);
+
+$app['session.storage.handler'] = $app->share(function () use ($app) {
+	return new PdoSessionHandler(
+			$app['db']->getWrappedConnection(),
+			$app['session.db_options'],
+			$app['session.storage.options']
+	);
+});
+
+
+
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
 		'monolog.logfile' => __DIR__.'/development.log',

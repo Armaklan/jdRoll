@@ -44,7 +44,9 @@ $commonController->post('/login', function(Request $request) use($app) {
 
 $commonController->get('/profile/{username}', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user]);
+    $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
+    $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes]);
 })->bind("profile");
 
 $commonController->get('/about', function() use($app) {

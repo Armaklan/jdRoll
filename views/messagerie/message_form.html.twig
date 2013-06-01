@@ -15,7 +15,7 @@
 	    <div class="control-group">
 		    <label class="control-label" for="to_usernames">Destinataires :</label>
 		    <div class="controls">
-		    	<input type="text" id="to" name="to_usernames" placeholder="" value="{{ message.to_usernames }}">
+		    	<input type="text" id="to" name="to_usernames" placeholder="">
 		    </div>
 	    </div>
 	    <div class="control-group">
@@ -44,7 +44,7 @@
     	$('#to').magicSuggest({
     	    resultAsString: true,
     	    width: 500,
-    	    value: [ {{ message.to_usernames }} ],
+    	    value: [ {% autoescape false %} {{ message.to_usernames }} {% endautoescape %}],
     	    data: '{{ list_username }}'
     	});
          

@@ -1,14 +1,20 @@
-{% if campagnes is not empty %}
+{% set car_campagnes = open_campagne %}
+{% set car_title = "Recrutement en cours" %}
+{% if open_campagne is empty %}
+	{% set car_campagnes = campagnes %}
+	{% set car_title = "Parties actives" %}
+{% endif %}
+
 <p></p>
 <div class="carouseltitle" style="text-align: center">
-<h5>Recrutement en cours </h5>
+<h5>{{ car_title }}</h5>
 </div>
 <p></p>
 <div id="myCarousel" class="carousel slide">
   <!-- Carousel items -->  
   <div class="carousel-inner">
   	{% set isFirst = true %}
- 	{% for campagne in campagnes %}
+ 	{% for campagne in car_campagnes %}
  		
  		<div class="{% if isFirst %} active {% endif %}item" style="height: 250px">
  				
@@ -38,4 +44,3 @@
   <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div>
-{% endif %}

@@ -4,15 +4,18 @@
 	
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span6">
-				<div class="page-header">
-				  <h1>Bienvenue sur jdRoll ! <small>Du jeu, du rôle, du Roll !</small></h1>
-				</div>
+			<div class="page-header">
+				<h1>Bienvenue sur jdRoll ! <small>Du jeu, du rôle, du Roll !</small></h1>
+			</div>
 				<p></p>
 				<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrutent dans <b>Jouer > Rejoindre une campagne</b></p>
 				<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
 				<p></p>
 				<p>D'autres questions ? Envie de partager vos expériences ? Rejoignez la communauté via le <b>Tchat</b> ou le <b>Forum</b></p>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+			
 				<div class="container-fluid" style="margin-top: 1em">
 					<div class="row-fluid">
 						<div class="span10 offset1">
@@ -22,10 +25,10 @@
 				</div>
 			</div>
 			<div class="span5">
+				<div style="margin-top: 1.7em"></div>
 				{% include('composant/last_post.html.twig') %}
-				<div class="well" style="margin-top: 3em">
-					<h5>Derniers inscrits :</h5>
-					<p>
+				<div class="well well-small statistiques" style="margin-top: 3em">
+					<p><b>Derniers inscrits :</b>
 					{% set isFirst = true %}
 					{% for user in last_users %}
 						{% if not isFirst %}
@@ -35,19 +38,7 @@
 						{% set isFirst = false %}
 					{% endfor %}
 					</p>
-					<h5>Dernières campagnes ajoutées :</h5>
-					<p>
-					{% set isFirst = true %}
-					{% for campagne in campagnes %}
-						{% if not isFirst %}
-							<br>
-						{% endif %}
-						<a href="{{ path('campagne',{id: campagne.id} ) }}">{{ campagne.name }} ({{ campagne.univers }})</a>
-						{% set isFirst = false %}
-					{% endfor %}
-					</p>
-					<h5>Se sont connectés durant les 24 dernières heures :</h5>
-					<p>
+					<p><b>Connectés durant ses 24 dernières heures :</b>
 					{% set isFirst = true %}
 					{% for user in connected_24H_users %}
 						{% if not isFirst %}

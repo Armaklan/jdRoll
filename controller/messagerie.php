@@ -47,6 +47,13 @@ $messagerieController->get('/new', function() use($app) {
 	return $app->render('messagerie/message_form.html.twig', ['error' => '', 'message' => $message, 'list_username' => $users]);
 })->bind("messagerie_new");
 
+$messagerieController->get('/new_to/{username}', function($username) use($app) {
+	$message = $app['messagerieService']->getBlankMessage();
+	$message['to_usernames'] = "'" . $username . "'";
+	$users = $app['userService']->getUsernamesList();
+	return $app->render('messagerie/message_form.html.twig', ['error' => '', 'message' => $message, 'list_username' => $users]);
+})->bind("messagerie_new_to");
+
 $messagerieController->post('/send', function(Request $request) use($app) {
 	$message = $app['messagerieService']->sendMessage($request);
 	return $app->redirect($app->path('messagerie'));

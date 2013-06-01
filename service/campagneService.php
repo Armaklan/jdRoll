@@ -208,27 +208,36 @@ class CampagneService {
 	}
 
 	public function getMyActiveMjCampagnes() {
+		return $this->getActiveMjCampagnes($this->session->get('user')['id']);
+	}
+	
+	
+	public function getActiveMjCampagnes($id) {
 		$sql = "SELECT *
 				FROM campagne
 				WHERE mj_id = :user 
 				AND statut IN (0, 3)
 				ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+	    $campagne = $this->db->fetchAll($sql, array('user' => $id));
 	    return $campagne;
 	}
 
 	public function getMyActivePjCampagnes() {
-		$sql = "SELECT 
+		return $this->getActivePjCampagnes($this->session->get('user')['id']);
+	}
+	
+	public function getActivePjCampagnes($id) {
+		$sql = "SELECT
 		campagne.*, user.username as username
 		FROM campagne
 		JOIN campagne_participant as cp
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
-		WHERE cp.user_id = ? 
+		WHERE cp.user_id = ?
 		AND statut = 0
 		ORDER BY campagne.name";
-	    $campagne = $this->db->fetchAll($sql, array($this->session->get('user')['id']));
-	    return $campagne;
+		$campagne = $this->db->fetchAll($sql, array($id));
+		return $campagne;
 	}
 	
 	public function getMyCampagnes() {
