@@ -75,6 +75,9 @@
 	        if ($request->get('id') == '') {
 	            $campagne_id = $app['campagneService']->createCampagne($request);
 	            $app['campagneService']->createCampagneConfig($campagne_id);
+	            $app['sectionService']->createSectionWith($campagne_id, "Partie", 1, 0, "");
+	            $app['sectionService']->createSectionWith($campagne_id, "Mod-Off", 2, 0, "");
+	            $app['sectionService']->createSectionWith($campagne_id, "Système et Contexte", 3, 0, "");
 	            return $app->redirect($app->path('campagne_my_list'));
 	        } else {
 	            $app['campagneService']->updateCampagne($request);

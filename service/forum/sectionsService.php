@@ -48,19 +48,32 @@ class SectionService {
     }
     
     public function createSection($request, $campagne_id) {	
-		$sql = "INSERT INTO sections 
-				(campagne_id, title, ordre, default_collapse, banniere) 
-				VALUES
-				(:campagne,:title,:ordre,:default_collapse,:banniere)";
-
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
-		$stmt->bindValue("title", $request->get('title'));
-		$stmt->bindValue("ordre", $request->get('ordre'));
-		$stmt->bindValue("banniere", $request->get('banniere'));
-		$stmt->bindValue("default_collapse", $request->get('default_collapse'));
-		$stmt->execute();
+		$title = $request->get('title');
+		$ordre = $request->get('ordre');
+		$banniere =  $request->get('banniere');
+		$default_collapse = $request->get('default_collapse');
+		return $this->createSectionWith($campagne_id, $title, $ordre, $default_collapse, $banniere);
     }
+    
+    public function createSectionWith($campagne, $title, $ordre, $default_collapse, $banniere) {
+    	$sql = "INSERT INTO sections
+				(campagne_id, title, ordre, default_collapse, banniere)
+				VALUES
+				(:campagne,:title,:ordre,:default_collapse,:banniere)";
+    
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $campagne);
+    	$stmt->bindValue("title", $title);
+    	$stmt->bindValue("ordre", $ordre);
+    	$stmt->bindValue("banniere", $banniere);
+    	$stmt->bindValue("default_collapse", $default_collapse);
+    	$stmt->execute();
+    	
+    	return $this->db->lastInsertId();
+    }
+    
 
     public function updateSection($request) {
     	$sql = "UPDATE sections 
