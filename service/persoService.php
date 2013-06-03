@@ -19,6 +19,7 @@ class PersoService {
     	$perso["publicDescription"] = "";
     	$perso["privateDescription"] = "";
     	$perso["technical"] = "";
+    	$perso["statut"] = "0";
     	$perso["campagne_id"] = $campagne_id;
     	$perso["id"] = "";
     	$perso["user_id"] = null;
@@ -92,7 +93,7 @@ class PersoService {
 				WHERE
 						campagne_id = :campagne
 				AND 	user_id IS NULL
-				AND     statut = 0";
+				AND     statut IN (0, 2)";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -115,7 +116,8 @@ class PersoService {
 				concept = :concept,
 				publicDescription = :publicDescription,
 				privateDescription = :privateDescription,
-				technical = :technical
+				technical = :technical,
+				statut = :statut
 				WHERE
 					campagne_id = :campagne
 				AND id = :perso";
@@ -129,15 +131,16 @@ class PersoService {
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
 		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
 		$stmt->bindValue("technical",  $request->get('technical'));
+		$stmt->bindValue("statut",  $request->get('statut'));
 		$stmt->execute();
 	}
 	
 	public function insertPNJ($campagne_id, $request) {
 	
 		$sql = "INSERT INTO personnages
-				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id)
+				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id, statut)
 				VALUES
-				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne)";
+				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne, :statut)";
 	
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
@@ -147,6 +150,7 @@ class PersoService {
 		$stmt->bindValue("publicDescription",  $request->get('publicDescription'));
 		$stmt->bindValue("privateDescription",  $request->get('privateDescription'));
 		$stmt->bindValue("technical",  $request->get('technical'));
+		$stmt->bindValue("statut",  $request->get('statut'));
 		$stmt->execute();
 	}
 	

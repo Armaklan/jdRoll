@@ -145,7 +145,8 @@ class UserService {
 				JOIN user
 				ON last_action.user_id = user.id
 				WHERE
-				time > DATE_SUB(now(), INTERVAL 15 MINUTE)";
+				time > DATE_SUB(now(), INTERVAL 10 MINUTE)
+				ORDER BY user.username ASC";
 		
 		$users = $this->db->fetchAll($sql);
 		return $users;

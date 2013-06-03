@@ -47,6 +47,34 @@
       min_height: 160
    });
   </script>
+  <script>
+  function notifyMsg(msg) {
+	  AlternativeTitle.titles = new Array("jdRoll", msg);
+	  AlternativeTitle.delay = 1000;
+	   
+	  function AlternativeTitle(){};
+	   
+	  AlternativeTitle.currentIndex;
+	   
+	  AlternativeTitle.init = function()
+	      {
+	      AlternativeTitle.currentIndex = 0;
+	      setInterval(AlternativeTitle.change, AlternativeTitle.delay);
+	      };
+	       
+	  AlternativeTitle.change = function()
+	      {
+	      if(AlternativeTitle.currentIndex + 1 > AlternativeTitle.titles.length)
+	          AlternativeTitle.currentIndex = 0;
+	           
+	      document.title = AlternativeTitle.titles[AlternativeTitle.currentIndex];
+	       
+	      AlternativeTitle.currentIndex++;
+	      };
+	       
+	  AlternativeTitle.init();
+  }
+</script>
 	{% block specificHeader %}
 	
 	{% endblock %}

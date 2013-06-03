@@ -50,7 +50,17 @@
 		    	 placeholder="Votre personnage selon les règles" rows="10">{{ perso['technical'] }}</textarea>
 		    </div>
 	    </div>
-	    
+	    {% if is_mj and perso.user_id is null%}
+		   	<div class="control-group">
+			    <label class="control-label" for="statut">Visibilité dans la gallerie</label>
+			    <div class="controls">
+			    	<input type="radio" name="statut" value="0" {% if perso.statut == 0 %} checked {% endif %}> Visible
+					<input type="radio" name="statut" value="2" {% if perso.statut == 2 %} checked {% endif %}> Non-Visible
+			    </div>
+		    </div>  
+		{% else %}
+			<input type="hidden" name="statut" value="{{ perso.statut }}">  
+	    {% endif %}
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>

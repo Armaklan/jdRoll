@@ -12,8 +12,8 @@
     	<h2>{{ campagne.name }}</h2>
     </div>
     <div align="right">
+    	<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-globe"></i></a>
     	{% if is_mj or is_participant %}
-			<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-globe"></i></a>
 			<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
 			{% if is_mj %}
 				<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>

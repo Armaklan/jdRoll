@@ -26,12 +26,17 @@
 			<tr>
 				<td colspan="2">
 				<form class="form-horizontal" action="{{ path('messagerie_send')  }}" method="POST">
+				    <div class="control-group">
+					    <label class="control-label" for="to_usernames">Destinataires :</label>
+					    <div class="controls">
+					    	<input type="text" id="to" name="to_usernames" placeholder="">
+					    </div>
+				    </div>
 					<div class="control-group">
 					    <div class="controls">
 					    	<input type="hidden" name="id" value="">
 							<input type="hidden" name="from_id" value="{{ app.session.get('user').id }}">
 							<input type="hidden" name="from_username" value="{{ app.session.get('user').login }}">
-							<input type="hidden" id="to" name="to_usernames" value="[{{ message.to_usernames_form }}]">
 							<input type="hidden"  name="title" value="{{ message.title }}">
 					    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
 					    		 placeholder="Texte de votre message" rows="10"></textarea>
@@ -48,4 +53,15 @@
 			</tr>
 	</table>
 
+	
+    <script>
+
+    	$('#to').magicSuggest({
+    	    resultAsString: true,
+    	    width: 500,
+    	    value: [ {% autoescape false %} {{ message.to_usernames_form }} {% endautoescape %}],
+    	    data: '{{ list_username }}'
+    	});
+         
+    </script>
 {% endblock %}

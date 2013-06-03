@@ -38,6 +38,7 @@
 	$securedCampagneController->get('/join/{id}', function($id) use($app) {
 		try {
 		    $campagne = $app['campagneService']->addJoueur($id, $app['session']->get('user')['id']);
+		    $perso = $app['persoService']->getPersonnage(true, $id, $app['session']->get('user')['id']);
 		    return $app->redirect($app->path('campagne_my_list'));
 		} catch (Exception $e) {
 			$campagnes = $app['campagneService']->getOpenCampagne();

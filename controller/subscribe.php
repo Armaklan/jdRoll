@@ -15,7 +15,7 @@ $subscribeController->get('/', function() use($app) {
 $subscribeController->post('/save', function(Request $request) use($app) {
     try {
         $user = $app["userService"]->subscribeUser($request);
-        return $app->render('login.html.twig', ['error' => "Création de l'utilisateur réussit."]);
+        return $app->render('login.html.twig', ['error' => "Création de l'utilisateur réussit.", 'url' => '!']);
     } catch (Exception $e) {
         $user = array("username" => $request->get('username'), "mail" => $request->get('mail'));
         return $app->render('subscribe.html.twig', ['user' => $user, 'error' => $e->getMessage()]);

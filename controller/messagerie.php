@@ -19,16 +19,19 @@ $messagerieController->get('/', function() use($app) {
 $messagerieController->get('/unread', function() use($app) {
 	$nbMsg = $app['messagerieService']->getNbNewMessages();
 	$color = "";
+	$script = "";
 	if($nbMsg > 0) {
 		$color = " style='color: #FCFFA6' ";
+		$script = "<script>notifyMsg('jdRoll - " . $nbMsg . " messages non lus')</script>";
 	}
-	return "<i class='icon-envelope'></i> <span " . $color . ">Messagerie (" . $nbMsg . ")</span></a>" ;
+	return "<i class='icon-envelope'></i> <span " . $color . ">Messagerie (" . $nbMsg . ")</span></a> " . $script ;
 })->bind("messagerie_unread");
 
 $messagerieController->get('/view/{id}', function($id) use($app) {
 	$app['messagerieService']->markRead($id);
 	$message = $app['messagerieService']->getMessage($id);
-	return $app->render('messagerie/message_detail.html.twig', ['error' => '', 'message' => $message]);
+	$users = $app['userService']->getUsernamesList();
+	return $app->render('messagerie/message_detail.html.twig', ['error' => '', 'message' => $message, 'list_username' => $users]);
 })->bind("messagerie_detail");
 
 $messagerieController->get('/delete/{id}', function($id) use($app) {

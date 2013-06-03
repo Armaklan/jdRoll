@@ -73,23 +73,25 @@
 				</tr>
 			{% endfor %}
 			{% if topic.is_closed == 0 %}
-				{% if campagne_id != 0 %}
-				<tr>
-					<td>
-					</td>
-					<td>
-						<b>Lancer les dés</b>
-						<form class="form-inline">
-						    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
-						    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
-						    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
-						    <span id="resultatDicerQuick">
-						    	
-				   			 </span>
-				   		</form>
-				   	</td>
-				</tr>
-				{% endif %}
+				{% if perso.id != null or is_mj %}
+					{% if campagne_id != 0 %}
+					<tr>
+						<td>
+						</td>
+						<td>
+							<b>Lancer les dés</b>
+							<form class="form-inline">
+							    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
+							    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
+							    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
+							    <span id="resultatDicerQuick">
+							    	
+					   			 </span>
+					   		</form>
+					   	</td>
+					</tr>
+					{% endif %}
+
 				<tr>
 					<td>
 					</td>
@@ -124,6 +126,7 @@
 					    </form>
 					</td>
 				</tr>
+				{% endif %}
 			{% endif %}
 		</tbody>
 		<tfoot>

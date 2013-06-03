@@ -147,9 +147,10 @@ class MessagerieService {
     }
     
     public function getMessage($id) {
+    	$user = $this->session->get('user')['login'];
     	$sql = "SELECT messages.id, messages.from_id, messages.from_username,
     			 messages.title, messages.time, messages.content, GROUP_CONCAT(mt.to_username SEPARATOR ', ') as to_usernames,
-    			GROUP_CONCAT(CONCAT('\"', mt.to_username, '\"') SEPARATOR ', ') as to_usernames_form
+    			CONCAT( '\"', messages.from_username , '\",' , GROUP_CONCAT(IF(mt.to_username = :user, '', CONCAT('\"', mt.to_username, '\"')) SEPARATOR ', ')) as to_usernames_form
     			FROM messages
     			JOIN messages_to mt
     			ON messages.id = mt.id_message
@@ -158,7 +159,7 @@ class MessagerieService {
     				messages.id, messages.from_id, messages.from_username,
     			 	messages.title, messages.time, messages.content";
     
-    	return $this->db->fetchAssoc($sql, array('id' => $id));
+    	return $this->db->fetchAssoc($sql, array('id' => $id, 'user' => $user));
     }
 
 }
