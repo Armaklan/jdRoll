@@ -53,13 +53,20 @@
 		    </div>
 	    </div>
 	    <div class="control-group">
-		    <label class="control-label" for="template">Votre description</label>
+		    <label class="control-label" for="template">Template de personnage</label>
 		    <div class="controls">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template" 
 		    	 placeholder="Template de la fiche de personnage" rows="20">{{ campagne.template }}</textarea>
 		    </div>
 	    </div>
-	    
+	    <div class="control-group">
+		    <label class="control-label" for="sidebar_text">Information dans la sidebar</label>
+		    <div class="controls">
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="sidebar_text" name="sidebar_text" 
+		    	 placeholder="Information de la sidebar" rows="20">{{ campagne.sidebar_text }}</textarea>
+		    </div>
+	    </div>
+
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Mettre à jour la configuration</button>

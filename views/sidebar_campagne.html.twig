@@ -25,3 +25,13 @@
 			<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 		{% endfor %}
 	</ul>
+	<div style="padding-left: 1.3em; padding-right: 1.3em;">
+		{% if config.sidebar_text != "" %}
+		<div class="page-header">
+		  <h5>Informations campagnes</h5>
+		</div>
+			{% autoescape false %}
+				{{ config.sidebar_text }}
+			{% endautoescape %}
+		{% endif %}
+	</div>

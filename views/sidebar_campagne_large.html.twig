@@ -22,13 +22,23 @@
 						{% endif %}	
 				    </div><p/>
 	    	</div>
-	    	<div class="span8">
+	    	<div class="span4">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Personnages</b></li>
 					{% for perso in allPerso %}
 						<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 					{% endfor %}
 				</ul>
+			</div>
+			<div class="span4">
+				<div class="page-header" style="padding-left: 1.3em; padding-right: 1.3em;">
+				  <h5>Informations campagnes</h5>
+				</div>
+				{% if config.sidebar_text != "" %}
+					{% autoescape false %}
+						{{ config.sidebar_text }}
+					{% endautoescape %}
+				{% endif %}
 			</div>
 	    </div>
 	</div>

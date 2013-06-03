@@ -51,6 +51,7 @@ class CampagneService {
     	$campagne['sidebar_color'] = $request->get('sidebar_color');
     	$campagne['link_color'] = $request->get('link_color');
     	$campagne['template'] = $request->get('template');
+    	$campagne['sidebar_text'] = $request->get('sidebar_text');
     	return $campagne;
     }
 
@@ -76,9 +77,9 @@ class CampagneService {
     
     public function createCampagneConfig($campagne) {
     	$sql = "INSERT INTO campagne_config
-				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_color, template)
+				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_color, template, sidebar_text)
 				VALUES
-				(:campagne, '', '', '', '', '', '', '')";
+				(:campagne, '', '', '', '', '', '', '', '')";
     
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
@@ -94,7 +95,8 @@ class CampagneService {
     			even_line_color = :even_line_color,
     			sidebar_color = :sidebar_color,
     			link_color = :link_color,
-    			template = :template
+    			template = :template,
+    			sidebar_text = :sidebar_text
     			WHERE
     			campagne_id = :campagne";
     
@@ -107,6 +109,7 @@ class CampagneService {
     	$stmt->bindValue("sidebar_color", $request->get('sidebar_color'));
     	$stmt->bindValue("link_color", $request->get('link_color'));
     	$stmt->bindValue("template", $request->get('template'));
+    	$stmt->bindValue("sidebar_text", $request->get('sidebar_text'));
     	$stmt->execute();
     }
 

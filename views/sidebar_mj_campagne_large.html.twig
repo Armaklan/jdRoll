@@ -16,13 +16,23 @@
 						<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>	
 				    </div><p/>
 	    	</div>
-	    	<div class="span8">
+	    	<div class="span4">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Personnages</b></li>
 					{% for perso in allPerso %}
 						<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 					{% endfor %}
 				</ul>
+			</div>
+			<div class="span4" style="padding-left: 1.3em; padding-right: 1.3em;">
+				<div class="page-header">
+				  <h5>Informations campagnes</h5>
+				</div>
+				{% if config.sidebar_text != "" %}
+					{% autoescape false %}
+						{{ config.sidebar_text }}
+					{% endautoescape %}
+				{% endif %}
 			</div>
 	    </div>
 	</div>
