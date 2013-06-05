@@ -136,6 +136,32 @@ class CampagneService {
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
+    
+    
+    public function openSubscribe($id) {
+    	$sql = "UPDATE campagne 
+    			SET is_recrutement_open = :is_recrutement_open
+    			WHERE
+    				id = :id";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("is_recrutement_open", 1);
+		$stmt->bindValue("id", $id);
+		$stmt->execute();
+    }
+    
+    
+    public function closeSubscribe($id) {
+    	$sql = "UPDATE campagne 
+    			SET is_recrutement_open = :is_recrutement_open
+    			WHERE
+    				id = :id";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("is_recrutement_open", 0);
+		$stmt->bindValue("id", $id);
+		$stmt->execute();
+    }
 
    	public function getAllCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
@@ -321,7 +347,7 @@ class CampagneService {
 					WHERE
 					sections.campagne_id = campagne.id 
 					AND (
-						(topics.is_private = 0)
+						(topics.is_private <> 1)
 						OR
 						(campagne.mj_id = :user)
 						OR
@@ -357,7 +383,7 @@ class CampagneService {
 					WHERE
 					sections.campagne_id = campagne.id
 					AND (
-						(topics.is_private = 0)
+						(topics.is_private <> 1)
 						OR
 						(campagne.mj_id = :user)
 						OR
@@ -390,7 +416,7 @@ class CampagneService {
 					WHERE
 					sections.campagne_id = campagne.id
 					AND (
-						(topics.is_private = 0)
+						(topics.is_private <> 1)
 						OR
 						(campagne.mj_id = :user)
 						OR

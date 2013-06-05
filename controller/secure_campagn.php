@@ -65,6 +65,16 @@ $securedCampagneController->get('/quit/{id}', function($id) use($app) {
                 return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_quit");
+        
+$securedCampagneController->get('/open_subscribe/{id}', function($id) use($app) {
+            $campagne = $app['campagneService']->openSubscribe($id);
+            return $app->redirect($app->path('campagne_my_list'));
+        })->bind("campagne_open_subscribe");
+        
+$securedCampagneController->get('/close_subscribe/{id}', function($id) use($app) {
+            $campagne = $app['campagneService']->closeSubscribe($id);
+            return $app->redirect($app->path('campagne_my_list'));
+        })->bind("campagne_close_subscribe");
 
 $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
             $campagne = $app['campagneService']->removeJoueur($id, $user_id);

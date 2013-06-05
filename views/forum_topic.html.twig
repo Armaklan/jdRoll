@@ -73,7 +73,7 @@
 				</tr>
 			{% endfor %}
 			{% if topic.is_closed == 0 %}
-				{% if campagne_id == 0 or perso.id != null or is_mj %}
+				{% if campagne_id == 0 or perso.id != null or is_mj or topic.is_private == 2 %}
 					{% if campagne_id != 0 %}
 					<tr>
 						<td>

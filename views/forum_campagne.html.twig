@@ -63,15 +63,18 @@
 		{% endif %}
 		
 		{% if line.topics_id != null %}
-			{% if (line.topics_is_private == 0) or is_mj or (line.cr_topic_id != null) %}
+			{% if (line.topics_is_private != 1) or is_mj or (line.cr_topic_id != null) %}
 							
 				<tr>
 					<td width="60px">
 						{% if line.posts_id > line.read_post_id %}
 							<i class="icon-asterisk"></i>
 						{% endif %}
+                                                        
 						{% if line.topics_is_closed > 0 %}
 							<i class="icon-lock"></i>
+                                                {% elseif line.topics_is_private == 2 %}
+                                                        <i class="icon-unlock-alt"></i>
 						{% endif %}
 					</td>
 					<td width="40px">
