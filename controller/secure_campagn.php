@@ -49,6 +49,8 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
             try {
                 $app['campagneService']->validJoueur($id, $user_id);
                 $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
+                $config = $app['campagneService']->getCampagneConfig($id);
+                $app['persoService']->setTechnical($perso['id'], $config['template']);
                 return $app->redirect($app->path('campagne', array('id' => $id)));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();

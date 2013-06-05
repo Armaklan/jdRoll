@@ -537,9 +537,9 @@ class CampagneService {
             
             $this->incrementeNbJoueur($campagne_id);
             $stmt = $this->db->prepare($sql);
-		$stmt->bindValue("campagne", $campagne_id);
-		$stmt->bindValue("user", $user_id);
-		$stmt->execute();
+            $stmt->bindValue("campagne", $campagne_id);
+            $stmt->bindValue("user", $user_id);
+            $stmt->execute();
         }
 
 	public function removeJoueur($campagne_id, $user_id) {

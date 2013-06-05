@@ -134,6 +134,20 @@ class PersoService {
 		$stmt->bindValue("statut",  $request->get('statut'));
 		$stmt->execute();
 	}
+        
+        public function setTechnical($perso_id, $template) {
+
+		$sql = "UPDATE personnages 
+				SET
+				technical = :technical
+				WHERE
+				id = :perso";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("perso", $perso_id);
+		$stmt->bindValue("technical",  $template);
+		$stmt->execute();
+	}
 	
 	public function insertPNJ($campagne_id, $request) {
 	
