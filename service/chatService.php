@@ -21,14 +21,16 @@ class ChatService {
     }
     
     public function postMsg($user, $text) {
-    	$sql = "INSERT INTO chat
-    			(message, username) 
-    			VALUES (:message, :user) ";
-    	
-    	$stmt = $this->db->prepare($sql);
-    	$stmt->bindValue("message", $text);
-    	$stmt->bindValue("user", $user);
-    	$stmt->execute();
+        if ($text != "") {
+            $sql = "INSERT INTO chat
+                            (message, username) 
+                            VALUES (:message, :user) ";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue("message", $text);
+            $stmt->bindValue("user", $user);
+            $stmt->execute();
+        }
     }
 
     
