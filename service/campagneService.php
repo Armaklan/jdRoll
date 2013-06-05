@@ -237,7 +237,7 @@ class CampagneService {
 	}
         
        
-        public function isRealJoueur($campagne_id, $userid) {
+        public function isRealJoueur($campagne_id, $user_id) {
 		if($this->session->get('user') != null) {
 			$sql = "SELECT user_id 
 					FROM campagne_participant
@@ -548,7 +548,7 @@ class CampagneService {
 			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
 		} catch (Exception $e) {
 			$this->deleteParticipant($campagne_id, $user_id);
-                        if($this->isRealJoueur($campagne_id, $userid)) {
+                        if($this->isRealJoueur($campagne_id, $user_id)) {
                             $this->decrementeNbJoueur($campagne_id);
                             $this->persoService->detachPersonnage($campagne_id, $user_id);
                         }

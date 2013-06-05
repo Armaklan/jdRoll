@@ -97,6 +97,12 @@ class UserService {
 	    $user = $this->db->fetchAssoc($sql, array($username));
 	    return $user;
 	}
+        
+        public function getById($id) {
+		$sql = "SELECT * FROM user WHERE id = ?";
+	    $user = $this->db->fetchAssoc($sql, array($id));
+	    return $user;
+	}
 	
 	public function getLastSubscribe() {
 		$sql = "SELECT *

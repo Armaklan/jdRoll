@@ -77,7 +77,13 @@ $securedCampagneController->get('/close_subscribe/{id}', function($id) use($app)
         })->bind("campagne_close_subscribe");
 
 $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
-            $campagne = $app['campagneService']->removeJoueur($id, $user_id);
+            $user = $app['userService']->getById($user_id);
+            $campagne = $app['campagneService']->getCampagne($id);
+            $campagne_name = $campagne['name'];
+            $app['campagneService']->removeJoueur($id, $user_id);
+            $content = "Vous avez désinscrit de la partie de $campagne_name par le MJ (Refus d'inscription ou désinscription forcée).";
+            $destinataires = array($user['username']);
+            $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription partie", $content, $destinataires);
             return $app->redirect($app->path('campagne', array('id' => $id)));
         })->bind("campagne_ban");
 
