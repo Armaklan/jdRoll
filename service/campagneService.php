@@ -142,7 +142,7 @@ class CampagneService {
 				FROM campagne 
 				JOIN user 
 				ON user.id = campagne.mj_id 
-				WHERE statut < 3
+				WHERE campagne.statut < 3
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
@@ -153,7 +153,7 @@ class CampagneService {
 		$sql = "SELECT campagne.*, user.username as username
 				FROM campagne
 				JOIN user ON user.id = campagne.mj_id
-				WHERE STATUT = 0
+				WHERE campagne.STATUT = 0
 				ORDER BY campagne.id desc
 				LIMIT 0, 5";
 		$campagnes = $this->db->fetchAll($sql);
@@ -164,8 +164,8 @@ class CampagneService {
 		$sql = "SELECT campagne.*, user.username as username
 				FROM campagne
 				JOIN user ON user.id = campagne.mj_id
-				WHERE STATUT < 2
-				AND nb_joueurs_actuel < nb_joueurs
+				WHERE campagne.STATUT < 2
+				AND is_recrutement_open = 1
 				ORDER BY campagne.name ASC";
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
@@ -209,6 +209,22 @@ class CampagneService {
 			return false;
 		}
 	}
+        
+       
+        public function isRealJoueur($campagne_id, $userid) {
+		if($this->session->get('user') != null) {
+			$sql = "SELECT user_id 
+					FROM campagne_participant
+					WHERE 
+					campagne_id = :campagne
+					AND user_id = :user
+                                        AND statut = 1";
+			$result = $this->db->fetchColumn($sql, array('user' => $user_id, 'campagne' => $campagne_id ), 0);
+			return ($result != null);
+		} else {
+			return false;
+		}
+	}
 
 	public function getMyActiveMjCampagnes() {
 		return $this->getActiveMjCampagnes($this->session->get('user')['id']);
@@ -237,7 +253,7 @@ class CampagneService {
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
 		WHERE cp.user_id = ?
-		AND statut = 0
+		AND campagne.statut = 0
 		ORDER BY campagne.name";
 		$campagne = $this->db->fetchAll($sql, array($id));
 		return $campagne;
@@ -259,14 +275,36 @@ class CampagneService {
 				) as activity
 				FROM campagne
 				WHERE mj_id = :user
-				AND statut <> 2
+				AND campagne.statut <> 2
 				ORDER BY name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
+	}
+        
+        public function getMyCampagnesWithWaiting() {
+		$sql = "SELECT campagne.id, campagne.name 
+			FROM campagne
+                        JOIN campagne_participant cp
+                        ON campagne.id = campagne_id
+			WHERE mj_id = :user
+			AND campagne.statut <> 2
+                        AND cp.statut = 0
+			ORDER BY name";
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
 	
 	public function getMyPjCampagnes() {
-		$sql = "SELECT
+            return $this->getMyPjCampagneByStatut(1);
+	}
+        
+        public function getMyWaitingPjCampagnes() {
+            return $this->getMyPjCampagneByStatut(0);
+	}
+        
+        
+        public function getMyPjCampagneByStatut($statut) {
+            $sql = "SELECT
 		campagne.*, user.username as username,
 				( SELECT 
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
@@ -295,11 +333,12 @@ class CampagneService {
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
 		WHERE cp.user_id = :user
-		AND statut <> 2
+		AND campagne.statut <> 2
+                AND cp.statut = :statut
 		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut' => $statut));
 		return $campagne;
-	}
+        }
 
 	public function getMyMjArchiveCampagnes() {
 		$sql = "SELECT * ,
@@ -373,6 +412,7 @@ class CampagneService {
 		$sql = "UPDATE campagne 
 				SET 
 					nb_joueurs_actuel = nb_joueurs_actuel + 1
+                                AND     is_recrutement_open = IF(nb_joueurs_actuel = nb_joueurs, 0, 1)
 				WHERE id = :id";
 
 		$stmt = $this->db->prepare($sql);
@@ -392,7 +432,7 @@ class CampagneService {
 	}
 	
 	public function getParticipant($campagne_id) {
-		$sql = "SELECT user.* 
+		$sql = "SELECT user.*, cp.statut as part_statut
 				FROM campagne_participant cp
 				JOIN
 				user
@@ -460,18 +500,32 @@ class CampagneService {
 			throw new Exception("La partie est déjà complète");
 		}
 		$this->checkIfNotParticipant($campagne_id, $user_id);
-		$this->incrementeNbJoueur($campagne_id);
 		$this->insertParticipant($campagne_id, $user_id);
 	}
+        
+        public function validJoueur($campagne_id, $user_id) {
+            $sql = "UPDATE campagne_participant
+                    SET statut = 1
+                    WHERE campagne_id = :campagne
+                    AND user_id = :user";
+            
+            $this->incrementeNbJoueur($campagne_id);
+            $stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("user", $user_id);
+		$stmt->execute();
+        }
 
 	public function removeJoueur($campagne_id, $user_id) {
 		try {
 			$this->checkIfNotParticipant($campagne_id, $user_id);
 			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
 		} catch (Exception $e) {
-			$this->decrementeNbJoueur($campagne_id);
 			$this->deleteParticipant($campagne_id, $user_id);
-			$this->persoService->detachPersonnage($campagne_id, $user_id);
+                        if($this->isRealJoueur($campagne_id, $userid)) {
+                            $this->decrementeNbJoueur($campagne_id);
+                            $this->persoService->detachPersonnage($campagne_id, $user_id);
+                        }
 		}	
 	}
 }

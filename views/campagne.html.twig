@@ -40,9 +40,12 @@
 				{% for participant in participants %}
 				<tr>
 					<td>{{ participant.username }}</td>
-					<td width="60px" >
-					{% if is_mj %}
+					<td width="90px" style="text-align : right" >
+					{% if is_mj and participant.part_statut == 1 %}
 						<a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Désinscrire" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+                                        {% else %}
+                                                <a href="{{ path('campagne_join_valid', {id : campagne.id, user_id: participant.id}) }}" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
+                                                <a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Refuser l'inscription" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 					{% endif %}
 					</td>
 				<tr>
