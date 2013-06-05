@@ -23,7 +23,7 @@
 			 			{% if campagne.banniere != "" %}
 			 				<img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 250px;">
 			 			{% else %}
-			 				<h5>{{ campagne.title }}</h5>
+			 				<img src="{{app.request.baseUrl}}/img/ban.png" style="max-height: 200px; max-width: 250px;" />
 			 			{% endif %}
 			 			</a>
 		 			</div>
