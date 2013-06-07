@@ -142,10 +142,10 @@
 	<div class="container-fluid" style="margin-top: 4em;">
 
 	    <div class="row-fluid">
-	    	<div class="span10">
+	    	<div class="span9">
 	    		{% block sidebar_large %}
-					{{ render(url('sidebar_std_large')) }}
-				{% endblock %}
+                                {{ render(url('sidebar_std_large')) }}
+                        {% endblock %}
 
           {% block precontent %}
           {% endblock %}
@@ -154,7 +154,7 @@
 				    Content of the page...
 				{% endblock %}
 	    	</div>
-	    	<div class="span2 sidebar visible-desktop">
+	    	<div class="span3 sidebar visible-desktop" style="max-width: 300px">
   	    	  {% block sidebar %}
               		{{ render(url('sidebar_std')) }}
   			  {% endblock %}

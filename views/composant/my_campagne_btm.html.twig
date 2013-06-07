@@ -1,9 +1,8 @@
 		<div class="btn-group">
-    		<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
-    		<button class="btn dropdown-toggle" data-toggle="dropdown">
-		    	<span class="caret"></span>
-		    </button>
+    		<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-bookmark"></i> <span class="caret"></span></button>
 		    <ul class="dropdown-menu {{ pull_mode }}">
+                                 <li><a tabindex="-1" href="{{ path('campagne_my_list') }}">Mes campagnes</a></li>
+                                 <li class="divider"></li>
 				 <li><b>Partie MJ</b></li>
 					{% for campagne in active_campagnes %}
 						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>

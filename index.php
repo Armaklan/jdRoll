@@ -34,6 +34,10 @@ require_once("config.php");
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS", 'gc_maxlifetime' => 432000)));
+// Registers Swiftmailer extension
+
+$app->register(new Silex\Provider\SwiftmailerServiceProvider(), array());
+$app['mailer'] = \Swift_Mailer::newInstance(\Swift_MailTransport::newInstance());
 
 
 $app['session.db_options'] = array(
@@ -91,7 +95,7 @@ $app['chatService'] = function ($app) {
 	return new ChatService($app['db'], $app['session']);
 };
 $app['messagerieService'] = function ($app) {
-	return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService']);
+	return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
 };
 
 

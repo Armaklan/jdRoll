@@ -6,12 +6,14 @@ class MessagerieService {
     private $session;
     private $logger;
     private $userService;
+    private $mailer;
 
-    public function __construct($db, $session, $logger, $userService) {
+    public function __construct($db, $session, $logger, $userService, $mailer) {
         $this->db = $db;
         $this->session = $session;
         $this->logger = $logger;
         $this->userService = $userService;
+        $this->mailer = $mailer;
     }
 
     public function getBlankMessage() {
@@ -44,7 +46,7 @@ class MessagerieService {
         $title = $request->get('title');
         $content = $request->get('content');
         $destinataires = json_decode($request->get('to_usernames'));
-        sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
+        $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
     
     public function sendMessageWith($from_id, $from_username, $title, $content, $destinataires) {
@@ -64,6 +66,20 @@ class MessagerieService {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
             $this->insertDestinataire($id, $user);
+            
+            try {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('[JdRoll] Notification de MP')
+                    ->setFrom(array('contact@jdroll.org'))
+                    ->setTo(array($user['mail']))
+                    ->setBody("Vous avez reçu un nouveau message privée de la partie de $from_username. \n Titre : $title.");
+
+                $this->mailer->send($message);
+            } catch (Exception $e) {
+                // Pas de mail, tant pis...
+            }
+    
+ 
         }
     }
 
