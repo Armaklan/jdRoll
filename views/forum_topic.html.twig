@@ -62,12 +62,13 @@
 							{% endif %}
 							
 						{% endif %}
-						{% if is_mj %}
+						{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
 							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}" 
 								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
 						{% endif %}
 						<a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
 						<a title="Aller au début de la page" href="#top"><i class="icon-double-angle-up"></i></a>
+                                                <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
 
 					</td>
 				</tr>

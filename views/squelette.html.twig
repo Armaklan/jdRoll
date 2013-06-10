@@ -31,10 +31,11 @@
       selector: ".wysiwyg",
       plugins: [
          "link image lists preview hr spellchecker insertdatetime",
-         "table contextmenu template paste textcolor fullscreen"
+         "table contextmenu template paste textcolor fullscreen",
+         "emoticons"
       ],
       menubar : false,
-      toolbar: "styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen",		
+      toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",		
       style_formats: [
                       {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                       {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -92,7 +93,7 @@
 		    <span class="icon-bar"></span>
 		    </a>
 		    
-          <a class="brand" href="{{app.request.baseUrl}}">jdRoll</a>
+          <a class="brand" href="{{ path('homepage') }}">jdRoll</a>
           <div class="nav-collapse collapse">
           	{% if (app.session.get('user') == null)  %}
 				<ul class="nav pull-right">
@@ -150,6 +151,15 @@
           {% block precontent %}
           {% endblock %}
           <p></p>
+          
+
+              {% if app.request.baseUrl == "/jdRoll" %}
+                  <div class="alert alert-error">
+                  Merci d'utiliser la nouvelle URL : <a href="http://www.jdroll.org">http://www.jdroll.org</a> <br>
+                  L'utilisation de l'ancien adresse peut entrainer des problèmes de compatibilités dans la gestion des images.
+                  </div>
+              {% endif %}
+
 	    		{% block content %}
 				    Content of the page...
 				{% endblock %}

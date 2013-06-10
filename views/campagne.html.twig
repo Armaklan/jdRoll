@@ -9,7 +9,10 @@
     {% endif %}
 
     <div align="center">
-    	<h2>{{ campagne.name }}</h2>
+    	<h2>{{ campagne.name }}</h2><br>
+        {% if campagne.banniere != "" %}
+            <img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 250px;">
+        {% endif %}
     </div>
     <div align="right">
     	<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-globe"></i></a>
@@ -46,8 +49,10 @@
 					{% if is_mj and participant.part_statut == 1 %}
 						<a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Désinscrire" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
                                         {% else %}
-                                                <a href="{{ path('campagne_join_valid', {id : campagne.id, user_id: participant.id}) }}" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
-                                                <a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Refuser l'inscription" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+                                                    {% if is_mj %}
+                                                        <a href="{{ path('campagne_join_valid', {id : campagne.id, user_id: participant.id}) }}" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
+                                                        <a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Refuser l'inscription" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+                                                    {% endif %}
 					{% endif %}
 					</td>
 				<tr>

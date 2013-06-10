@@ -90,3 +90,11 @@ blockquote p {
 .sidebar {
 	font-size: 0.8em;
 }
+
+a.collapserLink {
+    text-decoration: none;
+}
+
+a.collapserLink:hover {
+    text-decoration: none;
+}

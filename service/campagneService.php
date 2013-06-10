@@ -437,8 +437,8 @@ class CampagneService {
 	private function incrementeNbJoueur($id) {
 		$sql = "UPDATE campagne 
 				SET 
-					nb_joueurs_actuel = nb_joueurs_actuel + 1
-                                AND     is_recrutement_open = IF(nb_joueurs_actuel = nb_joueurs, 0, 1)
+					nb_joueurs_actuel = nb_joueurs_actuel + 1,
+                                        is_recrutement_open = IF(nb_joueurs_actuel = nb_joueurs, 0, 1)
 				WHERE id = :id";
 
 		$stmt = $this->db->prepare($sql);
@@ -535,11 +535,12 @@ class CampagneService {
                     WHERE campagne_id = :campagne
                     AND user_id = :user";
             
-            $this->incrementeNbJoueur($campagne_id);
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("campagne", $campagne_id);
             $stmt->bindValue("user", $user_id);
             $stmt->execute();
+            
+            $this->incrementeNbJoueur($campagne_id);
         }
 
 	public function removeJoueur($campagne_id, $user_id) {
