@@ -26,6 +26,7 @@ class CampagneService {
 		$campagne['description'] = '';
 		$campagne['statut'] = 3;
                 $campagne['rythme'] = 2;
+                $campagne['rp'] = 1;
 		return $campagne;
     }
 
@@ -40,6 +41,7 @@ class CampagneService {
 		$campagne['description'] = $request->get('description');
 		$campagne['statut'] = $request->get('statut');
                 $campagne['rythme'] = $request->get('rythme');
+                $campagne['rp'] = $request->get('rp');
 		return $campagne;
     }
     
@@ -59,9 +61,9 @@ class CampagneService {
 
     public function createCampagne($request) {	
 		$sql = "INSERT INTO campagne 
-				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut, rythme) 
+				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut, rythme, rp) 
 				VALUES
-				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut, :rythme)";
+				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut, :rythme, rp)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", $request->get('name'));
@@ -72,6 +74,7 @@ class CampagneService {
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("statut", $request->get('statut'));
                 $stmt->bindValue("rythme", $request->get('rythme'));
+                $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("mj_id", $this->session->get('user')['id']);
 		$stmt->execute();
 		
@@ -125,7 +128,8 @@ class CampagneService {
     				nb_joueurs = :nb_joueurs,
     				description = :description,
     				statut = :statut,
-                                rythme = :rythme
+                                rythme = :rythme,
+                                rp = :rp
     			WHERE
     				id = :id";
 
@@ -136,6 +140,7 @@ class CampagneService {
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("statut", $request->get('statut'));
                 $stmt->bindValue("rythme", $request->get('rythme'));
+                $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("id", $request->get('id'));

@@ -44,6 +44,15 @@
                                 <input type="radio" class="iconeBtn" name="rythme" value="4" {% if campagne.rythme == 4 %} checked {% endif %} title="Plusieurs posts par jour"> Extrême
 		    </div>
 	    </div>
+            <div class="control-group">
+		    <label class="control-label" for="statut">Exigence</label>
+		    <div class="controls">
+		    	<input type="radio" class="iconeBtn" name="rp" value="0" {% if campagne.rp == 0 %} checked {% endif %} title="Peu d'exigence en terme de Roleplay"> Roman de gare
+		    	<input type="radio" class="iconeBtn" name="rp" value="1" {% if campagne.rp == 1 %} checked {% endif %} title="Exigence standard : action décrite correctement, quelques pensées, ..."> Standard
+			<input type="radio" class="iconeBtn" name="rp" value="2" {% if campagne.rp == 2 %} checked {% endif %} title="Exigence forte : la description prime, il faudra faire des efforts."> Théatre
+			<input type="radio" class="iconeBtn" name="rp" value="3" {% if campagne.rp == 3 %} checked {% endif %} title="De haut vol : le roleplay est au centre même de la partie !"> Cyrano
+		    </div>
+	    </div>
 	    <div class="control-group">
 		    <label class="control-label" for="banniere">Banniere</label>
 		    <div class="controls">

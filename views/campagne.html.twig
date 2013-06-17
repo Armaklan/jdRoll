@@ -42,7 +42,18 @@
             {% elseif campagne.rythme == 4 %}
                 Extrême (Plusieurs posts par jour)
             {% endif %}
-        </p>
+    </p>
+    <p><b>Exigence : </b> 
+            {% if campagne.rp == 0 %}
+                Roman de gare (peu d'exigence en terme de Roleplay)
+            {% elseif campagne.rp == 1 %}
+                Standard (action décrite correctement, quelques pensées, ...)
+            {% elseif campagne.rp == 2 %}
+                Théatre (la description prime, il faudra faire des efforts)
+            {% elseif campagne.rp == 3 %}
+                Cyrano (le roleplay est au centre même de la partie !)
+            {% endif %}
+    </p>
     <p><b>Description : </b> </p>
     {% autoescape false %}
     	<p>{{ campagne.description }}</p>
