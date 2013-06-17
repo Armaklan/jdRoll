@@ -58,8 +58,14 @@ $messagerieController->get('/new_to/{username}', function($username) use($app) {
 })->bind("messagerie_new_to");
 
 $messagerieController->post('/send', function(Request $request) use($app) {
-	$message = $app['messagerieService']->sendMessage($request);
-	return $app->redirect($app->path('messagerie'));
+        try {
+            $message = $app['messagerieService']->sendMessage($request);
+            return $app->redirect($app->path('messagerie'));
+        } catch (Exception $e) {
+            $message = $app['messagerieService']->getFormMessage($request);
+            $users = $app['userService']->getUsernamesList();
+            return $app->render('messagerie/message_form.html.twig', ['error' => $e->getMessage(), 'message' => $message, 'list_username' => $users]);
+        }
 })->bind("messagerie_send");
 
 $app->mount('/messagerie', $messagerieController);

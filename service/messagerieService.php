@@ -46,6 +46,9 @@ class MessagerieService {
         $title = $request->get('title');
         $content = $request->get('content');
         $destinataires = json_decode($request->get('to_usernames'));
+        if(trim($title) == "") {
+            throw new Exception("Le titre ne doit pas être nul");
+        }
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
     
