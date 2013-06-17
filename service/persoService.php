@@ -70,7 +70,8 @@ class PersoService {
 				JOIN user ON user.id = personnages.user_id
 				WHERE
 						personnages.campagne_id = :campagne
-				AND 	personnages.user_id IS NOT NULL";
+				AND 	personnages.user_id IS NOT NULL
+                                ";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -93,7 +94,8 @@ class PersoService {
 				WHERE
 						campagne_id = :campagne
 				AND 	user_id IS NULL
-				AND     statut IN (0, 2)";
+				AND     statut IN (0, 2)
+                                ORDER BY name ASC";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}
@@ -102,7 +104,7 @@ class PersoService {
 		$sql = "SELECT * FROM personnages
 				WHERE
 						campagne_id = :campagne
-				AND statut = 0";
+				AND statut <> 1";
 		$result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
 		return $result;
 	}

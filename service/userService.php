@@ -93,7 +93,13 @@ class UserService {
 	}
 
 	public function getByUsername($username) {
-		$sql = "SELECT * FROM user WHERE username = ?";
+		$sql = "SELECT user.*, last_action.time as last_activity
+                    FROM user 
+                    LEFT OUTER JOIN
+                    last_action 
+                    ON
+                    user.id = last_action.user_id
+                    WHERE username = ?";
 	    $user = $this->db->fetchAssoc($sql, array($username));
 	    return $user;
 	}

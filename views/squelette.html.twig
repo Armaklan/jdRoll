@@ -5,7 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
+	
+        <link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
+        
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-fileupload.css" type="text/css" media="all">
@@ -25,28 +27,58 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/chat.js"></script>  
 
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
+  
+  <script>
+        if (window.matchMedia("(min-width: 600px)").matches) {
+          tinymce.init({
+          selector: ".wysiwyg",
+          plugins: [
+             "link image lists preview hr spellchecker insertdatetime",
+             "table template textcolor fullscreen",
+             "emoticons"
+          ],
+          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",		
+          style_formats: [
+                          {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
+                          {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
+                          {title: 'Hrp', inline: 'span', classes: 'hrp', styles : {color : 'grey'}},
+                          {title: 'Titre 1', block : 'h1'},
+                          {title: 'Titre 2', block : 'h2'},
+                          {title: 'Titre 3', block : 'h3'}
+                      ],
+          autosave_ask_before_unload: false,
+          min_height: 160
+       });
+    } else {
+        tinymce.init({
+              selector: ".wysiwyg",
+              plugins: [
+                 "link image lists preview hr spellchecker insertdatetime",
+                 "table template textcolor fullscreen",
+                 "emoticons"
+              ],
+              menubar : false,
+              toolbar: "paste | styleselect removeformat | bold italic | hr | link image",		
+              style_formats: [
+                              {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
+                              {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
+                              {title: 'Hrp', inline: 'span', classes: 'hrp', styles : {color : 'grey'}},
+                              {title: 'Titre 1', block : 'h1'},
+                              {title: 'Titre 2', block : 'h2'},
+                              {title: 'Titre 3', block : 'h3'}
+                          ],
+              autosave_ask_before_unload: false,
+              min_height: 160,
+              width: 300
+           });
+    }
+ </script>
+
+ 
   <script type="text/javascript">
   
-  tinymce.init({
-      selector: ".wysiwyg",
-      plugins: [
-         "link image lists preview hr spellchecker insertdatetime",
-         "table contextmenu template paste textcolor fullscreen",
-         "emoticons"
-      ],
-      menubar : false,
-      toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",		
-      style_formats: [
-                      {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
-                      {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
-                      {title: 'Hrp', inline: 'span', classes: 'hrp', styles : {color : 'grey'}},
-                      {title: 'Titre 1', block : 'h1'},
-                      {title: 'Titre 2', block : 'h2'},
-                      {title: 'Titre 3', block : 'h3'}
-                  ],
-      autosave_ask_before_unload: false,
-      min_height: 160
-   });
+
+  
   </script>
   <script>
   function notifyMsg(msg) {

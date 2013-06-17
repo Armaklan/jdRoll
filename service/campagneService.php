@@ -308,7 +308,7 @@ class CampagneService {
 	}
         
         public function getMyCampagnesWithWaiting() {
-		$sql = "SELECT campagne.id, campagne.name 
+		$sql = "SELECT DISTINCT campagne.id, campagne.name 
 			FROM campagne
                         JOIN campagne_participant cp
                         ON campagne.id = campagne_id

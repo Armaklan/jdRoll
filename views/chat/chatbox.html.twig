@@ -12,7 +12,7 @@
 		        
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
-			        <form class="form-inline" onsubmit="postMessage(); return false;">
+			        <form class="form-inline" onsubmit="postMessage(); return false;" autocomplete="off">
 				        <div class="input-append">
 						  <input class="input-xxlarge" id="messageChat" type="text">
 						  <input type="submit" class="btn" value="Envoyer">
