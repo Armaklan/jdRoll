@@ -127,25 +127,8 @@
 		    
           <a class="brand" href="{{ path('homepage') }}">jdRoll</a>
           <div class="nav-collapse collapse">
-          	{% if (app.session.get('user') == null)  %}
-				<ul class="nav pull-right">
-					<li class="dropdown">
-	              	<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="caret"></b></a>
-	              	<ul class="dropdown-menu">
-	              		<li><a href="{{ path('login_page', {url : '!'} )  }}">Se connecter</a></li>
-	              		<li><a href="{{ path('subscribe') }}">S'inscrire</a></li>
-	              	</ul>
-	              </li>
-				</ul>
-			{% endif %}
-            <p class="navbar-text pull-right">
-            	{% if (app.session.get('user') == null)  %}
-              		<a href="{{ path('login_page', {url : '!'})  }}" class="navbar-link">Se connecter</a>
-              		
-              	{% else %}
-              		<a href="{{ path('logout')  }}" class="navbar-link">Se déconnecter</a>
-              	{% endif %}
-            </p>
+          	
+            
             <ul class="nav">
               <li><a href="{{ path('homepage') }}"><i class="icon-home"></i> Accueil</a></li>
               <li><a href="{{ path('my_profile') }}"><i class="icon-user"></i> Profil</a></li>
@@ -162,6 +145,16 @@
               </li>
               <li><a href="{{ path('forum') }}"><i class="icon-folder-open"></i> Forum</a></li>
               <li><a href="{{ path('about') }}"><i class="icon-question-sign"></i> About</a></li>
+            </ul>
+            <ul class="nav pull-right">
+                <li>
+                    {% if (app.session.get('user') == null)  %}
+                            <a href="{{ path('login_page', {url : '!'})  }}" class="navbar-link">Se connecter</a>
+
+                    {% else %}
+                            <a href="{{ path('logout')  }}" class="navbar-link">Se déconnecter</a>
+                    {% endif %}
+                </li>
             </ul>
 
           </div><!--/.nav-collapse -->
