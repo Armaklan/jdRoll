@@ -89,6 +89,11 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 	return $app->path('homepage') . "files/" . $filename;
 })->bind("upload");
 
+$commonController->get('/users', function(Request $request) use ($app) {
+        $users = $app['userService']->getAllUsers();
+	return $app->render('user_list.html.twig', ['users' => $users]);
+})->bind("user_list");
+
 
 $app->mount('/', $commonController);
 

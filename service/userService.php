@@ -151,6 +151,17 @@ class UserService {
 		return implode(',', $users);
 	}
 	
+        public function getAllUsers() {
+		$sql = "SELECT user.*, last_action.time as last_activity
+                        FROM user
+                        LEFT JOIN last_action
+                        ON last_action.user_id = user.id
+                        ORDER BY user.username ASC";
+		
+		$users = $this->db->fetchAll($sql);
+		return $users;
+	}
+        
 	public function getConnected() {
 		$sql = "SELECT *
 				FROM last_action
