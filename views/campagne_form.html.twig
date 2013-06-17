@@ -34,6 +34,16 @@
 		    	<input type="text" id="nb_joueurs" name="nb_joueurs" placeholder="Nombre de joueurs" value="{{ campagne['nb_joueurs'] }}">
 		    </div>
 	    </div>
+            <div class="control-group">
+		    <label class="control-label" for="statut">Rythme</label>
+		    <div class="controls">
+		    	<input type="radio" class="iconeBtn" name="rythme" value="0" {% if campagne.rythme == 0 %} checked {% endif %} title="1 post par mois"> Tortue
+		    	<input type="radio" class="iconeBtn" name="rythme" value="1" {% if campagne.rythme == 1 %} checked {% endif %} title="1 post par semaine"> Ralenti
+				<input type="radio" class="iconeBtn" name="rythme" value="2" {% if campagne.rythme == 2 %} checked {% endif %} title="1 post pour 3 jours"> Standard
+				<input type="radio" class="iconeBtn" name="rythme" value="3" {% if campagne.rythme == 3 %} checked {% endif %} title="1 post par jour"> Intense
+                                <input type="radio" class="iconeBtn" name="rythme" value="4" {% if campagne.rythme == 4 %} checked {% endif %} title="Plusieurs posts par jour"> Extrême
+		    </div>
+	    </div>
 	    <div class="control-group">
 		    <label class="control-label" for="banniere">Banniere</label>
 		    <div class="controls">

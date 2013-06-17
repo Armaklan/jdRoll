@@ -30,6 +30,19 @@
     <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
     <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
     <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
+    <p><b>Rythme : </b> 
+            {% if campagne.rythme == 0 %}
+                Tortue (1 post / mois)
+            {% elseif campagne.rythme == 1 %}
+                Ralenti (1 post / semaine)
+            {% elseif campagne.rythme == 2 %}
+                Standard (1 post / 3 jours)
+            {% elseif campagne.rythme == 3 %}
+                Intense (1 post par jour)
+            {% elseif campagne.rythme == 4 %}
+                Extrême (Plusieurs posts par jour)
+            {% endif %}
+        </p>
     <p><b>Description : </b> </p>
     {% autoescape false %}
     	<p>{{ campagne.description }}</p>
