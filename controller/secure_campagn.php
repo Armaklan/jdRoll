@@ -51,6 +51,23 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
                 $config = $app['campagneService']->getCampagneConfig($id);
                 $app['persoService']->setTechnical($perso['id'], $config['template']);
+                
+                $user = $app['userService']->getById($user_id);
+                $campagne = $app['campagneService']->getCampagne($id);
+                $campagne_name = $campagne['name'];
+                $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
+                $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
+                $content = "
+                    <p>Votre inscription à '$campagne_name' a été validé par le MJ.</p>
+                    <p>Nous t'invitons à te manifester sur le Mod-Off de la partie. 
+                    Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p> 
+                    <p>Ta <a href='$url_perso'>fiche de personnage est accessible ici.</a></p>
+                    <br>
+                    <p>Nous te souhaitons une bonne partie.</p>
+                    <p>Ludiquement.</p>
+                ";
+                $destinataires = array($user['username']);
+                $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
                 return $app->redirect($app->path('campagne', array('id' => $id)));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
