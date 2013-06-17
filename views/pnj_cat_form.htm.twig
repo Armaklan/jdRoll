@@ -1,0 +1,28 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<form class="form-horizontal" action="{{ path('pnj_cat_save', {campagne_id : campagne_id}) }}" method="POST">
+            <input type="hidden" name="id" value="{{ cat.id }}" >
+            <input type="hidden" name="campagne_id" value="{{ cat.campagne_id }}" >
+	    <div class="control-group">
+		    <label class="control-label" for="name">Nom</label>
+		    <div class="controls">
+		    	<input type="text" id="title" name="name" placeholder="Nom de la catégorie" value="{{ cat.name }}">
+		    </div>
+	    </div>
+	   
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+		    </div>
+	    </div>
+    </form>
+
+{% endblock %}

@@ -13,13 +13,15 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 	    $perso = $app['persoService']->getPersonnage(true,$campagne_id, $player_id);
-	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+            $cats = $app['persoService']->getAllPnjCat($campagne_id);
+	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_edit");
 	
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+                $cats = $app['persoService']->getAllPnjCat($campagne_id);
+		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_edit_mj");
 	
 	$persoController->get('/view/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
@@ -53,14 +55,16 @@
 			if ($perso_id != "") {
 	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
-	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+                        $cats = $app['persoService']->getAllPnjCat($campagne_id);
+	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 			} else {
 				$app['persoService']->insertPNJ($campagne_id, $request);
 				return $app->redirect($app->path('perso_pnj', ['campagne_id' => $campagne_id]));
 			}
 		} catch(Exception $e) {
 			$perso = $app['persoService']->getPersonnageById($perso_id);
-			return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
+                        $cats = $app['persoService']->getAllPnjCat($campagne_id);
+			return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'cats' => $cats]);
 		}
 	})->bind("perso_save");
 
@@ -75,7 +79,8 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getBlankPnj($campagne_id);
-		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+                $cats = $app['persoService']->getAllPnjCat($campagne_id);
+		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_pnj_add");
 	
 	$persoController->get('/remove/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
@@ -106,6 +111,32 @@
 		$perso = $app['persoService']->attachPersonnage($campagne_id, $request->get('user_id'), $request->get('perso_id'));
 		return $app->redirect($app->path('perso_pnj', ['campagne_id' => $campagne_id]));
 	})->bind("save_attach");
+        
+        $persoController->get('{campagne_id}/pnj_cat/view/{id}', function($campagne_id, $id) use($app) {
+		$cat = $app['persoService']->getPnjCat($id);
+                $is_mj = $app["campagneService"]->isMj($campagne_id);
+		return $app->render('pnj_cat_form.htm.twig', ['campagne_id' => $campagne_id, 'cat' => $cat, 'error' => "", 'is_mj' => $is_mj]);
+	})->bind("pnj_cat");
+	
+	$persoController->get('{campagne_id}/pnj_cat/add/', function($campagne_id) use($app) {
+		$cat = $app['persoService']->getBlankPnjCat($campagne_id);
+                $is_mj = $app["campagneService"]->isMj($campagne_id);
+		return $app->render('pnj_cat_form.htm.twig', ['campagne_id' => $campagne_id, 'cat' => $cat, 'error' => "", 'is_mj' => $is_mj]);
+	})->bind("pnj_cat_add");
+        
+        $persoController->get('{campagne_id}/pnj_cat/remove/{id}', function($campagne_id, $id) use($app) {
+                $app['persoService']->deletePnjCat($id);
+                return $app->redirect($app->path('perso_pnj', array('campagne_id' => $campagne_id)));
+	})->bind("pnj_cat_del");
+        
+        $persoController->post('{campagne_id}/pnj_cat/save', function($campagne_id, Request $request) use($app) {
+            if($request->get('id') == 0) {
+                $cat = $app['persoService']->insertPnjCat($request);
+            } else {
+                $cat = $app['persoService']->updatePnjCat($request);
+            }
+	    return $app->redirect($app->path('perso_pnj', array('campagne_id' => $campagne_id)));
+	})->bind("pnj_cat_save");
 
 	$app->mount('/perso', $persoController);
 
