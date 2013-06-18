@@ -63,13 +63,6 @@ $commonController->get('/logout', function(Request $request) use($app) {
     return $app->redirect($app->path('homepage'));
 })->bind("logout");
 
-$commonController->get('/sidebar/std', function() use ($app) {
-    $campagnes = $app['campagneService']->getAllCampagne();
-    $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
-    $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-    return $app->render('sidebar_std.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);
-})->bind("sidebar_std");
-
 $commonController->get('/sidebar/std_large', function() use ($app) {
 	$campagnes = $app['campagneService']->getAllCampagne();
 	$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();

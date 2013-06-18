@@ -168,7 +168,7 @@ class UserService {
 				JOIN user
 				ON last_action.user_id = user.id
 				WHERE
-				time > DATE_SUB(now(), INTERVAL 10 MINUTE)
+				time > DATE_SUB(now(), INTERVAL 5 MINUTE)
 				ORDER BY user.username ASC";
 		
 		$users = $this->db->fetchAll($sql);
@@ -181,7 +181,7 @@ class UserService {
 				JOIN user
 				ON last_action.user_id = user.id
 				WHERE
-				time > DATE_SUB(now(), INTERVAL 15 HOUR)";
+				time > DATE_SUB(now(), INTERVAL 24 HOUR)";
 	
 		$users = $this->db->fetchAll($sql);
 		return $users;

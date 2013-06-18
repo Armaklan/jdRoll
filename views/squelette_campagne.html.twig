@@ -23,18 +23,6 @@
 	{% endif %}
 {% endblock %}
 
-{% block sidebar %}
-	{% if campagne_id == 0 %}
-		{{ render(url('sidebar_std')) }}
-	{% else %}
-		{% if is_mj %}
-	   		{{ render(url('sidebar_campagne_mj', {campagne_id : campagne_id})) }}	
-		{% else %}
-	   		{{ render(url('sidebar_campagne', {campagne_id : campagne_id})) }}
-	    {% endif %}
-	{% endif %}
-{% endblock %}
-
 {% block sidebar_large %}
 	{% if campagne_id == 0 %}
 		{{ render(url('sidebar_std_large')) }}

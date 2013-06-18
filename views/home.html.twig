@@ -52,7 +52,7 @@
 						{% set isFirst = false %}
 					{% endfor %}
 					</p>
-					<p><b>Connectés durant ses 24 dernières heures :</b>
+					<p><b>Connectés durant ses 24 dernières heures ({{connected_24H_users|length}}) : </b>
 					{% set isFirst = true %}
 					{% for user in connected_24H_users %}
 						{% if not isFirst %}

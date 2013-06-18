@@ -43,3 +43,44 @@
 	    </div>
 	</div>
 	
+
+
+<div class="span3 sidebar visible-desktop" style="max-width: 300px">
+	<div align="center">
+		<h5>{{ campagne.name }}</h5>
+	</div>
+	{% if perso.id != '' %}
+	    <div align="center">
+    		<img src="{{ perso.avatar }}"  width="60%" style="max-width: 130px" class="img-rounded" />
+            </div><p/>
+        {% endif %}
+        <div align="center">
+                    {% set pull_mode = "pull-right" %}
+            {% include("composant/my_campagne_btm.html.twig") %}
+                    <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
+                    {% if perso.id != '' %}
+                    <a href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2" title="Personnages"><i class="icon-user"></i></a>
+            {% endif %}
+            <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn3" title="Galerie des PNJ"><i class="icon-group"></i></a>
+            {% if perso.id != '' %}
+                            <a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+                    {% endif %}
+        </div>
+        <p/>
+	<ul class="nav nav-list nav-stacked">
+		<li class='nav-header'><b>Personnages</b></li>
+		{% for perso in allPerso %}
+			<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+		{% endfor %}
+	</ul>
+	<div style="padding-left: 1.3em; padding-right: 1.3em;">
+		{% if config.sidebar_text != "" %}
+		<div class="page-header">
+		  <h5>Informations campagnes</h5>
+		</div>
+			{% autoescape false %}
+				{{ config.sidebar_text }}
+			{% endautoescape %}
+		{% endif %}
+	</div>
+</div>

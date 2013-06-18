@@ -138,30 +138,6 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
             }
         })->bind("campagne_save");
 
-$securedCampagneController->get('/sidebar/{campagne_id}', function(Request $request, $campagne_id) use($app) {
-            $player_id = $app['session']->get('user')['id'];
-            $perso = $app['persoService']->getPersonnage(false, $campagne_id, $player_id);
-            $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-            $campagne = $app['campagneService']->getCampagne($campagne_id);
-            $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
-            $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
-            return $app->render('sidebar_campagne.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso,
-                        'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config]);
-        })->bind("sidebar_campagne");
-
-$securedCampagneController->get('/sidebarmj/{campagne_id}', function(Request $request, $campagne_id) use($app) {
-            $player_id = $app['session']->get('user')['id'];
-            $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-            $campagne = $app['campagneService']->getCampagne($campagne_id);
-            $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
-            $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
-            return $app->render('sidebar_mj_campagne.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso,
-                        'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config]);
-        })->bind("sidebar_campagne_mj");
 
 $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
             $player_id = $app['session']->get('user')['id'];

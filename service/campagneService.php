@@ -63,7 +63,7 @@ class CampagneService {
 		$sql = "INSERT INTO campagne 
 				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut, rythme, rp) 
 				VALUES
-				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut, :rythme, rp)";
+				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut, :rythme, :rp)";
 
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("name", $request->get('name'));
