@@ -121,7 +121,8 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 })->bind("topic_save");
 
 $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic_id) use($app) {
-	$page = $app["postService"]->getLastPageOfPost($topic_id);
+	//$page = $app["postService"]->getLastPageOfPost($topic_id);
+        $page = 1;
 	return $app->redirect($app->path('topic_page', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id, 'no_page' => $page)));
 })->bind("topic");
 

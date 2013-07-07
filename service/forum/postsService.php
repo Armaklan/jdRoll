@@ -48,7 +48,7 @@ class PostService {
 					posts as post, 
 					(SELECT @i := 0) as it
 					WHERE post.topic_id = :topic_id
-					ORDER BY id
+					ORDER BY id DESC
 				) as posts
     			WHERE post.id = :post_id";
     	
@@ -72,7 +72,7 @@ class PostService {
     
     public function getPostsInTopic($topic_id, $page) {
     	$debutPage = ( $page - 1) * $this->page_size;
-    	$sql = "SELECT 
+    	$sql = "SELECT * FROM ( SELECT 
     				post.id AS post_id,
     				post.content AS post_content,
     				post.create_date AS post_date,
@@ -92,8 +92,9 @@ class PostService {
     			LEFT JOIN personnages perso
     				ON perso.id = post.perso_id
 				WHERE topic_id = :topic
-    			ORDER BY post.id ASC
-    			LIMIT ". $debutPage . ", " . $this->page_size;
+    			ORDER BY post.id DESC
+    			LIMIT ". $debutPage . ", " . $this->page_size . ") AS posts
+                ORDER BY post_id ASC";
     			
     	return $this->db->fetchAll($sql, 
     			array("topic" => $topic_id)
