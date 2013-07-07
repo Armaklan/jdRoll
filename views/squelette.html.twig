@@ -225,6 +225,21 @@
 				}
 			});
         }
+        
+        function onBtnDangerClick() {
+            bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
+    		        if(confirmed) {
+                            return true;
+    		        } else {
+                            return false;
+                        }
+            });
+        }
+        
+        function selectAll(formName) {
+            var checked = $(formName).find(".checkAll").is(':checked'); 
+            $(formName).find('input[type=checkbox]').attr('checked', checked);
+        }
 
 
         $(function () {
@@ -239,9 +254,10 @@
     		});     
     	});
 
+        
 
     	$(function () {
-    		$(".btn-danger").click(function(e) {
+    		$("a.btn-danger").click(function(e) {
     		    e.preventDefault();
     		    var location = $(this).attr('href');
     		    bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
