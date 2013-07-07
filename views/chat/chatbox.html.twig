@@ -60,7 +60,7 @@
 		</div>
 		<script>
 
-		var reloadTime = 1000;
+		var reloadTime = 2000;
 		var scrollBar = false;
 
 		function getMessages() {
@@ -68,29 +68,31 @@
 			    type: "GET",
 			    url: "{{ path('chat_last_msg') }}",
 			    success: function(msg){
+                                if( $("#text").html() != msg ) {
+                                    console.debug(msg);
+                                    var container = $('#text');
+                                    var content = $('#messageContent');
+                                    var height = content.height()-250;
+                                    var toBottom;
 
-			    	 	var container = $('#text');
-		                var content = $('#messageContent');
-		                var height = content.height()-250;
-		                var toBottom;
-		 
-		                if(container[0].scrollTop == height)
-		                    toBottom = true;
-		                else
-		                    toBottom = false;
+                                    if(container[0].scrollTop == height)
+                                        toBottom = true;
+                                    else
+                                        toBottom = false;
+                                
+                                    $("#text").html(msg);
 
-		                $("#text").html(msg);
-		 
-		                content = $('#messages_content');
-		                height = content.height()-250;
-		                 
-		                if(toBottom == true)
-		                	container[0].scrollTop = container[0].scrollHeight
+                                    content = $('#messages_content');
+                                    height = content.height()-250;
 
-		                if(scrollBar != true) {
-		                	container.animate({scrollTop: container[0].scrollHeight},2000);
-		                    scrollBar = true;
-		                }   
+                                    if(toBottom == true)
+                                            container[0].scrollTop = container[0].scrollHeight
+
+                                    if(scrollBar != true) {
+                                            container.animate({scrollTop: container[0].scrollHeight},2000);
+                                        scrollBar = true;
+                                    }   
+                                }
 
 			    },
 			    error: function(msg) {
@@ -118,7 +120,7 @@
 			 getMessages();
 			 getOnline();
 			 window.setInterval(getMessages, reloadTime);
-			 window.setInterval(getOnline, 5000);
+			 window.setInterval(getOnline, 30000);
 		});
 			
 		</script>

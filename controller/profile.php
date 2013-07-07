@@ -25,6 +25,32 @@ $profileController->post('/passwd', function(Request $request) use($app) {
     return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("my_profile_passwd");
 
+$profileController->get('/absences', function() use($app) {
+    $absence_form = $app["absenceService"]->getBlankForm($app['session']->get('user')['id']);
+    $absences = $app["absenceService"]->getAllAbsence($app['session']->get('user')['id']);
+    return $app->render('absences.html.twig', ['absences' => $absences, 'absence_form' => $absence_form, 'error' => ""]);
+})->bind("abs");
+
+$profileController->get('/absences/edit/{id}', function($id) use($app) {
+    $absence_form = $app["absenceService"]->getAbsence($id);
+    $absences = $app["absenceService"]->getAllAbsence($app['session']->get('user')['id']);
+    return $app->render('absences.html.twig', ['absences' => $absences,'absence_form' => $absence_form, 'error' => ""]);
+})->bind("abs_edit");
+
+$profileController->get('/absences/remove/{id}', function($id) use($app) {
+    $app["absenceService"]->deleteAbsence($id);
+    return $app->redirect($app->path('abs'));
+})->bind("abs_remove");
+
+$profileController->post('/absences/save', function(Request $request) use($app) {
+    if ($request->get('id') == 0) {
+        $app["absenceService"]->insertAbsence($request);
+    } else {
+        $app["absenceService"]->updateAbsence($request);
+    }
+    return $app->redirect($app->path('abs'));
+})->bind("abs_save");
+
 $app->mount('/my_profile', $profileController);
 
 ?>

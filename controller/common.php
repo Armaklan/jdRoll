@@ -15,8 +15,9 @@ $commonController->get('/', function() use ($app) {
     $last_users = $app['userService']->getLastSubscribe();
     $connected_24H_users = $app['userService']->getConnectedIn24H();
     $last_posts = $app['sectionService']->getLastPostInForum();
+    $absences = $app['absenceService']->getCurrentAbsence();
     return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users, 
-    		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts]);
+    		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts, 'absences' => $absences]);
 })->bind("homepage");
 
 $commonController->get('/login/{url}', function($url) use($app) {

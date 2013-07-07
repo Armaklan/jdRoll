@@ -1,4 +1,4 @@
-			var reloadTime = 1000;
+			var reloadTime = 2000;
 			var scrollBar = false;
 			 
 			function getMessages() {

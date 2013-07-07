@@ -9,6 +9,7 @@ require __DIR__.'/service/persoService.php';
 require __DIR__.'/service/forum/sectionsService.php';
 require __DIR__.'/service/forum/topicsService.php';
 require __DIR__.'/service/forum/postsService.php';
+require __DIR__.'/service/absenceService.php';
 require __DIR__.'/service/dicerService.php';
 require __DIR__.'/service/chatService.php';
 require __DIR__.'/service/messagerieService.php';
@@ -62,7 +63,7 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 		'monolog.logfile' => __DIR__.'/development.log',
 ));
 
-$app["debug"] = true;
+$app["debug"] = false;
 
 /*
     Définition des services
@@ -96,6 +97,9 @@ $app['chatService'] = function ($app) {
 };
 $app['messagerieService'] = function ($app) {
 	return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
+};
+$app['absenceService'] = function ($app) {
+	return new AbsenceService($app['db'], $app['session']);
 };
 
 

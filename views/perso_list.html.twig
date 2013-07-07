@@ -60,14 +60,14 @@
             {% endif %}
             <tr>
                     <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="10%"><img src="{{ perso.avatar }}" width="70%"/></td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="60%">
+                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="50%">
                             {% if is_mj %}
                                     <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}">{{ perso.name }}</a>
                             {% else %}
                                     <a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: perso.id}) }}">{{ perso.name }}</a>
                             {% endif %}
                     </td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="15%">{{ perso.concept }}</td>
+                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="25%">{{ perso.concept }}</td>
                     <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="15%">{% if is_mj %}
                                     <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
                                     <a href="{{ path('attach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Transférer"><i class="icon-share-alt"></i></a>

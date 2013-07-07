@@ -28,7 +28,7 @@ function getExterneCampagneNumber($campagne_id) {
 $forumController->get('/', function() use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne(null);
 	$is_mj = $app["campagneService"]->isMj(null);
-	return $app->render('forum_campagne.html.twig', ['campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '']);
+	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '']);
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
@@ -36,7 +36,8 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '']);
+        $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
+	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '']);
 })->bind("forum_campagne");
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {

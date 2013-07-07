@@ -268,7 +268,7 @@ class PersoService {
     }
     
     public function updatePnjCat($request) {
-        $sql = "UPDATE INTO 
+        $sql = "UPDATE 
                     pnj_category
                 SET name = :name
                 WHERE

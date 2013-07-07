@@ -558,10 +558,13 @@ class CampagneService {
 			$this->checkIfNotParticipant($campagne_id, $user_id);
 			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
 		} catch (Exception $e) {
-			$this->deleteParticipant($campagne_id, $user_id);
+			
                         if($this->isRealJoueur($campagne_id, $user_id)) {
+                            $this->deleteParticipant($campagne_id, $user_id);
                             $this->decrementeNbJoueur($campagne_id);
                             $this->persoService->detachPersonnage($campagne_id, $user_id);
+                        } else {
+                            $this->deleteParticipant($campagne_id, $user_id);
                         }
 		}	
 	}

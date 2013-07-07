@@ -8,6 +8,16 @@
 	    </div>
     {% endif %}
 
+    {% if (absences is not empty) %}
+	    <div class="alert alert-warning">
+                <ul>
+	    	{% for absence in absences %}
+                    <li>{{absence.username}} sera absent du {{absence.begin_date}} au {{absence.end_date}}</li>
+                {% endfor %}
+                </ul>
+	    </div>
+    {% endif %}
+
     
 	{% if is_mj %}
 	<div align="right">

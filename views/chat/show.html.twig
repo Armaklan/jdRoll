@@ -1,15 +1,15 @@
 <div id="messageContent">
 	<table class="table-striped table-condensed table-bordered" width="100%">
 		<tr>
-			<th width="130px">Auteur</th>
-			<th width="150px">Date</th>
+			<th width="120px">Date</th>
+                        <th width="130px">Auteur</th>
 			<th>Message</th>
 		</tr>
 		{% for msg in msgs %} 
 			<tr>
-				<td>{{ msg.username }}</td>
-				<td>{{ msg.time }}</td>
-				<td>{{ msg.message }}</td>
+                                <td>{{ msg.time|date("d/m H:i:s") }}</td>
+                                <td>{{ msg.username }}</td>
+				<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
 			</tr>
 		{% endfor %}
 	</table>
