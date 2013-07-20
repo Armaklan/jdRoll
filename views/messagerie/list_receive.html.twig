@@ -1,4 +1,8 @@
-    <form action="{{ path('messagerie_delete_select') }}" method="post" id="msg_receive">
+
+<form action="{{ path('messagerie_delete_select') }}" method="post" id="msg_receive">
+        <button class="btn btn-danger" onClick="return onBtnDangerClick()">
+            <i class="icon-remove"></i> Supprimer les messages selectionnés
+        </button><p></p>
         <table class="table-striped table-condensed table-bordered messageTable" width="100%">
     
 		<tr>
@@ -28,7 +32,7 @@
                 
         
 	</table>
-            <br>
+        <br>
         <button class="btn btn-danger" onClick="return onBtnDangerClick()">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </button>

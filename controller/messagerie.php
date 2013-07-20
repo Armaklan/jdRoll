@@ -47,6 +47,14 @@ $messagerieController->post('/delete_select', function(Request $request) use($ap
 	return $app->redirect($app->path('messagerie'));
 })->bind("messagerie_delete_select");
 
+$messagerieController->post('/delete_my_select', function(Request $request) use($app) {
+        $delId = $request->get('del_id');
+        foreach ($delId as $id) {
+            $app['messagerieService']->markDeleteMyMsg($id);
+        }
+	return $app->redirect($app->path('messagerie'));
+})->bind("messagerie_delete_my_select");
+
 $messagerieController->get('/delete_my/{id}', function($id) use($app) {
 	$app['messagerieService']->markDeleteMyMsg($id);
 	return $app->redirect($app->path('messagerie'));

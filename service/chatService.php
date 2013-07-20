@@ -22,7 +22,18 @@ class ChatService {
     
     public function postMsg($user, $text) {
         if ($text != "") {
+            $text = strip_tags($text);
             $text = $this->urllink($text);
+            $text = str_replace(":)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-smile.gif' alt=''>", $text);
+            $text = str_replace(";)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-wink.gif' alt=''>", $text);
+            $text = str_replace(":p", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-tongue-out.gif' alt=''>", $text);
+            $text = str_replace(":X", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-sealed.gif' alt=''>", $text);
+            $text = str_replace(":'(", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-cry.gif' alt=''>", $text);
+            $text = str_replace("8-)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-cool.gif' alt=''>", $text);
+            $text = str_replace("o-)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-innocent.gif' alt=''>", $text);
+            $text = str_replace(":D", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-laughing.gif' alt=''>", $text);
+            $text = str_replace(":mrgreen:", "<img src='../../../../img/smileys-mrgreen.gif' alt=''>", $text);
+            
             $sql = "INSERT INTO chat
                             (message, username) 
                             VALUES (:message, :user) ";
