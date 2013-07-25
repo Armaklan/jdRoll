@@ -178,12 +178,33 @@ class CampagneService {
 				FROM campagne 
 				JOIN user 
 				ON user.id = campagne.mj_id 
-				WHERE campagne.statut < 3
+				WHERE campagne.statut < 2
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}
 
+        public function getArchiveCampagne() {
+		$sql = "SELECT campagne.*, user.username as username
+				FROM campagne 
+				JOIN user 
+				ON user.id = campagne.mj_id 
+				WHERE campagne.statut = 2
+				ORDER BY campagne.statut ASC, campagne.name ASC";
+	    $campagnes = $this->db->fetchAll($sql);
+	    return $campagnes;
+	}
+        
+        public function getPrepaCampagne() {
+		$sql = "SELECT campagne.*, user.username as username
+				FROM campagne 
+				JOIN user 
+				ON user.id = campagne.mj_id 
+				WHERE campagne.statut = 3
+				ORDER BY campagne.statut ASC, campagne.name ASC";
+	    $campagnes = $this->db->fetchAll($sql);
+	    return $campagnes;
+	}
 	
 	public function getLastCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
@@ -208,7 +229,7 @@ class CampagneService {
 	}
 
 	public function getCampagne($id) {
-		$sql = "SELECT * FROM campagne WHERE id = ?";
+		$sql = "SELECT campagne.*, user.username FROM campagne JOIN user ON campagne.mj_id = user.id WHERE campagne.id = ?";
 	    $campagne = $this->db->fetchAssoc($sql, array($id));
 	    return $campagne;
 	}

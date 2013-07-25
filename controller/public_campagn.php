@@ -18,6 +18,16 @@ $publicCampagneController->get('/list/all', function() use($app) {
 	return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => ""]);
 })->bind("campagne_list_all");
 
+$publicCampagneController->get('/list/archive', function() use($app) {
+	$campagnes = $app['campagneService']->getArchiveCampagne();
+	return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => ""]);
+})->bind("campagne_list_archive");
+
+$publicCampagneController->get('/list/prepa', function() use($app) {
+	$campagnes = $app['campagneService']->getPrepaCampagne();
+	return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => ""]);
+})->bind("campagne_list_prepa");
+
 $publicCampagneController->get('/{id}', function($id) use($app) {
     $campagne = $app['campagneService']->getCampagne($id);
     $is_mj = $app["campagneService"]->isMj($id);

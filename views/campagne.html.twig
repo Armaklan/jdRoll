@@ -29,6 +29,7 @@
     </div>
     <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
     <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
+    <p><b>MJ : </b><a href="{{ path('profile',{username: campagne.username} ) }}">{{ campagne.username }}</a></p>
     <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
     <p><b>Rythme : </b> 
             {% if campagne.rythme == 0 %}
