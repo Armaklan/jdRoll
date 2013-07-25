@@ -19,7 +19,11 @@
 				    	<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn3" title="Galerie des PNJ"><i class="icon-group"></i></a>
 				    	{% if perso.id != '' %}
 							<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-						{% endif %}	
+                            <a class="btn iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+                                title="Mettre une alerte">
+                                <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
+                            </a>
+						{% endif %}
 				    </div><p/>
 	    	</div>
 	    	<div class="span4">
@@ -42,7 +46,7 @@
 			</div>
 	    </div>
 	</div>
-	
+
 
 
 <div class="span3 sidebar visible-desktop" style="max-width: 300px">
@@ -64,6 +68,10 @@
             <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn3" title="Galerie des PNJ"><i class="icon-group"></i></a>
             {% if perso.id != '' %}
                             <a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+                            <a class="btn iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+                                title="Mettre une alerte">
+                                <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
+                            </a>
                     {% endif %}
         </div>
         <p/>

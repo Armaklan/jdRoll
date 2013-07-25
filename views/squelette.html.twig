@@ -37,9 +37,9 @@
           tinymce.init({
           selector: ".wysiwyg",
           plugins: [
-             "link image lists preview hr spellchecker insertdatetime",
+             "link image lists preview hr insertdatetime",
              "table template textcolor fullscreen",
-             "emoticons"
+             "emoticons code"
           ],
           toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",
           style_formats: [
@@ -57,9 +57,9 @@
         tinymce.init({
               selector: ".wysiwyg",
               plugins: [
-                 "link image lists preview hr spellchecker insertdatetime",
+                 "link image lists preview hr insertdatetime",
                  "table template textcolor fullscreen",
-                 "emoticons"
+                 "emoticons code"
               ],
               menubar : false,
               toolbar: "paste | styleselect removeformat | bold italic | hr | link image",
@@ -272,6 +272,24 @@
     		});
     	});
 
+        function alarm(joueur, campagne) {
+            var statutAlarm = 0;
+            if ($(".alarm-pj").hasClass("alarm-on") ) {
+                $(".alarm-pj").removeClass("alarm-on");
+                var statutAlarm = 0;
+            } else {
+                $(".alarm-pj").addClass("alarm-on");
+                var statutAlarm = 1;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "{{ path('alarm') }}",
+				data: {joueur: joueur, campagne: campagne, statut: statutAlarm},
+                success: function(msg){},
+                error: function(msg) {}
+            });
+        }
 
     </script>
 

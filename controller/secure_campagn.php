@@ -51,7 +51,7 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
                 $config = $app['campagneService']->getCampagneConfig($id);
                 $app['persoService']->setTechnical($perso['id'], $config['template']);
-                
+
                 $user = $app['userService']->getById($user_id);
                 $campagne = $app['campagneService']->getCampagne($id);
                 $campagne_name = $campagne['name'];
@@ -59,8 +59,8 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
                 $content = "
                     <p>Votre inscription à '$campagne_name' a été validé par le MJ.</p>
-                    <p>Nous t'invitons à te manifester sur le Mod-Off de la partie. 
-                    Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p> 
+                    <p>Nous t'invitons à te manifester sur le Mod-Off de la partie.
+                    Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p>
                     <p>Ta <a href='$url_perso'>fiche de personnage est accessible ici.</a></p>
                     <br>
                     <p>Nous te souhaitons une bonne partie.</p>
@@ -84,17 +84,29 @@ $securedCampagneController->get('/quit/{id}', function($id) use($app) {
                 return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_quit");
-        
+
 $securedCampagneController->get('/open_subscribe/{id}', function($id) use($app) {
             $campagne = $app['campagneService']->openSubscribe($id);
             return $app->redirect($app->path('campagne_my_list'));
         })->bind("campagne_open_subscribe");
-        
+
 $securedCampagneController->get('/close_subscribe/{id}', function($id) use($app) {
             $campagne = $app['campagneService']->closeSubscribe($id);
             return $app->redirect($app->path('campagne_my_list'));
         })->bind("campagne_close_subscribe");
 
+$securedCampagneController->post('/alarm', function(Request $request) use($app) {
+            $campagne = $request->get("campagne");
+            $joueur = $request->get("joueur");
+            $statut = $request->get("statut");
+
+            if($statut == 0) {
+                $app["campagneService"]->removeAlert($campagne, $joueur);
+            } else {
+                $app["campagneService"]->addAlert($campagne, $joueur);
+            }
+            return "";
+        })->bind("alarm");
 $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
             $user = $app['userService']->getById($user_id);
             $campagne = $app['campagneService']->getCampagne($id);
@@ -147,9 +159,10 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
             $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config]);
+                        'config' => $config, 'alert' => $alert]);
         })->bind("sidebar_campagne_large");
 
 $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
@@ -159,9 +172,10 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
             $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_mj_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso,
                         'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config]);
+                        'config' => $config, 'alert' => $alert]);
         })->bind("sidebar_campagne_mj_large");
 
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {

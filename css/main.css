@@ -98,3 +98,12 @@ a.collapserLink {
 a.collapserLink:hover {
     text-decoration: none;
 }
+
+.alarm-on {
+    color: #F95;
+}
+
+.campagne_alert {
+    color: red;
+    font-weight: 550;
+}

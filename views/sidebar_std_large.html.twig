@@ -15,7 +15,12 @@
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie active (MJ)</b></li>
 					{% for campagne in active_campagnes %}
-						<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+						<li><a
+                            href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >{{ campagne.name }}
+                            </a>
+                        </li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -23,16 +28,21 @@
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie active (PJ)</b></li>
 					{% for campagne in active_pj_campagnes %}
-						<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+						<li><a
+                            href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >{{ campagne.name }}
+                            </a>
+                        </li>
 					{% endfor %}
-				</ul>	    	
+				</ul>
 	    	</div>
 	    </div>
 	</div>
-{% endif %}	
+{% endif %}
 
 <div class="span3 sidebar visible-desktop" style="max-width: 300px">
-	    	
+
 	{% if (app.session.get('user') == null)  %}
 	<form class="" action="{{ path('login_connect')  }}" method="POST">
 	    <div class="control-group">
@@ -45,7 +55,7 @@
 		    	<input type="password" id="pass" name="pass" placeholder="Mot de passe">
 		    	<input type="hidden" name="url" value="!" />
 		    </div>
-	    </div>	    
+	    </div>
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -67,14 +77,24 @@
 		<ul class="nav nav-list nav-stacked">
 			<li class='nav-header'><b>Partie active (MJ)</b></li>
 			{% for campagne in active_campagnes %}
-				<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >{{ campagne.name }}
+                    </a>
+                </li>
 			{% endfor %}
 		</ul>
-	
+
 		<ul class="nav nav-list nav-stacked">
 			<li class='nav-header'><b>Partie active (PJ)</b></li>
 			{% for campagne in active_pj_campagnes %}
-				<li><a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >{{ campagne.name }}
+                    </a>
+                </li>
 			{% endfor %}
 		</ul>
 	{% endif %}

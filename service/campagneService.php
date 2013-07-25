@@ -44,7 +44,7 @@ class CampagneService {
                 $campagne['rp'] = $request->get('rp');
 		return $campagne;
     }
-    
+
     public function getFormCampagneConfig($request) {
     	$campagne = array();
     	$campagne['campagne_id'] = $request->get('campagne_id');
@@ -59,9 +59,9 @@ class CampagneService {
     	return $campagne;
     }
 
-    public function createCampagne($request) {	
-		$sql = "INSERT INTO campagne 
-				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut, rythme, rp) 
+    public function createCampagne($request) {
+		$sql = "INSERT INTO campagne
+				(name, systeme, univers, nb_joueurs, description, mj_id, banniere, statut, rythme, rp)
 				VALUES
 				(:name,:systeme,:univers,:nb_joueurs,:description,:mj_id,:banniere, :statut, :rythme, :rp)";
 
@@ -77,21 +77,21 @@ class CampagneService {
                 $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("mj_id", $this->session->get('user')['id']);
 		$stmt->execute();
-		
+
 		return $this->db->lastInsertId();
     }
-    
+
     public function createCampagneConfig($campagne) {
     	$sql = "INSERT INTO campagne_config
 				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_color, template, sidebar_text)
 				VALUES
 				(:campagne, '', '', '', '', '', '', '', '')";
-    
+
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
     	$stmt->execute();
     }
-    
+
     public function updateCampagneConfig($request) {
     	$sql = "UPDATE campagne_config
     			SET
@@ -105,7 +105,7 @@ class CampagneService {
     			sidebar_text = :sidebar_text
     			WHERE
     			campagne_id = :campagne";
-    
+
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $request->get('campagne_id'));
     	$stmt->bindValue("banniere", $request->get('banniere'));
@@ -120,7 +120,7 @@ class CampagneService {
     }
 
     public function updateCampagne($request) {
-    	$sql = "UPDATE campagne 
+    	$sql = "UPDATE campagne
     			SET name = :name,
     				banniere = :banniere,
     				systeme = :systeme,
@@ -146,10 +146,10 @@ class CampagneService {
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
-    
-    
+
+
     public function openSubscribe($id) {
-    	$sql = "UPDATE campagne 
+    	$sql = "UPDATE campagne
     			SET is_recrutement_open = :is_recrutement_open
     			WHERE
     				id = :id";
@@ -159,10 +159,10 @@ class CampagneService {
 		$stmt->bindValue("id", $id);
 		$stmt->execute();
     }
-    
-    
+
+
     public function closeSubscribe($id) {
-    	$sql = "UPDATE campagne 
+    	$sql = "UPDATE campagne
     			SET is_recrutement_open = :is_recrutement_open
     			WHERE
     				id = :id";
@@ -175,9 +175,9 @@ class CampagneService {
 
    	public function getAllCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
-				FROM campagne 
-				JOIN user 
-				ON user.id = campagne.mj_id 
+				FROM campagne
+				JOIN user
+				ON user.id = campagne.mj_id
 				WHERE campagne.statut < 2
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
@@ -186,26 +186,26 @@ class CampagneService {
 
         public function getArchiveCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
-				FROM campagne 
-				JOIN user 
-				ON user.id = campagne.mj_id 
+				FROM campagne
+				JOIN user
+				ON user.id = campagne.mj_id
 				WHERE campagne.statut = 2
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}
-        
+
         public function getPrepaCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
-				FROM campagne 
-				JOIN user 
-				ON user.id = campagne.mj_id 
+				FROM campagne
+				JOIN user
+				ON user.id = campagne.mj_id
 				WHERE campagne.statut = 3
 				ORDER BY campagne.statut ASC, campagne.name ASC";
 	    $campagnes = $this->db->fetchAll($sql);
 	    return $campagnes;
 	}
-	
+
 	public function getLastCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
 				FROM campagne
@@ -216,7 +216,7 @@ class CampagneService {
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
 	}
-	
+
 	public function getOpenCampagne() {
 		$sql = "SELECT campagne.*, user.username as username
 				FROM campagne
@@ -229,17 +229,18 @@ class CampagneService {
 	}
 
 	public function getCampagne($id) {
-		$sql = "SELECT campagne.*, user.username FROM campagne JOIN user ON campagne.mj_id = user.id WHERE campagne.id = ?";
+        $sql = "SELECT campagne.*, user.username FROM campagne
+                    JOIN user ON campagne.mj_id = user.id WHERE campagne.id = ?";
 	    $campagne = $this->db->fetchAssoc($sql, array($id));
 	    return $campagne;
 	}
-	
+
 	public function getCampagneConfig($id) {
 		$sql = "SELECT * FROM campagne_config WHERE campagne_id = ?";
 		$campagne = $this->db->fetchAssoc($sql, array($id));
 		return $campagne;
 	}
-	
+
 	public function isMj($id) {
 		if($this->session->get('user') != null) {
 			if($id == null) {
@@ -252,12 +253,12 @@ class CampagneService {
 			return false;
 		}
 	}
-	
+
 	public function isParticipant($id) {
 		if($this->session->get('user') != null) {
-			$sql = "SELECT user_id 
+			$sql = "SELECT user_id
 					FROM campagne_participant
-					WHERE 
+					WHERE
 					campagne_id = :campagne
 					AND user_id = :user";
 			$result = $this->db->fetchColumn($sql, array('user' => $this->session->get('user')['id'], 'campagne' => $id ), 0);
@@ -266,13 +267,13 @@ class CampagneService {
 			return false;
 		}
 	}
-        
-       
+
+
         public function isRealJoueur($campagne_id, $user_id) {
 		if($this->session->get('user') != null) {
-			$sql = "SELECT user_id 
+			$sql = "SELECT user_id
 					FROM campagne_participant
-					WHERE 
+					WHERE
 					campagne_id = :campagne
 					AND user_id = :user
                                         AND statut = 1";
@@ -286,12 +287,16 @@ class CampagneService {
 	public function getMyActiveMjCampagnes() {
 		return $this->getActiveMjCampagnes($this->session->get('user')['id']);
 	}
-	
-	
+
+
 	public function getActiveMjCampagnes($id) {
-		$sql = "SELECT *
+		$sql = "SELECT campagne.*, IFNULL(alert.joueur_id, 0) as campagne_alert
 				FROM campagne
-				WHERE mj_id = :user 
+                LEFT JOIN alert
+                ON
+                    campagne.id = alert.campagne_id
+                AND campagne.mj_id = alert.joueur_id
+				WHERE mj_id = :user
 				AND statut IN (0, 3)
 				ORDER BY name";
 	    $campagne = $this->db->fetchAll($sql, array('user' => $id));
@@ -301,21 +306,25 @@ class CampagneService {
 	public function getMyActivePjCampagnes() {
 		return $this->getActivePjCampagnes($this->session->get('user')['id']);
 	}
-	
+
 	public function getActivePjCampagnes($id) {
 		$sql = "SELECT
-		campagne.*, user.username as username
+		campagne.*, user.username as username, IFNULL(alert.joueur_id, 0) as campagne_alert
 		FROM campagne
 		JOIN campagne_participant as cp
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
+        LEFT JOIN alert
+        ON
+            campagne.id = alert.campagne_id
+        AND cp.user_id = alert.joueur_id
 		WHERE cp.user_id = ?
 		AND campagne.statut = 0
 		ORDER BY campagne.name";
 		$campagne = $this->db->fetchAll($sql, array($id));
 		return $campagne;
 	}
-	
+
 	public function getMyCampagnes() {
 		$sql = "SELECT * ,
 				( SELECT
@@ -337,9 +346,9 @@ class CampagneService {
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
-        
+
         public function getMyCampagnesWithWaiting() {
-		$sql = "SELECT DISTINCT campagne.id, campagne.name 
+		$sql = "SELECT DISTINCT campagne.id, campagne.name
 			FROM campagne
                         JOIN campagne_participant cp
                         ON campagne.id = campagne_id
@@ -350,22 +359,22 @@ class CampagneService {
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
-	
+
 	public function getMyPjCampagnes() {
             return $this->getMyPjCampagneByStatut(1);
 	}
-        
+
         public function getMyWaitingPjCampagnes() {
             return $this->getMyPjCampagneByStatut(0);
 	}
-        
-        
+
+
         public function getMyPjCampagneByStatut($statut) {
             $sql = "SELECT
 		campagne.*, user.username as username,
-				( SELECT 
+				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM 
+					FROM
 					sections
 					JOIN topics
 					ON sections.id = topics.section_id
@@ -376,7 +385,7 @@ class CampagneService {
 					ON can_read.topic_id = topics.id
 					AND can_read.user_id = :user
 					WHERE
-					sections.campagne_id = campagne.id 
+					sections.campagne_id = campagne.id
 					AND (
 						(topics.is_private <> 1)
 						OR
@@ -384,7 +393,7 @@ class CampagneService {
 						OR
 						(can_read.topic_id IS NOT NULL)
 					)
-				) as activity			
+				) as activity
 		FROM campagne
 		JOIN campagne_participant as cp
 		ON cp.campagne_id = campagne.id
@@ -428,7 +437,7 @@ class CampagneService {
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
-	
+
 	public function getMyPjArchiveCampagnes() {
 		$sql = "SELECT
 		campagne.*, user.username as username,
@@ -464,10 +473,10 @@ class CampagneService {
 		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
 		return $campagne;
 	}
-	
+
 	private function incrementeNbJoueur($id) {
-		$sql = "UPDATE campagne 
-				SET 
+		$sql = "UPDATE campagne
+				SET
 					nb_joueurs_actuel = nb_joueurs_actuel + 1,
                                         is_recrutement_open = IF(nb_joueurs_actuel = nb_joueurs, 0, 1)
 				WHERE id = :id";
@@ -478,8 +487,8 @@ class CampagneService {
 	}
 
 	private function decrementeNbJoueur($id) {
-		$sql = "UPDATE campagne 
-				SET 
+		$sql = "UPDATE campagne
+				SET
 					nb_joueurs_actuel = nb_joueurs_actuel - 1
 				WHERE id = :id";
 
@@ -487,7 +496,7 @@ class CampagneService {
 		$stmt->bindValue("id", $id);
 		$stmt->execute();
 	}
-	
+
 	public function getParticipant($campagne_id) {
 		$sql = "SELECT user.*, cp.statut as part_statut
 				FROM campagne_participant cp
@@ -500,8 +509,8 @@ class CampagneService {
 	}
 
 	private function insertParticipant($campagne_id, $user_id) {
-		$sql = "INSERT INTO campagne_participant 
-				(campagne_id, user_id) 
+		$sql = "INSERT INTO campagne_participant
+				(campagne_id, user_id)
 				VALUES
 				(:campagne, :user)";
 
@@ -512,7 +521,7 @@ class CampagneService {
 	}
 
 	private function deleteParticipant($campagne_id, $user_id) {
-		$sql = "DELETE FROM campagne_participant 
+		$sql = "DELETE FROM campagne_participant
 				WHERE
 				campagne_id = :campagne
 				AND user_id = :user";
@@ -524,8 +533,8 @@ class CampagneService {
 	}
 
 	private function createPersonnage($campagne_id, $user_id) {
-		$sql = "INSERT INTO campagne_participant 
-				(campagne_id, user_id) 
+		$sql = "INSERT INTO campagne_participant
+				(campagne_id, user_id)
 				VALUES
 				(:campagne, :user)";
 
@@ -536,7 +545,7 @@ class CampagneService {
 	}
 
 	private function checkIfNotParticipant($campagne_id, $user_id) {
-		$sql = "SELECT count(*) FROM campagne_participant 
+		$sql = "SELECT count(*) FROM campagne_participant
 				WHERE campagne_id = :campagne
 				AND   user_id = :user";
 
@@ -559,18 +568,18 @@ class CampagneService {
 		$this->checkIfNotParticipant($campagne_id, $user_id);
 		$this->insertParticipant($campagne_id, $user_id);
 	}
-        
+
         public function validJoueur($campagne_id, $user_id) {
             $sql = "UPDATE campagne_participant
                     SET statut = 1
                     WHERE campagne_id = :campagne
                     AND user_id = :user";
-            
+
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("campagne", $campagne_id);
             $stmt->bindValue("user", $user_id);
             $stmt->execute();
-            
+
             $this->incrementeNbJoueur($campagne_id);
         }
 
@@ -579,7 +588,7 @@ class CampagneService {
 			$this->checkIfNotParticipant($campagne_id, $user_id);
 			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
 		} catch (Exception $e) {
-			
+
                         if($this->isRealJoueur($campagne_id, $user_id)) {
                             $this->deleteParticipant($campagne_id, $user_id);
                             $this->decrementeNbJoueur($campagne_id);
@@ -587,7 +596,45 @@ class CampagneService {
                         } else {
                             $this->deleteParticipant($campagne_id, $user_id);
                         }
-		}	
+		}
 	}
+
+    public function addAlert($campagne, $joueur) {
+		$sql = "INSERT INTO alert
+                (campagne_id, joueur_id)
+                VALUES
+                (:campagne, :joueur)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+
+
+    }
+
+    public function removeAlert($campagne, $joueur) {
+
+		$sql = "DELETE FROM alert
+                WHERE
+                campagne_id = :campagne
+                AND joueur_id = :joueur ";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+
+    }
+
+    public function hasAlert($campagne, $joueur) {
+        $sql = "SELECT joueur_id
+                FROM alert
+                WHERE
+                campagne_id = :campagne
+                AND joueur_id = :joueur";
+        $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
+        return ($result != null);
+    }
 }
 ?>
