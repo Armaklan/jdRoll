@@ -1,7 +1,7 @@
 {% extends "squelette_campagne.html.twig" %}
 
 {% block content %}
-	
+
 	<table class="table table-striped table-hover" width="100%">
 		<thead>
 			<tr>
@@ -57,13 +57,13 @@
 						<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
 						{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
 							{% if post.user_id != null %}
-								<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}" 
+								<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
 								title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
 							{% endif %}
-							
+
 						{% endif %}
 						{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
-							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}" 
+							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
 								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
 						{% endif %}
 						<a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
@@ -86,7 +86,7 @@
 							    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 							    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
 							    <span id="resultatDicerQuick">
-							    	
+
 					   			 </span>
 					   		</form>
 					   	</td>
@@ -107,18 +107,32 @@
 							{% if is_mj %}
 							<div class="control-group">
 								<label for="perso_id">Poster en tant que...</label>
-								<select name="perso_id" >
-								 <option value="">MJ</option>
-								 {% for personnage in personnages %}
-									 <option value="{{ personnage.id }}">{{ personnage.name }}</option>
-								 {% endfor %}
-								</select>
+
+
+                                <div class="bfh-selectbox">
+                                    <input type="hidden" name="perso_id" value="">
+                                    <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+                                        <span class="bfh-selectbox-option input-medium" data-option="">MJ</span>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <div class="bfh-selectbox-options">
+                                        <input type="text" class="bfh-selectbox-filter">
+                                        <div role="listbox">
+                                            <ul role="option">
+                                                 {% for personnage in personnages %}
+                                                     <option value="{{ personnage.id }}">{{ personnage.name }}</option>
+                                                     <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
+                                                 {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
 							</div>
 							{% else %}
 								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
 							{% endif %}
 						   	<div class="control-group">
-							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
 							    	 placeholder="Votre message" rows="15" title="Réponse"></textarea>
 						    </div>
 						    <div class="control-group">
@@ -132,7 +146,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th colspan="2" class="categorie"><h5><a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}">Forum</a> > 
+				<th colspan="2" class="categorie"><h5><a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}">Forum</a> >
 					{{ topic.section_title }} > {{ topic.title }}</h5></th>
 				<th class="categorie" style="text-align: right">
 				{% for i in range(1, last_page) %}
@@ -146,14 +160,14 @@
 			</tr>
 		</tfoot>
 	</table>
-	
+
 <script language="javascript">
-						
+
 function quote(id) {
 	text = "<blockquote style='color: #339966'><p>" + $('#contentDiv' + id).html().trim() + "</blockquote></p><p></p>";
 	tinyMCE.get('content').setContent(tinyMCE.get('content').getContent() + text);
 }
-						
+
 function callLaunchDiceQuick() {
 	param=$('#dicerParamQuick').val();
 	description=$('#dicerDescriptionQuick').val();

@@ -1,35 +1,37 @@
-<!DOCTYPE html> 
-<html lang="fr"> 
-<head> 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 	<title>jdRoll</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+
         <link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
-        
+
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-responsive.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-fileupload.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-colorpicker.css" type="text/css" media="all">
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/css/datepicker.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap-formhelpers.css" type="text/css" media="all">
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/datepicker.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/magicsuggest-1.3.0-min.css">
-	
+
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-1.9.1.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-fileupload.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-colorpicker.js"> </script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-datepicker.js"> </script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-datepicker.js"> </script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-formhelpers-selectbox.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.form.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/magicsuggest-1.3.0-min.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/chat.js"></script>  
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/chat.js"></script>
 
   <script type="text/javascript" src="{{app.request.baseUrl}}/tinymce/tinymce.min.js"></script>
-  
+
   <script>
         if (window.matchMedia("(min-width: 600px)").matches) {
           tinymce.init({
@@ -39,7 +41,7 @@
              "table template textcolor fullscreen",
              "emoticons"
           ],
-          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",		
+          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",
           style_formats: [
                           {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                           {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -60,7 +62,7 @@
                  "emoticons"
               ],
               menubar : false,
-              toolbar: "paste | styleselect removeformat | bold italic | hr | link image",		
+              toolbar: "paste | styleselect removeformat | bold italic | hr | link image",
               style_formats: [
                               {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                               {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -76,45 +78,45 @@
     }
  </script>
 
- 
-  <script type="text/javascript">
-  
 
-  
+  <script type="text/javascript">
+
+
+
   </script>
   <script>
   function notifyMsg(msg) {
 	  AlternativeTitle.titles = new Array("jdRoll", msg);
 	  AlternativeTitle.delay = 1000;
-	   
+
 	  function AlternativeTitle(){};
-	   
+
 	  AlternativeTitle.currentIndex;
-	   
+
 	  AlternativeTitle.init = function()
 	      {
 	      AlternativeTitle.currentIndex = 0;
 	      setInterval(AlternativeTitle.change, AlternativeTitle.delay);
 	      };
-	       
+
 	  AlternativeTitle.change = function()
 	      {
 	      if(AlternativeTitle.currentIndex + 1 > AlternativeTitle.titles.length)
 	          AlternativeTitle.currentIndex = 0;
-	           
+
 	      document.title = AlternativeTitle.titles[AlternativeTitle.currentIndex];
-	       
+
 	      AlternativeTitle.currentIndex++;
 	      };
-	       
+
 	  AlternativeTitle.init();
   }
 </script>
 	{% block specificHeader %}
-	
+
 	{% endblock %}
 </head>
-<body>  
+<body>
 
 	<a name="top"></a>
 	<div class="navbar navbar-inverse">
@@ -126,11 +128,11 @@
 		    <span class="icon-bar"></span>
 		    <span class="icon-bar"></span>
 		    </a>
-		    
+
           <a class="brand" href="{{ path('homepage') }}">jdRoll</a>
           <div class="nav-collapse collapse">
-          	
-            
+
+
             <ul class="nav">
               <li><a href="{{ path('homepage') }}"><i class="icon-home"></i> Accueil</a></li>
               <li class="dropdown">
@@ -173,8 +175,8 @@
         </div>
       </div>
     </div>
-    
-    
+
+
 
 
 	<div class="container-fluid" style="margin-top: 4em;">
@@ -188,7 +190,7 @@
           {% block precontent %}
           {% endblock %}
           <p></p>
-          
+
 
               {% if app.request.baseUrl == "/jdRoll" %}
                   <div class="alert alert-error">
@@ -208,9 +210,9 @@
 		$('.iconeBtn').tooltip();
 		$('.colorpicker').colorpicker();
 	</script>
-	
+
 	{% block specificJs %}
-	
+
 	{% endblock %}
 
     <script>
@@ -227,7 +229,7 @@
 				}
 			});
         }
-        
+
         function onBtnDangerClick() {
             bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
     		        if(confirmed) {
@@ -237,9 +239,9 @@
                         }
             });
         }
-        
+
         function selectAll(formName) {
-            var checked = $(formName).find(".checkAll").is(':checked'); 
+            var checked = $(formName).find(".checkAll").is(':checked');
             $(formName).find('input[type=checkbox]').attr('checked', checked);
         }
 
@@ -253,10 +255,10 @@
                     } else {
                         sign.removeClass("icon-chevron-sign-up").addClass("icon-chevron-sign-down");
                     }
-    		});     
+    		});
     	});
 
-        
+
 
     	$(function () {
     		$("a.btn-danger").click(function(e) {
@@ -267,19 +269,19 @@
     		        window.location.replace(location);
     		        }
     		    });
-    		});     
+    		});
     	});
 
-		
+
     </script>
 
     <a name="bottom"></a>
-   
+
    	{% if app.session.get('user') != null %}
 		{% include('messagerie/btm_messagerie_ajax.html.twig') %}
 	{% endif %}
     {% include('uploader.html.twig') %}
-    
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -293,5 +295,5 @@
   })();
 
 </script>
-</body> 
+</body>
 </html>

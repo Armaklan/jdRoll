@@ -8,22 +8,35 @@
 	<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" name="id" value="{{ post.id }}" >
 		<input type="hidden" name="topic_id" value="{{ post.topic_id }}" >
-		{% if is_mj %}
-			<div class="control-group">
-				<label for="perso_id">Poster en tant que...</label>
-				<select name="perso_id" >
-				 <option value="">MJ</option>
-				 {% for personnage in personnages %}
-					 <option value="{{ personnage.id }}" {% if personnage.id == post.perso_id %} SELECTED="SELECTED" {% endif %}>
-					 	{{ personnage.name }}</option>
-				 {% endfor %}
-				</select>
-			</div>
-		{% else %}
-			<input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
-		{% endif %}
+        {% if is_mj %}
+        <div class="control-group">
+            <label for="perso_id">Modifier l'auteur vers...</label>
+
+
+            <div class="bfh-selectbox">
+                <input type="hidden" name="perso_id" value="{{post.perso_id}}">
+                <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+                    <span class="bfh-selectbox-option input-medium" data-option="{{ post.perso_id }}">Inchangé</span>
+                    <b class="caret"></b>
+                </a>
+                <div class="bfh-selectbox-options">
+                    <input type="text" class="bfh-selectbox-filter">
+                    <div role="listbox">
+                        <ul role="option">
+                             {% for personnage in personnages %}
+                                 <option value="{{ personnage.id }}">{{ personnage.name }}</option>
+                                 <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
+                             {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
+        {% endif %}
 	   	<div class="control-group">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
 		    	 placeholder="Votre message" rows="15">{{ post.content }}</textarea>
 	    </div>
 	    <div class="control-group">
