@@ -13,6 +13,11 @@ require __DIR__.'/service/absenceService.php';
 require __DIR__.'/service/dicerService.php';
 require __DIR__.'/service/chatService.php';
 require __DIR__.'/service/messagerieService.php';
+require __DIR__.'/service/dicer/dicer.php';
+require __DIR__.'/service/dicer/JetElt.php';
+require __DIR__.'/service/dicer/Dice.php';
+require __DIR__.'/service/dicer/Group.php';
+require __DIR__.'/service/dicer/StaticValue.php';
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
