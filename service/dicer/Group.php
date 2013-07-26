@@ -27,10 +27,14 @@ class Group extends JetElt {
 
     public function getResultat() {
         $resultat = 0;
+        $firstResult = true;
         foreach ($this->elements as $elt) {
-            if ($operateur = "+") {
+            if ($this->operateur == "-" && !$firstResult) {
+                $resultat -= $elt->getResultat();
+            } else {
                 $resultat += $elt->getResultat();
             }
+            $firstResult = false;
         }
         return $resultat;
     }

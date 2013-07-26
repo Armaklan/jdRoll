@@ -18,15 +18,29 @@ class Dicer {
     private function parseGroup($expression) {
         $groupElt = explode("+", $expression);
         if(count($groupElt) == 1) {
-            $group = $this->parseDicesExpression($expression);
+            $group = $this->parseGroupElt($expression);
             $this->elements[count($this->elements)] = $group;
         } else {
             $group = new Group("+");
             foreach($groupElt as $elt) {
-                $result = $this->parseDicesExpression($elt);
+                $result = $this->parseGroupElt($elt);
                 $group->addElt($result);
             }
             $this->elements[count($this->elements)] = $group;
+        }
+    }
+
+    private function parseGroupElt($expression) {
+        $groupElt = explode("-", $expression);
+        if(count($groupElt) == 1) {
+            return $this->parseDicesExpression($expression);
+        } else {
+            $group = new Group("-");
+            foreach($groupElt as $elt) {
+                $result = $this->parseDicesExpression($elt);
+                $group->addElt($result);
+            }
+            return $group;
         }
     }
 
