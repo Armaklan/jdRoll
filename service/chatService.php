@@ -22,7 +22,12 @@ class ChatService {
     
     public function postMsg($user, $text) {
         if ($text != "") {
+			//On remplace le caractère '<' par son équivalent HTML
+			$text = $this->escapeLowerAngleBracket($text);
+			//On strip les tags HTML
             $text = strip_tags($text);
+			//On remplace la forme HTML du '<' par son équivalent ascii
+			$text = str_replace("&lt;", "<", $text);
             $text = $this->urllink($text);
             $text = str_replace(":)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-smile.gif' alt=''>", $text);
             $text = str_replace(";)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-wink.gif' alt=''>", $text);
@@ -55,6 +60,10 @@ class ChatService {
         $content = stripslashes($content);
         return $content;
     }
+	
+	private function escapeLowerAngleBracket($str){ 
+		return preg_replace('/<([^[:alpha:]])/', '&lt;\\1', $str); 
+	} 
 
     
 }
