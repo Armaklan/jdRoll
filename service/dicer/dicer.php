@@ -48,7 +48,20 @@ class Dicer {
         if ( stripos($expression, 'd') === FALSE ) {
             return new StaticValue($expression);
         } else {
-            $group = new Group("+");
+            $group = null;
+            if ( stripos($expression, 'g') !== FALSE ) {
+                $exprElt = explode("g", $expression);
+                $nbKeepDice = $exprElt[1];
+                $expression = $exprElt[0];
+                $group = new Group("g$nbKeepDice");
+            } elseif (stripos($expression, 'l') !== FALSE) {
+                $exprElt = explode("l", $expression);
+                $nbKeepDice = $exprElt[1];
+                $expression = $exprElt[0];
+                $group = new Group("l$nbKeepDice");
+            } else {
+                $group = new Group("+");
+            }
             $results = array();
             $nombre = 0;
             $diceDetail = "";
@@ -64,6 +77,10 @@ class Dicer {
             $diceDetail = $diceElt[1];
 
             for ($i = 0; $i < $nombre; $i++) {
+                if($i > 0 and ( stripos($diceDetail, 's') !== FALSE or stripos($diceDetail, 'S') !== FALSE)) {
+                    $diceDetail = str_replace('s', '', $diceDetail);
+                    $diceDetail = str_replace('S', '', $diceDetail);
+                }
                 $group->addElt(new Dice($diceDetail));
             }
             return $group;
