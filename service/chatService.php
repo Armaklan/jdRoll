@@ -49,7 +49,7 @@ class ChatService {
             $stmt->execute();
         }
     }
-    
+
     private function urllink($content='') {
         $content = preg_replace('#(((https?://)|(w{3}\.))+[a-zA-Z0-9&;\#\.\?=_/-]+\.([a-z]{2,4})([a-zA-Z0-9&;\#\.\?=_/-]+))#i', '<a href="$0" target="_blank">$0</a>', $content);
         // Si on capte un lien tel que www.test.com, il faut rajouter le http://
@@ -62,7 +62,8 @@ class ChatService {
     }
 	
 	private function escapeLowerAngleBracket($str){ 
-		return preg_replace('/<([^[:alpha:]])/', '&lt;\\1', $str); 
+		$find = array('/<([^[:alpha:]])/', '/<$/');
+		return preg_replace($find, '&lt;\\1', $str); 
 	} 
 
     
