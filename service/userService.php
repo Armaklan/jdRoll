@@ -56,6 +56,18 @@ class UserService {
 		$this->session->set('user', $userSession);
 		return $this->getCurrentUser();
 	}
+	
+	public function updateUser($request) {
+		$sql = "UPDATE user 
+				SET 
+					mail = ?,
+					avatar = ?,
+					description = ?
+				WHERE username = ?";
+
+		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'), $request->get('username')));
+		return $this->getByUsername($request->get('username'));
+	}
 
 	public function subscribeUser($request) {
 

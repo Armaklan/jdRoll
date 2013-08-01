@@ -14,6 +14,9 @@
 				<th>Nom</th>
 				<th>Date d'inscription</th>
 				<th>Date de dernière activité</th>
+				{% if currentUser.profil > 0%}
+				<th></th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -26,6 +29,9 @@
 				<td><a href="{{ path('profile', {username : user.username}) }}">{{ user.username }}</a></td>
 				<td>{{ user.subscribe_date|date("d/m/y") }}</td>
 				<td>{{ user.last_activity|date("d/m/y H:i") }}</td>
+				{% if currentUser.profil > 0%}
+				<td><a href="{{ path('profile_edit', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-edit"></i> Editer</a></td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 		</tbody>

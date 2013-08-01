@@ -8,7 +8,11 @@
 	    </div>
     {% endif %}
 
+{% if adminUser is not defined  %}
 	<form class="form-horizontal" action="{{ path('my_profile_save')  }}" method="POST">
+{% else %}
+	<form class="form-horizontal" action="{{ path('profile_edit_save',{'username' : user.username})  }}" method="POST">
+{% endif %}
 	    <div class="control-group">
 		    <label class="control-label" for="login">Login</label>
 		    <div class="controls">
@@ -44,6 +48,7 @@
 	    </div>
     </form>
 
+{% if adminUser is not defined %}
     <form class="form-horizontal" action="{{ path('my_profile_passwd')  }}" method="POST">
 		<h3>Changement de mot de passe</h3>
 	    <div class="control-group">
@@ -65,5 +70,5 @@
 		    </div>
 	    </div>
     </form>
-
+{% endif %}
 {% endblock %}

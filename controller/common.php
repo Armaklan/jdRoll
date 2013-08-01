@@ -45,10 +45,28 @@ $commonController->post('/login', function(Request $request) use($app) {
 
 $commonController->get('/profile/{username}', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
+	$currentUser = $app["userService"]->getCurrentUser();
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes]);
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser]);
 })->bind("profile");
+
+$commonController->get('/profile/{username}/edit', function($username) use($app) {
+    $user = $app["userService"]->getByUsername($username);
+	$currentUser = $app["userService"]->getCurrentUser();
+	
+	 if($currentUser["username"] == $user["username"] || $currentUser["profil"] <= 0)
+		 return $app->redirect($app->path('my_profile'));
+		 
+	
+    return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
+})->bind("profile_edit");
+
+$commonController->post('/profile/{username}/edit/save', function(Request $request) use($app) {
+	$user = $app["userService"]->updateUser($request);
+	$currentUser = $app["userService"]->getCurrentUser();
+    return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
+})->bind("profile_edit_save");
 
 $commonController->get('/about', function() use($app) {
 	return $app->render('about.html.twig');
@@ -85,7 +103,8 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 
 $commonController->get('/users', function(Request $request) use ($app) {
         $users = $app['userService']->getAllUsers();
-	return $app->render('user_list.html.twig', ['users' => $users]);
+		$currentUser = $app['userService']->getCurrentUser();
+	return $app->render('user_list.html.twig', ['users' => $users,'currentUser' => $currentUser]);
 })->bind("user_list");
 
 
