@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-	
+
 
 	</div>
 	{% if (msg != "") %}
@@ -28,7 +28,7 @@
 		{{ render(url('sidebar_std_large')) }}
 	{% else %}
 		{% if is_mj %}
-	   		{{ render(url('sidebar_campagne_mj_large', {campagne_id : campagne_id})) }}	
+	   		{{ render(url('sidebar_campagne_mj_large', {campagne_id : campagne_id})) }}
 		{% else %}
 	   		{{ render(url('sidebar_campagne_large', {campagne_id : campagne_id})) }}
 	    {% endif %}
@@ -38,5 +38,6 @@
 {% block specificJs %}
 	{% if campagne_id != 0 %}
 		{{ render(url("print_dicer", {campagne_id : campagne_id}) ) }}
+        {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
 	{% endif %}
 {% endblock %}

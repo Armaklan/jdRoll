@@ -636,5 +636,33 @@ class CampagneService {
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
+
+    public function getNote($campagne, $user) {
+        try {
+            $sql = "SELECT content
+                    FROM note
+                    WHERE
+                    campagne_id = :campagne
+                    AND user_id = :user";
+            return $this->db->fetchColumn($sql, array('user' => $user, 'campagne' => $campagne ), 0);
+        } catch(Exception $e) {
+            return "";
+        }
+    }
+
+    public function updateNote($campagne, $user, $content) {
+        $sql = "UPDATE note
+                SET content = :content
+                , last_update = CURRENT_TIMESTAMP
+                WHERE
+                campagne_id = :campagne
+                AND user_id = :user";
+        $count = $this->db->executeUpdate($sql, array('user' => $user, 'campagne' => $campagne, 'content' => $content ));
+        if($count == 0) {
+            $sql = "INSERT INTO note (user_id, campagne_id, content)
+                VALUES (:user, :campagne, :content)";
+            $this->db->executeUpdate($sql, array('user' => $user, 'campagne' => $campagne, 'content' => $content ));
+        }
+    }
 }
 ?>
