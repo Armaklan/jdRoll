@@ -17,11 +17,11 @@ class Dice extends JetElt {
     function __construct($expression) {
 
         $lastCar = substr(trim($expression), -1);
-        if ( $lastCar == "E") {
+        if ( $lastCar == "E" or $lastCar == "S") {
             $this->explosif = true;
             $this->limitedExplosif = false;
             $expression = substr($expression, 0, -1);
-        } elseif ($lastCar == "e") {
+        } elseif ($lastCar == "e" or $lastCar == "s") {
             $this->explosif = true;
             $this->limitedExplosif = true;
             $expression = substr($expression, 0, -1);
