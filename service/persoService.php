@@ -28,8 +28,8 @@ class PersoService {
     }
 
     public function createPersonnage($campagne_id, $user_id) {
-        $sql = "INSERT INTO personnages 
-				(name, campagne_id, user_id) 
+        $sql = "INSERT INTO personnages
+				(name, campagne_id, user_id)
 				VALUES
 				(:name, :campagne, :user)";
 
@@ -41,7 +41,7 @@ class PersoService {
     }
 
     public function getPersonnage($createIfNotExist, $campagne_id, $user_id) {
-        $sql = "SELECT * FROM personnages 
+        $sql = "SELECT * FROM personnages
 				WHERE
 						campagne_id = :campagne
 				AND 	user_id = :user";
@@ -79,7 +79,7 @@ class PersoService {
     public function getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id) {
         $sql = "SELECT personnages.*, user.username as username, can_read.user_id as cr_user FROM personnages
 				JOIN user ON user.id = personnages.user_id
-				LEFT JOIN can_read 
+				LEFT JOIN can_read
 				ON user.id = can_read.user_id
 				AND can_read.topic_id = :topic
 				WHERE
@@ -89,31 +89,33 @@ class PersoService {
         return $result;
     }
 
-    public function getPNJInCampagne($campagne_id) {
+    public function getPNJInCampagne($campagne_id, $is_mj) {
         $sql = "
-            SELECT perso.* FROM 
+            SELECT perso.* FROM
             (   SELECT pnj.*, cat.name as cat_name, cat.id as cate_id
                 FROM
                 personnages pnj
-                LEFT JOIN 
-                pnj_category cat 
+                LEFT JOIN
+                pnj_category cat
                 ON pnj.cat_id = cat.id
                 WHERE
                     pnj.campagne_id = :campagne
                 AND 	pnj.user_id IS NULL
                 AND     pnj.statut IN (0, 2)
+                AND     (:is_mj = true or pnj.statut = 0)
             UNION
                 SELECT pnj.*, cat.name as cat_name, cat.id as cate_id
                 FROM
                 personnages pnj
-                RIGHT JOIN 
-                pnj_category cat 
+                RIGHT JOIN
+                pnj_category cat
                 ON pnj.cat_id = cat.id
                 WHERE
                         cat.campagne_id = :campagne
+                        and :is_mj = true
             ) as perso
             ORDER BY perso.cat_name ASC, perso.name ASC";
-        $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+        $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "is_mj" => $is_mj));
         return $result;
     }
 
@@ -128,7 +130,7 @@ class PersoService {
 
     public function updatePersonnage($campagne_id, $perso_id, $request) {
 
-        $sql = "UPDATE personnages 
+        $sql = "UPDATE personnages
 				SET
 				name = :name,
 				avatar = :avatar,
@@ -158,7 +160,7 @@ class PersoService {
 
     public function setTechnical($perso_id, $template) {
 
-        $sql = "UPDATE personnages 
+        $sql = "UPDATE personnages
 				SET
 				technical = :technical
 				WHERE
@@ -196,7 +198,7 @@ class PersoService {
             throw new Exception("Impossible de supprimer un PNJ existant");
         }
 
-        $sql = "UPDATE personnages 
+        $sql = "UPDATE personnages
 				SET
 				statut = 1
 				WHERE
@@ -237,8 +239,8 @@ class PersoService {
         $stmt->bindValue("campagne", $campagne_id);
         $stmt->execute();
     }
-    
-    
+
+
     public function getBlankPnjCat($campagne_id) {
         $cat = array();
         $cat["campagne_id"] = $campagne_id;
@@ -256,8 +258,8 @@ class PersoService {
     }
 
     public function insertPnjCat($request) {
-        $sql = "INSERT INTO pnj_category 
-		(name, campagne_id) 
+        $sql = "INSERT INTO pnj_category
+		(name, campagne_id)
 		VALUES
 		(:name, :campagne)";
 
@@ -266,9 +268,9 @@ class PersoService {
         $stmt->bindValue("campagne", $request->get('campagne_id'));
         $stmt->execute();
     }
-    
+
     public function updatePnjCat($request) {
-        $sql = "UPDATE 
+        $sql = "UPDATE
                     pnj_category
                 SET name = :name
                 WHERE
@@ -279,9 +281,9 @@ class PersoService {
         $stmt->bindValue("id", $request->get('id'));
         $stmt->execute();
     }
-    
+
     public function deletePnjCat($id) {
-        $sql = "DELETE FROM 
+        $sql = "DELETE FROM
                     pnj_category
                 WHERE
                     id = :id";
@@ -290,7 +292,7 @@ class PersoService {
         $stmt->bindValue("id", $id);
         $stmt->execute();
     }
-    
+
     public function getPnjCat($id) {
         $sql = "SELECT * FROM pnj_category
 		WHERE
@@ -298,7 +300,7 @@ class PersoService {
         $result = $this->db->fetchAssoc($sql, array("id" => $id));
         return $result;
     }
-    
+
     public function getAllPnjCat($campagne_id) {
         $sql = "SELECT * FROM pnj_category
 		WHERE
