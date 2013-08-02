@@ -104,7 +104,7 @@ a.collapserLink:hover {
 }
 
 .campagne_alert {
-    color: red;
+    color: red !important;
     font-weight: 550;
 }
 
