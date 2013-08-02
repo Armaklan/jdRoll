@@ -10,7 +10,7 @@ class SectionService {
         $this->db = $db;
         $this->session = $session;
     }
-    
+
     public function getBlankSection($campagne_id) {
 		$section = array();
 		$section['id'] = '';
@@ -36,18 +36,18 @@ class SectionService {
     public function getSection($section_id) {
     	$sql = "SELECT * FROM sections
 				WHERE id = :section";
-    
+
     	return $this->db->fetchAssoc($sql, array("section" => $section_id));
     }
-    
+
     public function getNbTopicInSection($section_id) {
     	$sql = "SELECT count(*) as nb FROM topics
 				WHERE section_id = :section";
-    
+
     	return $this->db->fetchColumn($sql, array("section" => $section_id), 0);
     }
-    
-    public function createSection($request, $campagne_id) {	
+
+    public function createSection($request, $campagne_id) {
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
 		$title = $request->get('title');
@@ -56,13 +56,13 @@ class SectionService {
 		$default_collapse = $request->get('default_collapse');
 		return $this->createSectionWith($campagne_id, $title, $ordre, $default_collapse, $banniere);
     }
-    
+
     public function createSectionWith($campagne, $title, $ordre, $default_collapse, $banniere) {
     	$sql = "INSERT INTO sections
 				(campagne_id, title, ordre, default_collapse, banniere)
 				VALUES
 				(:campagne,:title,:ordre,:default_collapse,:banniere)";
-    
+
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
     	$stmt->bindValue("title", $title);
@@ -70,13 +70,13 @@ class SectionService {
     	$stmt->bindValue("banniere", $banniere);
     	$stmt->bindValue("default_collapse", $default_collapse);
     	$stmt->execute();
-    	
+
     	return $this->db->lastInsertId();
     }
-    
+
 
     public function updateSection($request) {
-    	$sql = "UPDATE sections 
+    	$sql = "UPDATE sections
     			SET title = :title,
     				ordre = :ordre,
     				default_collapse = :default_collapse,
@@ -92,7 +92,7 @@ class SectionService {
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
-    
+
     public function deleteSection($section_id) {
     	$sql = "DELETE FROM sections WHERE id = :id";
     	$stmt = $this->db->prepare($sql);
@@ -104,7 +104,7 @@ class SectionService {
     	$sql = "SELECT * FROM sections WHERE campagne_id = :campagne OR (:campagne IS NULL AND campagne_id IS NULL)";
     	return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
     }
-    
+
    	public function getAllSectionInCampagne($campagne_id) {
    		$user_id = $this->session->get('user')['id'];
 		$sql = "SELECT DISTINCT
@@ -123,7 +123,7 @@ class SectionService {
 					user.username as user_username,
 					rd.post_id as read_post_id,
 					cr.topic_id as cr_topic_id
-				FROM sections sections 
+				FROM sections sections
 				LEFT JOIN topics topics
 				ON
 					sections.id = topics.section_id
@@ -137,21 +137,21 @@ class SectionService {
 				ON
 					perso.id = posts.perso_id
 				LEFT JOIN read_post rd
-				ON 
+				ON
 					topics.id = rd.topic_id
 				AND rd.user_id = :user
 				LEFT JOIN can_read cr
-				ON 
+				ON
 					topics.id = cr.topic_id
 				AND cr.user_id = :user
-				WHERE 
+				WHERE
 					(:campagne IS NULL and sections.campagne_id IS NULL)
 					OR (sections.campagne_id = :campagne)
-				ORDER BY sections.ordre ASC, topics.stickable DESC, topics.ordre ASC";
+				ORDER BY sections.ordre ASC, sections.title ASC, topics.stickable DESC, topics.ordre ASC, topics.title ASC";
 	    $campagnes = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
 	    return $campagnes;
 	}
-	
+
 	public function getLastPostInForum() {
 		$sql = "SELECT DISTINCT
 					sections.title as section_title,
