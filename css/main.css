@@ -107,3 +107,19 @@ a.collapserLink:hover {
     color: red;
     font-weight: 550;
 }
+
+.invisible {
+    display: none;
+}
+
+.profil2 {
+    color: red;
+}
+
+.profil1 {
+    color: #B061FF;
+}
+
+.profil-1 {
+    display: none;
+}

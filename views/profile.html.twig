@@ -11,11 +11,11 @@
     <div class="container-fluid">
     	<div class="row-fluid" style="text-align: right">
     		<a href="{{ path('messagerie_new_to', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-reply-all"></i> Envoyer un MP</a>
-			{% if currentUser.profil > 0  and currentUser.username != user.username%}
+			{% if currentUser.profil > 1  and currentUser.username != user.username%}
 			<a href="{{ path('profile_edit', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-edit"></i> Editer</a>
 			{% endif %}
     	</div>
-		
+
     	<div class="row-fluid">
     		<div class="span2">
     			<img src="{{ user.avatar }}" style="max-width: 130px">
@@ -65,6 +65,6 @@
 		    	</ul>
     		</div>
     	</div>
-    </div>	
+    </div>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 <?php
 
 class UserService {
-	
+
 	private $db;
 	private $session;
 
@@ -43,8 +43,8 @@ class UserService {
 	}
 
 	public function updateCurrentUser($request) {
-		$sql = "UPDATE user 
-				SET 
+		$sql = "UPDATE user
+				SET
 					mail = ?,
 					avatar = ?,
 					description = ?
@@ -56,10 +56,10 @@ class UserService {
 		$this->session->set('user', $userSession);
 		return $this->getCurrentUser();
 	}
-	
+
 	public function updateUser($request) {
-		$sql = "UPDATE user 
-				SET 
+		$sql = "UPDATE user
+				SET
 					mail = ?,
 					avatar = ?,
 					description = ?
@@ -75,8 +75,8 @@ class UserService {
 			throw new Exception("Les mots de passes ne correspondent pas");
 		}
 
-		$sql = "INSERT INTO user 
-				(username, password, mail) 
+		$sql = "INSERT INTO user
+				(username, password, mail)
 				VALUES
 				(:username,:password,:mail)";
 
@@ -93,8 +93,8 @@ class UserService {
 			throw new Exception("Les mots de passes ne correspondent pas");
 		}
 
-		$sql = "UPDATE user 
-				SET 
+		$sql = "UPDATE user
+				SET
 					password = :password
 				WHERE username = :username";
 
@@ -106,22 +106,22 @@ class UserService {
 
 	public function getByUsername($username) {
 		$sql = "SELECT user.*, last_action.time as last_activity
-                    FROM user 
+                    FROM user
                     LEFT OUTER JOIN
-                    last_action 
+                    last_action
                     ON
                     user.id = last_action.user_id
                     WHERE username = ?";
 	    $user = $this->db->fetchAssoc($sql, array($username));
 	    return $user;
 	}
-        
+
         public function getById($id) {
 		$sql = "SELECT * FROM user WHERE id = ?";
 	    $user = $this->db->fetchAssoc($sql, array($id));
 	    return $user;
 	}
-	
+
 	public function getLastSubscribe() {
 		$sql = "SELECT *
 			FROM user
@@ -129,7 +129,7 @@ class UserService {
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}
-	
+
 
 	public function updateLastActionTime() {
 		try {
@@ -137,7 +137,7 @@ class UserService {
 				(time, user_id)
 				VALUES
 				(CURRENT_TIMESTAMP, :username)";
-				
+
 			$stmt = $this->db->prepare($sql);
 			$stmt->bindValue("username", $this->session->get('user')['id']);
 			$stmt->execute();
@@ -146,12 +146,12 @@ class UserService {
 				SET
 					time = CURRENT_TIMESTAMP
 				WHERE user_id = ?";
-			
+
 			$this->db->executeUpdate($sql, array($this->session->get('user')['id']));
 		}
 
 	}
-	
+
 	public function getUsernamesList() {
 		$sql = "SELECT username
 				FROM user";
@@ -162,18 +162,19 @@ class UserService {
 		}
 		return implode(',', $users);
 	}
-	
+
         public function getAllUsers() {
 		$sql = "SELECT user.*, last_action.time as last_activity
                         FROM user
                         LEFT JOIN last_action
                         ON last_action.user_id = user.id
+                        WHERE user.profil >= 0
                         ORDER BY user.username ASC";
-		
+
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}
-        
+
 	public function getConnected() {
 		$sql = "SELECT *
 				FROM last_action
@@ -182,11 +183,11 @@ class UserService {
 				WHERE
 				time > DATE_SUB(now(), INTERVAL 5 MINUTE)
 				ORDER BY user.username ASC";
-		
+
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}
-	
+
 	public function getConnectedIn24H() {
 		$sql = "SELECT *
 				FROM last_action
@@ -194,7 +195,7 @@ class UserService {
 				ON last_action.user_id = user.id
 				WHERE
 				time > DATE_SUB(now(), INTERVAL 24 HOUR)";
-	
+
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}

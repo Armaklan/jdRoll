@@ -18,11 +18,12 @@
 	    </div>
     {% endif %}
 
-    
+
 	{% if is_mj %}
 	<div align="right">
-		<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn"><i class="icon-wrench"></i></a>
-		<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-primary iconeBtn"><i class="icon-plus"></i></a>
+		<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn admIcone invisible"><i class="icon-wrench"></i></a>
+		<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-primary iconeBtn admIcone invisible"><i class="icon-plus"></i></a>
+		<a title="Administrer l'espace campagne" id="admMode" class="btn iconeBtn admDisabled"><i class="icon-eye-open"></i></a>
 	</div>
 	{% endif %}
 	<p/>
@@ -30,15 +31,15 @@
 	{% set topic_id = -1 %}
 
 	{% for line in topics %}
-		{% if line.section_id != section_id %} 
-		
-			{% if section_id != -1 %} 
+		{% if line.section_id != section_id %}
+
+			{% if section_id != -1 %}
 					</tbody>
 				</table>
 	    	</div>
 			{% endif %}
-			
-			
+
+
 	    	<div class="categorie">
 	    		<table width="100%">
 	    			<tr>
@@ -49,7 +50,7 @@
                                                     {% else %}
                                                         <i class="icon-chevron-sign-up"></i>
                                                     {% endif %}
-                                                    
+
 				    			{% if (line.section_banniere != null) and (line.section_banniere != "") %}
 				    				<img src="{{ line.section_banniere }}" width="80%" style="max-height: 200px; max-width: 500px;" />
 				    			{% else %}
@@ -60,33 +61,33 @@
 	    				<td width="30%" style="vertical-align: top">
 		    				<div align="right">
 		    					{% if is_mj %}
-		    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn iconeBtn"><i class="icon-edit"></i></a>
-									<a href="{{ path('topic_add', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Ajouter un sujet" class="btn iconeBtn"><i class="icon-plus"></i></a>
-									<a href="{{ path('section_delete', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Supprimer la catégorie" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+		    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn iconeBtn admIcone invisible"><i class="icon-edit"></i></a>
+									<a href="{{ path('topic_add', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Ajouter un sujet" class="btn iconeBtn admIcone invisible"><i class="icon-plus"></i></a>
+									<a href="{{ path('section_delete', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Supprimer la catégorie" class="btn btn-danger iconeBtn admIcone invisible"><i class="icon-remove-sign"></i></a>
 								{% endif %}
 							</div>
 	    				</td>
 	    			</tr>
 	    		</table>
-	    		
-	    		
+
+
 	    	</div>
-	    	
+
 	    	<div class="topics collapse {% if line.default_collapse == 0 %} in {% else %} out {% endif %}" id="section{{ line.section_id  }}">
 		    	<table class="table table-striped table-hover">
 					<tbody>
 			{% set section_id = line.section_id %}
 		{% endif %}
-		
+
 		{% if line.topics_id != null %}
 			{% if (line.topics_is_private != 1) or is_mj or (line.cr_topic_id != null) %}
-							
+
 				<tr>
 					<td width="60px">
 						{% if line.posts_id > line.read_post_id %}
 							<i class="icon-asterisk"></i>
 						{% endif %}
-                                                        
+
 						{% if line.topics_is_closed > 0 %}
 							<i class="icon-lock"></i>
                                                 {% elseif line.topics_is_private == 2 %}
@@ -102,7 +103,7 @@
 					<td width="400px">
 						{% if line.posts_date != null %}
 						Dernier post le {{ line.posts_date|date("d/m/y H:i") }}
-						{% endif %}  
+						{% endif %}
 						{% if line.posts_username != null %}
 							par {{ line.posts_username }}
 						{% else %}
@@ -110,27 +111,27 @@
 								par {{ line.user_username }}
 							{% endif %}
 						{% endif %}
-					
+
 					</td>
 					<td width="90px">
 						{% if is_mj %}
-				    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn"><i class="icon-edit"></i></a>
-				    		<a href="{{ path('topic_delete', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="supprimer le sujet" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+				    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn admIcone invisible"><i class="icon-edit"></i></a>
+				    		<a href="{{ path('topic_delete', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="supprimer le sujet" class="btn btn-danger iconeBtn admIcone invisible"><i class="icon-remove-sign"></i></a>
 						{% endif %}
 					</td>
 				</tr>
 			{% endif %}
 		{% endif %}
-		
+
 	{% endfor %}
 				</tbody>
 			</table>
     	</div>
-    	
+
     	{% if campagne_id == 0 %}
-    	
+
     			{% include('chat/chatbox.html.twig') %}
-    			
+
     	{% endif %}
 
 {% endblock %}
