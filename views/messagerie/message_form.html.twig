@@ -15,7 +15,7 @@
 	    <div class="control-group">
 		    <label class="control-label" for="to_usernames">Destinataires :</label>
 		    <div class="controls">
-		    	<input type="text" id="to" name="to_usernames" placeholder="">
+                <input type="text" id="to" name="to_usernames" placeholder="" value="{{ message.to_usernames }}">
 		    </div>
 	    </div>
 	    <div class="control-group">
@@ -27,11 +27,11 @@
 	    <div class="control-group">
 		    <label class="control-label" for="content">Content :</label>
 		    <div class="controls">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content" 
-		    		 placeholder="Texte de votre message" rows="10">{{ message.title }}</textarea>
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
+		    		 placeholder="Texte de votre message" rows="10">{{ message.content }}</textarea>
 		    </div>
 	    </div>
-	       
+
 	    <div class="control-group">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">Envoyer</button>
@@ -47,6 +47,6 @@
     	    value: [ {% autoescape false %} {{ message.to_usernames }} {% endautoescape %}],
     	    data: '{{ list_username }}'
     	});
-         
+
     </script>
 {% endblock %}
