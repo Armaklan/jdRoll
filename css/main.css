@@ -107,3 +107,7 @@ a.collapserLink:hover {
     color: red;
     font-weight: 550;
 }
+
+.invisible {
+    display: none;
+}
