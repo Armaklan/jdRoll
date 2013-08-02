@@ -119,3 +119,7 @@ a.collapserLink:hover {
 .profil1 {
     color: #B061FF;
 }
+
+.profil-1 {
+    display: none;
+}
