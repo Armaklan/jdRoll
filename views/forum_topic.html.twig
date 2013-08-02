@@ -29,11 +29,11 @@
 					<td>
 						{% if post.perso_name != null %}
 							<p><a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: post.perso_id}) }}"><b>{{ post.perso_name }}</b></a></p>
-							<p><a href="{{ path('profile', {username: post.user_username}) }}"><i>( {{ post.user_username }} )</i></a></p>
+                            <p><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><i>( {{ post.user_username }} )</i></a></p>
 							<p><i>{{ post.post_date }}</i></p>
 							<img src="{{ post.perso_avatar }}" width="80%" />
 						{% elseif  post.user_username != null %}
-							<p><a href="{{ path('profile', {username: post.user_username}) }}"><b>{{ post.user_username }}</b></a></p>
+                            <p><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><b>{{ post.user_username }}</b></a></p>
 							<p><i>Le {{ post.post_date }}</i></p>
 							<img src="{{ post.user_avatar }}" width="80%" />
 						{% endif %}

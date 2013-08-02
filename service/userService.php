@@ -169,7 +169,7 @@ class UserService {
                         LEFT JOIN last_action
                         ON last_action.user_id = user.id
                         WHERE user.profil >= 0
-                        ORDER BY user.username ASC";
+                        ORDER BY user.profil DESC, user.username ASC";
 
 		$users = $this->db->fetchAll($sql);
 		return $users;

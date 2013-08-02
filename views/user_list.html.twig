@@ -26,7 +26,7 @@
                                     <a href="{{ path('profile', {username : user.username}) }}">
                                         <img src="{{ user.avatar }}" style="max-width: 80px" />
                                     </a></td>
-				<td><a href="{{ path('profile', {username : user.username}) }}">{{ user.username }}</a></td>
+                                    <td><a href="{{ path('profile', {username : user.username}) }}" class="profil{{user.profil}}">{{ user.username }}</a></td>
 				<td>{{ user.subscribe_date|date("d/m/y") }}</td>
 				<td>{{ user.last_activity|date("d/m/y H:i") }}</td>
 				{% if currentUser.profil > 1%}
