@@ -17,6 +17,14 @@
                 </ul>
 	    </div>
     {% endif %}
+	 {% if (waitingUsers is defined and waitingUsers > 0 and is_mj) %}
+            <div class="alert alert-warning">
+                    Des inscriptions à la partie sont en attentes de validations. <br>
+                    <a href="{{ path('campagne', { 'id' : campagne_id}) }}">Cliquez ici pour voir la liste des inscrits.</a>
+                    <p></p>
+                    <p>Les inscriptions à la partie seront fermées automatiquement quand vous aurez accepté le nombre de joueurs que vous avez indiqué comme requis.</p>
+            </div>
+    {% endif %}
 
 
 	{% if is_mj %}
