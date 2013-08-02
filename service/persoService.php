@@ -123,7 +123,8 @@ class PersoService {
         $sql = "SELECT * FROM personnages
 				WHERE
 						campagne_id = :campagne
-				AND statut <> 1";
+                AND statut <> 1
+                ORDER by name ASC";
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
         return $result;
     }
