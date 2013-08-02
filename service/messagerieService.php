@@ -46,14 +46,17 @@ class MessagerieService {
         $title = $request->get('title');
         $content = $request->get('content');
         $destinataires = json_decode($request->get('to_usernames'));
+        if($destinataires == null or count($destinataires) == 0) {
+            throw new Exception("Veuillez indiquer un destinataire");
+        }
         if(trim($title) == "") {
             throw new Exception("Le titre ne doit pas être nul");
         }
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
-    
+
     public function sendMessageWith($from_id, $from_username, $title, $content, $destinataires) {
-        $sql = "INSERT INTO messages 
+        $sql = "INSERT INTO messages
     			(from_id, from_username, title, content)
     			VALUES
     			(:from_id, :from_username, :title, :content)";
@@ -69,7 +72,7 @@ class MessagerieService {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
             $this->insertDestinataire($id, $user);
-            
+
             try {
                 $message = \Swift_Message::newInstance()
                     ->setSubject('[JdRoll] Notification de MP')
@@ -81,8 +84,8 @@ class MessagerieService {
             } catch (Exception $e) {
                 // Pas de mail, tant pis...
             }
-    
- 
+
+
         }
     }
 
@@ -149,7 +152,7 @@ class MessagerieService {
     public function markDeleteMyMsg($id) {
         $sql = "UPDATE messages
     			SET statut = :statut
-    			WHERE 
+    			WHERE
     			id = :id_message";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("id_message", $id);
@@ -160,7 +163,7 @@ class MessagerieService {
     private function updateStatut($id, $statut) {
         $sql = "UPDATE messages_to
     			SET statut = :statut
-    			WHERE 
+    			WHERE
     			id_message = :id_message
     			AND to_id = :to_id";
         $stmt = $this->db->prepare($sql);
