@@ -9,17 +9,17 @@
 		                </center>
 		            </div>
 		        </div>
-		        
+
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
 			        <form class="form-inline" onsubmit="postMessage(); return false;" autocomplete="off">
 				        <div class="input-append">
-						  <input class="input-xxlarge" id="messageChat" type="text">
+						  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
 						  <input type="submit" class="btn" value="Envoyer">
 						</div>
-						
+
 					</form>
-					
+
 					<script>
 					function postMessage() {
 						textMsg=$('#messageChat').val();
@@ -30,7 +30,7 @@
 						    url: "{{ path('chat_post') }}",
 						    data: {message: textMsg, user: user},
 						    success: function(msg){
-						    	
+
 						    },
 						    error: function(msg) {
 						    	$('#messageChat').val(textMsg);
@@ -39,12 +39,12 @@
 					}
 					</script>
 					{% else %}
-		        		Il est nécessaire d'être authentifier pour poster un message		        		
+		        		Il est nécessaire d'être authentifier pour poster un message
 		        	{% endif %}
 
 		        </div>
-		        
-		        
+
+
 			</div>
 			<div class="span2 chatbox">
 				<h5 class="categorie">En ligne</h5>
@@ -79,7 +79,7 @@
                                         toBottom = true;
                                     else
                                         toBottom = false;
-                                
+
                                     $("#text").html(msg);
 
                                     content = $('#messages_content');
@@ -91,12 +91,12 @@
                                     if(scrollBar != true) {
                                             container.animate({scrollTop: container[0].scrollHeight},2000);
                                         scrollBar = true;
-                                    }   
+                                    }
                                 }
 
 			    },
 			    error: function(msg) {
-			    	
+
 				}
 			});
 		}
@@ -110,11 +110,11 @@
 
 			    },
 			    error: function(msg) {
-			    	
+
 				}
 			});
 		}
-	
+
 
 		$(document).ready(function() {
 			 getMessages();
@@ -122,5 +122,5 @@
 			 window.setInterval(getMessages, reloadTime);
 			 window.setInterval(getOnline, 30000);
 		});
-			
+
 		</script>
