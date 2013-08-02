@@ -294,7 +294,7 @@ class CampagneService {
 
 
 	public function getActiveMjCampagnes($id) {
-		return $this->getMyMjCampagnesByStatut(0,3, 0);
+		return $this->getMjCampagnesByStatut(0,3, 0, $id);
 	}
 
 	public function getMyActivePjCampagnes() {
@@ -320,10 +320,11 @@ class CampagneService {
 	}
 
 	public function getMyCampagnes() {
-		return $this->getMyMjCampagnesByStatut(0,1,3);
+        $user = $this->session->get('user')['id'];
+		return $this->getMjCampagnesByStatut(0,1,3, $user);
 	}
 
-	public function getMyMjCampagnesByStatut($statut1, $statut2, $statut3) {
+	public function getMjCampagnesByStatut($statut1, $statut2, $statut3, $user) {
 		$sql = "SELECT campagne.* ,
 				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
@@ -346,7 +347,7 @@ class CampagneService {
 				WHERE mj_id = :user
 				AND campagne.statut IN (:statut1, :statut2, :statut3)
 				ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3));
+		$campagne = $this->db->fetchAll($sql, array('user' => $user, 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3));
 		return $campagne;
 	}
 
@@ -367,7 +368,7 @@ class CampagneService {
             return $this->getMyPjCampagneByStatut(0, 1, 3, 1);
 	}
 
-        public function getMyWaitingPjCampagnes() {
+    public function getMyWaitingPjCampagnes() {
             return $this->getMyPjCampagneByStatut(0, 1, 3, 0);
 	}
 
