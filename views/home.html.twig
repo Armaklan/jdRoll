@@ -1,7 +1,7 @@
 {% extends "squelette.html.twig" %}
 
 {% block content %}
-	
+
 	<div class="container-fluid">
 		<div class="row-fluid" style="margin-bottom: 1em">
 			<div class="span10">
@@ -12,12 +12,12 @@
 			<div class="span2">
 				<img src="{{app.request.baseUrl}}/img/ban.png" width="100%" style="max-width: 250px" />
 			</div>
-	
+
 		</div>
-	
-	
+
+
 		<div class="row-fluid">
-			
+
 
 			<div class="well well-large">
 				<p></p>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="row-fluid">
 			<div class="span6">
-			
+
 				<div class="container-fluid" style="margin-top: 1em">
 					<div class="row-fluid">
 						<div class="span10 offset1">
@@ -58,7 +58,7 @@
 						{% if not isFirst %}
 							,
 						{% endif %}
-						<a href="{{ path('profile',{username: user.username} ) }}" {% if user.profil > 0 %} style="color: red" {% endif %}>{{ user.username }}</a>
+                        <a href="{{ path('profile',{username: user.username} ) }}" class="profil{{user.profil}}">{{ user.username }}</a>
 						{% set isFirst = false %}
 					{% endfor %}
                                         <p><b>Actuellement absent : </b>
@@ -67,16 +67,16 @@
 						{% if not isFirst %}
 							,
 						{% endif %}
-						<a href="{{ path('profile',{username: absence.username} ) }}" {% if absence.profil > 0 %} style="color: red" {% endif %}>{{ absence.username }}</a>
+                        <a href="{{ path('profile',{username: absence.username} ) }}" class="profil{{absence.profil}}">{{ absence.username }}</a>
 						{% set isFirst = false %}
-					{% endfor %}       
+					{% endfor %}
 				</div>
 			</div>
 		</div>
 
 		{% include('chat/chatbox.html.twig') %}
-		
-	</div>  
-		
+
+	</div>
+
 
 {% endblock %}

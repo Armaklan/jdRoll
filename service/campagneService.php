@@ -244,7 +244,7 @@ class CampagneService {
 	public function isMj($id) {
 		if($this->session->get('user') != null) {
 			if($id == null) {
-				return $this->userService->getCurrentUser()['profil'] > 0;
+				return $this->userService->getCurrentUser()['profil'] > 1;
 			} else {
 				$campagne = $this->getCampagne($id);
 				return $campagne['mj_id'] == $this->session->get('user')['id'];
