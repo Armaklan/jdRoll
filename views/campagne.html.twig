@@ -18,9 +18,11 @@
     	<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-globe"></i></a>
     	{% if is_mj or is_participant %}
 			<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-user"></i></a>
-			{% if is_mj %}
+			{% if is_mj or is_admin %}
 				<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 			{% endif %}
+        {% elseif is_admin %}
+            <a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
     	{% else %}
                 {% if campagne.is_recrutement_open == 1 %}
                     <a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
@@ -31,7 +33,7 @@
     <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
     <p><b>MJ : </b><a href="{{ path('profile',{username: campagne.username} ) }}">{{ campagne.username }}</a></p>
     <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
-    <p><b>Rythme : </b> 
+    <p><b>Rythme : </b>
             {% if campagne.rythme == 0 %}
                 Tortue (1 post / mois)
             {% elseif campagne.rythme == 1 %}
@@ -44,7 +46,7 @@
                 Extrême (Plusieurs posts par jour)
             {% endif %}
     </p>
-    <p><b>Exigence : </b> 
+    <p><b>Exigence : </b>
             {% if campagne.rp == 0 %}
                 Roman de gare (peu d'exigence en terme de Roleplay)
             {% elseif campagne.rp == 1 %}

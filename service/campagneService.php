@@ -254,6 +254,10 @@ class CampagneService {
 		}
 	}
 
+    public function isAdmin() {
+        return $this->isMj(0);
+    }
+
 	public function isParticipant($id) {
 		if($this->session->get('user') != null) {
 			$sql = "SELECT user_id
