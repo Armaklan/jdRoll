@@ -294,21 +294,11 @@ class CampagneService {
 
 
 	public function getActiveMjCampagnes($id) {
-		$sql = "SELECT campagne.*, IFNULL(alert.joueur_id, 0) as campagne_alert
-				FROM campagne
-                LEFT JOIN alert
-                ON
-                    campagne.id = alert.campagne_id
-                AND campagne.mj_id = alert.joueur_id
-				WHERE mj_id = :user
-				AND statut IN (0, 3)
-				ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array('user' => $id));
-	    return $campagne;
+		return $this->getMyMjCampagnesByStatut(0,3, 0);
 	}
 
 	public function getMyActivePjCampagnes() {
-		return $this->getActivePjCampagnes($this->session->get('user')['id']);
+		return $this->getMyPjCampagneByStatut(0, 0, 0, 1);
 	}
 
 	public function getActivePjCampagnes($id) {
@@ -330,7 +320,11 @@ class CampagneService {
 	}
 
 	public function getMyCampagnes() {
-		$sql = "SELECT * ,
+		return $this->getMyMjCampagnesByStatut(0,1,3);
+	}
+
+	public function getMyMjCampagnesByStatut($statut1, $statut2, $statut3) {
+		$sql = "SELECT campagne.* ,
 				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
 					FROM
@@ -342,16 +336,21 @@ class CampagneService {
 					AND read_post.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id
-				) as activity
+				) as activity,
+                IFNULL(alert.joueur_id, 0) as campagne_alert
 				FROM campagne
+                LEFT JOIN alert
+                ON
+                    campagne.id = alert.campagne_id
+                AND campagne.mj_id = alert.joueur_id
 				WHERE mj_id = :user
-				AND campagne.statut <> 2
+				AND campagne.statut IN (:statut1, :statut2, :statut3)
 				ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3));
 		return $campagne;
 	}
 
-        public function getMyCampagnesWithWaiting() {
+    public function getMyCampagnesWithWaiting() {
 		$sql = "SELECT DISTINCT campagne.id, campagne.name
 			FROM campagne
                         JOIN campagne_participant cp
@@ -365,16 +364,16 @@ class CampagneService {
 	}
 
 	public function getMyPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(1);
+            return $this->getMyPjCampagneByStatut(0, 1, 3, 1);
 	}
 
         public function getMyWaitingPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(0);
+            return $this->getMyPjCampagneByStatut(0, 1, 3, 0);
 	}
 
 
-        public function getMyPjCampagneByStatut($statut) {
-            $sql = "SELECT
+        public function getMyPjCampagneByStatut($statut1, $statut2, $statut3, $cpstatut) {
+            $sql = "SELECT distinct
 		campagne.*, user.username as username,
 				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
@@ -397,16 +396,21 @@ class CampagneService {
 						OR
 						(can_read.topic_id IS NOT NULL)
 					)
-				) as activity
+                ) as activity,
+                 IFNULL(alert.joueur_id, 0) as campagne_alert
 		FROM campagne
 		JOIN campagne_participant as cp
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
+        LEFT JOIN alert
+        ON
+            campagne.id = alert.campagne_id
+        AND cp.user_id = alert.joueur_id
 		WHERE cp.user_id = :user
-		AND campagne.statut <> 2
-                AND cp.statut = :statut
+		AND campagne.statut IN (:statut1, :statut2, :statut3)
+        AND cp.statut = :cpstatut
 		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut' => $statut));
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3, 'cpstatut' => $cpstatut));
 		return $campagne;
         }
 

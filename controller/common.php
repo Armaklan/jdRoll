@@ -16,7 +16,7 @@ $commonController->get('/', function() use ($app) {
     $connected_24H_users = $app['userService']->getConnectedIn24H();
     $last_posts = $app['sectionService']->getLastPostInForum();
     $absences = $app['absenceService']->getCurrentAbsence();
-    return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users, 
+    return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users,
     		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts, 'absences' => $absences]);
 })->bind("homepage");
 
@@ -54,11 +54,11 @@ $commonController->get('/profile/{username}', function($username) use($app) {
 $commonController->get('/profile/{username}/edit', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
 	$currentUser = $app["userService"]->getCurrentUser();
-	
+
 	 if($currentUser["username"] == $user["username"] || $currentUser["profil"] <= 0)
 		 return $app->redirect($app->path('my_profile'));
-		 
-	
+
+
     return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
 })->bind("profile_edit");
 
@@ -83,7 +83,6 @@ $commonController->get('/logout', function(Request $request) use($app) {
 })->bind("logout");
 
 $commonController->get('/sidebar/std_large', function() use ($app) {
-	$campagnes = $app['campagneService']->getAllCampagne();
 	$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
 	$mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
 	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);

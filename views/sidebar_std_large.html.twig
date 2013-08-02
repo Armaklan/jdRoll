@@ -18,7 +18,11 @@
 						<li><a
                             href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                             {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                            >{{ campagne.name }}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
                             </a>
                         </li>
 					{% endfor %}
@@ -31,7 +35,11 @@
 						<li><a
                             href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                             {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                            >{{ campagne.name }}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
                             </a>
                         </li>
 					{% endfor %}
@@ -80,7 +88,11 @@
                 <li><a
                     href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                     {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                    >{{ campagne.name }}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
                     </a>
                 </li>
 			{% endfor %}
@@ -92,7 +104,11 @@
                 <li><a
                     href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                     {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                    >{{ campagne.name }}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
                     </a>
                 </li>
 			{% endfor %}
