@@ -516,6 +516,18 @@ class CampagneService {
 				cp.campagne_id = :campagne";
 		return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
 	}
+	
+	public function getParticipantByStatus($campagne_id,$status) {
+		$sql = "SELECT count(user_id) as nb_users
+				FROM campagne_participant cp
+				WHERE
+				cp.campagne_id = :campagne and cp.statut = :status";
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne_id);
+		$stmt->bindValue("status", $status);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
 
 	private function insertParticipant($campagne_id, $user_id) {
 		$sql = "INSERT INTO campagne_participant
