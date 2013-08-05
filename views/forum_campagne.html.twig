@@ -151,8 +151,18 @@
 		
 		<script>
 		$('.collapse').on('shown', function (e) {
-		 
-		 $("body").animate({scrollTop: document.getElementById($(this).attr('id')).scrollHeight},400);
+		
+		var $elem = $(this),
+		top = $elem.offset().top,
+		left = $elem.offset().left,
+		width = $elem.width(),
+		height = $elem.height();
+	
+		var justDoIt = 0;
+		
+
+		if (top + height > $(window).height()) 
+			$("body").animate({scrollTop: $(this).offset().top},400);
 		 
 		})
 		
