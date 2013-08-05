@@ -11,7 +11,7 @@
     <div class="container-fluid">
     	<div class="row-fluid" style="text-align: right">
     		<a href="{{ path('messagerie_new_to', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-reply-all"></i> Envoyer un MP</a>
-			{% if currentUser.profil > 1  and currentUser.username != user.username%}
+			{% if isAdmin  and currentUser.username != user.username%}
 			<a href="{{ path('profile_edit', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-edit"></i> Editer</a>
 			{% endif %}
     	</div>
@@ -28,6 +28,10 @@
                                             <td>Nom</td>
                                             <td>{{ user.username }}</td>
                                     </tr>
+									<tr>
+											<td>Date de naissance : </td>
+											<td>{{ user.birthDate|slice(0, 6)}}{{ user.birthDate|slice(8, 9)}}</td>
+									</tr>
                                     <tr>
                                             <td>Date d'inscription</td>
                                             <td>{{ user.subscribe_date|date("d/m/y") }}</td>
@@ -66,5 +70,7 @@
     		</div>
     	</div>
     </div>
+	
+	
 
 {% endblock %}

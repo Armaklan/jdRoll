@@ -148,5 +148,14 @@
     			{% include('chat/chatbox.html.twig') %}
 
     	{% endif %}
+		
+		<script>
+		$('.collapse').on('shown', function (e) {
+		 
+		 $("body").animate({scrollTop: document.getElementById($(this).attr('id')).scrollHeight},400);
+		 
+		})
+		
+		</script>
 
 {% endblock %}

@@ -38,6 +38,8 @@ class UserService {
 			$login = $sessionUser['login'];
 			$sql = "SELECT * FROM user WHERE username = ?";
 	    	$user = $this->db->fetchAssoc($sql, array($login));
+			if($user['birthDate'] != null)
+				$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
 	    	return $user;
 		}
 	}
@@ -47,10 +49,11 @@ class UserService {
 				SET
 					mail = ?,
 					avatar = ?,
-					description = ?
+					description = ?,
+					birthDate = STR_TO_DATE(?, '%d/%m/%Y')
 				WHERE username = ?";
 
-		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'), $request->get('username')));
+		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'),$request->get('birthDate'), $request->get('username')));
 		$userSession = $this->session->get('user');
 		$userSession['avatar'] = $request->get('avatar');
 		$this->session->set('user', $userSession);
@@ -62,10 +65,11 @@ class UserService {
 				SET
 					mail = ?,
 					avatar = ?,
-					description = ?
+					description = ?,
+					birthDate = STR_TO_DATE(?, '%d/%m/%Y')
 				WHERE username = ?";
 
-		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'), $request->get('username')));
+		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'),$request->get('birthDate') == ''?null:$request->get('birthDate'), $request->get('username')));
 		return $this->getByUsername($request->get('username'));
 	}
 
@@ -113,6 +117,8 @@ class UserService {
                     user.id = last_action.user_id
                     WHERE username = ?";
 	    $user = $this->db->fetchAssoc($sql, array($username));
+		if($user['birthDate'] != null)
+				$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
 	    return $user;
 	}
 
@@ -195,6 +201,16 @@ class UserService {
 				ON last_action.user_id = user.id
 				WHERE
 				time > DATE_SUB(now(), INTERVAL 24 HOUR)";
+
+		$users = $this->db->fetchAll($sql);
+		return $users;
+	}
+	
+	public function getCurrentBirthDay() {
+		$sql = "SELECT * 
+				FROM user
+				WHERE MONTH( birthDate ) = MONTH( NOW( ) ) 
+				AND DAY( birthDate ) = DAY( NOW( ) )";
 
 		$users = $this->db->fetchAll($sql);
 		return $users;

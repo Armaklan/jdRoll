@@ -25,6 +25,15 @@
 		    	<input type="text" id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
 		    </div>
 	    </div>
+		<div class="control-group">
+		    <label class="control-label" for="birthDate">Date de naissance :</label>
+		    <div class="controls">
+				<div class="input-append date" id="birthDateComp" >
+					<input name="birthDate" class="span2" size="160" type="text" value="{{ user['birthDate'] }}" readonly>
+					<span class="add-on"><i class="icon-th"></i></span>
+				</div>
+			</div>
+	    </div>
 	    <div class="control-group">
 		    <label class="control-label" for="avatar">Url de votre avatar</label>
 		    <div class="controls">
@@ -60,7 +69,7 @@
 	    <div class="control-group">
 		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
 		    <div class="controls">
-		    	<input type="password" id="password"2 name="password2" placeholder="Mot de passe">
+		    	<input type="password" id="password2" name="password2" placeholder="Mot de passe">
 		    </div>
 	    </div>
 	    
@@ -71,4 +80,25 @@
 	    </div>
     </form>
 {% endif %}
+<script>
+    
+        $(function () { 
+
+        var nowTemp = new Date();
+        var startDate = new Date(nowTemp.getFullYear()-90, 12, 0, 0, 0, 0, 0);
+		var endDate = new Date(nowTemp.getFullYear()-10, 12, 0, 0, 0, 0, 0);
+
+        var dp = $('#birthDateComp').datepicker({
+		autoClose: true,
+		format: 'dd/mm/yyyy',
+		forceParse: true,
+        }).on('changeDate', function(ev) {
+          dp.hide();
+        }).data('datepicker');
+		//dp.setValue({{ user['birthDate'] }});
+		dp.setEndDate(endDate);
+		dp.setStartDate(startDate);
+		
+    });
+</script>
 {% endblock %}

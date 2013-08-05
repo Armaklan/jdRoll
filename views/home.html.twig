@@ -61,13 +61,26 @@
                         <a href="{{ path('profile',{username: user.username} ) }}" class="profil{{user.profil}}">{{ user.username }}</a>
 						{% set isFirst = false %}
 					{% endfor %}
-                                        <p><b>Actuellement absent : </b>
+                     <p><b>Actuellement absent : </b>
 					{% set isFirst = true %}
 					{% for absence in absences %}
 						{% if not isFirst %}
 							,
 						{% endif %}
                         <a href="{{ path('profile',{username: absence.username} ) }}" class="profil{{absence.profil}}">{{ absence.username }}</a>
+						{% set isFirst = false %}
+					{% endfor %}
+					{% if birthDays is empty %}
+						<p><b>Anniversaires du jour : aucun.</b>
+					{% else %}
+						<p><b>Anniversaires du jour :</b>
+					{% endif %}
+					{% set isFirst = true %}
+					{% for birthDay in birthDays %}
+						{% if not isFirst %}
+							,
+						{% endif %}
+                        <a href="{{ path('profile',{username: birthDay.username} ) }}" class="profil{{birthDay.profil}}">{{ birthDay.username }}</a>
 						{% set isFirst = false %}
 					{% endfor %}
 				</div>
