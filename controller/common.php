@@ -85,7 +85,8 @@ $commonController->get('/logout', function(Request $request) use($app) {
 $commonController->get('/sidebar/std_large', function() use ($app) {
 	$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
 	$mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);
+	$favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
+	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes, 'favorised_campagne' => $favorisedCampagne]);
 })->bind("sidebar_std_large");
 
 $commonController->post('/upload', function(Request $request) use ($app) {

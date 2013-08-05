@@ -27,13 +27,20 @@
     {% endif %}
 
 
-	{% if is_mj %}
 	<div align="right">
+	{% if is_mj %}
 		<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn iconeBtn admIcone invisible"><i class="icon-wrench"></i></a>
 		<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-primary iconeBtn admIcone invisible"><i class="icon-plus"></i></a>
 		<a title="Administrer l'espace campagne" id="admMode" class="btn iconeBtn admDisabled"><i class="icon-eye-open"></i></a>
-	</div>
 	{% endif %}
+    {% if campagne_id > 0 %}
+        {% if is_favoris %}
+            <a title="Mettre en favoris" id="favorised" class="btn iconeBtn"><i class="icon-star"></i></a>
+        {% else %}
+            <a title="Mettre en favoris" id="favorised" class="btn iconeBtn notFavorised"><i class="icon-star-empty"></i></a>
+        {% endif %}
+    {% endif %}
+	</div>
 	<p/>
 	{% set section_id = -1 %}
 	{% set topic_id = -1 %}

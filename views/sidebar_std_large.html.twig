@@ -1,7 +1,7 @@
 {% if (app.session.get('user') != null)  %}
 	<div class="container-fluid hidden-desktop sidebarTop">
 	    <div class="row-fluid">
-	    	<div class="span4">
+	    	<div class="span3">
 	    		<div align="center">
     				<img src="{{ app.session.get('user')['avatar'] }}" width="130px" style="max-width: 130px" class="img-rounded" />
     			</div><p/>
@@ -11,7 +11,7 @@
 		            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn iconeBtn quickLink3"><i class="icon-envelope"></i></a>
 			    </div><p/>
 	    	</div>
-	    	<div class="span4">
+	    	<div class="span3">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie active (MJ)</b></li>
 					{% for campagne in active_campagnes %}
@@ -28,10 +28,27 @@
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="span4">
+			<div class="span3">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie active (PJ)</b></li>
 					{% for campagne in active_pj_campagnes %}
+						<li><a
+                            href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                            </a>
+                        </li>
+					{% endfor %}
+				</ul>
+	    	</div>
+			<div class="span3">
+				<ul class="nav nav-list nav-stacked">
+					<li class='nav-header'><b>Partie favorites</b></li>
+					{% for campagne in favorised_campagne %}
 						<li><a
                             href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                             {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
@@ -101,6 +118,22 @@
 		<ul class="nav nav-list nav-stacked">
 			<li class='nav-header'><b>Partie active (PJ)</b></li>
 			{% for campagne in active_pj_campagnes %}
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+			{% endfor %}
+		</ul>
+
+		<ul class="nav nav-list nav-stacked">
+			<li class='nav-header'><b>Partie favorite</b></li>
+			{% for campagne in favorised_campagne %}
                 <li><a
                     href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
                     {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}

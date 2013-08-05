@@ -26,5 +26,17 @@
                                 {{campagne.name}}
                         </a></li>
 					{% endfor %}
+				 <li class="divider"></li>
+				 <li><b>Partie favorites</b></li>
+					{% for campagne in favorised_campagne %}
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                        </a></li>
+					{% endfor %}
 			</ul>
 		</div>

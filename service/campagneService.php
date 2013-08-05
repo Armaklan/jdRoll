@@ -415,6 +415,46 @@ class CampagneService {
 		return $campagne;
         }
 
+    public function getFavorisedCampagne() {
+            $sql = "SELECT distinct
+		campagne.*, user.username as username,
+				( SELECT
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id
+					AND (
+						(topics.is_private <> 1)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
+                ) as activity,
+                 IFNULL(alert.joueur_id, 0) as campagne_alert
+		FROM campagne
+		JOIN campagne_favoris as cp
+		ON cp.campagne_id = campagne.id
+		JOIN user ON user.id = campagne.mj_id
+        LEFT JOIN alert
+        ON
+            campagne.id = alert.campagne_id
+        AND cp.user_id = alert.joueur_id
+		WHERE cp.user_id = :user
+		ORDER BY campagne.name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
+    }
+
 	public function getMyMjArchiveCampagnes() {
 		$sql = "SELECT * ,
 				( SELECT
@@ -516,7 +556,7 @@ class CampagneService {
 				cp.campagne_id = :campagne";
 		return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
 	}
-	
+
 	public function getParticipantByStatus($campagne_id,$status) {
 		$sql = "SELECT count(user_id) as nb_users
 				FROM campagne_participant cp
@@ -630,8 +670,6 @@ class CampagneService {
 		$stmt->bindValue("campagne", $campagne);
         $stmt->bindValue("joueur", $joueur);
 		$stmt->execute();
-
-
     }
 
     public function removeAlert($campagne, $joueur) {
@@ -645,7 +683,6 @@ class CampagneService {
 		$stmt->bindValue("campagne", $campagne);
         $stmt->bindValue("joueur", $joueur);
 		$stmt->execute();
-
     }
 
     public function hasAlert($campagne, $joueur) {
@@ -654,6 +691,40 @@ class CampagneService {
                 WHERE
                 campagne_id = :campagne
                 AND joueur_id = :joueur";
+        $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
+        return ($result != null);
+    }
+
+    public function addFavoris($campagne, $joueur) {
+		$sql = "INSERT INTO campagne_favoris
+                (campagne_id, user_id)
+                VALUES
+                (:campagne, :joueur)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+    }
+
+    public function removeFavoris($campagne, $joueur) {
+        $sql = "DELETE FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne
+                AND user_id = :joueur ";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+    }
+
+    public function isFavoris($campagne, $joueur) {
+        $sql = "SELECT user_id
+                FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne
+                AND user_id = :joueur";
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
