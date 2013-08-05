@@ -16,8 +16,9 @@ $commonController->get('/', function() use ($app) {
     $connected_24H_users = $app['userService']->getConnectedIn24H();
     $last_posts = $app['sectionService']->getLastPostInForum();
     $absences = $app['absenceService']->getCurrentAbsence();
+	$birthDay = $app['userService']->getCurrentBirthDay();
     return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users, 
-    		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts, 'absences' => $absences]);
+    		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts, 'absences' => $absences,'birthDays' => $birthDay]);
 })->bind("homepage");
 
 $commonController->get('/login/{url}', function($url) use($app) {
@@ -46,9 +47,10 @@ $commonController->post('/login', function(Request $request) use($app) {
 $commonController->get('/profile/{username}', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
 	$currentUser = $app["userService"]->getCurrentUser();
+	$isAdmin = $app["campagneService"]->IsAdmin();
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser]);
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin]);
 })->bind("profile");
 
 $commonController->get('/profile/{username}/edit', function($username) use($app) {
@@ -103,8 +105,8 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 
 $commonController->get('/users', function(Request $request) use ($app) {
         $users = $app['userService']->getAllUsers();
-		$currentUser = $app['userService']->getCurrentUser();
-	return $app->render('user_list.html.twig', ['users' => $users,'currentUser' => $currentUser]);
+		$isAdmin = $app['campagneService']->isAdmin();
+	return $app->render('user_list.html.twig', ['users' => $users,'isAdmin' => $isAdmin]);
 })->bind("user_list");
 
 
