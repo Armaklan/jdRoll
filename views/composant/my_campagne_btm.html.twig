@@ -5,12 +5,38 @@
                                  <li class="divider"></li>
 				 <li><b>Partie MJ</b></li>
 					{% for campagne in active_campagnes %}
-						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                        </a></li>
 					{% endfor %}
 				 <li class="divider"></li>
 				 <li><b>Partie joueurs</b></li>
 					{% for campagne in active_pj_campagnes %}
-						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}">{{ campagne.name }}</a></li>
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                        </a></li>
+					{% endfor %}
+				 <li class="divider"></li>
+				 <li><b>Partie favorites</b></li>
+					{% for campagne in favorised_campagne %}
+						<li><a tabindex="-1" href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                        </a></li>
 					{% endfor %}
 			</ul>
 		</div>

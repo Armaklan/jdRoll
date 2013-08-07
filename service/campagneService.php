@@ -294,21 +294,11 @@ class CampagneService {
 
 
 	public function getActiveMjCampagnes($id) {
-		$sql = "SELECT campagne.*, IFNULL(alert.joueur_id, 0) as campagne_alert
-				FROM campagne
-                LEFT JOIN alert
-                ON
-                    campagne.id = alert.campagne_id
-                AND campagne.mj_id = alert.joueur_id
-				WHERE mj_id = :user
-				AND statut IN (0, 3)
-				ORDER BY name";
-	    $campagne = $this->db->fetchAll($sql, array('user' => $id));
-	    return $campagne;
+		return $this->getMjCampagnesByStatut(0,3, 0, $id);
 	}
 
 	public function getMyActivePjCampagnes() {
-		return $this->getActivePjCampagnes($this->session->get('user')['id']);
+		return $this->getMyPjCampagneByStatut(0, 0, 0, 1);
 	}
 
 	public function getActivePjCampagnes($id) {
@@ -330,7 +320,12 @@ class CampagneService {
 	}
 
 	public function getMyCampagnes() {
-		$sql = "SELECT * ,
+        $user = $this->session->get('user')['id'];
+		return $this->getMjCampagnesByStatut(0,1,3, $user);
+	}
+
+	public function getMjCampagnesByStatut($statut1, $statut2, $statut3, $user) {
+		$sql = "SELECT campagne.* ,
 				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
 					FROM
@@ -342,16 +337,21 @@ class CampagneService {
 					AND read_post.user_id = :user
 					WHERE
 					sections.campagne_id = campagne.id
-				) as activity
+				) as activity,
+                IFNULL(alert.joueur_id, 0) as campagne_alert
 				FROM campagne
+                LEFT JOIN alert
+                ON
+                    campagne.id = alert.campagne_id
+                AND campagne.mj_id = alert.joueur_id
 				WHERE mj_id = :user
-				AND campagne.statut <> 2
+				AND campagne.statut IN (:statut1, :statut2, :statut3)
 				ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		$campagne = $this->db->fetchAll($sql, array('user' => $user, 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3));
 		return $campagne;
 	}
 
-        public function getMyCampagnesWithWaiting() {
+    public function getMyCampagnesWithWaiting() {
 		$sql = "SELECT DISTINCT campagne.id, campagne.name
 			FROM campagne
                         JOIN campagne_participant cp
@@ -365,16 +365,16 @@ class CampagneService {
 	}
 
 	public function getMyPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(1);
+            return $this->getMyPjCampagneByStatut(0, 1, 3, 1);
 	}
 
-        public function getMyWaitingPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(0);
+    public function getMyWaitingPjCampagnes() {
+            return $this->getMyPjCampagneByStatut(0, 1, 3, 0);
 	}
 
 
-        public function getMyPjCampagneByStatut($statut) {
-            $sql = "SELECT
+        public function getMyPjCampagneByStatut($statut1, $statut2, $statut3, $cpstatut) {
+            $sql = "SELECT distinct
 		campagne.*, user.username as username,
 				( SELECT
 					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
@@ -397,18 +397,63 @@ class CampagneService {
 						OR
 						(can_read.topic_id IS NOT NULL)
 					)
-				) as activity
+                ) as activity,
+                 IFNULL(alert.joueur_id, 0) as campagne_alert
 		FROM campagne
 		JOIN campagne_participant as cp
 		ON cp.campagne_id = campagne.id
 		JOIN user ON user.id = campagne.mj_id
+        LEFT JOIN alert
+        ON
+            campagne.id = alert.campagne_id
+        AND cp.user_id = alert.joueur_id
 		WHERE cp.user_id = :user
-		AND campagne.statut <> 2
-                AND cp.statut = :statut
+		AND campagne.statut IN (:statut1, :statut2, :statut3)
+        AND cp.statut = :cpstatut
 		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut' => $statut));
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3, 'cpstatut' => $cpstatut));
 		return $campagne;
         }
+
+    public function getFavorisedCampagne() {
+            $sql = "SELECT distinct
+		campagne.*, user.username as username,
+				( SELECT
+					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+					FROM
+					sections
+					JOIN topics
+					ON sections.id = topics.section_id
+					LEFT JOIN read_post
+					ON read_post.topic_id = topics.id
+					AND read_post.user_id = :user
+					LEFT JOIN can_read
+					ON can_read.topic_id = topics.id
+					AND can_read.user_id = :user
+					WHERE
+					sections.campagne_id = campagne.id
+					AND (
+						(topics.is_private <> 1)
+						OR
+						(campagne.mj_id = :user)
+						OR
+						(can_read.topic_id IS NOT NULL)
+					)
+                ) as activity,
+                 IFNULL(alert.joueur_id, 0) as campagne_alert
+		FROM campagne
+		JOIN campagne_favoris as cp
+		ON cp.campagne_id = campagne.id
+		JOIN user ON user.id = campagne.mj_id
+        LEFT JOIN alert
+        ON
+            campagne.id = alert.campagne_id
+        AND cp.user_id = alert.joueur_id
+		WHERE cp.user_id = :user
+		ORDER BY campagne.name";
+		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
+		return $campagne;
+    }
 
 	public function getMyMjArchiveCampagnes() {
 		$sql = "SELECT * ,
@@ -511,7 +556,7 @@ class CampagneService {
 				cp.campagne_id = :campagne";
 		return $this->db->fetchAll($sql, array('campagne' => $campagne_id));
 	}
-	
+
 	public function getParticipantByStatus($campagne_id,$status) {
 		$sql = "SELECT count(user_id) as nb_users
 				FROM campagne_participant cp
@@ -625,8 +670,6 @@ class CampagneService {
 		$stmt->bindValue("campagne", $campagne);
         $stmt->bindValue("joueur", $joueur);
 		$stmt->execute();
-
-
     }
 
     public function removeAlert($campagne, $joueur) {
@@ -640,7 +683,6 @@ class CampagneService {
 		$stmt->bindValue("campagne", $campagne);
         $stmt->bindValue("joueur", $joueur);
 		$stmt->execute();
-
     }
 
     public function hasAlert($campagne, $joueur) {
@@ -649,6 +691,40 @@ class CampagneService {
                 WHERE
                 campagne_id = :campagne
                 AND joueur_id = :joueur";
+        $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
+        return ($result != null);
+    }
+
+    public function addFavoris($campagne, $joueur) {
+		$sql = "INSERT INTO campagne_favoris
+                (campagne_id, user_id)
+                VALUES
+                (:campagne, :joueur)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+    }
+
+    public function removeFavoris($campagne, $joueur) {
+        $sql = "DELETE FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne
+                AND user_id = :joueur ";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("joueur", $joueur);
+		$stmt->execute();
+    }
+
+    public function isFavoris($campagne, $joueur) {
+        $sql = "SELECT user_id
+                FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne
+                AND user_id = :joueur";
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }

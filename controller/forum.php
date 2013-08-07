@@ -32,6 +32,7 @@ $forumController->get('/', function() use($app) {
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
+    $user_id = $app['session']->get('user')['id'];
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
@@ -39,7 +40,8 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	$campagne_id = getExterneCampagneNumber($campagne_id);
     $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
-	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
+    $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
+	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
 })->bind("forum_campagne");
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {
@@ -66,7 +68,7 @@ $forumController->post('/{campagne_id}/section/save', function($campagne_id, Req
 			$app["sectionService"]->createSection($request, $campagne_id);
 		} else {
 			$app["sectionService"]->updateSection($request);
-		} 
+		}
 		$campagne_id = getExterneCampagneNumber($campagne_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 	} catch(Exception $e) {
@@ -95,7 +97,7 @@ $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne
 	$sections =  $app["sectionService"]->getSections($campagne_id);
 	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '', 
+	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '',
 			'sections' => $sections, 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_edit");
 
@@ -143,7 +145,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
 })->bind("topic_page");
 
@@ -154,7 +156,7 @@ $forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_i
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post, 
+	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post,
 			'error' => '', 'is_mj' => $is_mj, 'personnages' => $personnages]);
 })->bind("post_edit");
 
@@ -176,14 +178,14 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
 	} else {
 		$post_id = $request->get('id');
 		$app["postService"]->updatePost($request);
-	} 
+	}
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id);
 })->bind("post_save");
 
 $forumController->get('/{campagne_id}/section/delete/{section_id}', function($campagne_id, $section_id) use($app) {
 	$nbTopics = $app["sectionService"]->getNbTopicInSection($section_id);
-	if($nbTopics > 0) { 
+	if($nbTopics > 0) {
 		$error =  "Cette section contient encore des sujets. Impossible de la supprimer.";
 		$campagne_id = getInterneCampagneNumber($campagne_id);
 		$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);

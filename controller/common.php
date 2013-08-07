@@ -56,11 +56,11 @@ $commonController->get('/profile/{username}', function($username) use($app) {
 $commonController->get('/profile/{username}/edit', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
 	$currentUser = $app["userService"]->getCurrentUser();
-	
+
 	 if($currentUser["username"] == $user["username"] || $currentUser["profil"] <= 0)
 		 return $app->redirect($app->path('my_profile'));
-		 
-	
+
+
     return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
 })->bind("profile_edit");
 
@@ -85,10 +85,10 @@ $commonController->get('/logout', function(Request $request) use($app) {
 })->bind("logout");
 
 $commonController->get('/sidebar/std_large', function() use ($app) {
-	$campagnes = $app['campagneService']->getAllCampagne();
 	$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
 	$mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes]);
+	$favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
+	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes, 'favorised_campagne' => $favorisedCampagne]);
 })->bind("sidebar_std_large");
 
 $commonController->post('/upload', function(Request $request) use ($app) {
