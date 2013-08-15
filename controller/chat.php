@@ -8,10 +8,50 @@
 	*/
 	$chatController = $app['controllers_factory'];
 
-	$chatController->get('/', function() use($app) {
-		$last_msg = $app['chatService']->getLastMsg();
-		return $app->render('chat/show.html.twig', ['msgs' => $last_msg]);
+	$chatController->get('/', function(Request $request) use($app) {
+		
+		$isFirstLoad = $request->get('isFirst');
+		$reinit = 0;
+		$lastId = $request->get('lastId');
+		$deletedIds = '';
+		if($isFirstLoad == "true")
+		{
+
+			$last_msg = $app['chatService']->getLastMsg(0);
+			if(count($last_msg) > 0)
+			$lastId = $last_msg[count($last_msg)-1]['id'];
+			
+			
+		}
+		else
+		{
+			
+			 $last_msg = $app['chatService']->getLastMsg($lastId);
+			
+			 if(count($last_msg) > 0)
+			 {
+				$lastId = $last_msg[count($last_msg)-1]['id'];
+
+			 }
+			 $deletedIds = $app['chatService']->getDeletedMessge();
+	
+		}
+		
+		$isAdmin = $app['campagneService']->isAdmin();
+		return $app->render('chat/show.html.twig', ['msgs' => $last_msg,'isAdmin' => $isAdmin,'isFirstLoad' => $isFirstLoad, 'lastId' => $lastId, 'deletedIds' => $deletedIds]);
 	})->bind("chat_last_msg");
+	
+	$chatController->post('/remove', function(Request $request) use($app) {
+		$app['chatService']->deleteMsg($request->get('msgId'));
+		return "ok";
+	})->bind("chat_msg_remove")->before($mustBeAdmin);
+	
+	$chatController->post('/removelast', function(Request $request) use($app) {
+
+		$app['chatService']->deleteLastMsg($request->get('nbToDelete'));
+		return "ok";
+	})->bind("chat_msg_remove_last")->before($mustBeAdmin);
+
 
 	$chatController->get('/users', function() use($app) {
 		$connected_users = $app['userService']->getConnected();
@@ -23,7 +63,7 @@
 		return "ok";
 	})->bind("chat_post")->before($mustBeLogged);
         
-        $chatController->get('/post/{user}/{message}', function($user, $message) use($app) {
+    $chatController->get('/post/{user}/{message}', function($user, $message) use($app) {
 		$app['chatService']->postMsg($user, $message);
 		return "ok";
 	})->bind("chat_post_get")->before($mustBeLogged);

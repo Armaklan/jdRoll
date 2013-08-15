@@ -1,16 +1,46 @@
+{{ lastId }}
+	{% for deletedId in deletedIds %}
+		,{{ deletedId.messageId }}
+	{% endfor %}|
+{% if isFirstLoad == "true" %}
 <div id="messageContent">
-	<table class="table-striped table-condensed table-bordered" width="100%">
+	<table class="table-striped table-condensed table-bordered" width="100%" id="tableChat">
 		<tr>
 			<th width="120px">Date</th>
-                        <th width="130px">Auteur</th>
+            <th width="130px">Auteur</th>
 			<th>Message</th>
+			{% if(isAdmin) %}
+			<th>Action</th>
+			{% endif %}
 		</tr>
+{% endif %}
 		{% for msg in msgs %} 
-			<tr>
+			<tr id='chat_tr_{{msg.id}}'>
                                 <td>{{ msg.time|date("d/m H:i:s") }}</td>
                                 <td>{{ msg.username }}</td>
-				<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
+								<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
+								{% if(isAdmin) %}
+								<td><a  onClick="deleteChatMessage({{ msg.id }});" title="supprimer le message" class="btn btn-danger iconeBtn admIcone"><i class="icon-remove-sign"></i></a></td>
+								{% endif %}
 			</tr>
 		{% endfor %}
+{% if isFirstLoad == "true" %}
 	</table>
+	<script>
+	function deleteChatMessage(msgId) {
+						
+						$.ajax({
+						    type: "POST",
+						    url: "{{ path('chat_msg_remove') }}",
+						    data: {msgId: msgId},
+						    success: function(msg){
+
+						    },
+						    error: function(msg) {
+						    	$('#messageChat').val(textMsg);
+							}
+						});
+					} 
+	</script>
 </div>
+{% endif %}

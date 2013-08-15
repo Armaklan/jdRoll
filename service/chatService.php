@@ -11,13 +11,14 @@ class ChatService {
         $this->session = $session;
     }
     
-    public function getLastMsg() {
+    public function getLastMsg($id) {
+		
     	$sql = "SELECT * FROM (SELECT * 
-    			FROM chat
+    			FROM chat WHERE id > ?
     			ORDER BY time DESC 
     			LIMIT 0, 100) chat 
     			ORDER BY time ASC";
-    	return $this->db->fetchAll($sql);
+    	return $this->db->fetchAll($sql,array($id));
     }
     
     public function postMsg($user, $text) {
@@ -38,6 +39,11 @@ class ChatService {
             $text = str_replace("o-)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-innocent.gif' alt=''>", $text);
             $text = str_replace(":D", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-laughing.gif' alt=''>", $text);
             $text = str_replace(":mrgreen:", "<img src='../../../../img/smileys-mrgreen.gif' alt=''>", $text);
+			if(!strncasecmp($text,"/me ",4))
+			{
+				$text = str_ireplace("/me ",$user . " ", $text);
+				$text = "<span class=\"dialogue\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: #4488cc;\">" . $text . "</span></span>";
+			}
             
             $sql = "INSERT INTO chat
                             (message, username) 
@@ -65,6 +71,57 @@ class ChatService {
 		$find = array('/<([^[:alpha:]])/', '/<$/');
 		return preg_replace($find, '&lt;\\1', $str); 
 	} 
+	
+	public function deleteMsg($id) {
+       
+            
+            $sql = "delete from chat
+                            where id = :id";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue("id", $id);
+            $stmt->execute();
+			
+			$sql = "INSERT INTO chat_actions( actionType, messageId ) VALUES (0,:id)";
+			$stmt = $this->db->prepare($sql);
+            $stmt->bindValue("id", $id);
+            $stmt->execute();
+        
+    }
+	
+		public function getDeletedMessge() {
+       
+            
+           $sql = "SELECT messageId FROM chat_actions where actionType = 0
+    			ORDER BY messageId ASC";
+    	return $this->db->fetchAll($sql);
+        
+    }
+	
+	public function deleteLastMsg($nb) {
+       
+            
+			  $sql = "SELECT id from chat order by time desc limit " . $nb;
+			  $rows =  $this->db->fetchAll($sql);
+			  if(rows != null)
+			  {
+				$sql = "delete from chat order by time desc limit " . $nb;
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute();
+				$count = $stmt->rowCount();
+				if($count > 0)
+				{
+					foreach ($rows as $msg)
+					{
+						$sql = "INSERT INTO chat_actions( actionType, messageId ) VALUES (0,:id)";
+						$stmt = $this->db->prepare($sql);
+						$stmt->bindValue("id", $msg['id']);
+						$stmt->execute();
+					}
+				}
+			}
+        
+    }
 
     
 }
