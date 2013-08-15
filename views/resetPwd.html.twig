@@ -1,1 +1,57 @@
-aze
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+<div style="margin-top: 3em"></div>
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+	{% if (warning != "") %}
+	<div class="alert alert-warning">
+	    	{{ warning }}
+	    </div>	
+	{% endif %}
+	{% if (warning == "" or error != "") %}
+	<form class="form-horizontal" action="{{ path('reset_asked')  }}" method="POST">
+	    <div class="control-group">
+		    <label class="control-label" for="login">Login</label>
+		    <div class="controls">
+		    	<input type="text" id="login" name="login" placeholder="Nom d'utilisateur">
+		    </div>
+	    </div>
+	    
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn">Valider</button>
+		    </div>
+	    </div>
+    </form>
+	{% endif %}
+	{% if changePwd is defined and changePwd == 1 %}
+	   <form class="form-horizontal" action="{{ path('reset_pwd')  }}" method="POST">
+		<h3>Changement de mot de passe</h3>
+	    <div class="control-group">
+		    <label class="control-label" for="password">Mot de passe</label>
+		    <div class="controls">
+		    	<input type="password" id="password" name="password" placeholder="Mot de passe">
+		    </div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
+		    <div class="controls">
+		    	<input type="password" id="password2" name="password2" placeholder="Mot de passe">
+		    </div>
+	    </div>
+	    
+	    <div class="control-group">
+		    <div class="controls">
+			    <button type="submit" class="btn btn-danger">Changer le mot de passe</button>
+		    </div>
+	    </div>
+		<input type="hidden" id="alea" name="alea" value='{{ alea }}'>
+    </form>
+    {% endif %}
+
+{% endblock %}
