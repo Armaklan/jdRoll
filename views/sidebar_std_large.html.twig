@@ -87,7 +87,11 @@
 			    <a href="{{ path('subscribe') }}" class="btn">S'inscrire</a>
 		    </div>
 	    </div>
+		<div align="center">
+    		<a href="{{path('reset')}}">J'ai oublié mon mot de passe</a>
+    	</div>
     </form>
+	 
     {% else %}
     	<div align="center">
     		<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />

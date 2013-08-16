@@ -54,6 +54,28 @@ class MessagerieService {
         }
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
+	
+	    public function sendMessageToMailBox($title,$content, $destinataires) {
+        
+        foreach ($destinataires as $destinaire) {
+            $user = $this->userService->getByUsername($destinaire);
+            
+            try {
+
+                $message = \Swift_Message::newInstance()
+                    ->setSubject($title)
+                    ->setFrom(array('contact@jdroll.org'))
+                    ->setTo(array($user['mail']))
+                    ->setBody($content);
+
+                $this->mailer->send($message);
+            } catch (Exception $e) {
+                // Pas de mail, tant pis...
+            }
+
+
+        }
+    }
 
     public function sendMessageWith($from_id, $from_username, $title, $content, $destinataires) {
         $sql = "INSERT INTO messages
