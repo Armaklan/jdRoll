@@ -17,9 +17,12 @@
 						  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
 						  <input type="submit" class="btn" value="Envoyer">
 						</div>
+						
 
 					</form>
-
+					<div >
+						  <input type="button" class="btn" value="Supprimer les 30 derniers messages" onClick="deleteLastMessages();">
+						</div>
 					<script>
 					function postMessage() {
 						textMsg=$('#messageChat').val();
@@ -62,14 +65,39 @@
 
 		var reloadTime = 2000;
 		var scrollBar = false;
+		var isFirstLoad = true;
+		var lastMsgs = '';
+		var lastMsgId = 0;
+		
+		
+		function deleteLastMessages() {
+		
+							$.ajax({
+						    type: "POST",
+						    url: "{{ path('chat_msg_remove_last') }}",
+						    data: {nbToDelete: 30},
+						    success: function(msg){
 
+						    },
+						    error: function(msg) {
+								
+							}
+						});
+
+		
+		}
+		
 		function getMessages() {
+		
+			
 			$.ajax({
 			    type: "GET",
 			    url: "{{ path('chat_last_msg') }}",
+				data: {isFirst: isFirstLoad, lastId: lastMsgId},
 			    success: function(msg){
                                 if( $("#text").html() != msg ) {
-                                    console.debug(msg);
+                                   
+									
                                     var container = $('#text');
                                     var content = $('#messageContent');
                                     var height = content.height()-250;
@@ -79,9 +107,30 @@
                                         toBottom = true;
                                     else
                                         toBottom = false;
-
-                                    $("#text").html(msg);
-
+									
+									var param =  msg.substring(0,msg.indexOf('|'));
+									var paramTab = param.split(',');
+									
+									
+									lastMsgId = paramTab[0];
+									
+									msg = msg.substring(msg.indexOf('|')+1);
+									
+									var msgs = '';
+									var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
+									var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
+									msgs = before + "</tr>" + msg + after;
+									
+									
+									lastMsgs = msgs;
+									
+                                    $("#text").html(msgs);
+									
+									for (var i=1;i<paramTab.length; i++){
+									
+										$('#chat_tr_' + paramTab[i]).remove();
+									}
+									
                                     content = $('#messages_content');
                                     height = content.height()-250;
 
@@ -99,6 +148,9 @@
 
 				}
 			});
+			
+			if(isFirstLoad)
+				isFirstLoad = false;
 		}
 
 		function getOnline() {
@@ -122,5 +174,6 @@
 			 window.setInterval(getMessages, reloadTime);
 			 window.setInterval(getOnline, 30000);
 		});
+		
 
 		</script>

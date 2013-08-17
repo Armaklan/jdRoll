@@ -6,6 +6,7 @@ require __DIR__.'/service/dbService.php';
 require __DIR__.'/service/userService.php';
 require __DIR__.'/service/campagneService.php';
 require __DIR__.'/service/persoService.php';
+require __DIR__.'/service/resetPwdService.php';
 require __DIR__.'/service/forum/sectionsService.php';
 require __DIR__.'/service/forum/topicsService.php';
 require __DIR__.'/service/forum/postsService.php';
@@ -107,6 +108,10 @@ $app['absenceService'] = function ($app) {
 	return new AbsenceService($app['db'], $app['session']);
 };
 
+$app['resetPwdService'] = function ($app) {
+	return new resetPwdService($app['db'], $app['session'],$app['messagerieService']);
+};
+
 
 
 $mustBeLogged = function (Request $request) use ($app) {
@@ -118,10 +123,15 @@ $mustBeLogged = function (Request $request) use ($app) {
 	}
 };
 
+$mustBeAdmin = function () use ($app) {
+	if (!$app['campagneService']->isAdmin($app['session']->get('user'))) {
+		return $app->redirect($app->path('homepage'));
+	}
+};
+
 function isLog($app) {
 	return ($app['session']->get('user') != null);
 }
-
 
 
 require("controller/common.php");
@@ -134,6 +144,7 @@ require("controller/database.php");
 require("controller/messagerie.php");
 require("controller/forum.php");
 require("controller/chat.php");
+require("controller/resetPwd.php");
 
 Request::enableHttpMethodParameterOverride();
 $app->run();
