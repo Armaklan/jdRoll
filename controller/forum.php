@@ -151,15 +151,15 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 		{
 			$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
 			function ($matches) use ($is_mj,$app,$perso){
-				$ret = $ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.</div>';;
-				if($is_mj)
+				$ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.</div>';;
+				if($is_mj || !isset($perso['name']))
 					$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
 				else
 				{
 					$users = preg_split("#,#", $matches[2]);
 					foreach($users as $user)
 					{
-						if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || ($var=isset($perso['name'])?strcasecmp($perso['name'],$user):0) == 0)
+						if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
 						{
 							$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
 							break;
