@@ -28,7 +28,8 @@ function getExterneCampagneNumber($campagne_id) {
 $forumController->get('/', function() use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne(null);
 	$is_mj = $app["campagneService"]->isMj(null);
-	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '']);
+	$isAdmin = $app["campagneService"]->isAdmin();
+	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','isAdmin' => $isAdmin]);
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
@@ -144,6 +145,33 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
+	if($campagne_id > 0)
+	{
+		foreach ($posts as &$post)
+		{
+			$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+			function ($matches) use ($is_mj,$app,$perso){
+				$ret = $ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.</div>';;
+				if($is_mj)
+					$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
+				else
+				{
+					$users = preg_split("#,#", $matches[2]);
+					foreach($users as $user)
+					{
+						if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || ($var=isset($perso['name'])?strcasecmp($perso['name'],$user):0) == 0)
+						{
+							$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
+							break;
+						}
+					}
+				}
+				return $ret;
+			},
+			$post
+		);
+		}
+	}
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
