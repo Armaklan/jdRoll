@@ -149,27 +149,35 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	{
 		foreach ($posts as &$post)
 		{
-			$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-			function ($matches) use ($is_mj,$app,$perso){
-				$ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.</div>';;
-				if($is_mj || !isset($perso['name']))
-					$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
-				else
-				{
-					$users = preg_split("#,#", $matches[2]);
-					foreach($users as $user)
+				$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+				function ($matches) use ($is_mj,$app,$perso,$post){
+					
+					$txt = '';
+					$txtDenied = '';
+					if($matches[2] != '')
 					{
-						if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+						$txt = '<center>Message privé à destination de : ' . $matches[2] . '</center>';
+						$txtDenied = '<br>Seules les personnes suivantes ont accès au message : '. $matches[2];
+					}
+					$ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.' . $txtDenied . '</div>';;
+					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+						$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $txt . $matches[3] . '</div>';
+					else
+					{
+						$users = preg_split("#,#", $matches[2]);
+						foreach($users as $user)
 						{
-							$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $matches[3] . '</div>';
-							break;
+							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							{
+								$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $txt . $matches[3] . '</div>';
+								break;
+							}
 						}
 					}
-				}
-				return $ret;
-			},
-			$post
-		);
+					return $ret;
+				},
+				$post
+			);
 		}
 	}
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
