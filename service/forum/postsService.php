@@ -80,11 +80,12 @@ class PostService {
     				user.username AS user_username,
     				user.avatar AS user_avatar,
     				user.profil AS user_profil,
+                    user.titre AS user_titre,
     				topic.id AS topic_id,
     				topic.title AS topic_title,
     				perso.id AS perso_id,
     				perso.name AS perso_name,
-    				perso.avatar AS perso_avatar
+                    perso.avatar AS perso_avatar
     			FROM posts post
     			JOIN topics topic
     				ON topic.id = post.topic_id
