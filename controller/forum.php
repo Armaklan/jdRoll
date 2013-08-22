@@ -156,12 +156,12 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 					$txtDenied = '';
 					if($matches[2] != '')
 					{
-						$txt = '<center>Message privé à destination de : ' . $matches[2] . '</center>';
-						$txtDenied = '<br>Seules les personnes suivantes ont accès au message : '. $matches[2];
+						$txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
+						$txtDenied = '<br>Une partie de ce message est en privée et ne vous est pas accessible.<br>';
 					}
-					$ret = '<div style="background-color: #FFFFFF; border-color:#FF0000; border-width:1px; border-style:dashed">Vous n\'avez pas accès à ce message.' . $txtDenied . '</div>';;
+					$ret = '<div style="background-color: #EBEADD; padding:15px">' . $txtDenied . '</div>';
 					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
-						$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $txt . $matches[3] . '</div>';
+						$ret = '<div style="background-color: #EBEADD; padding:15px ">' . $txt . $matches[3] . '</div>';
 					else
 					{
 						$users = preg_split("#,#", $matches[2]);
@@ -169,7 +169,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						{
 							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
 							{
-								$ret = '<div style="background-color: #EBEADD; border-color:#FF0000; border-width:1px; border-style:dashed">' . $txt . $matches[3] . '</div>';
+								$ret = '<div style="background-color: #EBEADD; padding: 15px">' . $txt . $matches[3] . '</div>';
 								break;
 							}
 						}
