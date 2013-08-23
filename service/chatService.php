@@ -43,6 +43,7 @@ class ChatService {
 			{
 				$text = str_ireplace("/me ",$user . " ", $text);
 				$text = "<span class=\"dialogue\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: #4488cc;\">" . $text . "</span></span>";
+				$user = "";
 			}
             
             $sql = "INSERT INTO chat

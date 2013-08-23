@@ -32,6 +32,12 @@
 											<td>Date de naissance : </td>
 											<td>{{ user.birthDate|slice(0, 6)}}{{ user.birthDate|slice(8, 9)}}</td>
 									</tr>
+                                    {% if user.titre is not empty %}
+                                        <tr>
+                                                <td>Titre : </td>
+                                                <td>{{ user.titre }}</td>
+                                        </tr>
+                                    {% endif %}
                                     <tr>
                                             <td>Date d'inscription</td>
                                             <td>{{ user.subscribe_date|date("d/m/y") }}</td>
@@ -70,7 +76,7 @@
     		</div>
     	</div>
     </div>
-	
-	
+
+
 
 {% endblock %}

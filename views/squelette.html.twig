@@ -39,9 +39,9 @@
           plugins: [
              "link image lists preview hr insertdatetime",
              "table template textcolor fullscreen",
-             "emoticons code"
+             "emoticons code spellchecker"
           ],
-          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",
+          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private",
           style_formats: [
                           {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                           {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -51,6 +51,15 @@
                           {title: 'Titre 3', block : 'h3'}
                       ],
           autosave_ask_before_unload: false,
+				setup: function(editor) {
+					editor.addButton('private', {
+						text: 'Prv',
+						icon: false,
+						onclick: function() {
+							editor.insertContent('[private][/private]');
+						}
+					});
+				},
           min_height: 160
        });
     } else {
