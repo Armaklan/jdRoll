@@ -1,10 +1,12 @@
 <?php
-
 /**
- * Description of Group
+ * Static element in Jet
  *
- * @author zuberl
+ * @package StaticValue
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
  */
+
 class  StaticValue extends JetElt {
 
     var $resultat;

@@ -18,7 +18,7 @@ $commonController->get('/', function() use ($app) {
     $absences = $app['absenceService']->getCurrentAbsence();
 	$birthDay = $app['userService']->getCurrentBirthDay();
 	$isAdmin = $app["campagneService"]->IsAdmin();
-    return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users, 
+    return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes, 'last_users' => $last_users,
     		'connected_24H_users' => $connected_24H_users, 'last_posts' => $last_posts, 'absences' => $absences,'birthDays' => $birthDay,'isAdmin' => $isAdmin]);
 })->bind("homepage");
 

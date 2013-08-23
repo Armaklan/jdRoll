@@ -1,4 +1,11 @@
 <?php
+/**
+ * Manage private message
+ *
+ * @package messagerieService
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
 
 class MessagerieService {
 
@@ -54,12 +61,12 @@ class MessagerieService {
         }
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
-	
+
 	    public function sendMessageToMailBox($title,$content, $destinataires) {
-        
+
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
-            
+
             try {
 
                 $message = \Swift_Message::newInstance()
