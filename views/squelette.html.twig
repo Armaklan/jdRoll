@@ -41,7 +41,7 @@
              "table template textcolor fullscreen",
              "emoticons code spellchecker"
           ],
-          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private",
+          toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide",
           style_formats: [
                           {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                           {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
@@ -58,6 +58,14 @@
 						onclick: function() {
                             var content = tinyMCE.activeEditor.selection.getContent();
 							editor.insertContent('[private]' + content + '[/private]');
+						}
+					});
+					editor.addButton('hide', {
+						text: 'Hid',
+						icon: false,
+						onclick: function() {
+                            var content = tinyMCE.activeEditor.selection.getContent();
+							editor.insertContent('[hide]' + content + '[/hide]');
 						}
 					});
 				},
