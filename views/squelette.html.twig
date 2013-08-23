@@ -56,7 +56,8 @@
 						text: 'Prv',
 						icon: false,
 						onclick: function() {
-							editor.insertContent('[private][/private]');
+                            var content = tinyMCE.activeEditor.selection.getContent();
+							editor.insertContent('[private]' + content + '[/private]');
 						}
 					});
 				},
