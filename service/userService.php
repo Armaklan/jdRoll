@@ -1,4 +1,12 @@
 <?php
+/**
+ * Manage user information and listing
+ *
+ * @package userService
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 class UserService {
 
@@ -205,11 +213,11 @@ class UserService {
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}
-	
+
 	public function getCurrentBirthDay() {
-		$sql = "SELECT * 
+		$sql = "SELECT *
 				FROM user
-				WHERE MONTH( birthDate ) = MONTH( NOW( ) ) 
+				WHERE MONTH( birthDate ) = MONTH( NOW( ) )
 				AND DAY( birthDate ) = DAY( NOW( ) )";
 
 		$users = $this->db->fetchAll($sql);

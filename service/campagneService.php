@@ -1,4 +1,12 @@
 <?php
+/**
+ * Manage Campagne informations or listing
+ *
+ * @package campagneService
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 class CampagneService {
 

@@ -10,17 +10,17 @@ class ChatService {
         $this->db = $db;
         $this->session = $session;
     }
-    
+
     public function getLastMsg($id) {
-		
-    	$sql = "SELECT * FROM (SELECT * 
+
+    	$sql = "SELECT * FROM (SELECT *
     			FROM chat WHERE id > ?
-    			ORDER BY time DESC 
-    			LIMIT 0, 100) chat 
+    			ORDER BY time DESC
+    			LIMIT 0, 100) chat
     			ORDER BY time ASC";
     	return $this->db->fetchAll($sql,array($id));
     }
-    
+
     public function postMsg($user, $text) {
         if ($text != "") {
 			//On remplace le caractère '<' par son équivalent HTML
@@ -45,9 +45,9 @@ class ChatService {
 				$text = "<span class=\"dialogue\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: #4488cc;\">" . $text . "</span></span>";
 				$user = "";
 			}
-            
+
             $sql = "INSERT INTO chat
-                            (message, username) 
+                            (message, username)
                             VALUES (:message, :user) ";
 
             $stmt = $this->db->prepare($sql);
@@ -67,41 +67,41 @@ class ChatService {
         $content = stripslashes($content);
         return $content;
     }
-	
-	private function escapeLowerAngleBracket($str){ 
+
+	private function escapeLowerAngleBracket($str){
 		$find = array('/<([^[:alpha:]])/', '/<$/');
-		return preg_replace($find, '&lt;\\1', $str); 
-	} 
-	
+		return preg_replace($find, '&lt;\\1', $str);
+	}
+
 	public function deleteMsg($id) {
-       
-            
+
+
             $sql = "delete from chat
                             where id = :id";
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("id", $id);
             $stmt->execute();
-			
+
 			$sql = "INSERT INTO chat_actions( actionType, messageId ) VALUES (0,:id)";
 			$stmt = $this->db->prepare($sql);
             $stmt->bindValue("id", $id);
             $stmt->execute();
-        
+
     }
-	
+
 		public function getDeletedMessge() {
-       
-            
+
+
            $sql = "SELECT messageId FROM chat_actions where actionType = 0
     			ORDER BY messageId ASC";
     	return $this->db->fetchAll($sql);
-        
+
     }
-	
+
 	public function deleteLastMsg($nb) {
-       
-            
+
+
 			  $sql = "SELECT id from chat order by time desc limit " . $nb;
 			  $rows =  $this->db->fetchAll($sql);
 			  if(rows != null)
@@ -121,9 +121,9 @@ class ChatService {
 					}
 				}
 			}
-        
+
     }
 
-    
+
 }
 ?>

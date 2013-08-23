@@ -1,4 +1,11 @@
 <?php
+/**
+ * Manage information and listing of character
+ *
+ * @package persoService
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
 
 class PersoService {
 
