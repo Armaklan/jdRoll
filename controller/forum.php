@@ -145,10 +145,11 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
-	if($campagne_id > 0)
-	{
+	
 		foreach ($posts as &$post)
 		{
+			if($campagne_id > 0)
+			{
 				$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
 				function ($matches) use ($is_mj,$app,$perso,$post){
 					
@@ -175,11 +176,26 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						}
 					}
 					return $ret;
+					},
+					$post
+				);
+			}
+			$post = preg_replace_callback('#\[hide(?:=(.*,?))?\](.*)\[/hide\]#isU',
+				function ($matches) {
+					
+					$txt = '';
+					if($matches[1] != '')
+						$txt = $matches[1];
+					else
+						$txt = 'Informations masquées';
+					
+					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $matches[2] . '</div></div>';;
+				
 				},
 				$post
 			);
 		}
-	}
+	
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
