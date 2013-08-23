@@ -20,7 +20,7 @@
                                 <td>{{ msg.username }}</td>
 								<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
 								{% if(isAdmin) %}
-								<td><a  onClick="deleteChatMessage({{ msg.id }});" title="supprimer le message" class="iconeBtn admIcone"><i class="icon-remove-sign" style="color: red"></i></a></td>
+								<td><a  onClick="deleteChatMessage({{ msg.id }});" title="supprimer le message" class="iconeBtn"><i class="icon-remove-sign" style="color: red"></i></a></td>
 								{% endif %}
 			</tr>
 		{% endfor %}
