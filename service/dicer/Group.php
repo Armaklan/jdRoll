@@ -1,4 +1,11 @@
 <?php
+/**
+ * Description of Group
+ *
+ * @package Group
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
 
 function resultDescComparator($a, $b) {
     if ($a == $b) {
@@ -12,11 +19,6 @@ function resultAscComparator($a, $b) {
 }
 
 
-/**
- * Description of Group
- *
- * @author zuberl
- */
 class Group extends JetElt {
 
     var $elements;

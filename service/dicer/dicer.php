@@ -1,10 +1,12 @@
 <?php
-
 /**
  * Description of dicer
  *
- * @author zuberl
+ * @package dicer
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
  */
+
 class Dicer {
     var $elements = array();
 

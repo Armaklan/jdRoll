@@ -1,11 +1,10 @@
 <?php
-
-
-
 /**
  * Description of Dice
  *
- * @author zuberl
+ * @package Dice
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
  */
 class Dice extends JetElt {
 

@@ -1,20 +1,17 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Jet
+ * Standard jet element
  *
- * @author zuberl
+ * @package JetElt
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
  */
+
 abstract class JetElt {
-    
+
     public abstract function launch();
     public abstract function toString();
-   
+
 }
 
 ?>
