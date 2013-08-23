@@ -45,6 +45,7 @@ class Dicer {
     }
 
     private function parseDicesExpression($expression) {
+        $expression = str_replace('D','d', $expression);
         if ( stripos($expression, 'd') === FALSE ) {
             return new StaticValue($expression);
         } else {
