@@ -47,7 +47,12 @@ class UserService {
 			$sql = "SELECT * FROM user WHERE username = ?";
 	    	$user = $this->db->fetchAssoc($sql, array($login));
 			if($user['birthDate'] != null)
-				$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
+			{
+				if($user['birthDate'] == '0000-00-00')
+					$user['birthDate'] = null;
+				else
+					$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
+			}
 	    	return $user;
 		}
 	}
@@ -61,7 +66,7 @@ class UserService {
 					birthDate = STR_TO_DATE(?, '%d/%m/%Y')
 				WHERE username = ?";
 
-		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'),$request->get('birthDate'), $request->get('username')));
+		$this->db->executeUpdate($sql, array($request->get('mail'), $request->get('avatar'), $request->get('description'),$request->get('birthDate') == ''?null:$request->get('birthDate'), $request->get('username')));
 		$userSession = $this->session->get('user');
 		$userSession['avatar'] = $request->get('avatar');
 		$this->session->set('user', $userSession);
@@ -126,7 +131,12 @@ class UserService {
                     WHERE username = ?";
 	    $user = $this->db->fetchAssoc($sql, array($username));
 		if($user['birthDate'] != null)
-				$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
+		{
+				if($user['birthDate'] == '0000-00-00')
+					$user['birthDate'] = null;
+				else
+					$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
+		}
 	    return $user;
 	}
 
