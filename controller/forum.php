@@ -9,6 +9,34 @@ use Symfony\Component\HttpFoundation\Response;
 $forumController = $app['controllers_factory'];
 $forumController->before($mustBeLogged);
 
+function replace_hide($text)
+{
+
+$ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(.*)|(?R)?|\[)*)\[/hide\]#is',
+				function ($matches) {
+					
+					$txt = '';
+					$m = '';
+					if($matches[1] != '')
+						$txt = $matches[1];
+					else
+						$txt = 'Informations masquées';
+						
+					if(strpos($matches[2],"[hide]"))
+						$m = replace_hide($matches[2]);
+					else
+						$m = $matches[2];
+					
+					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
+				
+				},
+				$text
+			);
+
+		
+	return $ret;
+}
+
 function getInterneCampagneNumber($campagne_id) {
 	if($campagne_id == 0) {
 		return null;
@@ -180,20 +208,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 					$post
 				);
 			}
-			$post = preg_replace_callback('#\[hide(?:=(.*,?))?\](.*)\[/hide\]#isU',
-				function ($matches) {
-					
-					$txt = '';
-					if($matches[1] != '')
-						$txt = $matches[1];
-					else
-						$txt = 'Informations masquées';
-					
-					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $matches[2] . '</div></div>';;
-				
-				},
-				$post
-			);
+			$post = replace_hide($post);
 		}
 	
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
