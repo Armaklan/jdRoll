@@ -11,8 +11,8 @@ $forumController->before($mustBeLogged);
 
 function replace_hide($text)
 {
-
-$ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(.*)|(?R)?|\[)*)\[/hide\]#is',
+							  
+$ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
 				function ($matches) {
 					
 					$txt = '';
@@ -22,7 +22,7 @@ $ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(.*)|(?R)?|\[)*
 					else
 						$txt = 'Informations masquées';
 						
-					if(strpos($matches[2],"[hide]"))
+					if(strpos($matches[2],"[/hide]"))
 						$m = replace_hide($matches[2]);
 					else
 						$m = $matches[2];
