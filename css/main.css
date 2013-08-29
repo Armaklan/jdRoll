@@ -123,3 +123,12 @@ a.collapserLink:hover {
 .profil-1 {
     display: none;
 }
+
+.redColor {
+    color: #882222;
+}
+
+.inline {
+    display: inline-block;
+    margin-left: 2em;
+}
