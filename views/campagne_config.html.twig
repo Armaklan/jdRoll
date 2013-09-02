@@ -1,7 +1,7 @@
 
 <style type="text/css">
 	{% if campagne_config != null %}
-	
+
 		{% if campagne_config.banniere != '' %}
 			.logo_campagne {
 				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;
@@ -9,37 +9,37 @@
 				margin-bottom: 1em;
 			}
 		{% endif %}
-		
+
 		{% if campagne_config.hr != '' %}
 			hr {
 				display: block;
 				border: none;
 				height: 60px;
 				background: transparent url('{{ campagne_config.hr }}') no-repeat center top;
-			}			
+			}
 		{% endif %}
-		
+
 		{% if campagne_config.odd_line_color != '' %}
-		
+
 			.table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th {
 			    background-color: {{ campagne_config.odd_line_color }};
 			}
 
 		{% endif %}
-		
+
 		{% if campagne_config.even_line_color != '' %}
-		
+
 			.table-striped tbody > tr:nth-child(2n) > td, .table-striped tbody > tr:nth-child(2n) > th {
 			    background-color: {{ campagne_config.even_line_color }};
 			}
 
 		{% endif %}
-		
+
 		{% if campagne_config.sidebar_color != '' %}
 			.sidebar {
 				background-color: {{ campagne_config.sidebar_color }};
 			}
-			
+
 			.sidebarTop {
 				background-color: {{ campagne_config.sidebar_color }};
 			}
@@ -48,12 +48,26 @@
 				background-color: {{ campagne_config.sidebar_color }};
 			}
 		{% endif %}
-		
+
 		{% if campagne_config.link_color != '' %}
 			a {
 				color: {{ campagne_config.link_color }};
 			}
 		{% endif %}
-	
+
+		{% if campagne_config.link_sidebar_color != '' %}
+			.sidebar a {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+			.sidebarTop a {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+			.categorie a {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+            a.sidebarBtn {
+                color: black;
+            }
+		{% endif %}
 	{% endif %}
 </style>

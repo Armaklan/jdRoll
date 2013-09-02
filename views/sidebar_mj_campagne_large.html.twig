@@ -24,7 +24,7 @@
 	    	</div>
 	    	<div class="span4">
 				<ul class="nav nav-list nav-stacked">
-					<li class='nav-header'><b>Personnages</b></li>
+					<li><b>Personnages</b></li>
 					{% for perso in allPerso %}
 						<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 					{% endfor %}
@@ -68,7 +68,7 @@
     </div>
     <p/>
 	<ul class="nav nav-list nav-stacked">
-		<li class='nav-header'><b>Personnages</b></li>
+		<li><b>Personnages</b></li>
 		{% for perso in allPerso %}
 			<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 		{% endfor %}
