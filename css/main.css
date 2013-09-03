@@ -100,7 +100,7 @@ a.collapserLink:hover {
 }
 
 .alarm-on {
-    color: #F95;
+    color: #F95 !important;
 }
 
 .campagne_alert {
