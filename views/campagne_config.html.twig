@@ -56,6 +56,9 @@
 		{% endif %}
 
 		{% if campagne_config.link_sidebar_color != '' %}
+            .sidebar {
+				color: {{ campagne_config.link_sidebar_color }};
+            }
 			.sidebar a {
 				color: {{ campagne_config.link_sidebar_color }};
 			}
