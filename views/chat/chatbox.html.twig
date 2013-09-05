@@ -97,6 +97,7 @@
 				$.ajax({
 					type: "GET",
 					url: "{{ path('chat_last_msg') }}",
+					timeout: 5000,
 					data: {isFirst: isFirstLoad, lastId: lastMsgId},
 					success: function(msg){
 									if( $("#text").html() != msg ) {
