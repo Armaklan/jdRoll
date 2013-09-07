@@ -1,0 +1,170 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+<div class="accordion" id="accordion">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#FAQ1">Comment héberger une image ?</a>
+
+		</div>
+		<div id="FAQ1" class="accordion-body collapse">
+			<div class="accordion-inner">
+<p>Que ce soit votre avatar, ou une illustration de vos posts, il est possible d'héberger vos images directement sur la plate-forme. Pour y accéder, vous avez 2 solutions :</p>
+<ul><li>Dans votre profil, via le bouton  « Uploader une image ».</li>
+	<li>Lors de la rédaction d'un post, via le lien « Uploader une image », situé au dessus du formulaire de saisie.</li>
+</ul>
+<p>Quel que soit votre chemin, vous serez dirigé vers « Uploader un fichier » . </p>
+<P>
+<IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_21ccbec5.png" NAME="images17" ALIGN=LEFT WIDTH=329 HEIGHT=245 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<p>Il ne vous restera plus qu'à choisir votre image dans vos fichiers et l'envoyer. Le site vous proposera une URL, que vous devrez copier, puis </p>
+<ul>
+	<li>coller dans « Insérer une image » dans le formulaire de saisie de votre avatar</li>
+	<li>coller via le bouton du formulaire de saisie : insertion d'image.</li>
+</ul>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#FAQ2">Comment fonctionne le lanceur de dés</a>
+		</div>
+		<div id="FAQ2" class="accordion-body collapse">
+			<div class="accordion-inner">
+<P>
+Afin
+de résoudre les actions lors du jeu, vous disposez du lanceur de
+dés. Il est accessible soit directement dans le topic de jeu, après
+le dernier message, soit via le bouton <I>(screen bouton)</I>.</P>
+<P>
+Le
+lanceur supporte plusieurs formules, illustrées ci dessous&nbsp;:</P>
+
+	<P>Le lancer standard&nbsp;:</P>
+	<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_1caa9698.png" NAME="images8" ALIGN=LEFT WIDTH=537 HEIGHT=59 BORDER=0><BR CLEAR=LEFT>
+	<P><b>L'addition</b>&nbsp;:
+	
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_db7758b3.png" NAME="images9" ALIGN=LEFT WIDTH=527 HEIGHT=55 BORDER=0><BR CLEAR=LEFT>
+	<P><b>La soustraction</b>&nbsp;: 
+	</P> 
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_190f4572.png" NAME="images10" ALIGN=LEFT WIDTH=531 HEIGHT=64 BORDER=0><BR CLEAR=LEFT>
+	<P><b>Lance
+	et garde le(s) meilleur(s)&nbsp;: </b>
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_810203e8.png" NAME="images11" ALIGN=LEFT WIDTH=539 HEIGHT=62 BORDER=0><BR CLEAR=LEFT>
+	<P><b>Lance
+	et garde le(s) moins bon(s)&nbsp;: </b>
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_34766bd4.png" NAME="images12" ALIGN=LEFT WIDTH=546 HEIGHT=59 BORDER=0><BR CLEAR=LEFT>
+	<P><b>L'explosion
+	ouverte groupée&nbsp;: </b>
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_7eb2c7a2.png" NAME="images13" ALIGN=LEFT WIDTH=502 HEIGHT=43 BORDER=0><BR CLEAR=LEFT>
+	<P><b>L'explosion
+	ouverte pour un dé&nbsp;:</b></P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_df00556b.png" NAME="images14" ALIGN=LEFT WIDTH=515 HEIGHT=61 BORDER=0><BR CLEAR=LEFT>
+	<P><b>L'explosion
+	fermée groupée&nbsp;: </b>
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_6921d8c2.png" NAME="images15" ALIGN=LEFT WIDTH=540 HEIGHT=62 BORDER=0><BR CLEAR=LEFT>
+	<P><b>L'explosion
+	fermée pour un dé&nbsp;: </b>
+	</P>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_87722b8c.png" NAME="images16" ALIGN=LEFT WIDTH=517 HEIGHT=64 BORDER=0><BR CLEAR=LEFT>
+<P>
+Veillez
+à bien respecter majuscules et minuscules. Notez aussi que toutes
+ces formules sont compatibles entre elles, et qu'il est possible de
+faire des combinaisons.</P>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#FAQ3">Qu'est-ce qu'une explosion&nbsp;?</a>
+		</div>
+		<div id="FAQ3" class="accordion-body collapse">
+			<div class="accordion-inner">
+<P>
+Non,
+ce n'est pas le truc qui fait «&nbsp;Boum&nbsp;!!&nbsp;»</P>
+<P>
+Certains jeux de rôle demandent d'utiliser un (ou plusieurs!) dé dit
+<U>explosif</U>. Les dés explosifs, lorsque leur nombre maximal est
+tiré, sont relancés. Deux types d'explosion&nbsp;:</P>
+<UL>
+	<LI><P><U>L'explosion
+	fermée</U>&nbsp;:
+	le dé n'est relancé qu'une seule fois. <I>Exemple&nbsp;:
+	Je lance deux dés 6, dont l'un est explosif. J'obtiens 4 pour mon
+	dé normal, et 6 au dé explosif. Joie&nbsp;! Je peux le relancer
+	une fois. Et si j'obtiens 6 à nouveau, je ne le relancerai pas.</I></P>
+	<LI><P><U>L'explosion
+	ouverte</U>&nbsp;:
+	le dé est relancé autant de fois que son maximum est tiré.
+	<I>Exemple&nbsp;:
+	Je lance deux dés 4, dont l'un est explosif. J'obtiens 2 pour mon
+	dé normal, 4 au dé explosif. Youpi, je relance! Tant que je ferai
+	4 avec ce dé, je pourrai le relancer.</I></P>
+</UL>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#FAQ4">Que sont les balises spéciales&nbsp;?</a>
+		</div>
+		<div id="FAQ4" class="accordion-body collapse">
+			<div class="accordion-inner">
+<P>
+Ce
+sont des balises qui ne rentrent pas dans la configuration WYSIWYG,
+elle sont visibles lorsque vous créez et/ou éditez votre message,
+mais une fois celui-ci posté, elles disparaissent au profit d'une
+mise en forme.</P>
+<UL>
+	<LI><P><U>La
+	balise </U><I><U>private</U></I>&nbsp;:
+	permet de communiquer en secret avec un ou des joueur(s), et/ou le
+	Maître de partie. Elle s'utilise via le bouton «&nbsp;Prv&nbsp;»
+	disponible sur le formulaire de saisie. Si la balise est utilisée
+	seule, le message n'est destinée qu'au Maître de jeu. Pour y
+	inclure des joueurs, vous devrez insérez leurs pseudonymes ou le
+	nom de leur personnage dans la balise.
+	<I>Exemple&nbsp;:</I><SPAN ><I><SPAN>[private=pseudo1,pseudo2,nomperso3]</SPAN></I></SPAN><I>
+	Message [/private]. Les joueurs  </I><SPAN ><I><SPAN>pseudo1,
+	pseudo2 et nomperso3 verront mon message sur mon post. Les autres ne
+	verront qu'un cadre précisant qu'une partie du message ne leur est
+	pas accessible.</SPAN></I></SPAN></P>
+</UL>
+<P><IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_6abdd7a6.png" NAME="images20" ALIGN=LEFT WIDTH=641 HEIGHT=287 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<UL>
+	<LI><P><U>La
+	balise </U><I><U>hide</U></I>&nbsp;: Idéale pour les longs posts
+	présentant diverses catégories, elle permet de dissimuler une
+	partie du texte/des images et de ne l'afficher qu'en cas de clic sur
+	son titre. Elle s'utilise via le bouton «&nbsp;Hid&nbsp;» du
+	formulaire de saisie. <I>Exemple&nbsp;:
+	</I><SPAN ><I><SPAN>[hide=Mon
+	titre de la mort]</SPAN></I></SPAN><SPAN ><SPAN><SPAN>Mon
+	contenu de la mort qui tue ![/hide] donnera&nbsp;:</SPAN></SPAN></SPAN></P>
+	<P>
+	<IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_b3f6821b.png" NAME="images21" ALIGN=LEFT WIDTH=170 HEIGHT=36 BORDER=0><BR CLEAR=LEFT>Puis,
+	si vous cliquez sur le titre&nbsp;:</P>
+	<P>
+	<IMG SRC="{{app.request.baseUrl}}/img/static/guide_html_441aea55.png" NAME="images22" ALIGN=LEFT WIDTH=252 HEIGHT=63 BORDER=0><BR CLEAR=LEFT>Elle
+	est pas belle, la vie&nbsp;?</P>
+</UL>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
