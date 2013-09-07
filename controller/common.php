@@ -79,6 +79,9 @@ $commonController->get('/chat', function() use($app) {
 	return $app->render('tchat.html.twig');
 })->bind("chat");
 
+$commonController->get('/static/{page}', function($page) use($app) {
+	return $app->render('static/' . $page . '.html.twig');
+})->bind("static");
 
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
