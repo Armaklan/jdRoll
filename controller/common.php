@@ -1,4 +1,11 @@
 <?php
+/**
+ * Controller for generic element
+ *
+ * @package common
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
