@@ -21,6 +21,19 @@ class ChatService {
     	return $this->db->fetchAll($sql,array($id));
     }
 
+    public function getTop10Chat() {
+        $sql = "SELECT username, count(id) as cpt
+                FROM chat
+                WHERE username <> ''
+                GROUP BY username
+                ORDER BY cpt DESC
+                LIMIT 0, 10
+                ";
+    	return $this->db->fetchAll($sql,
+    			array()
+    		);
+
+    }
     public function postMsg($user, $text) {
         if ($text != "") {
 			//On remplace le caractère '<' par son équivalent HTML
