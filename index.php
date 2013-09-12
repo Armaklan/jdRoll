@@ -1,7 +1,6 @@
 <?php
 
 require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/constante/StatutCampagn.php';
 require __DIR__.'/service/dbService.php';
 require __DIR__.'/service/userService.php';
 require __DIR__.'/service/campagneService.php';
