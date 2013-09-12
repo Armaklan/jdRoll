@@ -23,6 +23,13 @@ class CampagneService {
         $this->userService = $userService;
     }
 
+    public function getNbCampagne($statut) {
+			$sql = "SELECT count(id)
+					FROM campagne
+                    WHERE statut = :statut";
+			return $this->db->fetchColumn($sql, array('statut' => $statut), 0);
+    }
+
     public function getBlankCampagne() {
 		$campagne = array();
 		$campagne['id'] = '';

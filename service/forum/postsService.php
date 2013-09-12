@@ -39,6 +39,30 @@ class PostService {
     	return $this->db->fetchAssoc($sql, array("post" => $post_id));
     }
 
+
+    public function getNbPost() {
+        $sql = "SELECT count(*)
+                FROM posts
+                ";
+        return $this->db->fetchColumn($sql, array(), 0);
+    }
+
+
+    public function getTop10Post() {
+        $sql = "SELECT user.username, count(posts.id) as cpt
+                FROM user
+                JOIN posts
+                ON
+                user.id = posts.user_id
+                GROUP BY user.username
+                ORDER BY cpt DESC
+                LIMIT 0, 10
+                ";
+    	return $this->db->fetchAll($sql,
+    			array()
+    		);
+    }
+
     public function getPageOfPost($topic_id, $post_id) {
     	$sql = "SELECT ( (posts.num_post - 1) DIV :page_size) as page
 				FROM

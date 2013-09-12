@@ -19,6 +19,16 @@ class UserService {
         $this->session = $session;
     }
 
+    public function getNbUser() {
+        $sql = "SELECT count(distinct user.id)
+                FROM user
+                JOIN posts
+                ON
+                user.id = posts.id
+                ";
+        return $this->db->fetchColumn($sql, array(), 0);
+    }
+
 	public function login($login, $password) {
 		$sql = "SELECT * FROM user WHERE username = ?";
 	    $user = $this->db->fetchAssoc($sql, array($login));

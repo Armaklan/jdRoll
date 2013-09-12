@@ -1,4 +1,12 @@
 <?php
+/**
+ * User profile controller
+ *
+ * @package profile
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

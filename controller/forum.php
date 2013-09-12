@@ -1,4 +1,12 @@
 <?php
+/**
+ * Control top heading forum Operation
+ *
+ * @package forum
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,29 +19,29 @@ $forumController->before($mustBeLogged);
 
 function replace_hide($text)
 {
-							  
+
 $ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
 				function ($matches) {
-					
+
 					$txt = '';
 					$m = '';
 					if($matches[1] != '')
 						$txt = $matches[1];
 					else
 						$txt = 'Informations masquées';
-						
+
 					if(strpos($matches[2],"[/hide]"))
 						$m = replace_hide($matches[2]);
 					else
 						$m = $matches[2];
-					
+
 					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
-				
+
 				},
 				$text
 			);
 
-		
+
 	return $ret;
 }
 
@@ -173,14 +181,14 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
-	
+
 		foreach ($posts as &$post)
 		{
 			if($campagne_id > 0)
 			{
 				$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
 				function ($matches) use ($is_mj,$app,$perso,$post){
-					
+
 					$txt = '';
 					$txtDenied = '';
 					if($matches[2] != '')
@@ -210,7 +218,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 			}
 			$post = replace_hide($post);
 		}
-	
+
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
 			"last_page" => $last_page, 'actual_page' => $no_page]);

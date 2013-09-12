@@ -1,0 +1,25 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+<center><h1>Statistiques</h1></center>
+<b> Nombre de partie en-cours : {{nb_partie}} </b> <br>
+<b> Nombre de partie en préparation : {{nb_partie_prep}} </b> <br>
+<b> Nombre d'utilisateurs : </b> {{nb_user}} (Seul les utilisateurs ayant déjà posté sont comptabilisés).<br>
+<b> Nombre de posts : </b> {{nb_post}} <br>
+
+<p></p>
+
+<h2>Top 10 des posteurs : </h2>
+<ul>
+{% for posteur in top_post %}
+    <li> {{posteur.username}} : {{posteur.cpt}}</li>
+{% endfor %}
+</ul>
+
+<h2>Top 10 des plus présents sur le tchat : </h2>
+{% for posteur in top_chat %}
+    <li> {{posteur.username}} : {{posteur.cpt}}</li>
+{% endfor %}
+
+{% endblock %}

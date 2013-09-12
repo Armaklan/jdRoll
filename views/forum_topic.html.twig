@@ -87,6 +87,8 @@
 							    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
 							    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 							    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
+                                <br>
+                                <b>Résultats : </b>
 							    <span id="resultatDicerQuick">
 
 					   			 </span>
@@ -179,7 +181,8 @@ function callLaunchDiceQuick() {
 		data: {param: param, description: description},
 		error: function() { alert("Jet de dé impossible"); },
 		success: function(retour){
-			$('#resultatDicerQuick').html(retour);
+            $('#resultatDicerQuick').append('<br>');
+			$('#resultatDicerQuick').append(retour);
 		}
 	});
 	return false;
