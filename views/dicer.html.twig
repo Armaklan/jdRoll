@@ -9,7 +9,7 @@
 			    <input type="text" class="input-medium" id="dicerDescription" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 			    <button type="submit" class="btn" onClick="return callLaunchDice();">Lancer les dés</button>
 			    <span id="resultatDicer">
-			    	
+
 			    </span>
 			    <p/>
 			    <p><i>Les lancés effectués via cette popup ne crée par de post dans le sujet de jeu.</i></p>
@@ -53,7 +53,8 @@ function callLaunchDice() {
 		data: {param: param, description: description},
 		error: function() { alert("Jet de dé impossible"); },
 		success: function(retour){
-			$('#resultatDicer').html(retour);
+            $('#resultatDicer').append('<br>');
+			$('#resultatDicer').append(retour);
 		}
 	});
 	return false;
