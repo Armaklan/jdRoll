@@ -24,7 +24,7 @@ class UserService {
                 FROM user
                 JOIN posts
                 ON
-                user.id = posts.id
+                user.id = posts.user_id
                 ";
         return $this->db->fetchColumn($sql, array(), 0);
     }
