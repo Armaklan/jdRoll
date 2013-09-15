@@ -1,4 +1,11 @@
 <?php
+/**
+ * Controller for generic element
+ *
+ * @package common
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +86,9 @@ $commonController->get('/chat', function() use($app) {
 	return $app->render('tchat.html.twig');
 })->bind("chat");
 
+$commonController->get('/static/{page}', function($page) use($app) {
+	return $app->render('static/' . $page . '.html.twig');
+})->bind("static");
 
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
@@ -110,6 +120,16 @@ $commonController->get('/users', function(Request $request) use ($app) {
 	return $app->render('user_list.html.twig', ['users' => $users,'isAdmin' => $isAdmin]);
 })->bind("user_list");
 
+$commonController->get('/stat', function() use ($app) {
+    $nbPartie = $app['campagneService']->getNbCampagne(0);
+    $nbPartiePrep = $app['campagneService']->getNbCampagne(3);
+    $nbUser = $app['userService']->getNbUser();
+    $nbPost = $app['postService']->getNbPost();
+    $topPost = $app['postService']->getTop10Post();
+    $topChat = $app['chatService']->getTop10Chat();
+    return $app->render('stat.html.twig', ['nb_partie' => $nbPartie, 'nb_partie_prep' => $nbPartiePrep, 'nb_user' => $nbUser, 'nb_post' => $nbPost,
+        'top_post' => $topPost, 'top_chat' => $topChat]);
+})->bind("stat");
 
 $app->mount('/', $commonController);
 

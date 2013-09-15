@@ -1,7 +1,6 @@
 <?php
 
 require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/constante/StatutCampagn.php';
 require __DIR__.'/service/dbService.php';
 require __DIR__.'/service/userService.php';
 require __DIR__.'/service/campagneService.php';
@@ -69,7 +68,7 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 		'monolog.logfile' => __DIR__.'/development.log',
 ));
 
-$app["debug"] = false;
+$app["debug"] = true;
 
 /*
     Définition des services
@@ -140,7 +139,6 @@ require("controller/secure_campagn.php");
 require("controller/public_campagn.php");
 require("controller/subscribe.php");
 require("controller/perso.php");
-require("controller/database.php");
 require("controller/messagerie.php");
 require("controller/forum.php");
 require("controller/chat.php");

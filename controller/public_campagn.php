@@ -1,4 +1,12 @@
 <?php
+/**
+ * Campagne controller for public operation
+ *
+ * @package public_campagn
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

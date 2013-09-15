@@ -1,6 +1,6 @@
 <?php
 /**
- * Manage Campagne informations or listing
+ * Manage Campagne Information
  *
  * @package campagneService
  * @copyright (C) 2013 jdRoll
@@ -21,6 +21,13 @@ class CampagneService {
         $this->session = $session;
         $this->persoService = $persoService;
         $this->userService = $userService;
+    }
+
+    public function getNbCampagne($statut) {
+			$sql = "SELECT count(id)
+					FROM campagne
+                    WHERE statut = :statut";
+			return $this->db->fetchColumn($sql, array('statut' => $statut), 0);
     }
 
     public function getBlankCampagne() {
@@ -62,6 +69,7 @@ class CampagneService {
     	$campagne['even_line_color'] = $request->get('even_line_color');
     	$campagne['sidebar_color'] = $request->get('sidebar_color');
     	$campagne['link_color'] = $request->get('link_color');
+    	$campagne['link_sidebar_color'] = $request->get('link_sidebar_color');
     	$campagne['template'] = $request->get('template');
     	$campagne['sidebar_text'] = $request->get('sidebar_text');
     	return $campagne;
@@ -91,9 +99,9 @@ class CampagneService {
 
     public function createCampagneConfig($campagne) {
     	$sql = "INSERT INTO campagne_config
-				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_color, template, sidebar_text)
+				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_sidebar_color, link_color, template, sidebar_text)
 				VALUES
-				(:campagne, '', '', '', '', '', '', '', '')";
+				(:campagne, '', '', '', '', '', '', '', '', '')";
 
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
@@ -109,6 +117,7 @@ class CampagneService {
     			even_line_color = :even_line_color,
     			sidebar_color = :sidebar_color,
     			link_color = :link_color,
+    			link_sidebar_color = :link_sidebar_color,
     			template = :template,
     			sidebar_text = :sidebar_text
     			WHERE
@@ -122,6 +131,7 @@ class CampagneService {
     	$stmt->bindValue("even_line_color", $request->get('even_line_color'));
     	$stmt->bindValue("sidebar_color", $request->get('sidebar_color'));
     	$stmt->bindValue("link_color", $request->get('link_color'));
+    	$stmt->bindValue("link_sidebar_color", $request->get('link_sidebar_color'));
     	$stmt->bindValue("template", $request->get('template'));
     	$stmt->bindValue("sidebar_text", $request->get('sidebar_text'));
     	$stmt->execute();

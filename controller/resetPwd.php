@@ -1,4 +1,12 @@
 <?php
+/**
+ * Template to control reset password operation
+ *
+ * @package resetPwd
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 */
 $resetPwdController = $app['controllers_factory'];
 $resetPwdController->get('/', function() use($app) {
-    
+
     return $app->render('resetPwd.html.twig', ['warning' => '','error' => ""]);
 })->bind("reset");
 
@@ -42,8 +50,8 @@ $resetPwdController->post('/asked', function(Request $request) use($app) {
 })->bind("reset_asked");
 
 $resetPwdController->get('/{alea}', function($alea) use($app) {
-   
-	
+
+
 		$error = '';
 		$warning = '';
 		$asked = $app['resetPwdService']->checkAleaAndExpiration($alea);
@@ -51,7 +59,7 @@ $resetPwdController->get('/{alea}', function($alea) use($app) {
 		if($asked == null)
 		{
 			$error = 'Le lien de réinitialisation est expiré ou n\'est pas valide';
-			
+
 		}
 		else
 		{
