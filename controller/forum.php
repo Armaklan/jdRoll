@@ -186,19 +186,14 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 		{
 			if($campagne_id > 0)
 			{
-				$post = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-				function ($matches) use ($is_mj,$app,$perso,$post){
+				$isThereAPrivateForMe = false;
+				$postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+				function ($matches) use($is_mj,$app,$perso,&$isThereAPrivateForMe,$post){
 
-					$txt = '';
-					$txtDenied = '';
-					if($matches[2] != '')
-					{
-						$txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
-						$txtDenied = '<br>Une partie de ce message est en privée et ne vous est pas accessible.<br>';
-					}
-					$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px">' . $txtDenied . '</div>';
 					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
-						$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">' . $txt . $matches[3] . '</div>';
+					{
+						$isThereAPrivateForMe = true;
+					}
 					else
 					{
 						$users = preg_split("#,#", $matches[2]);
@@ -206,17 +201,55 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						{
 							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
 							{
-								$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding: 15px">' . $txt . $matches[3] . '</div>';
+								$isThereAPrivateForMe=true;
 								break;
 							}
 						}
 					}
+					return '';
+					},
+					$post['post_content']
+				);
+				
+				$postTrim = strip_tags($postForTest);
+				$postSize = strlen(trim($postTrim));
+				
+				
+				$post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+				function ($matches) use ($is_mj,$app,$perso,$post,$postSize,$isThereAPrivateForMe){
+					
+						$txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
+						 $ret = '';
+					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+					{
+						$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
+					}
+					else
+					{
+						$users = preg_split("#,#", $matches[2]);
+						foreach($users as $user)
+						{
+							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							{
+								$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
+								
+								break;
+							}
+						}
+					}
+					
+					if(!$isThereAPrivateForMe)
+					{
+						if($postSize == 0)
+							$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px "><br>Une partie de ce message est en privée et ne vous est pas accessible.<br></div>';
+					}
+					
 					return $ret;
 					},
-					$post
+					$post['post_content']
 				);
 			}
-			$post = replace_hide($post);
+			$post['post_content'] = replace_hide($post['post_content']);
 		}
 
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
