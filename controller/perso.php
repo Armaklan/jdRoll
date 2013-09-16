@@ -28,7 +28,7 @@
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-                $cats = $app['persoService']->getAllPnjCat($campagne_id);
+        $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_edit_mj");
 
@@ -41,6 +41,8 @@
 			return $app->redirect($app->path('perso_view_all', ['campagne_id' => $campagne_id]));
 		}
 	})->bind("perso_view");
+	
+
 
 	$persoController->get('/view_all_mj/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
@@ -61,9 +63,11 @@
 		$perso_id = $request->get('perso_id');
 		try {
 			if ($perso_id != "") {
+				
 	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
-                        $cats = $app['persoService']->getAllPnjCat($campagne_id);
+
+                $cats = $app['persoService']->getAllPnjCat($campagne_id);
 	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 			} else {
 				$app['persoService']->insertPNJ($campagne_id, $request);
@@ -87,7 +91,7 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getBlankPnj($campagne_id);
-                $cats = $app['persoService']->getAllPnjCat($campagne_id);
+        $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_pnj_add");
 

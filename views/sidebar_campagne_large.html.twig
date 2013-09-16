@@ -31,7 +31,7 @@
 				<ul class="nav nav-stacked">
 					<li><b>Personnages</b></li>
 					{% for perso in allPerso %}
-						<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+							<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -80,7 +80,12 @@
 	<ul class="nav nav-stacked">
 		<li><b>Personnages</b></li>
 		{% for perso in allPerso %}
+		{% if perso.username == app.session.get('user')['login'] %}
+			<li><a id='myPerso' href="#">{{ perso.name }} ({{ perso.username }})</a></li>
+		{% else %}
 			<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+		{% endif %}
+			
 		{% endfor %}
 	</ul>
 	<div style="padding-left: 1.3em; padding-right: 1.3em;">

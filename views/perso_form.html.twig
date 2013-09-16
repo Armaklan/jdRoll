@@ -7,6 +7,84 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
+	
+	<script type='text/javascript'>
+$(function() {
+
+	$('a[id^="JDRollUserControlLink"]').each(function(){
+	
+		var isEmpty = 0;
+		if($(this).hasClass("editable-empty"))
+			isEmpty = 1;
+		
+		var value = '';
+		if(document.getElementById($(this).attr('id')  +  '_hidden'))
+			{
+				$(this).text($('#' + $(this).attr('id')  +  '_hidden').val());
+				value = $('#' + $(this).attr('id')  +  '_hidden').val();
+				$(this).removeClass("editable-empty");
+				isEmpty = 0;
+			}
+	
+		$(this).editable({
+			 value:  $('#' + $(this).attr('id')  +  '_hidden').val(),
+
+			success: function(response, newValue) {
+				
+				if(newValue.city)
+				{
+					
+					$(this).text(newValue.city);
+					if(document.getElementById($(this).attr('id')  +  '_hidden'))
+						$('#' + $(this).attr('id')  +  '_hidden').val(newValue.city);
+					else
+						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='" + newValue.city + "' />");
+
+					
+					
+				}
+				else
+				{
+					if(document.getElementById($(this).attr('id')  +  '_hidden'))
+						$('#' + $(this).attr('id')  +  '_hidden').val(newValue);
+					else
+						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='" + newValue + "' />");
+				}
+			}
+		});
+		
+		if(isEmpty)
+		{
+			$(this).addClass("editable-empty");
+		}
+		
+	});
+	
+	$('.ui-resizable-handle').remove();
+	
+	 
+	$('#saveBtn').click(function(e){
+		e.preventDefault();
+		var fieldsValue = '';
+		$('#zoneFicheCustom').find('input[id$="hidden"]').each(function(){
+			fieldsValue +=$(this)[0].outerHTML;
+		});
+	
+		$('#hiddenInputFields').val(fieldsValue);
+			$("form:first").submit();
+		});
+});
+
+   
+</script>
+
+<style>
+.ui-layout-center {	
+	position: relative;
+    border: 1px solid black;
+}
+
+</style>
 
 	<form class="form-horizontal" action="{{ path('perso_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
@@ -66,6 +144,15 @@
 		    	 placeholder="Votre personnage selon les règles" rows="10">{{ perso['technical'] }}</textarea>
 		    </div>
 	    </div>
+		<div class="control-group" id='zoneFicheCustomControl'>
+			<label class="control-label" for="template">Fiche de personnage</label>
+			<div class="controls">
+				<div class="ui-layout-center" id='zoneFicheCustom'>
+					{% autoescape false %}{{ perso.template_html }}{% endautoescape %}
+					{% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
+					{% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
+				</div>
+			</div>
 	    {% if is_mj and perso.user_id is null%}
 		   	<div class="control-group">
 			    <label class="control-label" for="statut">Visibilité dans la gallerie</label>
@@ -80,9 +167,10 @@
             
 	    <div class="control-group">
 		    <div class="controls">
-			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+			    <button type="submit" class="btn btn-primary" id='saveBtn'>Sauvegarder</button>
 		    </div>
 	    </div>
+		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>
 
 {% endblock %}
