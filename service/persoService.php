@@ -31,6 +31,10 @@ class PersoService {
         $perso["campagne_id"] = $campagne_id;
         $perso["id"] = "";
         $perso["user_id"] = null;
+		$perso["template_html"] = null;
+		$perso["template_img"] = null;
+		$perso["template_fields"] = null;
+		$perso["perso_fields"] = null;
         return $perso;
     }
 
@@ -48,9 +52,8 @@ class PersoService {
     }
 
     public function getPersonnage($createIfNotExist, $campagne_id, $user_id) {
-        $sql = "SELECT * FROM personnages
-				WHERE
-						campagne_id = :campagne
+        $sql = "SELECT * FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
+				where campagne_config.campagne_id = :campagne
 				AND 	user_id = :user";
         $result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
         if (empty($result)) {
@@ -65,9 +68,8 @@ class PersoService {
     }
 
     public function getPersonnageById($perso_id) {
-        $sql = "SELECT * FROM personnages
-				WHERE
-						id = :perso";
+        $sql = "SELECT * FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
+				where id = :perso";
         $result = $this->db->fetchAssoc($sql, array("perso" => $perso_id));
         return $result;
     }
@@ -146,8 +148,9 @@ class PersoService {
 				publicDescription = :publicDescription,
 				privateDescription = :privateDescription,
 				technical = :technical,
+				perso_fields = :perso_fields,
 				statut = :statut,
-                                cat_id = :cat_id
+                cat_id = :cat_id
 				WHERE
 					campagne_id = :campagne
 				AND id = :perso";
@@ -161,8 +164,10 @@ class PersoService {
         $stmt->bindValue("publicDescription", $request->get('publicDescription'));
         $stmt->bindValue("privateDescription", $request->get('privateDescription'));
         $stmt->bindValue("technical", $request->get('technical'));
+		$stmt->bindValue("perso_fields", $request->get('hiddenInputFields'));
         $stmt->bindValue("statut", $request->get('statut'));
-        $stmt->bindValue("cat_id", $request->get('cat_id'));
+		$stmt->bindValue("cat_id", $request->get('cat_id'));
+
         $stmt->execute();
     }
 
@@ -180,12 +185,13 @@ class PersoService {
         $stmt->execute();
     }
 
+
     public function insertPNJ($campagne_id, $request) {
 
         $sql = "INSERT INTO personnages
-				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id, statut, cat_id)
+				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id, statut, cat_id,perso_fields)
 				VALUES
-				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne, :statut, :cat_id)";
+				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne, :statut, :cat_id,:perso_fields)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("campagne", $campagne_id);
@@ -197,6 +203,7 @@ class PersoService {
         $stmt->bindValue("technical", $request->get('technical'));
         $stmt->bindValue("statut", $request->get('statut'));
         $stmt->bindValue("cat_id", $request->get('cat_id'));
+		$stmt->bindValue("perso_fields",$request->get('hiddenInputFields'));
         $stmt->execute();
     }
 
