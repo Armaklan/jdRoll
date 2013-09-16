@@ -1,0 +1,104 @@
+<script type='text/javascript'>
+$(function() {
+
+
+	var lastv;
+	$('#zoneFicheCustomPopUp').find('a[id^="JDRollUserControlLink"]').each(function(){
+
+		var isEmpty = 0;
+		if($(this).hasClass("editable-empty"))
+			isEmpty = 1;
+		
+		var value = '';
+		if(document.getElementById($(this).attr('id')  +  '_hidden'))
+			{
+				$(this).text($('#' + $(this).attr('id')  +  '_hidden').val());
+				value = $('#' + $(this).attr('id')  +  '_hidden').val();
+				$(this).removeClass("editable-empty");
+				isEmpty = 0;
+			}
+	
+		$(this).editable({
+			value:  $('#' + $(this).attr('id')  +  '_hidden').val(),
+			success: function(response, newValue) {
+				if(newValue.city)
+				{
+					
+					$(this).text(newValue.city);
+					if(document.getElementById($(this).attr('id')  +  '_hidden'))
+						$('#' + $(this).attr('id')  +  '_hidden').val(newValue.city);
+					else
+						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='" + newValue.city + "' />");
+				}
+				else
+				{
+					if(document.getElementById($(this).attr('id')  +  '_hidden'))
+						$('#' + $(this).attr('id')  +  '_hidden').val('');
+					else
+						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='' />");
+				}
+			}
+		});
+		
+		if(isEmpty)
+		{
+			$(this).addClass("editable-empty");
+			$(this).css("display","none");
+			
+		}
+	});
+	
+	$('#zoneFicheCustomPopUp .editable').editable('toggleDisabled');
+
+});
+
+   
+</script>
+
+ <style type='text/css'>
+ 
+.ui-layout-center {
+	
+	
+	position: relative;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	color: #333333
+		
+	
+   
+	
+	
+}
+
+
+.JDRollDroppedUserContro {
+       z-index:1000;
+}
+
+.JDRollUserControl {
+		display: inline-block;
+}
+</style>
+<div id="persoModal" class="form-horizontal" title="Fiche de personnage" >
+
+		<div class="control-group" id='zoneFichepopUp'>
+
+			<div >
+			
+				<div class="ui-layout-center" id='zoneFicheCustomPopUp'>
+					{% autoescape false %}{{ perso.template_html }}{% endautoescape %}
+					{% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
+					{% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
+				</div>
+		
+
+			</div>
+		</div>
+
+
+</div>
+
+
+

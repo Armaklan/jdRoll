@@ -71,6 +71,9 @@ class CampagneService {
     	$campagne['link_color'] = $request->get('link_color');
     	$campagne['link_sidebar_color'] = $request->get('link_sidebar_color');
     	$campagne['template'] = $request->get('template');
+		$campagne['template_html'] = $request->get('hiddenInput');
+		$campagne['template_fields'] = $request->get('hiddenInputFields');
+		$campagne['template_img'] = $request->get('imgBG');
     	$campagne['sidebar_text'] = $request->get('sidebar_text');
     	return $campagne;
     }
@@ -119,6 +122,9 @@ class CampagneService {
     			link_color = :link_color,
     			link_sidebar_color = :link_sidebar_color,
     			template = :template,
+				template_html = :template_html,
+				template_fields = :template_fields,
+				template_img = :template_img,
     			sidebar_text = :sidebar_text
     			WHERE
     			campagne_id = :campagne";
@@ -133,6 +139,12 @@ class CampagneService {
     	$stmt->bindValue("link_color", $request->get('link_color'));
     	$stmt->bindValue("link_sidebar_color", $request->get('link_sidebar_color'));
     	$stmt->bindValue("template", $request->get('template'));
+		$stmt->bindValue("template_html",$request->get('hiddenInput'));
+		if($request->get('typeFiche') == 0)
+			$stmt->bindValue("template_img",NULL);
+		else
+			$stmt->bindValue("template_img",$request->get('imgBG'));
+		$stmt->bindValue("template_fields",$request->get('hiddenInputFields'));
     	$stmt->bindValue("sidebar_text", $request->get('sidebar_text'));
     	$stmt->execute();
     }
