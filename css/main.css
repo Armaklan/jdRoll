@@ -132,3 +132,7 @@ a.collapserLink:hover {
     display: inline-block;
     margin-left: 2em;
 }
+
+#zoneImg {
+	width: 600px !important;
+}
