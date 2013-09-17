@@ -199,7 +199,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						$users = preg_split("#,#", $matches[2]);
 						foreach($users as $user)
 						{
-							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
 							{
 								$isThereAPrivateForMe=true;
 								break;
@@ -212,8 +212,11 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 				);
 				
 				$postTrim = strip_tags($postForTest);
-				$postSize = strlen(trim($postTrim));
+				//Trop gourmand ? A optimiser ?
+				$postTrim = strtr($postTrim, array_flip(get_html_translation_table(HTML_ENTITIES)));
+				$postTrim = trim($postTrim,"\t\n\r\0\x0B\xC2\xA0\xE2\x80\x89\xE2\x80\x83\xE2\x80\x82");
 				
+				$postSize = strlen($postTrim);
 				
 				$post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
 				function ($matches) use ($is_mj,$app,$perso,$post,$postSize,$isThereAPrivateForMe){
@@ -229,7 +232,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						$users = preg_split("#,#", $matches[2]);
 						foreach($users as $user)
 						{
-							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
 							{
 								$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
 								
