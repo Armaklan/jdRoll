@@ -212,8 +212,11 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 				);
 				
 				$postTrim = strip_tags($postForTest);
-				$postSize = strlen(trim($postTrim));
+				//Trop gourmand ? A optimiser ?
+				$postTrim = strtr($postTrim, array_flip(get_html_translation_table(HTML_ENTITIES)));
+				$postTrim = trim($postTrim,"\t\n\r\0\x0B\xC2\xA0\xE2\x80\x89\xE2\x80\x83\xE2\x80\x82");
 				
+				$postSize = strlen($postTrim);
 				
 				$post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
 				function ($matches) use ($is_mj,$app,$perso,$post,$postSize,$isThereAPrivateForMe){
