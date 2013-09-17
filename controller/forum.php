@@ -199,7 +199,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						$users = preg_split("#,#", $matches[2]);
 						foreach($users as $user)
 						{
-							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
 							{
 								$isThereAPrivateForMe=true;
 								break;
@@ -232,7 +232,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 						$users = preg_split("#,#", $matches[2]);
 						foreach($users as $user)
 						{
-							if(strcasecmp($app['session']->get('user')['login'],$user) == 0 || strcasecmp($perso['name'],$user) == 0)
+							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
 							{
 								$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
 								
