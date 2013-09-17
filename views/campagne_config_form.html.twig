@@ -316,15 +316,10 @@ $(function() {
 				</div>
 			
 				
-				<div class="ui-layout-center" id='zoneFicheCustom'>
-				{% if campagne.template_img is empty %}
-					{% autoescape false %}{{ campagne.template_html }}{% endautoescape %}
-					{% autoescape false %}{{ campagne.template_fields }}{% endautoescape %}
-				{% endif %}
-				</div>
+				<div class="ui-layout-center" id='zoneFicheCustom'>{% if campagne.template_img is empty %}{% autoescape false %}{{ campagne.template_html }}{% endautoescape %}{% autoescape false %}{{ campagne.template_fields }}{% endautoescape %}{% endif %}</div>
 		
 				<div class="ui-layout-center" id='zoneFiche'>
-					<img id='zoneImg' src="{{ campagne.template_img }}" />
+					<img id='zoneImg' src="{{ campagne.template_img }}"/>
 					{% if campagne.template_img is not empty %}
 					{% autoescape false %}{{ campagne.template_fields }}{% endautoescape %}
 					{% endif %}
