@@ -43,6 +43,16 @@
 		{{ render(url("perso_popup", {campagne_id : campagne_id}) ) }}
 		{%endif%}
 	{% endif %}
+	<style>
+	.FDPToolBarBtn
+	{
+
+		margin: -15px 0 0 0;
+		position: absolute;
+
+top: 50%;
+	}
+	</style>
   <script>
 	$(function(){
 			$("#persoModal" ).css('display','none');
@@ -51,7 +61,13 @@
 					$("#persoModal" ).dialog({
 						height: 'auto',
 						width: 'auto',
-					}).removeClass('ui-widget');	
+					}).removeClass('ui-widget');						
+					//$('.ui-dialog-titlebar').append('<a id="EditFDP" href="#" class="btn iconeBtn sidebarBtn quickLink2" title="Editer la fiche"><i class="icon-edit"></i></a>');
+					$('.ui-dialog-titlebar').append('<a href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Personnages"><span><i class="icon-user"></i></span></a>');
+					//$('#EditFDP').click(function(e){
+					//	$('#zoneFichepopUp .editable').editable('toggleDisabled');
+						
+					//});
 				});
 	});
 		
@@ -95,5 +111,6 @@
                 error: function(msg) {}
             });
         }
+		
     </script>
 {% endblock %}

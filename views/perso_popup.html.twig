@@ -55,6 +55,8 @@ $(function() {
    
 </script>
 
+		{{ render(url("campagne_config", {id : campagne_id}) ) }}
+		
  <style type='text/css'>
  
 .ui-layout-center {
@@ -80,18 +82,34 @@ $(function() {
 .JDRollUserControl {
 		display: inline-block;
 }
+
 </style>
 <div id="persoModal" class="form-horizontal" title="Fiche de personnage" >
 
 		<div class="control-group" id='zoneFichepopUp'>
 
 			<div >
-			
+			{% if perso.template_html is not empty %}
 				<div class="ui-layout-center" id='zoneFicheCustomPopUp'>
+				
 					{% autoescape false %}{{ perso.template_html }}{% endautoescape %}
 					{% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
 					{% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
 				</div>
+			{% else %}
+				
+			<table class="table table-striped table-hover">
+			<tbody>
+			<tr></tr>
+			<tr>
+				<td></td>
+				<td>{% autoescape false %}{{ perso.technical }}{% endautoescape %}</td>
+			</tr>	
+			</tbody>
+	</table>
+				
+				</div>
+			{% endif %}
 		
 
 			</div>
