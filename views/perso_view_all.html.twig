@@ -5,50 +5,7 @@
 <script type='text/javascript'>
 $(function() {
 
-	var lastv;
-	$('a[id^="JDRollUserControlLink"]').each(function(){
-	
-		var isEmpty = 0;
-		if($(this).hasClass("editable-empty"))
-			isEmpty = 1;
-		
-		var value = '';
-		if(document.getElementById($(this).attr('id')  +  '_hidden'))
-			{
-				$(this).text($('#' + $(this).attr('id')  +  '_hidden').val());
-				value = $('#' + $(this).attr('id')  +  '_hidden').val();
-				$(this).removeClass("editable-empty");
-				isEmpty = 0;
-			}
-	
-		$(this).editable({
-			value: $('#' + $(this).attr('id')  +  '_hidden').val(),
-			success: function(response, newValue) {
-				if(newValue.city)
-				{
-					$(this).text(newValue.city);
-					if(document.getElementById($(this).attr('id')  +  '_hidden'))
-						$('#' + $(this).attr('id')  +  '_hidden').val(newValue.city);
-					else
-						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='" + newValue.city + "' />");
-				}
-				else
-				{
-					if(document.getElementById($(this).attr('id')  +  '_hidden'))
-						$('#' + $(this).attr('id')  +  '_hidden').val('');
-					else
-						$(this).parent().append("<input type='hidden' id='" + $(this).attr('id')  +  "_hidden' value='' />");
-				}
-			}
-		});
-		
-		if(isEmpty)
-		{
-			$(this).addClass("editable-empty");
-			$(this).css("display","none");
-			
-		}
-	});
+	initFDP($('#zoneFicheCustom'),false);
 	
 	$('#zoneFicheCustom .editable').editable('toggleDisabled');
 
