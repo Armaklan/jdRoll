@@ -64,6 +64,7 @@ $publicCampagneController->post('/favoris', function(Request $request) use($app)
             }
             return "";
         })->bind("favoris");
+		
 
 $app->mount('/campagne', $publicCampagneController);
 
