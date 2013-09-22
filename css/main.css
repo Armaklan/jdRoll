@@ -136,3 +136,11 @@ a.collapserLink:hover {
 #zoneImg {
 	width: 600px !important;
 }
+
+.JDRollUserControl {
+	font-size: 0.8em;
+}
+
+a[id^="JDRollUserControlLink"] {
+	font-size: 0.8em;
+}
