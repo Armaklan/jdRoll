@@ -11,6 +11,7 @@ class Dicer {
     var $elements = array();
 
     public function parse($expression) {
+		$expression = str_replace(' ', '', $expression);
         $this->elements = array();
         $this->parseGroup($expression);
         $this->launch();
@@ -18,18 +19,41 @@ class Dicer {
     }
 
     private function parseGroup($expression) {
-        $groupElt = explode("+", $expression);
-        if(count($groupElt) == 1) {
-            $group = $this->parseGroupElt($expression);
-            $this->elements[count($this->elements)] = $group;
-        } else {
-            $group = new Group("+");
-            foreach($groupElt as $elt) {
-                $result = $this->parseGroupElt($elt);
-                $group->addElt($result);
-            }
-            $this->elements[count($this->elements)] = $group;
-        }
+		$regularExpr = "/\((.*)\)[lg][0-9]/";
+		$tabOccur = array();
+		if (preg_match($regularExpr, $expression, $tabOccur)) {
+				$occur = $tabOccur[0];
+				$expression = str_replace($occur, "", $expression);
+				if(preg_match("/^\+/", $expression)) {
+					$expression = substr($expression, -1);
+				}
+				$occurElt = explode(")", str_replace("(", "", $occur));
+
+				$dicePart = $occurElt[0];
+				$operateur = $occurElt[1];
+
+				$groupElt = explode("+", $occurElt[0]);
+				$group = new Group($operateur);
+				foreach($groupElt as $elt) {
+					$result = $this->parseGroupElt($elt);
+					$group->addEltDetail($result);
+				}
+				$this->elements[count($this->elements)] = $group;
+		}
+		if($expression != "") {
+			$groupElt = explode("+", $expression);
+			if(count($groupElt) == 1) {
+				$group = $this->parseGroupElt($expression);
+				$this->elements[count($this->elements)] = $group;
+			} else {
+				$group = new Group("+");
+				foreach($groupElt as $elt) {
+					$result = $this->parseGroupElt($elt);
+					$group->addElt($result);
+				}
+				$this->elements[count($this->elements)] = $group;
+			}
+		}
     }
 
     private function parseGroupElt($expression) {
@@ -98,10 +122,13 @@ class Dicer {
 
     private function toString() {
         $result = "";
+		$resultat = 0;
         foreach ($this->elements as $elt) {
+			if($result != "") $result .= " + ";
             $result = $result . $elt->toString();
+			$resultat += $elt->getResultat();
         }
-        $result = $result . " = " . $elt->getResultat();
+        $result = $result . " = " . $resultat;
         return $result;
     }
 }

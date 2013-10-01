@@ -39,6 +39,16 @@ class Group extends JetElt {
         $this->elements[count($this->elements)] = $elt;
     }
 
+    public function addEltDetail($elt) {
+		foreach($elt->getElt() as $element) {
+        	$this->elements[count($this->elements)] = $element;
+		}
+    }
+
+	public function getElt() {
+		return $this->elements;
+	}
+
     public function getResultat() {
         if($this->operateur == "-") {
             return $this->calculSoustractResult();
