@@ -10,9 +10,9 @@
 				<th class="categorie" style="text-align: right">
 				{% for i in range(1, last_page) %}
 					{% if i != actual_page %}
-					<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
+						<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
 					{% else %}
-						{{ i }}
+						<u>{{ i }}</u>
 					{% endif %}
 				{% endfor %}
 				</th>
@@ -157,7 +157,7 @@
 					{% if i != actual_page %}
 					<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
 					{% else %}
-						{{ i }}
+						<u>{{ i }}</u>
 					{% endif %}
 				{% endfor %}
 				</th>
