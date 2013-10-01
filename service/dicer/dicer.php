@@ -86,6 +86,8 @@ class Dicer {
                 $nbKeepDice = $exprElt[1];
                 $expression = $exprElt[0];
                 $group = new Group("l$nbKeepDice");
+            } elseif (stripos($expression, 'q') !== FALSE) {
+                $group = new Group("q");
             } else {
                 $group = new Group("+");
             }

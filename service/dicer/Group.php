@@ -56,6 +56,8 @@ class Group extends JetElt {
             return $this->calculKeepGreatResult();
         } elseif (stripos($this->operateur, 'l') !== FALSE) {
             return $this->calculKeepLessResult();
+        } elseif ($this->operateur == 'q') {
+            return $this->calculSubstractResult();
         } else {
             return $this->calculAddResult();
         }
@@ -82,6 +84,14 @@ class Group extends JetElt {
         }
         return $resultat;
     }
+    public function calculSubstractResult() {
+        $resultat = 0;
+        foreach ($this->elements as $elt) {
+			if($resultat == 0) $resultat += $elt->getResultat();
+			else $resultat -= $elt->getResultat();
+        }
+        return abs($resultat);
+	}
 
     public function calculKeepGreatResult() {
 
