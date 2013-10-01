@@ -231,6 +231,12 @@ $securedCampagneController->get('/persoModal/view/popup/{campagne_id}', function
             return $app->render('perso_popup.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso]);
         })->bind("perso_popup");
 		
+$securedCampagneController->post('/persoModal/save/popup/{campagne_id}', function($campagne_id,Request $request) use($app) {
+			
+            $user_id = $app['session']->get('user')['id'];
+            $app['persoService']->updatePersoFields($campagne_id,$user_id,$request->get('fields'));
+            return "";
+        })->bind("save_perso_popup");
 
 $app->mount('/campagne', $securedCampagneController);
 ?>

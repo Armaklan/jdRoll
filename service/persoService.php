@@ -166,6 +166,9 @@ class PersoService {
         $stmt->bindValue("technical", $request->get('technical'));
 		$stmt->bindValue("perso_fields", $request->get('hiddenInputFields'));
         $stmt->bindValue("statut", $request->get('statut'));
+		//if($request->get('cat_id') == '')
+		//$stmt->bindValue("cat_id", NULL);
+		//else
 		$stmt->bindValue("cat_id", $request->get('cat_id'));
 
         $stmt->execute();
@@ -182,6 +185,21 @@ class PersoService {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("perso", $perso_id);
         $stmt->bindValue("technical", $template);
+        $stmt->execute();
+    }
+	
+	    public function updatePersoFields($campagne_id,$user_id, $fields) {
+
+        $sql = "UPDATE personnages
+				SET
+				perso_fields = :fields
+				WHERE
+				user_id = :user AND campagne_id = :campagne";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("user", $user_id);
+        $stmt->bindValue("fields", $fields);
+		$stmt->bindValue("campagne",$campagne_id);
         $stmt->execute();
     }
 
