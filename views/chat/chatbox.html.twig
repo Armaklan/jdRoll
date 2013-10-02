@@ -16,15 +16,14 @@
 				        <div class="input-append">
 						  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
 						  <input type="submit" class="btn" value="Envoyer">
+                                                  {% if(isAdmin) %}
+                                                       <a class="btn"  onClick="deleteLastMessages();">Purger 30 messages</a>
+                                                  {% endif %}
+                                                  
 						</div>
 
 
 					</form>
-					{% if(isAdmin) %}
-					<div >
-						  <input type="button" class="btn" value="Supprimer les 30 derniers messages" onClick="deleteLastMessages();">
-						</div>
-					{% endif %}
 					<script>
 					function postMessage() {
 						textMsg=$('#messageChat').val();
