@@ -286,15 +286,26 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topicId = $request->get('topic_id');
 	$post_id = 0;
+        $isNew = false;
 	if ($request->get('id') == '') {
 		$post_id = $app["postService"]->createPost($request);
+                $isNew = true;
 		$app["topicService"]->updateLastPost($topicId, $post_id);
 	} else {
 		$post_id = $request->get('id');
 		$app["postService"]->updatePost($request);
 	}
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id);
+        $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id;
+        if($isNew) {
+            $app["notificationService"]->alertPostInCampagne(
+                            $app["session"]->get('user')['id'],
+                            $campagne_id,
+                            $topicId,
+                            $url
+                            );
+        }
+	return $app->redirect($url);
 })->bind("post_save");
 
 $forumController->get('/{campagne_id}/section/delete/{section_id}', function($campagne_id, $section_id) use($app) {

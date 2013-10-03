@@ -1,0 +1,29 @@
+        <div id="notifIndicator" class="btn {% if has_notif %} btn-danger {% endif %} " onClick="toggleNotif()">
+            <div id="notifNumber">
+                {{nb_notif}}
+            </div>
+            <i class="icon-comments-alt "></i>
+        </div>
+        <div id="notif" class="notifHide">
+            <div id="notifContent">
+                <div>
+                    <div class="well well-small pull-right">
+                        <!-- <a href="#" class="btn btn-link"><i class="icon-rss"></i></a> -->
+                        <a class="btn btn-link"><i class="icon-trash" onClick="clearNotif('{{app.request.baseUrl}}')"></i></a>
+                    </div>
+                </div>
+                 
+                <div id="msg-zone">
+                    {% for notif in notifs %}
+                        <div class="well well-small notifMsg" id="notif{{notif.id}}">
+                            <a class="close" data-dismiss="alert" href="#" onClick="deleteNotif('{{app.request.baseUrl}}',{{notif.id}})">&times;</a>
+                            <b>{{notif.title}}</b>
+                            {% autoescape false %}
+                            <p>{{notif.content}}</p>
+                            {% endautoescape %}
+                        </div>    
+                    {% endfor %}
+                </div>
+           </div>
+           <div class="arrow-down"></div>
+        </div>

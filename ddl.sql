@@ -374,6 +374,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_8D93D6495126AC48` (`mail`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
 
+
+--
+-- Structure de la table `notification`
+--
+
+CREATE TABLE IF NOT EXISTS `notif` (
+  `user_id` bigint(20) NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 --
 -- Contraintes pour les tables exportées
 --
@@ -432,3 +445,9 @@ ALTER TABLE `sections`
 ALTER TABLE `topics`
   ADD CONSTRAINT `FK_91F646392D053F64` FOREIGN KEY (`last_post_id`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `FK_91F64639D823E37A` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `notif`
+--
+ALTER TABLE `notif`
+  ADD CONSTRAINT `FK_NOTIF_01` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;

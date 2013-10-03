@@ -34,6 +34,7 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollFDP.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/notif.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-datepicker.js"> </script>
 	
     
@@ -330,7 +331,9 @@
         }
 
     </script>
-
+    {% if (app.session.get('user') != null)  %}
+    {{ render(url('notifications')) }}
+    {% endif %}
     <a name="bottom"></a>
 
    	{% if app.session.get('user') != null %}

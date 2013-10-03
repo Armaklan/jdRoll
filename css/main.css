@@ -144,3 +144,75 @@ a.collapserLink:hover {
 a[id^="JDRollUserControlLink"] {
 	font-size: 0.8em;
 }
+
+div#notifIndicator {
+   position: fixed;
+   bottom: 0px;
+   right: 30px;
+}
+
+div#notifIndicator {
+   border-bottom-left-radius: 0px !important;
+   border-bottom-right-radius: 0px !important;
+   padding-right: 1em;
+   padding-left: 1em;
+   padding-bottom: 0.3em;
+   padding-top: 0.6em;
+}
+
+div#notifIndicator i {
+    font-size: 1.6em;
+    text-decoration: none;
+}
+
+div#notifIndicator #notifNumber {
+    float: left;
+    margin-top: 0.1em;
+    margin-right: 0.7em;
+}
+
+div#notif {
+    height: 60%;
+    max-width: 500px;
+    width: 50%;
+    position: fixed;
+    bottom: 38px;
+    right: 20px;
+}
+.notifHide {
+    display: none;
+
+}
+div#notif #notifContent {
+    background-color: #eFeFeF;
+    border: 1px solid #c5c5c5;
+    box-shadow: 1px 1px 12px #555;
+    height: 90%;
+    width: 98%;
+    position: absolute;
+    bottom: 13px;
+    right: 15px;
+    overflow-y: scroll;
+}
+
+div#notif .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;	
+    border-top: 13px solid #eFeFeF;
+    position: absolute;
+    bottom: 1px;
+    right: 35px;
+}
+
+#notifContent #msg-zone {
+    margin-top: 60px;
+}
+
+#notifContent .notifMsg {
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: white;
+}
