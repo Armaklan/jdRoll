@@ -758,6 +758,14 @@ class CampagneService {
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
+    
+    public function getFavorisInCampagne($campagne) {
+        $sql = "SELECT user_id
+                FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne";
+        return $this->db->fetchAll($sql, array('campagne' => $campagne ));
+    }
 
     public function getNote($campagne, $user) {
         try {

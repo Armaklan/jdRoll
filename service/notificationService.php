@@ -53,17 +53,34 @@ class NotificationService {
             $user = $this->userService->getById($user_id);
             $campagne = $this->campagneService->getCampagne($campagne_id);
             $participants = $this->campagneService->getParticipant($campagne_id);
+            $favoris = $this->campagneService->getFavorisInCampagne($campagne_id);
             $topic = $this->topicService->getTopic($topic_id);
             $content = "Nouveau message de " . $user['username'] . " dans le sujet <a href='$url'>" . $topic['title'] . "</a>";
             $title = "Nouveau message - " . $campagne['name'];
-            foreach($participants as $participant) {
-                if($user_id != $participant['id']) {
-                    $this->insertNotif($participant['id'], $title, $content, $url);
+            if($topic['is_private'] != 1) {
+                // FIXIT Arma - Capitalisation
+                foreach($participants as $participant) {
+                    if($user_id != $participant['id']) {
+                        $this->insertNotif($participant['id'], $title, $content, $url);
+                    }
+                }
+                foreach($favoris as $participant) {
+                    if($user_id != $participant['user_id']) {
+                        $this->insertNotif($participant['user_id'], $title, $content, $url);
+                    }
+                }
+            } else {
+                $participants = $this->topicService->getWhoCanRead($topic_id);
+                foreach($participants as $participant) {
+                    if($user_id != $participant['user_id']) {
+                        $this->insertNotif($participant['user_id'], $title, $content, $url);
+                    }
                 }
             }
             if($user_id != $campagne['mj_id']) {
                 $this->insertNotif($campagne['mj_id'], $title, $content);
             }
+            
         }
     }
 
