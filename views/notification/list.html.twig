@@ -8,7 +8,7 @@
             <div id="notifContent">
                 <div>
                     <div class="well well-small pull-right">
-                        <!-- <a href="#" class="btn btn-link"><i class="icon-rss"></i></a> -->
+                        <a href="{{path('notifications_feed', {'username': app.session.get('user').login, 'id': app.session.get('user').id })}}" class="btn btn-link"><i class="icon-rss"></i></a>
                         <a class="btn btn-link"><i class="icon-trash" onClick="clearNotif('{{app.request.baseUrl}}')"></i></a>
                     </div>
                 </div>

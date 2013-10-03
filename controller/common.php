@@ -33,6 +33,17 @@ $commonController->get('/login/{url}', function($url) use($app) {
     return $app->render('login.html.twig', ['error' => "", 'url' => $url]);
 })->bind("login_page");
 
+$commonController->get('/feed/{username}/{id}/notif.rss', function($username, $id) use($app) {
+        $user = $app["userService"]->getById($id);
+        if($user['username'] == $username) {
+            $notifs = $app['notificationService']->getNotifForUser($id);
+            //$response->headers->set('Content-Type', 'text/xml');
+            return $app->render('notification/feed.xml.twig', ['notifs' => $notifs]);
+        } else {
+            return "Authentification incorrect";
+        }
+})->bind("notifications_feed");
+
 $commonController->post('/login', function(Request $request) use($app) {
 
 	$login = $request->get('login');
