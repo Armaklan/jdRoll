@@ -37,8 +37,9 @@ $commonController->get('/feed/{username}/{id}/notif.rss', function($username, $i
         $user = $app["userService"]->getById($id);
         if($user['username'] == $username) {
             $notifs = $app['notificationService']->getNotifForUser($id);
-            //$response->headers->set('Content-Type', 'text/xml');
-            return $app->render('notification/feed.xml.twig', ['notifs' => $notifs]);
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/rss+xml');
+            return $app->render('notification/feed.xml.twig', ['notifs' => $notifs], $response);
         } else {
             return "Authentification incorrect";
         }

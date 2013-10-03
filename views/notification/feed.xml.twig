@@ -8,8 +8,10 @@
         {% for notif in notifs %}
         <item>
             <title>{{notif.title}}</title>
-            <link>http://www.jdroll.org</link>
+            <link>{{notif.url}}</link>
+            <guid>notif{{notif.id}}</guid>
             <description>{{notif.content}}</description>
+            <pubDate>{{notif.create_date}}</pubDate>
          </item>
         {% endfor %}
     </channel>

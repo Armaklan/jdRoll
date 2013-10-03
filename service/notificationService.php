@@ -38,12 +38,13 @@ class NotificationService {
             $stmt->execute();
     }
     
-    public function insertNotif($user_id, $title, $content) {
-            $sql = "INSERT INTO notif (user_id, title, content) VALUES (:user, :title, :content)";
+    public function insertNotif($user_id, $title, $content, $url) {
+            $sql = "INSERT INTO notif (user_id, title, content, url) VALUES (:user, :title, :content, :url)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("user", $user_id);
             $stmt->bindValue("title", $title);
             $stmt->bindValue("content", $content);
+            $stmt->bindValue("url", $url);
             $stmt->execute();
     }
     
@@ -57,7 +58,7 @@ class NotificationService {
             $title = "Nouveau message - " . $campagne['name'];
             foreach($participants as $participant) {
                 if($user_id != $participant['id']) {
-                    $this->insertNotif($participant['id'], $title, $content);
+                    $this->insertNotif($participant['id'], $title, $content, $url);
                 }
             }
             if($user_id != $campagne['mj_id']) {
