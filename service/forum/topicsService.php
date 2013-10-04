@@ -171,7 +171,6 @@ class TopicService {
     public function getWhoCanRead($topic_id) {
         $sql = "SELECT * 
     			FROM can_read
-    			JOIN sections
 			WHERE topic_id = :topic";
 
         return $this->db->fetchAll($sql, array("topic" => $topic_id));

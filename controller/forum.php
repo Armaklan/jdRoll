@@ -16,34 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 $forumController = $app['controllers_factory'];
 $forumController->before($mustBeLogged);
 
-function replace_hide($text)
-{
-
-$ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
-				function ($matches) {
-
-					$txt = '';
-					$m = '';
-					if($matches[1] != '')
-						$txt = $matches[1];
-					else
-						$txt = 'Informations masquées';
-
-					if(strpos($matches[2],"[/hide]"))
-						$m = replace_hide($matches[2]);
-					else
-						$m = $matches[2];
-
-					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
-
-				},
-				$text
-			);
-
-
-	return $ret;
-}
-
 function getInterneCampagneNumber($campagne_id) {
 	if($campagne_id == 0) {
 		return null;
@@ -171,6 +143,34 @@ function getPrivateZone($txt) {
     return '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . '</div>';
 }
 
+    
+function replace_hide(&$post)
+{
+ $post['post_content']  = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
+				function ($matches) {
+
+					$txt = '';
+					$m = '';
+					if($matches[1] != '')
+						$txt = $matches[1];
+					else
+						$txt = 'Informations masquées';
+
+					if(strpos($matches[2],"[/hide]"))
+						$m = replace_hide($matches[2]);
+					else
+						$m = $matches[2];
+
+					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
+
+				},
+				$post['post_content']
+			);
+
+	return $post;
+}
+
+
 function transformPrivateZoneForMessage(&$post, $login, $perso, $is_mj) {
         $isThereAPrivateForMe = false;
         $postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
@@ -236,7 +236,7 @@ function transformPrivateZoneForMessage(&$post, $login, $perso, $is_mj) {
                 },
                 $post['post_content']
         );
-    return replace_hide($post['post_content']);
+        return $post;
 }
 
 $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($campagne_id, $topic_id, $no_page) use($app) {
@@ -255,6 +255,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
         if($campagne_id > 0) {
             foreach ($posts as &$post){
                     transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
+                    replace_hide($post);
             }
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
