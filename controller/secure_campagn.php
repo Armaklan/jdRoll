@@ -79,6 +79,7 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 ";
                 $destinataires = array($user['username']);
                 $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
+				$app['notificationService']->alertUserForMp("Système", $destinataires, "Inscription à une partie", $app->path('messagerie'));
                 return $app->redirect($app->path('campagne', array('id' => $id)));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
