@@ -153,75 +153,9 @@
 <body>
 
 	<a name="top"></a>
-	<div class="navbar navbar-inverse">
-      <div class="navbar-inner">
-        <div class="container">
-            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-		    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		    </a>
-
-          <a class="brand" href="{{ path('homepage') }}">jdRoll</a>
-          <div class="nav-collapse collapse">
 
 
-            <ul class="nav">
-              <li><a href="{{ path('homepage') }}"><i class="icon-home"></i> Accueil</a></li>
-              <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Profil <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-              		<li><a href="{{ path('my_profile') }}">Editer mon Profil</a></li>
-              		<li><a href="{{ path('abs') }}">Signaler une absence</a></li>
-              	  </ul>
-              </li>
-              <li><a href="{{ path('messagerie') }}" id="msgTitle"><i class="icon-envelope"></i> Messagerie</a></li>
-              <li class="dropdown">
-              	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-play-circle"></i> Jouer <b class="caret"></b></a>
-              	<ul class="dropdown-menu">
-              		<li><a href="{{ path('campagne_my_list') }}">Mes campagnes</a></li>
-                        <li class="divider"></li>
-              		<li><a href="{{ path('campagne_list') }}">Rejoindre une campagne</a></li>
-              		<li><a href="{{ path('campagne_new') }}">Créer une campagne</a></li>
-                        <li class="divider"></li>
-              		<li><a href="{{ path('campagne_list_all') }}">Toutes les campagnes en-cours</a></li>
-                        <li><a href="{{ path('campagne_list_archive') }}">Toutes les campagnes archivées</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
-              	</ul>
-              </li>
-              <li><a href="{{ path('forum') }}"><i class="icon-folder-open"></i> Forum</a></li>
-              <li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-question-sign"></i> Aide <b class="caret"></b></a>
-				  <ul class="dropdown-menu">
-					  <li><a href="{{ path('static', {page: 'guide'} ) }}">Guide</a></li>
-						<li><a href="{{ path('static', {page : 'faq'} ) }}">FAQ</a></li>
-						<li class="divider"></li>
-						<li><a href="{{ path('about') }}">A propos de jdRoll</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ path('stat') }}">Quelques statistiques</a></li>
-				  </ul>
-			  </li>
-            </ul>
-            <ul class="nav pull-right">
-                <li>
-                    {% if (app.session.get('user') == null)  %}
-                            <a href="{{ path('login_page', {url : '!'})  }}" class="navbar-link">Se connecter</a>
-
-                    {% else %}
-                            <a href="{{ path('logout')  }}" class="navbar-link">Se déconnecter</a>
-                    {% endif %}
-                </li>
-            </ul>
-
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-
-
+    {{ render(url('menu')) }}
 
 	<div class="container-fluid" style="margin-top: 4em;">
 
@@ -342,7 +276,6 @@
     <a name="bottom"></a>
 
    	{% if app.session.get('user') != null %}
-		{% include('messagerie/btm_messagerie_ajax.html.twig') %}
 	{% endif %}
     {% include('uploader.html.twig') %}
 

@@ -47,7 +47,14 @@ class NotificationService {
             $stmt->bindValue("url", $url);
             $stmt->execute();
     }
-    
+   	
+	public function alertUserForMp($expediteur, $destinataires, $msgTitle, $url) {
+        foreach ($destinataires as $destinaire) {
+            $user = $this->userService->getByUsername($destinaire);
+			$this->insertNotif($user['id'], "Nouveau message privée", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url);
+		}	
+	}	
+
     public function alertPostInCampagne($user_id, $campagne_id, $topic_id, $url) {
         if($campagne_id != 0) {
             $user = $this->userService->getById($user_id);

@@ -33,6 +33,16 @@ $commonController->get('/login/{url}', function($url) use($app) {
     return $app->render('login.html.twig', ['error' => "", 'url' => $url]);
 })->bind("login_page");
 
+$commonController->get('/menu', function() use($app) {
+	$isAdmin = false;
+	$nbMsg = 0;
+	if($app['session']->get('user') != null) {
+		$isAdmin = $app["campagneService"]->IsAdmin();
+		$nbMsg = $app['messagerieService']->getNbNewMessages();
+	}
+    return $app->render('menu.html.twig', ['is_admin' => $isAdmin, 'nb_msg' => $nbMsg]);
+})->bind("menu");
+
 $commonController->get('/feed/{username}/{id}/notif.rss', function($username, $id) use($app) {
         $user = $app["userService"]->getById($id);
         if($user['username'] == $username) {

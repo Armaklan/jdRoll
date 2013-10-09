@@ -24,17 +24,6 @@ $messagerieController->get('/', function() use($app) {
 	return $app->render('messagerie/message_list.html.twig', ['error' => '', 'messages' => $messages, 'sent_messages' => $sentMessages]);
 })->bind("messagerie");
 
-$messagerieController->get('/unread', function() use($app) {
-	$nbMsg = $app['messagerieService']->getNbNewMessages();
-	$color = "";
-	$script = "";
-	if($nbMsg > 0) {
-		$color = " style='color: #FCFFA6' ";
-		$script = "<script>notifyMsg('jdRoll - " . $nbMsg . " messages non lus')</script>";
-	}
-	return "<i class='icon-envelope'></i> <span " . $color . ">Messagerie (" . $nbMsg . ")</span></a> " . $script ;
-})->bind("messagerie_unread");
-
 $messagerieController->get('/view/{id}', function($id) use($app) {
 	$app['messagerieService']->markRead($id);
 	$message = $app['messagerieService']->getMessage($id);
@@ -84,6 +73,9 @@ $messagerieController->get('/new_to/{username}', function($username) use($app) {
 $messagerieController->post('/send', function(Request $request) use($app) {
         try {
             $message = $app['messagerieService']->sendMessage($request);
+        		$destinataires = json_decode($request->get('to_usernames'));
+				$app['notificationService']->alertUserForMp($app['session']->get('user')['login'], $destinataires, 
+						$request->get('title'), $app->path('messagerie'));
             return $app->redirect($app->path('messagerie'));
         } catch (Exception $e) {
             $message = $app['messagerieService']->getFormMessage($request);
