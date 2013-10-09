@@ -658,6 +658,7 @@ class CampagneService {
 		}
 		$this->checkIfNotParticipant($campagne_id, $user_id);
 		$this->insertParticipant($campagne_id, $user_id);
+		return $campagne;
 	}
 
         public function validJoueur($campagne_id, $user_id) {

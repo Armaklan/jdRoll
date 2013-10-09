@@ -69,6 +69,20 @@ class NotificationService {
 		}
 	}
 
+	public function alertJoinCampagne($campagne, $joueur, $url) {
+		$user = $campagne['mj_id'];
+		$title = "Nouvelle inscription - " . $campagne['name'];
+		$content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>"; 
+		$this->insertNotif($user, $title, $content, $url);
+	}
+
+	public function alertQuitCampagne($campagne, $joueur, $url) {
+		$user = $campagne['mj_id'];
+		$title = "Désinscription - " . $campagne['name'];
+		$content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>"; 
+		$this->insertNotif($user, $title, $content, $url);
+	}
+
     public function alertPostInCampagne($user_id, $campagne_id, $topic_id, $url) {
         if($campagne_id != 0) {
             $user = $this->userService->getById($user_id);

@@ -46,6 +46,8 @@ $securedCampagneController->post('/config/save', function(Request $request) use(
 $securedCampagneController->get('/join/{id}', function($id) use($app) {
             try {
                 $campagne = $app['campagneService']->addJoueur($id, $app['session']->get('user')['id']);
+				$url = $app->path("campagne", ['id' => $campagne['id']]);
+				$app['notificationService']->alertJoinCampagne($campagne, $app['session']->get('user')['login'],$url);
                 return $app->redirect($app->path('campagne_my_list'));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
@@ -86,7 +88,10 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
 
 $securedCampagneController->get('/quit/{id}', function($id) use($app) {
             try {
-                $campagne = $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
+				$campagne = $app['campagneService']->getCampagne($id);
+                $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
+				$url = $app->path("campagne", ['id' => $campagne['id']]);
+				$app['notificationService']->alertQuitCampagne($campagne, $app['session']->get('user')['login'],$url);
                 return $app->redirect($app->path('campagne_my_list'));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
