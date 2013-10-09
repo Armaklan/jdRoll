@@ -51,6 +51,7 @@
              "table template textcolor fullscreen",
              "emoticons code spellchecker"
           ],
+          browser_spellcheck : true,
           convert_urls: false,
           spellchecker_languages : "+French=fr",
           spellchecker_rpc_url : "{{app.request.baseUrl}}/tinymce/plugins/spellchecker/rpc.php",
@@ -93,8 +94,9 @@
                  "emoticons code"
               ],
               menubar : false,
-		  	  convert_urls: false,
-              toolbar: "paste | styleselect removeformat | bold italic | hr | link image",
+              browser_spellcheck : true,
+              convert_urls: false,
+              toolbar: "paste | styleselect removeformat | bold italic | hr | link image | code",
               style_formats: [
                               {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},
                               {title: 'Pensée', inline: 'span', classes: 'pensee', styles : {color : '#8844CC'}},
