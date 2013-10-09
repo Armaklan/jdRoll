@@ -55,6 +55,20 @@ class NotificationService {
 		}	
 	}	
 
+	public function alertModifPerso($user_id, $perso, $campagne_id, $urlPj, $urlMj) {
+		$persoUser = $perso['user_id'];
+        $campagne = $this->campagneService->getCampagne($campagne_id);
+		$mj = $campagne['mj_id'];
+		if($mj != $user_id) {
+			$this->insertNotif($mj, "Modification de personnage - " . $campagne['name'], "Le personnage <a href='$urlMj'>"
+			   	. $perso['name'] . "</a> a été modifié.", $urlMj);
+		}
+		if($persoUser != $user_id) {
+			$this->insertNotif($persoUser, "Modification de personnage - " . $campagne['name'],
+			   	"Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj);
+		}
+	}
+
     public function alertPostInCampagne($user_id, $campagne_id, $topic_id, $url) {
         if($campagne_id != 0) {
             $user = $this->userService->getById($user_id);

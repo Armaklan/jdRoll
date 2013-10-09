@@ -66,6 +66,13 @@
 				
 	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
+				$app["notificationService"]->alertModifPerso(
+					$app['session']->get('user')['id'], 
+					$perso,
+					$campagne_id,
+					$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
+					$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
+				);
 
                 $cats = $app['persoService']->getAllPnjCat($campagne_id);
 	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
