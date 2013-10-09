@@ -181,6 +181,50 @@ class PostService {
 				WHERE topic_id = :topic_id";
 		return $this->db->fetchColumn($sql, array("topic_id" => $request->get('topic_id')), 0);
     }
+    
+    
+    public function deleteDraft($request) {
+            $sql = "DELETE FROM draft
+                    WHERE 
+                    topic_id = :topic
+                    AND user_id = :user";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue("topic", $request->get('topic_id'));
+            $stmt->bindValue("user", $this->session->get('user')['id']);
+            $stmt->execute();
+    }
+                
+    public function createDraft($request) {
+                $this->deleteDraft($request);
+                
+		$sql = "INSERT INTO draft
+				(topic_id, perso_id, user_id, content)
+				VALUES
+				(:topic,:perso,:user,:content)";
+
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue("topic", $request->get('topic_id'));
+		if($request->get('perso_id') != '') {
+			$stmt->bindValue("perso", $request->get('perso_id'));
+		} else {
+			$stmt->bindValue("perso", null);
+		}
+		$stmt->bindValue("user", $this->session->get('user')['id']);
+		$stmt->bindValue("content", $request->get('content'));
+		$stmt->execute();
+    }
+    
+    public function getDraft($topic_id, $user_id) {
+		$sql = "SELECT * 
+                        FROM draft
+                        WHERE user_id = :user
+                        AND topic_id = :topic";
+
+                return $this->db->fetchAssoc($sql,
+    			array("topic" => $topic_id, "user" => $user_id)
+    		);
+    }
 
     public function createDicerPost($topic_id, $content) {
     	$sql = "INSERT INTO posts

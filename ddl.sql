@@ -288,6 +288,23 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `draft`
+--
+
+CREATE TABLE IF NOT EXISTS `draft` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `topic_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `perso_id` int(10) unsigned DEFAULT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DRAFT_TOPIC` (`topic_id`),
+  KEY `IDX_DRAFT_USER` (`user_id`),
+  KEY `IDX_DRAFT_PERSO` (`perso_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6525 ;
+
+
+--
 -- Structure de la table `read_post`
 --
 
@@ -428,6 +445,14 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `FK_885DBAFA1221E019` FOREIGN KEY (`perso_id`) REFERENCES `personnages` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_885DBAFA1F55203D` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_885DBAFAA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `draft`
+--
+ALTER TABLE `draft`
+  ADD CONSTRAINT `FK_DRAFT_PERSO` FOREIGN KEY (`perso_id`) REFERENCES `personnages` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_DRAFT_TOPIC` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_DRAFT_USER` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `read_post`

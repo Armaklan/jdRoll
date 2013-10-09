@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/notif.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/draft.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap-datepicker.js"> </script>
 	
     
@@ -50,7 +51,9 @@
              "table template textcolor fullscreen",
              "emoticons code spellchecker"
           ],
-		  convert_urls: false,
+          convert_urls: false,
+          spellchecker_languages : "+French=fr",
+          spellchecker_rpc_url : "{{app.request.baseUrl}}/tinymce/plugins/spellchecker/rpc.php",
           toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide",
           style_formats: [
                           {title: 'Dialogue', inline: 'span', classes: 'dialogue', styles : {color : '#4488CC'}},

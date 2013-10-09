@@ -116,38 +116,42 @@
 							<input type="hidden" name="id" value="" >
 							<input type="hidden" name="topic_id" value="{{ topic.id }}" >
 							{% if is_mj %}
-							<div class="control-group">
-								<label for="perso_id">Poster en tant que...</label>
+                                                            <div class="control-group">
+                                                                    <label for="perso_id">Poster en tant que...</label>
 
 
-                                <div class="bfh-selectbox">
-                                    <input type="hidden" name="perso_id" value="">
-                                    <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
-                                        <span class="bfh-selectbox-option input-medium" data-option="">MJ</span>
-                                        <b class="caret"></b>
-                                    </a>
-                                    <div class="bfh-selectbox-options">
-                                        <input type="text" class="bfh-selectbox-filter">
-                                        <div role="listbox">
-                                            <ul role="option">
-                                                 {% for personnage in personnages %}
-                                                     <option value="{{ personnage.id }}">{{ personnage.name }}</option>
-                                                     <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
-                                                 {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-							</div>
+                                                                <div class="bfh-selectbox">
+                                                                    <input type="hidden" name="perso_id" value="">
+                                                                    <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+                                                                        <span class="bfh-selectbox-option input-medium" data-option="">MJ</span>
+                                                                        <b class="caret"></b>
+                                                                    </a>
+                                                                    <div class="bfh-selectbox-options">
+                                                                        <input type="text" class="bfh-selectbox-filter">
+                                                                        <div role="listbox">
+                                                                            <ul role="option">
+                                                                                 {% for personnage in personnages %}
+                                                                                     <option value="{{ personnage.id }}">{{ personnage.name }}</option>
+                                                                                     <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
+                                                                                 {% endfor %}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 							{% else %}
 								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
 							{% endif %}
 						   	<div class="control-group">
 							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
-							    	 placeholder="Votre message" rows="15" title="Réponse"></textarea>
+							    	 placeholder="Votre message" rows="15" title="Réponse">
+                                                                    {% if draft != null %} {{ draft.content }} {% endif %}
+                                                                </textarea>
 						    </div>
 						    <div class="control-group">
 							    <button type="submit" class="btn btn-primary">Répondre</button>
+                                                            <a class="btn" onClick="ajaxEnreg('{{app.request.baseUrl}}', '{{campagne_id}}')">Enregistrer</a>
+                                                            <span id="enregResult"></span>
 						    </div>
 					    </form>
 					</td>

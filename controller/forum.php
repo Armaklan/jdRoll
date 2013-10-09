@@ -115,7 +115,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 	$topicId = $request->get('id');
 	try {
 		if($topicId == '') {
-			$topicId = $app["topicService"]->createTopic($request);
+			$topicId = $app["topicService"]->createTopic($request);   
 		} else {
 			$app["topicService"]->updateTopic($request);
 		}
@@ -132,6 +132,17 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'persos' => $allPerso]);
 	}
 })->bind("topic_save");
+
+$forumController->post('/{campagne_id}/topic/draft', function($campagne_id, Request $request) use($app) {
+	$campagne_id = getInterneCampagneNumber($campagne_id);
+	try {
+                $topicId = $app["postService"]->createDraft($request);
+		$campagne_id = getExterneCampagneNumber($campagne_id);
+		return "Enregistrement effectué";
+	} catch(Exception $e) {
+		return "Erreur lors de l'enregistrement";
+	}
+})->bind("draft_save");
 
 $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic_id) use($app) {
 	//$page = $app["postService"]->getLastPageOfPost($topic_id);
@@ -155,8 +166,9 @@ $campagne_id = getInterneCampagneNumber($campagne_id);
             }
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
+        $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft,
 			"last_page" => $last_page, 'actual_page' => 0]);
 })->bind("topic_all");
 
@@ -282,8 +294,9 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
             }
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
+        $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
 })->bind("topic_page");
 
@@ -313,6 +326,11 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
         $isNew = false;
 	if ($request->get('id') == '') {
 		$post_id = $app["postService"]->createPost($request);
+                try {
+                    $app["postService"]->deleteDraft($request);
+                } catch (Exception $e) {
+                    //tant pis si on supprime pas le draft
+                }
                 $isNew = true;
 		$app["topicService"]->updateLastPost($topicId, $post_id);
 	} else {
