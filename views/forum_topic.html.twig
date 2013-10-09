@@ -14,7 +14,14 @@
 					{% else %}
 						<u>{{ i }}</u>
 					{% endif %}
+                                                    
+                                        
 				{% endfor %}
+                                {% if actual_page == 0%}
+                                    <u>Toutes</u>
+                                {% else %}
+                                    <a href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}">Toutes</a>
+                                {% endif %}
 				</th>
 			</tr>
 			<tr>
@@ -160,6 +167,11 @@
 						<u>{{ i }}</u>
 					{% endif %}
 				{% endfor %}
+                                {% if actual_page == 0%}
+                                    <u>Toutes</u>
+                                {% else %}
+                                    <a href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}">Toutes</a>
+                                {% endif %}
 				</th>
 			</tr>
 		</tfoot>

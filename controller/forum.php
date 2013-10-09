@@ -139,6 +139,28 @@ $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic
 })->bind("topic");
 
 
+$forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $topic_id) use($app) {
+$campagne_id = getInterneCampagneNumber($campagne_id);
+	$posts = $app["postService"]->getAllPostsInTopic($topic_id);
+	$topic = $app["topicService"]->getTopic($topic_id);
+	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
+        if($campagne_id > 0) {
+            foreach ($posts as &$post){
+                    transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
+                    replace_hide($post);
+            }
+        }
+        $campagne_id = getExterneCampagneNumber($campagne_id);
+	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
+			"last_page" => $last_page, 'actual_page' => 0]);
+})->bind("topic_all");
+
+
+
 function getPrivateZone($txt) {
     return '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . '</div>';
 }
