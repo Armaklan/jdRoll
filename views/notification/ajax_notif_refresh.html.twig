@@ -1,0 +1,20 @@
+<script>
+
+	function refreshNotif() {
+		$.ajax({
+		    type: "GET",
+		    url: "{{ path('notifications_ajax') }}",
+		    success: function(msg){
+				$('#notificationCenter').html(msg);
+		    },
+		    error: function(msg) {
+
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		window.setInterval(refreshNotif, 120000);
+	});
+
+</script>

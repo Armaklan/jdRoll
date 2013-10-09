@@ -271,7 +271,10 @@
 
     </script>
     {% if (app.session.get('user') != null)  %}
-    {{ render(url('notifications')) }}
+	<div id="notificationCenter">
+		{{ render(url('notifications')) }}
+    	{% include('notification/ajax_notif_refresh.html.twig') %}
+	</div>
     {% endif %}
     <a name="bottom"></a>
 
