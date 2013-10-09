@@ -44,12 +44,13 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
-
+        $isAdmin = $app["campagneService"]->isAdmin();
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-    $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
+        $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
-    $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
-	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
+        $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
+	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 
+            'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
 })->bind("forum_campagne");
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {
