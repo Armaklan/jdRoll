@@ -241,3 +241,41 @@ div#notif .arrow-down {
 .grey-accordion-group {
     border: 1px solid #999 !important;
 }
+
+
+
+
+
+
+#EditFDP
+{
+
+    margin: -15px 0 0 0;
+    top: 50%;
+    position:absolute;
+    right: 90px;
+    
+    
+}
+
+#SaveFDP
+{
+
+    margin: -15px 0 0 0;
+    top: 50%;
+    position:absolute;
+    right: 134px;
+    display:none;
+    
+    
+}
+
+#SwitchFDP
+{
+    margin: -15px 0 0 0;
+    top: 50%;
+    position:absolute;
+    right: 50px;
+    
+    
+}
