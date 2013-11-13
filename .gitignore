@@ -1,8 +1,12 @@
 # Symfony directories
-vendor/*
+vendor/
 */logs/*
 */cache/*
 *.db
 files/*
 *.logs
 *.log
+jdroll.sublime-project
+jdroll.sublime-workspace
+node_modules/
+files/

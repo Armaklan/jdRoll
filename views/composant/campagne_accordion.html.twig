@@ -8,9 +8,22 @@
     <div id="collapseOne" class="accordion-body collapse in">
       <div class="accordion-inner">
         <ul class="nav nav-list nav-stacked">
-          {% for perso in allPerso %}
-                <li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+           {% for perso in allPerso %}
+              {% if is_mj %}
+                <li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+              {% else %}
+                {% if perso.username == app.session.get('user')['login'] %}
+                  <li><a id='myPerso' href="#!">{{ perso.name }} ({{ perso.username }})</a></li>
+                {% else %}
+                  <li>
+                    <a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">
+                      {{ perso.name }} ({{ perso.username }})
+                    </a>
+                  </li>
+                {% endif %}
+              {% endif %}
             {% endfor %}
+
           </ul>
       </div>
     </div>

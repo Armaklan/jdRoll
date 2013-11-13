@@ -49,6 +49,35 @@
 		return $app->render('chat/show.html.twig', ['msgs' => $last_msg,'isAdmin' => $isAdmin,'isFirstLoad' => $isFirstLoad, 'lastId' => $lastId, 'deletedIds' => $deletedIds]);
 	})->bind("chat_last_msg");
 
+	$chatController->get('/last', function(Request $request) use($app) {
+		$deletedIds = [];
+		$lastId = $request->get('lastId');
+		if($lastId == 0)
+		{
+			$last_msg = $app['chatService']->getLastMsg(0);
+			if(count($last_msg) > 0)
+				$lastId = $last_msg[count($last_msg)-1]['id'];
+		}
+		else
+		{
+
+			 $last_msg = $app['chatService']->getLastMsg($lastId);
+			 if(count($last_msg) > 0)
+			 {
+				$lastId = $last_msg[count($last_msg)-1]['id'];
+
+			 }
+			 $deletedIds = $app['chatService']->getDeletedMessge();
+		}
+
+		$resp = [];
+		$resp['last_msg'] = $last_msg;
+		$resp['last_id'] = $lastId;
+		$resp['deleted'] = $deletedIds;
+
+		return new Response(json_encode($resp), 200, array('Content-Type' => 'application/json') );
+	});
+
 	$chatController->post('/remove', function(Request $request) use($app) {
 		$app['chatService']->deleteMsg($request->get('msgId'));
 		return "ok";

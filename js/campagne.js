@@ -19,7 +19,7 @@ $(function(){
 				$('.ui-dialog-titlebar').append('<a href="#!" id="SaveFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Sauvegarder" role="button"><span><i class="icon-save"></i></span></a>');
 				$('.ui-dialog-titlebar').append('<a href="#!" id="EditFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Editer la fiche" role="button"><span><i class="icon-edit"></i></span></a>');
 			}
-			$('.ui-dialog-titlebar').append('<a id="SwitchFDP" href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Personnages" role="button"><span><i class="icon-user"></i></span></a>');
+			$('.ui-dialog-titlebar').append('<a id="SwitchFDP" href="{{ path(\'perso_view_all\', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Personnages" role="button"><span><i class="icon-user"></i></span></a>');
 			
 			if($('#zoneFichepopUp').has('#zoneFicheCustomPopUp').length > 0)
 			{

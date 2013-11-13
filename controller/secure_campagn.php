@@ -179,7 +179,7 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'favorised_campagne' => $favorisedCampagne,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert]);
+                        'config' => $config, 'alert' => $alert, 'is_mj' => false]);
         })->bind("sidebar_campagne_large");
 
 $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
@@ -193,7 +193,7 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_mj_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso,'favorised_campagne' => $favorisedCampagne,
                         'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert]);
+                        'config' => $config, 'alert' => $alert, 'is_mj' => true]);
         })->bind("sidebar_campagne_mj_large");
 
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {

@@ -1,0 +1,10 @@
+{
+  "name": "jdRoll",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.9.1"
+    ,"distrib-jquery-ui":"~1.10.3"
+    , "magicsuggest":""
+    , "tinymce-release":""
+  }
+}
