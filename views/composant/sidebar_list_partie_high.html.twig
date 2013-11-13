@@ -1,0 +1,78 @@
+         
+             <div class="accordion" id="accordion2">
+                <div class="accordion-group grey-accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                      Partie active (MJ)
+                    </a>
+                  </div>
+                  <div id="collapseOne" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                      <ul class="nav nav-list nav-stacked">
+                        {% for campagne in active_campagnes %}
+                            <li><a
+                                href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                                {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                                >
+                                    {% if campagne.activity > 0 %}
+                                                                    <i class="icon-asterisk"></i>
+                                                            {% endif %}
+                                    {{campagne.name}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group grey-accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                      Partie active (PJ)
+                    </a>
+                  </div>
+                  <div id="collapseTwo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <ul class="nav nav-list nav-stacked">
+                            {% for campagne in active_pj_campagnes %}
+                                <li><a
+                                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                                    >
+                                        {% if campagne.activity > 0 %}
+                                                                        <i class="icon-asterisk"></i>
+                                                                {% endif %}
+                                        {{campagne.name}}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group grey-accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                      Partie favorite
+                    </a>
+                  </div>
+                  <div id="collapseTwo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <ul class="nav nav-list nav-stacked">
+                            {% for campagne in favorised_campagne %}
+                                <li><a
+                                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                                    >
+                                        {% if campagne.activity > 0 %}
+                                                                        <i class="icon-asterisk"></i>
+                                                                {% endif %}
+                                        {{campagne.name}}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
