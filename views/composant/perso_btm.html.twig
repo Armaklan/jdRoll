@@ -1,0 +1,9 @@
+		<div class="btn-group">     
+    		<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-group"></i> <span class="caret"></span></button>
+		    <ul class="dropdown-menu {{ pull_mode }}">
+              {% if perso.id != '' %}
+                    <li><a tabindex="-1" href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}">Ma feuille de Perso</a></li>
+              {% endif %}
+             <li><a tabindex="-1" href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}">Galerie des PNJ</a></li>
+			</ul>
+		</div>

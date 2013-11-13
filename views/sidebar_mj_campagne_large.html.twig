@@ -56,31 +56,18 @@
     <div align="center">
 
     	{% set pull_mode = "pull-right" %}
-    	{% include("composant/my_campagne_btm.html.twig") %}
-		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-		<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
-		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-        <a href="#notesModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
-        <a class="btn iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+    	<a class="btn iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
             title="Mettre une alerte">
             <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
         </a>
+		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
+		<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+		<br>
+		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+        <a href="#notesModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+        
+        {% include("composant/my_campagne_btm.html.twig") %}
     </div>
     <p/>
-	<ul class="nav nav-stacked">
-		<li><b>Personnages</b></li>
-		{% for perso in allPerso %}
-			<li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
-		{% endfor %}
-	</ul>
-	<div style="padding-left: 1.3em; padding-right: 1.3em;">
-		{% if config.sidebar_text != "" %}
-		<div class="page-header">
-		  <h5>Informations campagnes</h5>
-		</div>
-			{% autoescape false %}
-				{{ config.sidebar_text }}
-			{% endautoescape %}
-		{% endif %}
-	</div>
+	{% include("composant/campagne_accordion.html.twig") %}
 </div>
