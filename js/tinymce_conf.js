@@ -1,5 +1,5 @@
 
-  selected = ['mj'];
+  selected = [];
 
   if (window.matchMedia("(min-width: 600px)").matches) {
     tinymce.init({
