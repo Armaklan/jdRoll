@@ -7,7 +7,7 @@
     </div>
     <div id="collapseOne" class="accordion-body collapse in">
       <div class="accordion-inner">
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav nav-list nav-stacked">
            {% for perso in allPerso %}
               {% if is_mj %}
                 <li><a href="{{ path('perso_view_all_mj', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>

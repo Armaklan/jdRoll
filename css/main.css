@@ -279,3 +279,11 @@ div#notif .arrow-down {
     
     
 }
+
+.sidebar .nav-list>li>a {
+    text-shadow: 0 0 0;
+}
+
+.sidebarTop .nav-list>li>a {
+    text-shadow: 0 0 0;
+}
