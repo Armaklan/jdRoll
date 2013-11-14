@@ -281,9 +281,9 @@ div#notif .arrow-down {
 }
 
 .sidebar .nav-list>li>a {
-    text-shadow: 0 0 0;
+    text-shadow: none;
 }
 
 .sidebarTop .nav-list>li>a {
-    text-shadow: 0 0 0;
+    text-shadow: none;
 }

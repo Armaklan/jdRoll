@@ -66,7 +66,7 @@ function alarm(joueur, campagne) {
 
     $.ajax({
         type: "POST",
-        url: "{{ path('alarm') }}",
+        url: "/campagne/alarm",
         data: {joueur: joueur, campagne: campagne, statut: statutAlarm},
         success: function(msg){},
         error: function(msg) {}
