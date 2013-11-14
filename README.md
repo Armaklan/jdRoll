@@ -11,6 +11,9 @@ Requirment
 - Node and bower (for dependencies management)
 
 
+In Windows Environment, we recommend to use Git Bash to launch sh script.
+
+
 Instruction
 -----------
 
