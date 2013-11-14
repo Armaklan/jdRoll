@@ -405,7 +405,11 @@ CREATE TABLE IF NOT EXISTS `notif` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 ALTER TABLE  `notif` ADD  `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-ADD  `url` VARCHAR( 500 ) NULL
+ADD  `url` VARCHAR( 500 ) NULL;
+
+ALTER TABLE  `notif`
+ADD  `type` VARCHAR( 10 ) NULL,
+ADD  `target_id` bigint(20) NULL;
 
 --
 -- Contraintes pour les tables exportées
