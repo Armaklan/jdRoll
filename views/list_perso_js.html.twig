@@ -1,0 +1,16 @@
+<script type="text/javascript">
+
+{% if campagne_id > 0 %}  
+
+  specificValue = [
+  	{% for perso in allPerso %}
+  	    {text: "{{perso.name}} ({{perso.username}})", value: "{{perso.username}}"},
+  	{% endfor %}
+  ];
+
+{% else %}
+  specificValue = [];
+{% endif %}
+
+
+</script>

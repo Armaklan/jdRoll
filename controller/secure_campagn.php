@@ -167,6 +167,11 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
         })->bind("campagne_save");
 
 
+$securedCampagneController->get('/list_perso_js/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+    $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+    return $app->render('list_perso_js.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
+})->bind("list_perso_js");
+
 $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
             $player_id = $app['session']->get('user')['id'];
             $perso = $app['persoService']->getPersonnage(false, $campagne_id, $player_id);

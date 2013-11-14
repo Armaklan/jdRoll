@@ -1,3 +1,6 @@
+
+  selected = ['mj'];
+
   if (window.matchMedia("(min-width: 600px)").matches) {
     tinymce.init({
       selector: ".wysiwyg",
@@ -25,8 +28,29 @@
         text: 'Prv',
         icon: false,
         onclick: function() {
-          var content = tinyMCE.activeEditor.selection.getContent();
-          editor.insertContent('[private]' + content + '[/private]');
+          editor.windowManager.open({
+                title: 'Message privée',
+                body: [
+                    {type: 'listbox', 
+                        name: 'users', 
+                        multiple: 'true',
+                        size: 'large',
+                        width: '200',
+                        values: specificValue,
+                        onselect: function(e) {
+                            if (selected.indexOf(e.control.value()) == -1) {
+                              selected.push(e.control.value());
+                            }  else {
+                              selected.splice(e.control.value());
+                            } 
+                        }
+                    }
+                ],
+                onsubmit: function(e) {
+                    var content = tinyMCE.activeEditor.selection.getContent();
+                    editor.insertContent('[private='+selected.join()+']' + content + '[/private]');
+                }
+            });
         }
       });
        editor.addButton('hide', {
