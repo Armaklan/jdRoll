@@ -1,3 +1,11 @@
+/**
+ * Control chat ajax action.
+ *
+ * @package chat
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 var chatControllerImpl = function() {
 
 	var scrollBar = false;

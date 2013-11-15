@@ -1,3 +1,11 @@
+/**
+ * Control action execute "onLoadEnd" of page.
+ *
+ * @package notification
+ * @copyright (C) 2013 jdRoll
+ * @license MIT
+ */
+
 var onLoadControllerImpl = function() {
 
 	var generals = [];
