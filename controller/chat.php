@@ -69,9 +69,12 @@
 			 }
 			 $deletedIds = $app['chatService']->getDeletedMessge();
 		}
+		$isAdmin = $app['campagneService']->isAdmin();
+		$isFirstLoad = $request->get('isFirst');
 
 		$resp = [];
-		$resp['last_msg'] = $last_msg;
+		$responseMsg = $app->render('chat/show.html.twig', ['msgs' => $last_msg,'isAdmin' => $isAdmin,'isFirstLoad' => $isFirstLoad]);
+		$resp['last_msg'] = $responseMsg->getContent();
 		$resp['last_id'] = $lastId;
 		$resp['deleted'] = $deletedIds;
 
@@ -88,7 +91,6 @@
 		$app['chatService']->deleteLastMsg($request->get('nbToDelete'));
 		return "ok";
 	})->bind("chat_msg_remove_last")->before($mustBeAdmin);
-
 
 	$chatController->get('/users', function() use($app) {
 		$connected_users = $app['userService']->getConnected();

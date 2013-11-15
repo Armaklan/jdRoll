@@ -20,6 +20,15 @@
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/distrib-jquery-ui/css/jquery-ui.min.css" />
 
+	<script type="text/javascript">
+		var BASE_PATH = '{{app.request.baseUrl}}';
+		var AUTHENTICATED = "{{app.session.get('user') != null}}";
+		{% if app.session.get('user') != null %}
+			var USERNAME = "{{ app.session.get('user')['login'] }}'";
+		{% else %}
+			var USERNAME = "";
+		{% endif %}
+	</script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/jquery.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
@@ -30,16 +39,18 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery-form/jquery.form.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/magicsuggest/bin/magicsuggest-1.3.1-min.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/chat.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollFDP.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/distrib-jquery-ui/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
-  <script type="text/javascript" src="{{app.request.baseUrl}}/js/notif.js"></script>
   <script type="text/javascript" src="{{app.request.baseUrl}}/js/draft.js"></script>
   <script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap/bootstrap-datepicker.js"> </script>
   <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/tinymce-release/tinymce.min.js"></script>
   <script type="text/javascript" src="{{app.request.baseUrl}}/js/tinymce_conf.js"></script>
 
+	<!-- Application specific controller -->
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
+  	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/notification.js"></script>
+  	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/chat.js"></script>
 
 	{% block specificHeader %}
 

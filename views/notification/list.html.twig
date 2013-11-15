@@ -1,4 +1,4 @@
-        <div id="notifIndicator" class="btn {% if has_notif %} btn-danger {% endif %} " onClick="toggleNotif()">
+        <div id="notifIndicator" class="btn {% if has_notif %} btn-danger {% endif %} " onClick="notifController.toggleNotif()">
             <div id="notifNumber">
                 {{nb_notif}}
             </div>
@@ -9,14 +9,14 @@
                 <div>
                     <div class="well well-small pull-right">
                         <a href="{{path('notifications_feed', {'username': app.session.get('user').login, 'id': app.session.get('user').id })}}" class="btn btn-link"><i class="icon-rss"></i></a>
-                        <a class="btn btn-link"><i class="icon-trash" onClick="clearNotif('{{app.request.baseUrl}}')"></i></a>
+                        <a class="btn btn-link"><i class="icon-trash" onClick="notifController.clearNotif()"></i></a>
                     </div>
                 </div>
                  
                 <div id="msg-zone">
                     {% for notif in notifs %}
                         <div class="well well-small notifMsg" id="notif{{notif.id}}">
-                            <a class="close" data-dismiss="alert" href="#" onClick="deleteNotif('{{app.request.baseUrl}}',{{notif.id}})">&times;</a>
+                            <a class="close" data-dismiss="alert" href="#" onClick="notifController.deleteNotif({{notif.id}})">&times;</a>
                             <b>{{notif.title}}</b>
                             {% autoescape false %}
                             <p>{{notif.content}}</p>
