@@ -29,7 +29,9 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
 
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
             $campagne = $app['campagneService']->getCampagneConfig($campagne_id);
-            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 'is_mj' => true, 'error' => ""]);
+            $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 
+                'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
         })->bind("campagne_config_edit");
 
 $securedCampagneController->post('/config/save', function(Request $request) use($app) {

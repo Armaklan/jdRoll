@@ -84,6 +84,11 @@ CREATE TABLE IF NOT EXISTS `campagne_config` (
   PRIMARY KEY (`campagne_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+
+ALTER TABLE  `campagne_config`
+ADD  `text_color` VARCHAR( 10 ) NULL,
+ADD  `default_perso_id` bigint(20) NULL;
+
 -- --------------------------------------------------------
 
 --

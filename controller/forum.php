@@ -158,6 +158,11 @@ $campagne_id = getInterneCampagneNumber($campagne_id);
 	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+	$config = $app['campagneService']->getCampagneConfig($campagne_id);
+	$default_perso = '';
+	if($config != null) {
+		$default_perso = $config['default_perso_id'];
+	}
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
         if($campagne_id > 0) {
             foreach ($posts as &$post){
@@ -168,7 +173,7 @@ $campagne_id = getInterneCampagneNumber($campagne_id);
         $campagne_id = getExterneCampagneNumber($campagne_id);
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
 			"last_page" => $last_page, 'actual_page' => 0]);
 })->bind("topic_all");
 
@@ -286,6 +291,11 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+	$config = $app['campagneService']->getCampagneConfig($campagne_id);
+	$default_perso = '';
+	if($config != null) {
+		$default_perso = $config['default_perso_id'];
+	}
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
         if($campagne_id > 0) {
             foreach ($posts as &$post){
@@ -296,7 +306,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
         $campagne_id = getExterneCampagneNumber($campagne_id);
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
 })->bind("topic_page");
 

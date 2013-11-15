@@ -2,6 +2,13 @@
 <style type="text/css">
 	{% if campagne_config != null %}
 
+
+		{% if campagne_config.text_color != '' %}
+			.container-fluid {
+				color: {{ campagne_config.text_color }};
+			}
+		{% endif %}
+
 		{% if campagne_config.banniere != '' %}
 			.logo_campagne {
 				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;
