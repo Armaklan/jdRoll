@@ -232,58 +232,79 @@ $(function() {
 
             <form class="form-horizontal" action="{{ path('campagne_config_save')  }}" method="POST">
                 <input type="hidden" name="campagne_id" id="campagne_id" value="{{ campagne.campagne_id }}">
-                <div class="control-group">
-                    <label class="control-label" for="banniere">Banniere</label>
-                    <div class="controls">
-                        <input type="text" name="banniere" placeholder="http://" value="{{ campagne.banniere }}">
-                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-                        <br><i>Affiché en haut de chaque page. Taille attendue : 450px X 150px.</i>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="hr">Barre de séparation</label>
-                    <div class="controls">
-                        <input type="text" id="hr" name="hr" placeholder="http://" value="{{ campagne.hr }}">
-                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-                        <br><i>Image affiché sur les barres de séparation (HR)</i>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="odd_line_color">Couleur des lignes paires</label>
-                    <div class="controls">
-                        <input type="text" id="odd_line_color" name="odd_line_color" class="colorpicker" placeholder="#356803" value="{{ campagne.odd_line_color }}">
-                        <br><i>Couleur des lignes de tableau pair</i>
-                    </div>
-                </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="even_line_color">Couleur des lignes impaires</label>
-                    <div class="controls">
-                        <input type="text" id="even_line_color" name="even_line_color" class="colorpicker" placeholder="#746484" value="{{ campagne.even_line_color }}">
-                        <br><i>Couleur des lignes de tableau impair</i>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="link_color">Couleur des liens</label>
-                    <div class="controls">
-                        <input type="text" id="link_color" name="link_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_color }}">
-                        <br><i>Couleur des liens présent dans le contenu de la page</i>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="sidebar_color">Couleur de la barre latéral</label>
-                    <div class="controls">
-                        <input type="text" id="sidebar_color" name="sidebar_color" class="colorpicker" placeholder="#363673" value="{{ campagne.sidebar_color }}">
-                        <br><i>Couleur de fond de la barre latérale</i>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="link_sidebar_color">Couleur des liens dans la sidebar</label>
-                    <div class="controls">
-                        <input type="text" id="link_sidebar_color" name="link_sidebar_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_sidebar_color }}">
-                        <br><i>Couleur des liens dans la barre latérale</i>
-                    </div>
-                </div>
+                <fieldset class="titled-box">
+					<legend>Illustrations</legend>
+
+	                <div class="control-group">
+	                    <label class="control-label" for="banniere">Banniere</label>
+	                    <div class="controls">
+	                        <input type="text" name="banniere" placeholder="http://" value="{{ campagne.banniere }}">
+	                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+	                        <br><i>Affiché en haut de chaque page. Taille attendue : 450px X 150px.</i>
+	                    </div>
+	                </div>
+	                <div class="control-group">
+	                    <label class="control-label" for="hr">Barre de séparation</label>
+	                    <div class="controls">
+	                        <input type="text" id="hr" name="hr" placeholder="http://" value="{{ campagne.hr }}">
+	                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+	                        <br><i>Image affiché sur les barres de séparation (HR)</i>
+	                    </div>
+	                </div>
+	            </fieldset>
+
+                <fieldset class="titled-box">
+					<legend>Thème couleurs</legend>
+						<div class="pull-right">
+							<a href="#themingHelp" role="button" data-toggle="modal" class="btn btn-info">
+								<i class="icon-question"></i>
+							</a>
+						</div>
+							<div class="span5">
+								<b>Couleur de fond</b>
+								<div class="control-group">
+				                    <label class="control-label" for="odd_line_color">Couleur des lignes paires</label>
+				                    <div class="controls">
+				                        <input type="text" id="odd_line_color" name="odd_line_color" class="colorpicker" placeholder="#356803" value="{{ campagne.odd_line_color }}">
+				                    </div>
+				                </div>
+		
+				                <div class="control-group">
+				                    <label class="control-label" for="even_line_color">Couleur des lignes impaires</label>
+				                    <div class="controls">
+				                        <input type="text" id="even_line_color" name="even_line_color" class="colorpicker" placeholder="#746484" value="{{ campagne.even_line_color }}">
+				                    </div>
+				                </div>
+
+				                <div class="control-group">
+				                    <label class="control-label" for="sidebar_color">Couleur de la barre latéral</label>
+				                    <div class="controls">
+				                        <input type="text" id="sidebar_color" name="sidebar_color" class="colorpicker" placeholder="#363673" value="{{ campagne.sidebar_color }}">
+				                    </div>
+				                </div>
+
+							</div>
+							<div class="span5">
+								<b>Couleur des textes</b>
+				                <div class="control-group">
+				                    <label class="control-label" for="link_color">Couleur des liens</label>
+				                    <div class="controls">
+				                        <input type="text" id="link_color" name="link_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_color }}">
+				                    </div>
+				                </div>
+
+				                <div class="control-group">
+				                    <label class="control-label" for="link_sidebar_color">Couleur des liens dans la sidebar</label>
+				                    <div class="controls">
+				                        <input type="text" id="link_sidebar_color" name="link_sidebar_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_sidebar_color }}">
+				                    </div>
+				                </div>
+							</div>
+
+                </fieldset>
+
+                
                 <div class="control-group">
                     <label class="control-label" for="template">Template de personnage</label>
                     <div class="controls">
