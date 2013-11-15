@@ -116,29 +116,22 @@
 							<input type="hidden" name="id" value="" >
 							<input type="hidden" name="topic_id" value="{{ topic.id }}" >
 							{% if is_mj %}
-                                                            <div class="control-group">
-                                                                    <label for="perso_id">Poster en tant que...</label>
-
-
-                                                                <div class="bfh-selectbox">
-                                                                    <input type="hidden" name="perso_id" value="">
-                                                                    <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
-                                                                        <span class="bfh-selectbox-option input-medium" data-option="">MJ</span>
-                                                                        <b class="caret"></b>
-                                                                    </a>
-                                                                    <div class="bfh-selectbox-options">
-                                                                        <input type="text" class="bfh-selectbox-filter">
-                                                                        <div role="listbox">
-                                                                            <ul role="option">
-                                                                                 {% for personnage in personnages %}
-                                                                                     <option value="{{ personnage.id }}">{{ personnage.name }}</option>
-                                                                                     <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
-                                                                                 {% endfor %}
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                <div class="control-group">
+                                <label for="perso_id">Poster en tant que...</label>
+									<select class="select2" name="perso_id">
+										<option value="" selected="selected">MJ</option>
+										{% for personnage in personnages %}
+											{% if personnage.user_id != null %}
+												<option value="{{ personnage.id }}">PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>                        
+											{% endif %}
+	                                    {% endfor %}
+										{% for personnage in personnages %}
+											{% if personnage.user_id == null %}
+												<option value="{{ personnage.id }}">PNJ &emsp; {{ personnage.name }}</option>                        
+											{% endif %}
+	                                    {% endfor %}
+									</select>
+								</div>
 							{% else %}
 								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
 							{% endif %}

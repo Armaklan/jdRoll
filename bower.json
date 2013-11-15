@@ -6,5 +6,6 @@
     ,"distrib-jquery-ui":"~1.10.3"
     , "magicsuggest":""
     , "tinymce-release":""
+    , "select2":"~2.1.0"
   }
 }
