@@ -1,5 +1,5 @@
 .sidebar {
-	background-color: #DDDDDD;
+	background-color: #eFeFeF;
 	padding: 1em;
 	border-radius: 15px;
 	min-height: 500px !important;
@@ -7,20 +7,30 @@
 	right: 15px;
 	top: 50px;
 	font-size: 0.9em;
+    border: 1px solid #c5c5c5;
+    box-shadow: 1px 1px 8px #888;
 }
 
 .sidebarTop {
-	background-color: #DDDDDD;
+	background-color: #eFeFeF;
 	padding: 1em;
 	border-radius: 15px;
 	font-size: 0.9em;
 	margin-bottom: 1em;
+    border: 1px solid #c5c5c5;
+    box-shadow: 1px 1px 8px #888;
 }
 
 .categorie {
 	background-color: #DDDDDD;
 	font-weight: bold;
 	padding: 0.5em;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+th.categorie {
+    border-radius: 0px;
 }
 
 blockquote p {
@@ -322,4 +332,8 @@ div#notif .arrow-down {
 
 .colorpicker {
     width: 130px;
+}
+
+.topics.collapse {
+    margin-bottom: 20px;
 }
