@@ -41,7 +41,7 @@ class NotificationService {
     public function insertNotif($user_id, $title, $content, $url, $type, $target_id) {
         $nbNotif = 0;
 
-        if($type == "MSG") {
+        if( ($type == "MSG") || ($type == "PERSO") ) {
             $sql = "SELECT count(*) as nb 
             FROM notif 
             WHERE 
@@ -64,12 +64,12 @@ class NotificationService {
             $stmt->execute();
         } else {
             $sql = "UPDATE notif 
-                    SET content = CONCAT(content, ' (Plusieurs messages non lues) ')
+                    SET nb = nb + 1
                     WHERE 
                         user_id = :user
                     AND type = :type
                     AND target_id = :target_id
-                    AND content NOT LIKE '%Plusieurs messages non lues%' ";
+                    ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("user", $user_id);
             $stmt->bindValue("type", $type);
@@ -91,11 +91,11 @@ class NotificationService {
 		$mj = $campagne['mj_id'];
 		if($mj != $user_id) {
 			$this->insertNotif($mj, "Modification de personnage - " . $campagne['name'], "Le personnage <a href='$urlMj'>"
-			   	. $perso['name'] . "</a> a été modifié.", $urlMj, 'PERSO', 0);
+			   	. $perso['name'] . "</a> a été modifié.", $urlMj, 'PERSO', $campagne_id);
 		}
 		if($persoUser != $user_id) {
 			$this->insertNotif($persoUser, "Modification de personnage - " . $campagne['name'],
-			   	"Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', 0);
+			   	"Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
 		}
 	}
 

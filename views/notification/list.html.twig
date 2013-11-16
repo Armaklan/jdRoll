@@ -19,8 +19,15 @@
                             <a class="close" data-dismiss="alert" href="#" onClick="notifController.deleteNotif({{notif.id}})">&times;</a>
                             <b>{{notif.title}}</b>
                             {% autoescape false %}
-                            <p>{{notif.content}}</p>
+                            {{notif.content}}.<br>
                             {% endautoescape %}
+                            {% if notif.nb > 1 %}
+                                {{ notif.nb }} notifications concernées.
+                                <div align="right">À {{ notif.last_update|date("h") }}h{{ notif.last_update|date("i") }}</div>
+                            {% else %}
+                                <div align="right">À {{ notif.last_update|date("h") }}h{{ notif.last_update|date("i") }}</div>
+                            {% endif %}
+                           
                         </div>    
                     {% endfor %}
                 </div>

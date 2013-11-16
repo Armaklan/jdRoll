@@ -416,6 +416,12 @@ ALTER TABLE  `notif`
 ADD  `type` VARCHAR( 10 ) NULL,
 ADD  `target_id` bigint(20) NULL;
 
+ALTER TABLE  `notif`
+ADD  `nb` int(10) NULL DEFAULT 1;
+
+ALTER TABLE  `notif`
+ADD  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
 --
 -- Contraintes pour les tables exportées
 --
