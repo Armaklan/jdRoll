@@ -36,7 +36,6 @@ var notifControllerImpl = function() {
 	        error: function(msg) {}
 	    });
 	}
-	        
 
 	return {
 
@@ -64,8 +63,25 @@ var notifControllerImpl = function() {
 		    } else {
 		        $("#notif").addClass("notifHide");
 		    }
+		},
+
+		onClickHorsDiv : function() {
+			var oDiv = $('#notif');
+			$(document.body).click(function(e) {
+				if( !oDiv.hasClass('notifHide') ) {
+					if(  (event.srcElement.id.indexOf("notif") == -1) && 
+							($(event.srcElement).parents("#notificationCenter").length == 0) ) { 
+					    var oElem = e ? e.target : event.srcElement;
+						if(oElem !== oDiv) {
+					    	oDiv.addClass('notifHide');
+					  	}
+				  	}
+			  	}
+			});
+
 		}
 	}
 
 }
 var notifController = notifControllerImpl();
+onLoadController.generals.push(notifController.onClickHorsDiv);
