@@ -63,18 +63,20 @@
 						<a name="post{{ post.post_id }}"></a>
 					</td>
 					<td style="text-align: right">
-						<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
-						{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
-							{% if post.user_id != null %}
-								<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
-								title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
-							{% endif %}
+						<div class="btn-group">
+							<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
+							{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
+								{% if post.user_id != null %}
+									<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
+									title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
+								{% endif %}
 
-						{% endif %}
-						{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
-							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
-								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
-						{% endif %}
+							{% endif %}
+							{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
+								<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
+									title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+							{% endif %}
+						</div>
 						<a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
 						<a title="Aller au début de la page" href="#top"><i class="icon-double-angle-up"></i></a>
                                                 <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
@@ -146,9 +148,12 @@
                                                                 </textarea>
 						    </div>
 						    <div class="control-group">
-							    <button type="submit" class="btn btn-primary">Répondre</button>
+						    	<div class="btn-group">
+							    	<button type="submit" class="btn btn-primary">Répondre</button>
                                     <a class="btn" onClick="draftController.ajaxEnreg('{{campagne_id}}')">Enregistrer</a>
+                                </div>
                                  <span id="enregResult"></span>
+
 						    </div>
 					    </form>
 					</td>

@@ -9,76 +9,8 @@
     {% endif %}
 
 	<form class="form-horizontal" action="{{ path('campagne_save')  }}" method="POST">
-		<input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
-	    <div class="control-group">
-		    <label class="control-label" for="name">Nom</label>
-		    <div class="controls">
-		    	<input type="text" id="name" name="name" placeholder="Nom de la campagne" value="{{ campagne['name'] }}">
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="systeme">Univers</label>
-		    <div class="controls">
-		    	<input type="text" id="univers" name="univers" placeholder="Univers de jeu" value="{{ campagne['univers'] }}">
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="systeme">Système</label>
-		    <div class="controls">
-		    	<input type="text" id="systeme" name="systeme" placeholder="Système de jeu utilisé" value="{{ campagne['systeme'] }}">
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="nb_joueurs">Nombre de joueurs</label>
-		    <div class="controls">
-		    	<input type="text" id="nb_joueurs" name="nb_joueurs" placeholder="Nombre de joueurs" value="{{ campagne['nb_joueurs'] }}">
-		    </div>
-	    </div>
-            <div class="control-group">
-		    <label class="control-label" for="statut">Rythme</label>
-		    <div class="controls">
-		    	<input type="radio" class="iconeBtn" name="rythme" value="0" {% if campagne.rythme == 0 %} checked {% endif %} title="1 post par mois"> Tortue
-		    	<input type="radio" class="iconeBtn" name="rythme" value="1" {% if campagne.rythme == 1 %} checked {% endif %} title="1 post par semaine"> Ralenti
-				<input type="radio" class="iconeBtn" name="rythme" value="2" {% if campagne.rythme == 2 %} checked {% endif %} title="1 post pour 3 jours"> Standard
-				<input type="radio" class="iconeBtn" name="rythme" value="3" {% if campagne.rythme == 3 %} checked {% endif %} title="1 post par jour"> Intense
-                                <input type="radio" class="iconeBtn" name="rythme" value="4" {% if campagne.rythme == 4 %} checked {% endif %} title="Plusieurs posts par jour"> Extrême
-		    </div>
-	    </div>
-            <div class="control-group">
-		    <label class="control-label" for="statut">Exigence</label>
-		    <div class="controls">
-		    	<input type="radio" class="iconeBtn" name="rp" value="0" {% if campagne.rp == 0 %} checked {% endif %} title="Peu d'exigence en terme de Roleplay"> Roman de gare
-		    	<input type="radio" class="iconeBtn" name="rp" value="1" {% if campagne.rp == 1 %} checked {% endif %} title="Exigence standard : action décrite correctement, quelques pensées, ..."> Standard
-			<input type="radio" class="iconeBtn" name="rp" value="2" {% if campagne.rp == 2 %} checked {% endif %} title="Exigence forte : la description prime, il faudra faire des efforts."> Théatre
-			<input type="radio" class="iconeBtn" name="rp" value="3" {% if campagne.rp == 3 %} checked {% endif %} title="De haut vol : le roleplay est au centre même de la partie !"> Cyrano
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="banniere">Banniere</label>
-		    <div class="controls">
-		    	<input type="text" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ campagne['banniere'] }}">
-		    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-		    	<br><i>Taille attendue : 150px X 150px</i>
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="statut">Statut</label>
-		    <div class="controls">
-		    	<input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation
-		    	<input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte
-				<input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause
-				<input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="description">Votre description</label>
-		    <div class="controls">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
-		    	 placeholder="Votre description" rows="10">{{ campagne['description'] }}</textarea>
-		    </div>
-	    </div>
-	    
-	    <div class="control-group">
+
+	    <div class="control-group pull-right page-btn">
 		    <div class="controls">
 			    <button type="submit" class="btn btn-primary">
 			    {% if(campagne['id'] == '') %}
@@ -89,6 +21,96 @@
 			    </button>
 		    </div>
 	    </div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span6">
+					<fieldset class="titled-box">
+						<legend>Informations principales</legend>
+						<input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
+					    <div class="control-group">
+						    <label class="control-label" for="name">Nom</label>
+						    <div class="controls">
+						    	<input type="text" id="name" name="name" placeholder="Nom de la campagne" value="{{ campagne['name'] }}">
+						    </div>
+					    </div>
+					    <div class="control-group">
+						    <label class="control-label" for="systeme">Univers</label>
+						    <div class="controls">
+						    	<input type="text" id="univers" name="univers" placeholder="Univers de jeu" value="{{ campagne['univers'] }}">
+						    </div>
+					    </div>
+					    <div class="control-group">
+						    <label class="control-label" for="systeme">Système</label>
+						    <div class="controls">
+						    	<input type="text" id="systeme" name="systeme" placeholder="Système de jeu utilisé" value="{{ campagne['systeme'] }}">
+						    </div>
+					    </div>
+					    <div class="control-group">
+						    <label class="control-label" for="nb_joueurs">Nombre de joueurs</label>
+						    <div class="controls">
+						    	<input type="text" id="nb_joueurs" name="nb_joueurs" placeholder="Nombre de joueurs" value="{{ campagne['nb_joueurs'] }}">
+						    </div>
+					    </div>
+					    <div class="control-group">
+						    <label class="control-label" for="statut">Statut</label>
+						    <div class="controls">
+						    	<input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation
+						    	<input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte
+								<input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause
+								<input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé
+						    </div>
+					    </div>
+					</fieldset>
+				</div>
+				<div class="span6">
+					<fieldset class="titled-box">
+						<legend>Style de partie</legend>
+			            <div class="control-group">
+						    <label class="control-label" for="statut">Rythme</label>
+						    <div class="controls">
+						    	<input type="radio" class="iconeBtn" name="rythme" value="0" {% if campagne.rythme == 0 %} checked {% endif %} title="1 post par mois"> Tortue
+						    	<input type="radio" class="iconeBtn" name="rythme" value="1" {% if campagne.rythme == 1 %} checked {% endif %} title="1 post par semaine"> Ralenti
+								<input type="radio" class="iconeBtn" name="rythme" value="2" {% if campagne.rythme == 2 %} checked {% endif %} title="1 post pour 3 jours"> Standard
+								<input type="radio" class="iconeBtn" name="rythme" value="3" {% if campagne.rythme == 3 %} checked {% endif %} title="1 post par jour"> Intense
+				                                <input type="radio" class="iconeBtn" name="rythme" value="4" {% if campagne.rythme == 4 %} checked {% endif %} title="Plusieurs posts par jour"> Extrême
+						    </div>
+					    </div>
+			            <div class="control-group">
+						    <label class="control-label" for="statut">Exigence</label>
+						    <div class="controls">
+						    	<input type="radio" class="iconeBtn" name="rp" value="0" {% if campagne.rp == 0 %} checked {% endif %} title="Peu d'exigence en terme de Roleplay"> Roman de gare
+						    	<input type="radio" class="iconeBtn" name="rp" value="1" {% if campagne.rp == 1 %} checked {% endif %} title="Exigence standard : action décrite correctement, quelques pensées, ..."> Standard
+							<input type="radio" class="iconeBtn" name="rp" value="2" {% if campagne.rp == 2 %} checked {% endif %} title="Exigence forte : la description prime, il faudra faire des efforts."> Théatre
+							<input type="radio" class="iconeBtn" name="rp" value="3" {% if campagne.rp == 3 %} checked {% endif %} title="De haut vol : le roleplay est au centre même de la partie !"> Cyrano
+						    </div>
+					    </div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<fieldset class="titled-box">
+						<legend>Descriptions</legend>
+					    <div class="control-group">
+						    <label class="control-label" for="banniere">Banniere</label>
+						    <div class="controls">
+						    	<input type="text" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ campagne['banniere'] }}">
+						    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+						    	<br><i>Taille attendue : 150px X 150px</i>
+						    </div>
+					    </div>
+
+					    <div class="control-group">
+						    <label class="control-label" for="description">Votre description</label>
+						    <div class="controls">
+						    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
+						    	 placeholder="Votre description" rows="10">{{ campagne['description'] }}</textarea>
+						    </div>
+					    </div>
+				    </fieldset>
+				</div>
+			</div>
+		</div>
     </form>
 
 {% endblock %}

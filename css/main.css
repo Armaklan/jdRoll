@@ -330,6 +330,11 @@ div#notif .arrow-down {
     margin-top: -40px;
 }
 
+.page-btn {
+    margin-top: -50px;
+    margin-right: 20px;
+}
+
 .colorpicker {
     width: 130px;
 }
