@@ -69,8 +69,11 @@ var notifControllerImpl = function() {
 			var oDiv = $('#notif');
 			$(document.body).click(function(e) {
 				if( !oDiv.hasClass('notifHide') ) {
-					if(  (event.srcElement.id.indexOf("notif") == -1) && 
-							($(event.srcElement).parents("#notificationCenter").length == 0) ) { 
+					var evt = window.event || arguments[0];
+    				var src = evt.target || evt.srcElement;
+
+					if(  (src.id.indexOf("notif") == -1) && 
+							($(src).parents("#notificationCenter").length == 0) ) { 
 					    var oElem = e ? e.target : event.srcElement;
 						if(oElem !== oDiv) {
 					    	oDiv.addClass('notifHide');

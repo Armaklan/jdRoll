@@ -7,13 +7,36 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-    
-    <form class="form-inline" action="{{ path('abs_save') }}" method="POST">
-      De <input type="text" class="input-small datepicker" name="begin_date" id="dpd1" value="{{absence_form.begin_date}}">
-      à <input type="text" class="input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
-      <input type="hidden" class="input-small" name="user_id" value="{{absence_form.user_id}}">
-      <input type="hidden" class="input-small" name="id" value="{{absence_form.id}}">
-      <button type="submit" class="btn">Enregister</button>
+    <form class="form-horizontal" action="{{ path('abs_save') }}" method="POST">    
+      <fieldset class="titled-box">
+        <legend>Créer une absence</legend>
+
+        <div class="pull-right"><button type="submit" class="btn btn-primary">Enregister</button></div>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span5" style="text-align: right">
+              <div class="control-group">
+                <label class="control-label">Je part le... </label>
+                <div class="controls">
+                  <input type="text" class="input-small datepicker" name="begin_date" id="dpd1" value="{{absence_form.begin_date}}">
+                </div>
+              </div>
+            </div>
+            <div class="span5">
+              <div class="control-group">
+                <label class="control-label">
+                  Je revient le... 
+                </label>
+                <div class="controls">
+                  <input type="text" class="input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" class="input-small" name="user_id" value="{{absence_form.user_id}}">
+        <input type="hidden" class="input-small" name="id" value="{{absence_form.id}}">
+      </fieldset>
     </form>
 
 

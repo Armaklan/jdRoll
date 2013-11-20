@@ -80,7 +80,9 @@ $commonController->get('/profile/{username}', function($username) use($app) {
 	$isAdmin = $app["campagneService"]->IsAdmin();
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin]);
+    $absences = $app['absenceService']->getAllAbsence($user['id']);
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 
+        'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin, 'absences' => $absences]);
 })->bind("profile");
 
 $commonController->get('/profile/{username}/edit', function($username) use($app) {

@@ -75,6 +75,24 @@
 		    	</ul>
     		</div>
     	</div>
+        {% if not (absences is empty) %}
+            <fieldset class="titled-box">
+                <legend>Absences prévues</legend>
+                <table class="table table-striped table-condensed">
+                    <tr>
+                        <th>Part le... </th>
+                        <th>Revient le ...</th>
+                    </tr>
+                
+                    {% for absence in absences %}
+                    <tr>
+                        <td>{{absence.begin_date}}</td>
+                        <td>{{absence.end_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </fieldset>
+        {% endif %}
     </div>
 
 
