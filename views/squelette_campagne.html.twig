@@ -21,6 +21,9 @@
 	{% if campagne_id != 0 %}
 		{{ render(url("campagne_config", {id : campagne_id}) ) }}
 	{% endif %}
+	 <script type="text/javascript">
+	   var CAMPAGNE_ID = {{campagne_id}};
+	 </script>
 {% endblock %}
 
 {% block sidebar_large %}
@@ -50,6 +53,12 @@
 	{% endif %}
 
     <script type="text/javascript">
+
+    	$(document).ready(function() {
+		 	onLoadController.onLoadCampagnes();
+		});
+
+
 		$(function(){
 			
 			$("#persoModal" ).css('display','none');
@@ -122,21 +131,6 @@
 
 		});
 
-		$(document).ready(function () {
-			$('#admMode').click(function () {
-				if ( $("#admMode").hasClass("admDisabled") ) {
-					$("#admMode").removeClass("admDisabled");
-					$(".admIcone").removeClass("invisible");
-					$('#admMode i').removeClass("icon-eye-open")
-					$('#admMode i').addClass("icon-eye-close")
-				} else {
-					$("#admMode").addClass("admDisabled");
-					$(".admIcone").addClass("invisible");
-					$('#admMode i').removeClass("icon-eye-close")
-					$('#admMode i').addClass("icon-eye-open")
-				}
-			});
-		});
 		$(document).ready(function () {
 			$('.select2').select2();
 

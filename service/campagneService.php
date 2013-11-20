@@ -40,8 +40,9 @@ class CampagneService {
 		$campagne['univers'] = '';
 		$campagne['description'] = '';
 		$campagne['statut'] = 3;
-                $campagne['rythme'] = 2;
-                $campagne['rp'] = 1;
+        $campagne['rythme'] = 2;
+        $campagne['rp'] = 1;
+        $campagne['is_admin_open'] = 0;
 		return $campagne;
     }
 
@@ -55,8 +56,8 @@ class CampagneService {
 		$campagne['univers'] = $request->get('univers');
 		$campagne['description'] = $request->get('description');
 		$campagne['statut'] = $request->get('statut');
-                $campagne['rythme'] = $request->get('rythme');
-                $campagne['rp'] = $request->get('rp');
+        $campagne['rythme'] = $request->get('rythme');
+        $campagne['rp'] = $request->get('rp');
 		return $campagne;
     }
 
@@ -800,6 +801,13 @@ class CampagneService {
                 VALUES (:user, :campagne, :content)";
             $this->db->executeUpdate($sql, array('user' => $user, 'campagne' => $campagne, 'content' => $content ));
         }
+    }
+
+    public function updateIsAdminOpen($campagne, $state) {
+    	$sql = "UPDATE campagne
+    			SET is_admin_open = :state
+    			WHERE id = :campagne";
+    	$this->db->executeUpdate($sql, array('campagne' => $campagne, 'state' => $state ));
     }
 }
 ?>

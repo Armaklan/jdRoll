@@ -251,5 +251,13 @@ $securedCampagneController->post('/persoModal/save/popup/{campagne_id}', functio
             return "";
         })->bind("save_perso_popup");
 
+$securedCampagneController->post('/admin_open', function(Request $request) use($app) {
+            $id = $request->get('id');
+            $state = $request->get('state');
+            $app['campagneService']->updateIsAdminOpen($id, $state);
+            return "ok";
+});
+
+
 $app->mount('/campagne', $securedCampagneController);
 ?>

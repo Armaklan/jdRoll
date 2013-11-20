@@ -47,15 +47,18 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/tinymce_conf.js"></script>
 
+	{% block specificHeader %}
+
+	{% endblock %}
+	
 	<!-- Application specific controller -->
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
   	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/notification.js"></script>
   	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/chat.js"></script>
   	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/draft.js"></script>
+  	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/campagne.js"></script>
 
-	{% block specificHeader %}
 
-	{% endblock %}
 </head>
 <body>
 

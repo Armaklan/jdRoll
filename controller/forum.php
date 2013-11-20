@@ -36,21 +36,27 @@ $forumController->get('/', function() use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne(null);
 	$is_mj = $app["campagneService"]->isMj(null);
 	$isAdmin = $app["campagneService"]->isAdmin();
-	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','isAdmin' => $isAdmin]);
+	$campagne = $app["campagneService"]->getBlankCampagne();
+	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
+		'isAdmin' => $isAdmin, 'campagne' => $campagne]);
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $user_id = $app['session']->get('user')['id'];
 	$campagne_id = getInterneCampagneNumber($campagne_id);
+	$campagne = $app["campagneService"]->getBlankCampagne();
+	if($campagne_id != null) {
+		$campagne = $app["campagneService"]->getCampagne($campagne_id);
+	}
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
-        $isAdmin = $app["campagneService"]->isAdmin();
+    $isAdmin = $app["campagneService"]->isAdmin();
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-        $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
+    $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
-        $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
+    $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
 	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 
-            'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
+            'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);
 })->bind("forum_campagne");
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {
@@ -367,8 +373,12 @@ $forumController->get('/{campagne_id}/section/delete/{section_id}', function($ca
 		$campagne_id = getInterneCampagneNumber($campagne_id);
 		$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		$campagne = $app["campagneService"]->getBlankCampagne();
+		if($campagne_id != null) {
+			$campagne = $app["campagneService"]->getCampagne($campagne_id);
+		}
 		$campagne_id = getExterneCampagneNumber($campagne_id);
-		return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error]);
+		return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error, 'campagne' => $campagne]);
 	} else {
 		$app["sectionService"]->deleteSection($section_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));

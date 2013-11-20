@@ -64,6 +64,9 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   KEY `IDX_539B5D166A1B4FA4` (`mj_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=40 ;
 
+ALTER TABLE campagne
+ADD COLUMN
+is_admin_open int(1) default 1;
 -- --------------------------------------------------------
 
 --
