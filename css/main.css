@@ -21,6 +21,10 @@
     box-shadow: 1px 1px 8px #888;
 }
 
+.sidebar li {
+    line-height: 15px;
+}
+
 .categorie {
 	background-color: #DDDDDD;
 	font-weight: bold;
@@ -341,4 +345,16 @@ div#notif .arrow-down {
 
 .topics.collapse {
     margin-bottom: 20px;
+}
+
+.clickable_row {
+    cursor: pointer;
+}
+
+.control-condensed .control-label {
+    width: 60px;
+}
+
+.control-condensed .controls {
+    margin-left: 20px;
 }
