@@ -293,6 +293,11 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `IDX_885DBAFA1221E019` (`perso_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6525 ;
 
+ALTER TABLE posts 
+ADD COLUMN
+editor int(1) DEFAULT 0;
+
+
 -- --------------------------------------------------------
 
 --

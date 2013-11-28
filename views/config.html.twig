@@ -1,0 +1,74 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span5">
+			<fieldset class="titled-box">
+				<legend>Barre latérale</legend>
+				<div class="control-group">
+					<p><b>Espace commun</b></p>
+					<label class="radio"><input type="radio"> Affichage Condensé</label>
+					<label class="radio"><input type="radio"> Affichage Etendu</label>
+				</div>
+				<div class="control-group">
+					<p><b>Espaces campagnes</b></p>
+					<label class="radio"><input type="radio"> Affichage Condensé</label>
+					<label class="radio"><input type="radio"> Affichage Etendu</label>
+				</div>
+			</fieldset>
+		</div>
+		<div class="span4">
+			<fieldset class="titled-box">
+				<legend>Fiche de perso</legend>
+				<div class="control-group">
+				<p><b>Mes personnages</b></p>
+					<label class="radio"><input type="radio"> En page indépendante</label>
+					<label class="radio"><input type="radio"> En popup</label>
+				</div>
+				<div class="control-group">
+				<p><b>Les personnages des autres joueurs</b></p>
+					<label class="radio"><input type="radio"> En page indépendante</label>
+					<label class="radio"><input type="radio"> En popup</label>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span5">
+			<fieldset class="titled-box">
+				<legend>Notifications</legend>
+				<div class="control-group">
+					<table class="table table-condensed table-striped">
+						<tr>
+							<th></th><th>Notification</th><th>Mail</th>
+						</tr>
+						<tr>
+							<td>Nouveau message</td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+						</tr>
+						<tr>
+							<td>Nouveau message privée</td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+						</tr>
+						<tr>
+							<td>Inscription/Désinscription</td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+						</tr>
+						<tr>
+							<td>Messages privées</td><td><input type="checkbox"></td><td><input type="checkbox"></td>
+						</tr>
+					</table>
+			</fieldset>
+		</div>
+		<div class="span4">
+			<fieldset class="titled-box">
+				<legend>Editeurs</legend>
+				<div class="control-group">
+					<label class="radio"><input type="radio"> WYSIWYG</label>
+					<label class="radio"><input type="radio"> Mode texte</label>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
