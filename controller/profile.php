@@ -61,7 +61,7 @@ $profileController->post('/absences/save', function(Request $request) use($app) 
 
 $profileController->get('/config', function() use($app) {
     return $app->render('config.html.twig', []);
-})->bind("abs");
+})->bind("user_conf");
 
 $app->mount('/my_profile', $profileController);
 

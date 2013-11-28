@@ -64,7 +64,7 @@
 					</td>
 					<td style="text-align: right">
 						<div class="btn-group">
-							<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
+							<a title="Quote" class="btn btn-default iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
 							{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
 								{% if post.user_id != null %}
 									<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
@@ -92,7 +92,7 @@
 						</td>
 						<td>
 							<b>Lancer les dés</b><a href="#dicerHelp" role="button" data-toggle="modal" class="btn btn-link"><i class="icon-question"></i></a>
-							<form class="form-inline">
+							<form role="form" class="form-inline">
 							    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
 							    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 							    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
@@ -114,14 +114,14 @@
 							<a href="#uploaderModal" role="button" data-toggle="modal"><i>Uploader une image</i></a>
 						</div>
 						<b>Poster une réponse</b>
-						<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+						<form role="form" class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
 							<input type="hidden" name="id" value="" >
 							<input type="hidden" name="topic_id" value="{{ topic.id }}" >
 
 							
 
 							{% if is_mj %}
-                                <div class="control-group">
+                                <div class="form-group">
                                 <label for="perso_id">Poster en tant que...</label>
 									<select class="select2" name="perso_id">
 						                <option value="" {% if default_perso == '' %} selected="selected" {% endif %}>MJ</option>
@@ -141,13 +141,13 @@
 							{% else %}
 								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
 							{% endif %}
-						   	<div class="control-group">
+						   	<div class="form-group">
 							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
 							    	 placeholder="Votre message" rows="15" title="Réponse">
                                                                     {% if draft != null %} {{ draft.content }} {% endif %}
                                                                 </textarea>
 						    </div>
-						    <div class="control-group">
+						    <div class="form-group">
 						    	<div class="btn-group">
 							    	<button type="submit" class="btn btn-primary">Répondre</button>
                                     <a class="btn" onClick="draftController.ajaxEnreg('{{campagne_id}}')">Enregistrer</a>

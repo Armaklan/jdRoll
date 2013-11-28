@@ -3,7 +3,7 @@
 {% block content %}
 
     <div align="right">
-	    <form class="form-search">
+	    <form role="form" class="form-search">
 	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.messageTable')"  class="input-medium search-query">
 	    	<a href="{{ path('messagerie_new') }}" class="btn btn-primary">Nouveau message</a>
 	    </form>

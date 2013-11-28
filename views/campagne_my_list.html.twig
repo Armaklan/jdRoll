@@ -18,8 +18,8 @@
             </div>
     {% endfor %}
     <div align="right">
-	    <form class="form-search">
-	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.campagneTable')"  class="input-medium search-query">
+	    <form role="form" class="form-search">
+	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.campagneTable')"  class="search-query">
 	    </form>
     </div>
 
@@ -57,7 +57,7 @@
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
 						<div class="btn-group">
-							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
 							<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 							<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
 						</div>
@@ -93,10 +93,10 @@
 					<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 					<td>
 					<div class="btn-group">
-						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
 						                                        {% if campagne.is_recrutement_open != 1 %}
 						                                                {% if campagne.nb_joueurs > campagne.nb_joueurs_actuel %}
-						                                                    <a href="{{ path('campagne_open_subscribe', {id: campagne.id}) }}" class="btn iconeBtn" title="Rouvrir le recrutement"><i class="icon-unlock-alt"></i></a>
+						                                                    <a href="{{ path('campagne_open_subscribe', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Rouvrir le recrutement"><i class="icon-unlock-alt"></i></a>
 						                                                {% endif %}
 						                                        {% else %}
 						                                                    <a href="{{ path('campagne_close_subscribe', {id: campagne.id}) }}" class="btn iconeBtn btn-danger" title="Fermer le recrutement"><i class="icon-lock"></i></a>
@@ -135,8 +135,8 @@
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
 						<div class="btn-group">
-							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
-							<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-folder-close"></i></a>
+							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
+							<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Galerie des PNJ"><i class="icon-folder-close"></i></a>
 							<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 						</div>
 						<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
@@ -170,8 +170,8 @@
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
 						<div class="btn-group">
-							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
-							<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn" title="Galerie des PNJ"><i class="icon-folder-close"></i></a>
+							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
+							<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Galerie des PNJ"><i class="icon-folder-close"></i></a>
 							<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 						</div>
 						<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">
@@ -213,7 +213,7 @@
 					<td>{{ campagne.nb_joueurs_actuel }} / {{ campagne.nb_joueurs }}</td>
 					<td>
 						<div class="btn-group">
-						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
 						<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					</div>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
@@ -248,7 +248,7 @@
 					<td><a href="{{ path('profile', {username : campagne.username}) }}">{{ campagne.username }}</a></td>
 					<td>
 						<div class="btn-group">
-							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn iconeBtn" title="Détail"><i class="icon-search"></i></a>
+							<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
 							<a href="{{ path('campagne_quit', {id : campagne.id}) }}" title="Quitter" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
 						</div>
 						<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}{{ campagne.username }}">

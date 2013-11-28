@@ -8,17 +8,17 @@
 	    </div>
     {% endif %}
 
-	<form class="form-horizontal" action="{{ path('topic_save', {campagne_id : campagne_id}) }}" method="POST">
+	<form role="form" class="form-horizontal" action="{{ path('topic_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" name="id" value="{{ topic.id }}" >
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="title">Title</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="text" id="title" name="title" placeholder="Titre du sujet" value="{{ topic.title }}">
 		    </div>
 	    </div>
-	    <div class="control-group">
+	    <div class="form-group">
 	    	<label class="control-label"  for="section_id">Catégories</label>
-			<div class="controls">
+			<div class="form-control">
 				
 				<select name="section_id" >
 				 {% for section in sections %}
@@ -28,38 +28,38 @@
 				</select>
 			</div>
 		</div>
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="ordre">N°Ordre</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ topic.ordre }}">
 		    </div>
 	    </div>	
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="stickable">Type</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard
 				<input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it
 		    </div>
 	    </div>  
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="is_closed">Etat</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="radio" name="is_closed" value="0" {% if topic.is_closed == 0 %} checked {% endif %}> Ouvert
 				<input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouiller
 		    </div>
 	    </div>
 	    <fieldset>
 	    <legend>Accessibilité</legend>
-	  	<div class="control-group">
+	  	<div class="form-group">
 		    <label class="control-label" for="is_private">Accessibilité du sujet</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Public
 				<input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Privée
                                 <input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> Grand-Public
 		    </div>
 		</div>
-		<div class="control-group">
-			<div class="controls">
+		<div class="form-group">
+			<div class="form-control">
 			    <select multiple name="list_user[]" />
 			    {% for perso in persos %}
 			    		<option value="{{ perso.user_id }}" {% if perso.cr_user != null %} SELECTED="SELECTED" {% endif %}>
@@ -71,8 +71,8 @@
 	    </div>  
 	    </fieldset> 
 	       
-	    <div class="control-group">
-		    <div class="controls">
+	    <div class="form-group">
+		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
 		    </div>
 	    </div>

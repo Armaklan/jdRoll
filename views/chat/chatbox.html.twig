@@ -1,5 +1,5 @@
-<div class="row-fluid" style="margin-top: 1em; margin-bottom: 2em;">
-			<div class="span10 chatbox">
+<div class="row" style="margin-top: 1em; margin-bottom: 2em;">
+			<div class="col-md-10 chatbox">
 				<h5 class="categorie">Tchat</h5>
 		        <div id="text" style="height: 250px; overflow: auto;">
 		            <div id="loading">
@@ -12,7 +12,7 @@
 
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
-				        <form class="form-inline" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
+				        <form role="form" class="form-inline" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
 					        <div class="input-append">
 							  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
 							  <input type="submit" class="btn" value="Envoyer">
@@ -30,7 +30,7 @@
 
 
 			</div>
-			<div class="span2 chatbox">
+			<div class="col-md-2 chatbox">
 				<h5 class="categorie">En ligne</h5>
 				<div style="height: 250px; overflow: auto;" id="onlineUsers">
 		            <div id="loading">

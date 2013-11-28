@@ -1,10 +1,10 @@
 
-	<div class="container-fluid hidden-desktop sidebarTop">
+	<div class="visible-xs visible-sm sidebarTop">
 		<div align="center">
 			<h5>{{ campagne.name }}</h5>
 		</div>
-	    <div class="row-fluid">
-	    	<div class="span4">
+	    <div class="row">
+	    	<div class="col-md-4">
 	    		<div align="center">
     				<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
     			</div><p/>
@@ -23,7 +23,7 @@
 	                    </div>
 				    </div><p/>
 	    	</div>
-	    	<div class="span4">
+	    	<div class="col-md-4">
 				<ul class="nav nav-stacked">
 					<li><b>Personnages</b></li>
 					{% for perso in allPerso %}
@@ -31,7 +31,7 @@
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="span4" style="padding-left: 1.3em; padding-right: 1.3em;">
+			<div class="col-md-4" style="padding-left: 1.3em; padding-right: 1.3em;">
 				<div class="page-header">
 				  <h5>Informations campagnes</h5>
 				</div>
@@ -46,7 +46,7 @@
 
 
 
-<div class="span3 sidebar visible-desktop" style="max-width: 300px">
+<div class="col-md-3 sidebar hidden-xs hidden-sm" style="max-width: 300px">
 	<div align="center">
 		<h5>{{ campagne.name }}</h5>
 	</div>

@@ -1,7 +1,7 @@
 {% if (app.session.get('user') != null)  %}
-	<div class="container-fluid hidden-desktop sidebarTop">
-	    <div class="row-fluid">
-	    	<div class="span3">
+	<div class="visible-xs visible-sm sidebarTop">
+	    <div class="row">
+	    	<div class="col-md-3">
 	    		<div align="center">
     				<img src="{{ app.session.get('user')['avatar'] }}" width="130px" style="max-width: 130px" class="img-rounded" />
     			</div><p/>
@@ -13,7 +13,7 @@
 		            </div>
 			    </div><p/>
 	    	</div>
-	    	<div class="span3">
+	    	<div class="col-md-3">
                     
                     
             			<ul class="nav nav-list nav-stacked">
@@ -32,7 +32,7 @@
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="span3">
+			<div class="col-md-3">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie active (PJ)</b></li>
 					{% for campagne in active_pj_campagnes %}
@@ -49,7 +49,7 @@
 					{% endfor %}
 				</ul>
 	    	</div>
-			<div class="span3">
+			<div class="col-md-3">
 				<ul class="nav nav-list nav-stacked">
 					<li class='nav-header'><b>Partie favorites</b></li>
 					{% for campagne in favorised_campagne %}
@@ -70,23 +70,23 @@
 	</div>
 {% endif %}
 
-<div class="span3 sidebar visible-desktop" style="max-width: 300px">
+<div class="col-md-3 sidebar hidden-xs hidden-sm" style="max-width: 300px">
 
 	{% if (app.session.get('user') == null)  %}
-	<form class="" action="{{ path('login_connect')  }}" method="POST">
-	    <div class="control-group">
-		    <div class="controls">
+	<form role="form" class="" action="{{ path('login_connect')  }}" method="POST">
+	    <div class="form-group">
+		    <div class="form-control">
 		    	<input type="text" id="login" name="login" placeholder="Nom d'utilisateur">
 		    </div>
 	    </div>
-	    <div class="control-group">
-		    <div class="controls">
+	    <div class="form-group">
+		    <div class="form-control">
 		    	<input type="password" id="pass" name="pass" placeholder="Mot de passe">
 		    	<input type="hidden" name="url" value="!" />
 		    </div>
 	    </div>
-	    <div class="control-group">
-		    <div class="controls">
+	    <div class="form-group">
+		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary">Se connecter</button>
 			    <a href="{{ path('subscribe') }}" class="btn">S'inscrire</a>
 		    </div>

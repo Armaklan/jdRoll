@@ -8,36 +8,36 @@
 	    </div>
     {% endif %}
 
-	<form class="form-horizontal" action="{{ path('section_save', {campagne_id : campagne_id}) }}" method="POST">
+	<form role="form" class="form-horizontal" action="{{ path('section_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" name="id" value="{{ section.id }}" >
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="title">Title</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="text" id="title" name="title" placeholder="Titre de la section" value="{{ section.title }}">
 		    </div>
 	    </div>
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="banniere">Bannière (500px x 100px)</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="text" class="input-xlarge" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ section.banniere }}" placeholder="http://">
 		    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
 		    </div>
 	    </div>
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="ordre">N°Ordre</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ section.ordre }}">
 		    </div>
 	    </div>	
-	    <div class="control-group">
+	    <div class="form-group">
 		    <label class="control-label" for="default_collapse">Situation par défaut</label>
-		    <div class="controls">
+		    <div class="form-control">
 		    	<input type="radio" name="default_collapse" value="0" {% if section.default_collapse == 0 %} checked {% endif %}> Déplier
 				<input type="radio" name="default_collapse" value="1" {% if section.default_collapse == 1 %} checked {% endif %}> Plier
 		    </div>
 	    </div>    
-	    <div class="control-group">
-		    <div class="controls">
+	    <div class="form-group">
+		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
 		    </div>
 	    </div>

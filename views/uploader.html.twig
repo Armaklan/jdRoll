@@ -7,7 +7,7 @@
 		<div class="fileupload fileupload-new" data-provides="fileupload">
 			<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
 			<div>
-				<form enctype="multipart/form-data" id="uploaderForm" action="{{ path('upload') }}" method="post">
+				<form role="form" enctype="multipart/form-data" id="uploaderForm" action="{{ path('upload') }}" method="post">
 					<span class="btn btn-file"><span class="fileupload-new">Choisir une image</span><span class="fileupload-exists">Changer</span>
 					<input type="file" name="uploadFile" /></span>
 					<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Enlever</a>

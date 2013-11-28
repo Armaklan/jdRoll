@@ -8,8 +8,8 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
 
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-responsive.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-fileupload.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-colorpicker.css" type="text/css" media="all">
   	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/datepicker.css" type="text/css" media="all">
@@ -31,7 +31,7 @@
 	</script>
 	
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/jquery.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap/bootstrap.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/jquery.shortcuts.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootbox.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap/bootstrap-fileupload.min.js"> </script>
@@ -65,13 +65,13 @@
 	<a name="top"></a>
 
   {{ render(url('menu')) }}
-	<div class="container-fluid" style="margin-top: 4em;">
+	<div class="container" style="margin-top: 4em;">
 
-	    <div class="row-fluid">
-	    	<div class="span9">
+	    <div class="row">
+	    	<div class="col-md-9">
 	    		{% block sidebar_large %}
-                                {{ render(url('sidebar_std_large')) }}
-                        {% endblock %}
+                    {{ render(url('sidebar_std_large')) }}
+                {% endblock %}
 
           {% block precontent %}
           {% endblock %}
