@@ -25,6 +25,10 @@
     line-height: 15px;
 }
 
+.sidebar li a {
+    padding: 3px 10px;
+}
+
 .categorie {
 	background-color: #DDDDDD;
 	font-weight: bold;
@@ -294,11 +298,11 @@ div#notif .arrow-down {
     
 }
 
-.sidebar .nav-list>li>a {
+.sidebar .nav-pills>li>a {
     text-shadow: none;
 }
 
-.sidebarTop .nav-list>li>a {
+.sidebarTop .nav-pills>li>a {
     text-shadow: none;
 }
 
@@ -334,6 +338,10 @@ div#notif .arrow-down {
     margin-top: -40px;
 }
 
+.container {
+    margin-top: 50px;
+}
+
 .page-btn {
     margin-top: -50px;
     margin-right: 20px;
@@ -357,4 +365,45 @@ div#notif .arrow-down {
 
 .control-condensed .controls {
     margin-left: 20px;
+}
+
+.form-search {
+    padding-bottom: 5px;
+}
+.form-search .search-query {
+    padding: 4px 14px;
+    margin-bottom: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.search-query {
+  display: block;
+  width: 30%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.search-query:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }

@@ -45,9 +45,9 @@
 		</div>
 	    {% if campagne_id > 0 %}
 	        {% if is_favoris %}
-	            <a title="Mettre en favoris" id="favorised" class="btn iconeBtn"><i class="icon-star"></i></a>
+	            <a title="Mettre en favoris" id="favorised" class="btn btn-default iconeBtn"><i class="icon-star"></i></a>
 	        {% else %}
-	            <a title="Mettre en favoris" id="favorised" class="btn iconeBtn notFavorised"><i class="icon-star-empty"></i></a>
+	            <a title="Mettre en favoris" id="favorised" class="btn btn-default iconeBtn notFavorised"><i class="icon-star-empty"></i></a>
 	        {% endif %}
 	    {% endif %}
 	    
@@ -88,8 +88,8 @@
 		    				<div align="right">
 		    					{% if is_mj %}
 		    						<div class="btn-group">
-			    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-edit"></i></a>
-										<a href="{{ path('topic_add', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Ajouter un sujet" class="btn iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-plus"></i></a>
+			    						<a href="{{ path('section_edit', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Editer la catégorie" class="btn btn-default iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-edit"></i></a>
+										<a href="{{ path('topic_add', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Ajouter un sujet" class="btn btn-default iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-plus"></i></a>
 										<a href="{{ path('section_delete', {campagne_id : campagne_id, section_id : line.section_id}) }}" title="Supprimer la catégorie" class="btn btn-danger iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-remove-sign"></i></a>
 									</div>
 								{% endif %}
@@ -144,10 +144,10 @@
 						{% endif %}
 
 					</td>
-					<td width="90px">
+					<td width="130px">
 						{% if is_mj %}
 							<div class="btn-group">
-					    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-edit"></i></a>
+					    		<a href="{{ path('topic_edit', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="Editer le sujet" class="btn btn-default iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-edit"></i></a>
 					    		<a href="{{ path('topic_delete', {campagne_id : campagne_id, topic_id : line.topics_id}) }}" title="supprimer le sujet" class="btn btn-danger iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-remove-sign"></i></a>
 				    		</div>
 						{% endif %}

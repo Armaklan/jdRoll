@@ -7,16 +7,16 @@
     			</div><p/>
     			<div align="center">
     				<div class="btn-group">
-						<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
+						<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
 						{{ include("button/forum_btm.html.twig") }}
-			            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn iconeBtn quickLink3"><i class="icon-envelope"></i></a>
+			            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
 		            </div>
 			    </div><p/>
 	    	</div>
 	    	<div class="col-md-3">
                     
                     
-            			<ul class="nav nav-list nav-stacked">
+            	<ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie active (MJ)</b></li>
 					{% for campagne in active_campagnes %}
 						<li><a
@@ -33,7 +33,7 @@
 				</ul>
 			</div>
 			<div class="col-md-3">
-				<ul class="nav nav-list nav-stacked">
+				<ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie active (PJ)</b></li>
 					{% for campagne in active_pj_campagnes %}
 						<li><a
@@ -50,7 +50,7 @@
 				</ul>
 	    	</div>
 			<div class="col-md-3">
-				<ul class="nav nav-list nav-stacked">
+				<ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie favorites</b></li>
 					{% for campagne in favorised_campagne %}
 						<li><a
@@ -70,7 +70,7 @@
 	</div>
 {% endif %}
 
-<div class="col-md-3 sidebar hidden-xs hidden-sm" style="max-width: 300px">
+<div class="col-md-3 col-lg-2 sidebar hidden-xs hidden-sm" style="max-width: 300px">
 
 	{% if (app.session.get('user') == null)  %}
 	<form role="form" class="" action="{{ path('login_connect')  }}" method="POST">
@@ -88,7 +88,7 @@
 	    <div class="form-group">
 		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary">Se connecter</button>
-			    <a href="{{ path('subscribe') }}" class="btn">S'inscrire</a>
+			    <a href="{{ path('subscribe') }}" class="btn btn-default">S'inscrire</a>
 		    </div>
 	    </div>
 		<div align="center">
@@ -103,9 +103,9 @@
 	    <p/>
 	    <div align="center">
 	    	<div class="btn-group">
-				<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
+				<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
 				{{ include("button/forum_btm.html.twig") }}
-	            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn iconeBtn quickLink3"><i class="icon-envelope"></i></a>
+	            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
             </div>
 	    </div>
 	    <p/>

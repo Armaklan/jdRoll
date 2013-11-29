@@ -12,11 +12,11 @@
     			    	<div class="btn-group">
 	    			    	{% set pull_mode = "" %}
 					        {% include("composant/my_campagne_btm.html.twig") %}
-							<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-							<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
-							<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-	                        <a href="#notesModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
-	                        <a class="btn iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+							<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
+							<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+							<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+	                        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+	                        <a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 	                            title="Mettre une alerte">
 	                            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
 	                        </a>
@@ -46,7 +46,7 @@
 
 
 
-<div class="col-md-3 sidebar hidden-xs hidden-sm" style="max-width: 300px">
+<div class="col-md-3 col-lg-2 sidebar hidden-xs hidden-sm" style="max-width: 300px">
 	<div align="center">
 		<h5>{{ campagne.name }}</h5>
 	</div>
@@ -57,17 +57,17 @@
     <div align="center">
 		<div class="btn-group">
     	{% set pull_mode = "pull-right" %}
-    	<a class="btn iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+    	<a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
             title="Mettre une alerte">
             <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
         </a>
-		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-		<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+		<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
+		<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
 		</div>
 		<br>
 		<div class="btn-group">
-		<a href="#dicerModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-        <a href="#notesModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+		<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
         
         {% include("composant/my_campagne_btm.html.twig") %}
         </div>

@@ -8,39 +8,43 @@
 	    </div>
     {% endif %}
 
-	<form role="form" class="form-horizontal" action="{{ path('section_save', {campagne_id : campagne_id}) }}" method="POST">
-		<input type="hidden" name="id" value="{{ section.id }}" >
-	    <div class="form-group">
-		    <label class="control-label" for="title">Title</label>
-		    <div class="form-control">
-		    	<input type="text" id="title" name="title" placeholder="Titre de la section" value="{{ section.title }}">
+	<form role="form" action="{{ path('section_save', {campagne_id : campagne_id}) }}" method="POST">
+		<fieldset class="titled-box">
+			<legend>Information de la campagne</legend>
+		    <div class="pull-right">
+				<button type="submit" class="btn btn-primary">Sauvegarder</button>
+			</div>
+			<input type="hidden" name="id" value="{{ section.id }}" >
+		    <div class="form-group">
+			    <label class="control-label" for="title">Title</label>
+			    <input type="text" id="title" name="title" placeholder="Titre de la section" value="{{ section.title }}" class="form-control">
 		    </div>
-	    </div>
-	    <div class="form-group">
-		    <label class="control-label" for="banniere">Bannière (500px x 100px)</label>
-		    <div class="form-control">
-		    	<input type="text" class="input-xlarge" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ section.banniere }}" placeholder="http://">
-		    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+		    <div class="form-group">
+			    <label class="control-label" for="banniere">Bannière (500px x 100px)</label>
+			    <div class="input-group">
+			    	<input type="text" class="form-control" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ section.banniere }}" placeholder="http://">
+			    	<span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
+			    </div>
 		    </div>
-	    </div>
-	    <div class="form-group">
-		    <label class="control-label" for="ordre">N°Ordre</label>
-		    <div class="form-control">
-		    	<input type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ section.ordre }}">
+		    <div class="col-md-5">
+			    <div class="form-group">
+				    <label class="control-label" for="ordre">N°Ordre</label>
+				    <input type="text" class="form-control" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ section.ordre }}">
+			    </div>
 		    </div>
-	    </div>	
-	    <div class="form-group">
-		    <label class="control-label" for="default_collapse">Situation par défaut</label>
-		    <div class="form-control">
-		    	<input type="radio" name="default_collapse" value="0" {% if section.default_collapse == 0 %} checked {% endif %}> Déplier
-				<input type="radio" name="default_collapse" value="1" {% if section.default_collapse == 1 %} checked {% endif %}> Plier
+		 	<div class="col-md-6 col-md-offset-1">   
+			    <div class="form-group">
+			     	<label class="control-label" for="default_collapse">Situation par défaut</label>
+					<br>
+			    	<label class="radio-inline">
+			    		<input type="radio" name="default_collapse" value="0" {% if section.default_collapse == 0 %} checked {% endif %}> Déplier
+			    	</label>
+			    	<label class="radio-inline">
+						<input type="radio" name="default_collapse" value="1" {% if section.default_collapse == 1 %} checked {% endif %}> Plier
+					</label>
+			    </div>
 		    </div>
-	    </div>    
-	    <div class="form-group">
-		    <div class="form-control">
-			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
-		    </div>
-	    </div>
+		</fieldset>
     </form>
 
 {% endblock %}

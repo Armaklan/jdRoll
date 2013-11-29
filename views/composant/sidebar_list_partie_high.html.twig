@@ -8,7 +8,7 @@
                   </div>
                   <div id="collapseOne" class="accordion-body collapse in">
                     <div class="accordion-inner">
-                      <ul class="nav nav-list nav-stacked">
+                      <ul class="nav nav-pills nav-stacked">
                         {% for campagne in active_campagnes %}
                             <li><a
                                 href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
@@ -33,7 +33,7 @@
                   </div>
                   <div id="collapseTwo" class="accordion-body collapse">
                     <div class="accordion-inner">
-                        <ul class="nav nav-list nav-stacked">
+                        <ul class="nav nav-pills nav-stacked">
                             {% for campagne in active_pj_campagnes %}
                                 <li><a
                                     href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
@@ -58,7 +58,7 @@
                   </div>
                   <div id="collapseThree" class="accordion-body collapse">
                     <div class="accordion-inner">
-                        <ul class="nav nav-list nav-stacked">
+                        <ul class="nav nav-pills nav-stacked">
                             {% for campagne in favorised_campagne %}
                                 <li><a
                                     href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"

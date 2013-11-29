@@ -1,26 +1,30 @@
-<div id="uploaderModal" class="modal hide fade">
-    <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3>Uploader un fichier</h3>
-    </div>
-    <div class="modal-body">			   
-		<div class="fileupload fileupload-new" data-provides="fileupload">
-			<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
-			<div>
-				<form role="form" enctype="multipart/form-data" id="uploaderForm" action="{{ path('upload') }}" method="post">
-					<span class="btn btn-file"><span class="fileupload-new">Choisir une image</span><span class="fileupload-exists">Changer</span>
-					<input type="file" name="uploadFile" /></span>
-					<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Enlever</a>
-					<button type="submit" class="btn" class="fileupload-exist">Envoyer</button>
-				</form>
-			</div>
+<div id="uploaderModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+		    <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    <h3>Uploader un fichier</h3>
+		    </div>
+		    <div class="modal-body">			   
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
+					<div>
+						<form role="form" enctype="multipart/form-data" id="uploaderForm" action="{{ path('upload') }}" method="post">
+							<span class="btn btn-default btn-file"><span class="fileupload-new">Choisir une image</span><span class="fileupload-exists">Changer</span>
+							<input type="file" name="uploadFile" /></span>
+							<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Enlever</a>
+							<button type="submit" class="btn btn-default" class="fileupload-exist">Envoyer</button>
+						</form>
+					</div>
+				</div>
+				Url à recopier : <input type="text" id="urlUploader" class="form-control" onfocus="$(this).select();"/>
+			    
+		    </div>
+		    <div class="modal-footer">
+		    	<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		    </div>
 		</div>
-		Url à recopier : <input type="text" id="urlUploader" class="input-xxlarge" onfocus="$(this).select();"/>
-	    
-    </div>
-    <div class="modal-footer">
-    	<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-    </div>
+	</div>
 </div>
 
     <script> 
