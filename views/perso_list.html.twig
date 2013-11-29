@@ -17,7 +17,7 @@
 
     <div class="pull-right">
         {% if is_mj %}
-            <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
+            <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
 	    <a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
 	{% endif %}			
     </div>
@@ -40,7 +40,7 @@
                                 </th>
                                 <th  width="15%" class="categorie">
                                     {% if perso.cate_id is not null and is_mj %}
-                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cate_id}) }}" class="btn iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
+                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cate_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
                                         <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.cate_id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
                                     {% endif %}
                                 </th>
@@ -60,7 +60,7 @@
             {% endif %}
             <tr>
                     <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="10%"><img src="{{ perso.avatar }}" width="70%"/></td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="50%">
+                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="45%">
                             {% if is_mj %}
                                     <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}">{{ perso.name }}</a>
                             {% else %}
@@ -68,8 +68,8 @@
                             {% endif %}
                     </td>
                     <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="25%">{{ perso.concept }}</td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="15%">{% if is_mj %}
-                                    <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
+                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="20%">{% if is_mj %}
+                                    <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
                                     <a href="{{ path('attach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Transférer"><i class="icon-share-alt"></i></a>
                                     <a href="{{ path('perso_pnj_del', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
 

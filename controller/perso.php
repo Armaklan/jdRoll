@@ -96,7 +96,7 @@
 		return $app->render('perso_list.html.twig', ['campagne_id' => $campagne_id,'persos' => $persos, 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_pnj");
 
-	$persoController->get('/pnj/{campagne_id}/remove', function($campagne_id) use($app) {
+	$persoController->get('/pnj/{campagne_id}/add', function($campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getBlankPnj($campagne_id);

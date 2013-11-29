@@ -230,7 +230,7 @@ $(function() {
 }
   </style>
 
-            <form role="form" class="form-horizontal" action="{{ path('campagne_config_save')  }}" method="POST">
+            <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
                 <input type="hidden" name="campagne_id" id="campagne_id" value="{{ campagne.campagne_id }}">
 
                 <fieldset class="titled-box">
@@ -259,19 +259,19 @@ $(function() {
 
 	                <div class="form-group">
 	                    <label class="control-label" for="banniere">Bannière</label>
-	                    <div class="form-control">
-	                        <input type="text" name="banniere" placeholder="http://" value="{{ campagne.banniere }}">
-	                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-	                        <br><i>Affichée en haut de chaque page. Taille attendue : 450px X 150px.</i>
+	                    <div class="input-group">
+	                        <input class="form-control" type="text" name="banniere" placeholder="http://" value="{{ campagne.banniere }}">
+	                        <span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
 	                    </div>
+	                    <br><i>Affichée en haut de chaque page. Taille attendue : 450px X 150px.</i>
 	                </div>
 	                <div class="form-group">
 	                    <label class="control-label" for="hr">Barre de séparation</label>
-	                    <div class="form-control">
-	                        <input type="text" id="hr" name="hr" placeholder="http://" value="{{ campagne.hr }}">
-	                        <a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-	                        <br><i>Image affichée sur les barres de séparation (HR)</i>
+	                    <div class="input-group">
+	                        <input class="form-control" type="text" id="hr" name="hr" placeholder="http://" value="{{ campagne.hr }}">
+	                        <span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
 	                    </div>
+	                    <br><i>Image affichée sur les barres de séparation (HR)</i>
 	                </div>
 	            </fieldset>
 
@@ -283,51 +283,39 @@ $(function() {
 							</a>
 						</div>
 							<div class="col-md-5">
-								<b>Couleur de fond</b>
+								<h3>Couleur de fond</h3>
 								<div class="form-group">
 				                    <label class="control-label" for="odd_line_color">Couleur des lignes paires</label>
-				                    <div class="form-control">
-				                        <input type="text" id="odd_line_color" name="odd_line_color" class="colorpicker" placeholder="#356803" value="{{ campagne.odd_line_color }}">
-				                    </div>
+				                    <input type="text" id="odd_line_color" name="odd_line_color" class="form-control colorpicker" placeholder="#356803" value="{{ campagne.odd_line_color }}">
 				                </div>
 		
 				                <div class="form-group">
 				                    <label class="control-label" for="even_line_color">Couleur des lignes impaires</label>
-				                    <div class="form-control">
-				                        <input type="text" id="even_line_color" name="even_line_color" class="colorpicker" placeholder="#746484" value="{{ campagne.even_line_color }}">
-				                    </div>
+				                    <input type="text" id="even_line_color" name="even_line_color" class="form-control colorpicker" placeholder="#746484" value="{{ campagne.even_line_color }}">
 				                </div>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="sidebar_color">Couleur de la barre latérale</label>
-				                    <div class="form-control">
-				                        <input type="text" id="sidebar_color" name="sidebar_color" class="colorpicker" placeholder="#363673" value="{{ campagne.sidebar_color }}">
-				                    </div>
+				                    <input type="text" id="sidebar_color" name="sidebar_color" class="form-control colorpicker" placeholder="#363673" value="{{ campagne.sidebar_color }}">
 				                </div>
 
 							</div>
 							<div class="col-md-5">
-								<b>Couleur des textes</b>
+								<h3>Couleur des textes</h3>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_color">Couleur du texte</label>
-				                    <div class="form-control">
-				                        <input type="text" id="text_color" name="text_color" class="colorpicker" placeholder="#223356" value="{{ campagne.text_color }}">
-				                    </div>
+				                    <input type="text" id="text_color" name="text_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.text_color }}">
 				                </div>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_color">Couleur des liens</label>
-				                    <div class="form-control">
-				                        <input type="text" id="link_color" name="link_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_color }}">
-				                    </div>
+				                    <input type="text" id="link_color" name="link_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.link_color }}">
 				                </div>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_sidebar_color">Couleur des liens dans la sidebar</label>
-				                    <div class="form-control">
-				                        <input type="text" id="link_sidebar_color" name="link_sidebar_color" class="colorpicker" placeholder="#223356" value="{{ campagne.link_sidebar_color }}">
-				                    </div>
+				                    <input type="text" id="link_sidebar_color" name="link_sidebar_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.link_sidebar_color }}">
 				                </div>
 							</div>
 
@@ -336,17 +324,15 @@ $(function() {
                 
                 <div class="form-group">
                     <label class="control-label" for="template">Template de personnage</label>
-                    <div class="form-control">
-                        <textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template"
+                    <textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template"
                          placeholder="Template de la fiche de personnage" rows="20">{{ campagne.template }}</textarea>
-                         <br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
-                    </div>
+                    <br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
                 </div>
 
 		
 		<div class="form-group" id='zoneFicheCustomControl'>
 			<label class="control-label" for="template">Fiche de personnage</label>
-			<div class="form-control">
+
 				
 				<div id='WYSIWIGBtn'>
 					<input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="changeFicheType(0);"/> Utiliser un fond Custom WYSIWIG
@@ -355,7 +341,14 @@ $(function() {
 				<br>
 				<input type="button" id='bynEditionMode' value="Ouvrir / Fermer l'éditeur" />
 				<br>
-				<label   id='LbimgBG'>Image de fond : </label><input type="text" id="imgBG" name="imgBG" placeholder="http://" value="{{ campagne.template_img }}"><a id='uploadImg' href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a><a  href="" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="" id="validBG">OK</a>
+				<label   id='LbimgBG'>Image de fond : </label>
+				<div class="input-group">
+					<input class="form-control" type="text" id="imgBG" name="imgBG" placeholder="http://" value="{{ campagne.template_img }}">
+					<span class="input-group-btn">
+						<a id='uploadImg' href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+						<a  href="" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="" id="validBG">OK</a>
+					</span>
+				</div>
 				<label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
 				<div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
 				<div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
@@ -375,20 +368,15 @@ $(function() {
 					{% endif %}
 				</div>
 			</div>
-		</div>
+
 
 	    <div class="form-group">
 		    <label class="control-label" for="sidebar_text">Information dans la sidebar</label>
-		    <div class="form-control">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="sidebar_text" name="sidebar_text" 
+		    <textarea input class="input-xxlarge wysiwyg" type="text" id="sidebar_text" name="sidebar_text" 
 		    	 placeholder="Information de la sidebar" rows="20">{{ campagne.sidebar_text }}</textarea>
-		    </div>
 	    </div>
 
 	    <div class="form-group">
-		    <div class="form-control">
-			    <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
-		    </div>
 	    </div>
 		<input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>

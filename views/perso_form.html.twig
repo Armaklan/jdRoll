@@ -39,89 +39,73 @@ $(function() {
 
 </style>
 
-	<form role="form" class="form-horizontal" action="{{ path('perso_save', {campagne_id : campagne_id}) }}" method="POST">
+	<form role="form" action="{{ path('perso_save', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
 	    <div class="form-group">
 		    <label class="control-label" for="name">Nom</label>
-		    <div class="form-control">
-		    	<input type="text" id="name" name="name" placeholder="Nom du personnage" value="{{ perso['name'] }}">
-		    </div>
+		    	<input type="text" class="form-control" id="name" name="name" placeholder="Nom du personnage" value="{{ perso['name'] }}">
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="concept">Concept</label>
-		    <div class="form-control">
-		    	<input type="text" id="concept" name="concept" placeholder="Contrebandier, Guerrier, ..." value="{{ perso['concept'] }}">
-		    </div>
+		    	<input type="text" class="form-control" id="concept" name="concept" placeholder="Contrebandier, Guerrier, ..." value="{{ perso['concept'] }}">
 	    </div>
             {% if is_mj and perso.user_id is null%}
                 <div class="form-group">
                     <label class="control-label" for="cat_id">Catégorie</label>
-                    <div class="form-control">
-                        <select name="cat_id" >
+                        <select name="cat_id" class="form-control">
                                 <option></option>
 				 {% for cat in cats %}
                                     <option value="{{ cat.id }}" {% if cat.id == perso.cat_id %} SELECTED="SELECTED" {% endif %}>
 				{{ cat.name }}</option>
                             {% endfor %}
-			</select>
-		    </div>
+						</select>
                 </div>  
             {% else %}
 		<input type="hidden" name="cat_id">  
 	    {% endif %}
 	    <div class="form-group">
 		    <label class="control-label" for="name">Avatar</label>
-		    <div class="form-control">
-		    	<input class="input-xxlarge" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ perso['avatar'] }}">
-		    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+		    <div class="input-group">
+		    	<input class="form-control" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ perso['avatar'] }}">
+		    	<span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
 		    </div>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Votre description public</label>
-		    <div class="form-control">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="publicDescription" name="publicDescription" 
 		    	 placeholder="Votre description public (visible par tous)" rows="10">{{ perso['publicDescription'] }}</textarea>
-		    </div>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Votre description privée</label>
-		    <div class="form-control">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="privateDescription" name="privateDescription" 
 		    	 placeholder="Votre description privée (visible par vous et le MJ)" rows="10">{{ perso['privateDescription'] }}</textarea>
-		    </div>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Information technique</label>
-		    <div class="form-control">
 		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="technical" name="technical" 
 		    	 placeholder="Votre personnage selon les règles" rows="10">{{ perso['technical'] }}</textarea>
-		    </div>
 	    </div>
 		<div class="form-group" id='zoneFicheCustomControl'>
 			<label class="control-label" for="template">Fiche de personnage</label>
-			<div class="form-control">
 				<div class="ui-layout-center" id='zoneFicheCustom'>
 					{% autoescape false %}{{ perso.template_html }}{% endautoescape %}
 					{% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
 					{% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
 				</div>
-			</div>
 	    {% if is_mj and perso.user_id is null%}
 		   	<div class="form-group">
 			    <label class="control-label" for="statut">Visibilité dans la gallerie</label>
-			    <div class="form-control">
-			    	<input type="radio" name="statut" value="0" {% if perso.statut == 0 %} checked {% endif %}> Visible
-					<input type="radio" name="statut" value="2" {% if perso.statut == 2 %} checked {% endif %}> Non-Visible
-			    </div>
+			    <br>
+			    <label class="radio-inline"><input type="radio" name="statut" value="0" {% if perso.statut == 0 %} checked {% endif %}> Visible</label>
+				<label class="radio-inline"><input type="radio" name="statut" value="2" {% if perso.statut == 2 %} checked {% endif %}> Non-Visible</label>
+			    
 		    </div>  
 		{% else %}
 			<input type="hidden" name="statut" value="{{ perso.statut }}">  
 	    {% endif %}
             
 	    <div class="form-group">
-		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary" id='saveBtn'>Sauvegarder</button>
-		    </div>
 	    </div>
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>

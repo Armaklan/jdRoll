@@ -1,12 +1,12 @@
-<div class="accordion" id="accordion2">
-  <div class="accordion-group grey-accordion-group">
-    <div class="accordion-heading">
+<div class="panel-group" id="accordion2">
+  <div class="">
+    <div class="panel-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
         Personnages
       </a>
     </div>
-    <div id="collapseOne" class="accordion-body collapse in">
-      <div class="accordion-inner">
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
            {% for perso in allPerso %}
               {% if is_mj %}
@@ -29,14 +29,14 @@
     </div>
   </div>
   {% if config.sidebar_text != "" %}
-  <div class="accordion-group grey-accordion-group">
-    <div class="accordion-heading">
+  <div class="">
+    <div class="panel-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
         Informations campagnes
       </a>
     </div>
-    <div id="collapseTwo" class="accordion-body collapse">
-      <div class="accordion-inner">
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
           {% autoescape false %}
             {{ config.sidebar_text }}
           {% endautoescape %}

@@ -13,12 +13,14 @@
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
 				        <form role="form" class="form-inline" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
-					        <div class="input-append">
-							  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
-							  <input type="submit" class="btn" value="Envoyer">
-	                                                  {% if(isAdmin) %}
-	                                                       <a class="btn"  onClick="chatController.deleteLastMessages();">Purger 30 messages</a>
-	                                                  {% endif %}
+					        <div class="input-group">
+							  <input class="form-control" id="messageChat" type="text" maxlength="300">
+							  <span class="input-group-btn">
+								  <input type="submit" class="btn btn-default" value="Envoyer">
+                                  {% if(isAdmin) %}
+                                       <a class="btn btn-default "  onClick="chatController.deleteLastMessages();">Purger 30 messages</a>
+                                  {% endif %}
+	                           </span>
 	                                                  
 							</div>
 						</form>
