@@ -231,6 +231,13 @@ $(function() {
   </style>
 
             <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
+
+			<div class="control-group">
+                <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+                    <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
+                </div>
+            </div>
+
                 <input type="hidden" name="campagne_id" id="campagne_id" value="{{ campagne.campagne_id }}">
 
                 <fieldset class="titled-box">
@@ -376,8 +383,6 @@ $(function() {
 		    	 placeholder="Information de la sidebar" rows="20">{{ campagne.sidebar_text }}</textarea>
 	    </div>
 
-	    <div class="form-group">
-	    </div>
 		<input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>

@@ -13,8 +13,8 @@ function filterTable(idFilter, idTable) {
 }
 
 function onBtnDangerClick() {
-    bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
-       if(confirmed) {
+    bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
+    if(confirmed) {
         return true;
     } else {
         return false;
@@ -46,7 +46,7 @@ $(function () {
 	$("a.btn-danger").click(function(e) {
        e.preventDefault();
        var location = $(this).attr('href');
-       bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", "Non", "Oui", function(confirmed) {
+       bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
            if(confirmed) {
                window.location.replace(location);
            }

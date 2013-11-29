@@ -2,8 +2,8 @@
 <div id="messageContent">
 	<table class="table-striped table-condensed table-bordered" width="100%" id="tableChat">
 		<tr>
-			<th width="120px">Date</th>
-            <th width="130px">Auteur</th>
+			<th width="80px">Date</th>
+            <th>Auteur</th>
 			<th>Message</th>
 			{% if(isAdmin) %}
 			<th>Action</th>
@@ -12,8 +12,8 @@
 {% endif %}
 		{% for msg in msgs %}
 			<tr id='chat_tr_{{msg.id}}'>
-                                <td>{{ msg.time|date("d/m H:i:s") }}</td>
-                                <td>{{ msg.username }}</td>
+                                <td>{{ msg.time|date("H:i:s") }}</td>
+                                <td style="margin-left: 6px;">{{ msg.username }}</td>
 								<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
 								{% if(isAdmin) %}
 								<td><a  onClick="deleteChatMessage({{ msg.id }});" title="supprimer le message" class="iconeBtn"><i class="icon-remove-sign" style="color: red"></i></a></td>
