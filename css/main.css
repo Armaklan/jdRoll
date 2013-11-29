@@ -260,32 +260,21 @@ div#notif .arrow-down {
     border: 1px solid #999 !important;
 }
 
-
-
-
-
-
 #EditFDP
 {
-
     margin: -15px 0 0 0;
     top: 50%;
     position:absolute;
-    right: 90px;
-    
-    
+    right: 90px;   
 }
 
 #SaveFDP
 {
-
     margin: -15px 0 0 0;
     top: 50%;
     position:absolute;
     right: 134px;
     display:none;
-    
-    
 }
 
 #SwitchFDP
@@ -294,8 +283,6 @@ div#notif .arrow-down {
     top: 50%;
     position:absolute;
     right: 50px;
-    
-    
 }
 
 .sidebar .nav-pills>li>a {
@@ -406,4 +393,23 @@ div#notif .arrow-down {
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.carousel-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    background: #333;
+    background: rgba(0,0,0,0.75);
+    font-size: 80%;
+}
+
+.carousel-caption a {
+    color: white;
+}
+
+#notifContent .well {
+    padding: 5px;
 }
