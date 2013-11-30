@@ -8,77 +8,73 @@
 	    </div>
     {% endif %}
 
-{% if adminUser is not defined  %}
-	<form class="form-horizontal" action="{{ path('my_profile_save')  }}" method="POST">
-{% else %}
-	<form class="form-horizontal" action="{{ path('profile_edit_save',{'username' : user.username})  }}" method="POST">
-{% endif %}
-	    <div class="control-group">
-		    <label class="control-label" for="login">Login</label>
-		    <div class="controls">
-		    	<input type="text" id="username" name="username" readonly="true" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="mail">Email</label>
-		    <div class="controls">
-		    	<input type="text" id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
-		    </div>
-	    </div>
-		<div class="control-group">
-		    <label class="control-label" for="birthDate">Date de naissance :</label>
-		    <div class="controls">
-				<div class="input-append date" id="birthDateComp" >
-					<input name="birthDate" class="span2" size="160" type="text" value="{{ user['birthDate'] }}" readonly>
-					<span class="add-on"><i class="icon-th"></i></span>
-				</div>
-			</div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="avatar">Url de votre avatar</label>
-		    <div class="controls">
-		    	<input class="input-xxlarge" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ user['avatar'] }}">
-		    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-		    	<br><i>Taille conseillé : 130px de large, maximum 130px de haut.</i>
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="description">Votre description</label>
-		    <div class="controls">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
-		    	 placeholder="Votre description" rows="10">{{ user['description'] }}</textarea>
-		    </div>
-	    </div>
-	    
-	    <div class="control-group">
-		    <div class="controls">
-			    <button type="submit" class="btn btn-primary">Mettre à jour</button>
-		    </div>
-	    </div>
-    </form>
+	<div class="row">
+		<div class="col-md-8">
+			{% if adminUser is not defined  %}
+				<form role="form" action="{{ path('my_profile_save')  }}" method="POST">
+			{% else %}
+				<form role="form" action="{{ path('profile_edit_save',{'username' : user.username})  }}" method="POST">
+			{% endif %}
+			<fieldset class="titled-box">
+				<legend>Mes informations</legend>
+				    
+				    <div class="pull-right">
+						<button type="submit" class="btn btn-primary">Valider</button>
+				    </div> 
+				    <div class="form-group">
+					    <label class="control-label" for="login">Login</label>
+					    <input class="form-control" type="text" id="username" name="username" readonly="true" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
+				    </div>
+				    <div class="form-group">
+					    <label class="control-label" for="mail">Email</label>
+					    <input class="form-control" type="text" id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
+				    </div>
+					<div class="form-group">
+					    <label class="control-label" for="birthDate">Date de naissance :</label>
+						<div class="input-group date" id="birthDateComp" >
+							<input class="form-control" name="birthDate" class="col-md-2" size="200" type="text" value="{{ user['birthDate'] }}" readonly>
+							<span class="add-on input-group-btn"><a class="btn btn-default"><i class="icon-th"></i></a></span>
+						</div>
+				    </div>
+				    <div class="form-group">
+					    <label class="control-label" for="avatar">Url de votre avatar</label>
+					    	<div class="input-group">
+						    	<input class="form-control" type="text" id="avatar" name="avatar" placeholder="http://" value="{{ user['avatar'] }}">
+						    	<span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
+					    	</div>
+					    	<br><i>Taille conseillé : 130px de large, maximum 130px de haut.</i>
+				    </div>
+				    <div class="form-group">
+					    <label class="control-label" for="description">Votre description</label>
+					    <textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
+					    	 placeholder="Votre description" rows="10">{{ user['description'] }}</textarea>
+				    </div>
+
+				    </fieldset>
+			</form>
+		</div>
 
 {% if adminUser is not defined %}
-    <form class="form-horizontal" action="{{ path('my_profile_passwd')  }}" method="POST">
-		<h3>Changement de mot de passe</h3>
-	    <div class="control-group">
-		    <label class="control-label" for="password">Mot de passe</label>
-		    <div class="controls">
-		    	<input type="password" id="password" name="password" placeholder="Mot de passe">
-		    </div>
-	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
-		    <div class="controls">
-		    	<input type="password" id="password2" name="password2" placeholder="Mot de passe">
-		    </div>
-	    </div>
-	    
-	    <div class="control-group">
-		    <div class="controls">
-			    <button type="submit" class="btn btn-danger">Changer le mot de passe</button>
-		    </div>
-	    </div>
-    </form>
+		<div class="col-md-4">
+		    <form role="form" action="{{ path('my_profile_passwd')  }}" method="POST">
+			<fieldset class="titled-box">
+			<legend>Modifier mon mot de passe</legend>
+				    <div class="pull-right">
+						<button type="submit" class="btn btn-danger">Valider</button>
+				    </div> 
+			    <div class="form-group">
+			    	<label class="control-label" for="password">Mot de passe</label>
+			    	<input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe">
+			    </div>
+			    <div class="form-group">
+				    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
+				    <input class="form-control"  type="password" id="password2" name="password2" placeholder="Mot de passe">
+			    </div>
+			    
+			</fieldset>
+		    </form>
+		</div>
+	</div>
 {% endif %}
 <script>
     

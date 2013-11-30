@@ -8,13 +8,13 @@
 	    </div>
     {% endif %}
 
-    <div class="span2" align="center">
+    <div class="col-md-2" align="center">
     			<p><b>{{ perso['name'] }}</b></p>
 			    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
     		</div>
-	<form class="form-horizontal" action="{{ path('save_attach', {campagne_id : campagne_id}) }}" method="POST">
+	<form role="form" class="form-horizontal" action="{{ path('save_attach', {campagne_id : campagne_id}) }}" method="POST">
 		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
-	    <div class="control-group">
+	    <div class="form-group">
 			<label for="user_id">Transféré à : </label>
 			<select name="user_id" >
 			 {% for user in users %}
@@ -23,8 +23,8 @@
 			</select>
 		</div>
 	    	    
-	    <div class="control-group">
-		    <div class="controls">
+	    <div class="form-group">
+		    <div class="form-control">
 			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
 		    </div>
 	    </div>

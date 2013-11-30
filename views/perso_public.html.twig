@@ -8,20 +8,18 @@
 	    </div>
     {% endif %}
 
-    <div class="container-fluid">
-    	<div class="row-fluid">
-    		<div class="span2" align="center">
-    			<p><b>{{ perso['name'] }}</b></p>
-			    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
-    		</div>
-    		<div class="span10">
-    			<p><b>Concept : </b>{{ perso['concept'] }}</p>
-    			<p><b>Description : </b></p>
-    			{% autoescape false %}
-			    	<p>{{ perso.publicDescription }}</p>
-			    {% endautoescape %}
-    		</div>
-    	</div>
-    </div>
+	<div class="row">
+		<div class="col-md-2" align="center">
+			<p><b>{{ perso['name'] }}</b></p>
+		    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
+		</div>
+		<div class="col-md-10">
+			<p><b>Concept : </b>{{ perso['concept'] }}</p>
+			<p><b>Description : </b></p>
+			{% autoescape false %}
+		    	<p>{{ perso.publicDescription }}</p>
+		    {% endautoescape %}
+		</div>
+	</div>
 
 {% endblock %}

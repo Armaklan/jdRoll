@@ -167,6 +167,14 @@ class TopicService {
             $stmt->execute();
         }
     }
+    
+    public function getWhoCanRead($topic_id) {
+        $sql = "SELECT * 
+    			FROM can_read
+			WHERE topic_id = :topic";
+
+        return $this->db->fetchAll($sql, array("topic" => $topic_id));
+    }
 
     public function updateLastPost($topic_id, $post_id) {
         $sql = "UPDATE topics

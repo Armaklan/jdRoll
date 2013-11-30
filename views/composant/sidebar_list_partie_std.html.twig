@@ -1,0 +1,47 @@
+    <ul class="nav nav-pills nav-stacked">
+			<li class='nav-header'><b>Partie active (MJ)</b></li>
+			{% for campagne in active_campagnes %}
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+			{% endfor %}
+		</ul>
+
+		<ul class="nav nav-pills nav-stacked">
+			<li class='nav-header'><b>Partie active (PJ)</b></li>
+			{% for campagne in active_pj_campagnes %}
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+			{% endfor %}
+		</ul>
+
+		<ul class="nav nav-pills nav-stacked">
+			<li class='nav-header'><b>Partie favorite</b></li>
+			{% for campagne in favorised_campagne %}
+                <li><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                    >
+                        {% if campagne.activity > 0 %}
+							<i class="icon-asterisk"></i>
+						{% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+			{% endfor %}
+		</ul>

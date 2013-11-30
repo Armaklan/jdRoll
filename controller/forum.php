@@ -9,41 +9,12 @@
 
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /*
  Controller de campagne (sécurisé)
 */
 $forumController = $app['controllers_factory'];
 $forumController->before($mustBeLogged);
-
-function replace_hide($text)
-{
-
-$ret = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
-				function ($matches) {
-
-					$txt = '';
-					$m = '';
-					if($matches[1] != '')
-						$txt = $matches[1];
-					else
-						$txt = 'Informations masquées';
-
-					if(strpos($matches[2],"[/hide]"))
-						$m = replace_hide($matches[2]);
-					else
-						$m = $matches[2];
-
-					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
-
-				},
-				$text
-			);
-
-
-	return $ret;
-}
 
 function getInterneCampagneNumber($campagne_id) {
 	if($campagne_id == 0) {
@@ -65,20 +36,27 @@ $forumController->get('/', function() use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne(null);
 	$is_mj = $app["campagneService"]->isMj(null);
 	$isAdmin = $app["campagneService"]->isAdmin();
-	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','isAdmin' => $isAdmin]);
+	$campagne = $app["campagneService"]->getBlankCampagne();
+	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
+		'isAdmin' => $isAdmin, 'campagne' => $campagne]);
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $user_id = $app['session']->get('user')['id'];
 	$campagne_id = getInterneCampagneNumber($campagne_id);
+	$campagne = $app["campagneService"]->getBlankCampagne();
+	if($campagne_id != null) {
+		$campagne = $app["campagneService"]->getCampagne($campagne_id);
+	}
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
-
+    $isAdmin = $app["campagneService"]->isAdmin();
 	$campagne_id = getExterneCampagneNumber($campagne_id);
     $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
     $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
-	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers]);
+	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 
+            'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);
 })->bind("forum_campagne");
 
 $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($app) {
@@ -143,7 +121,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 	$topicId = $request->get('id');
 	try {
 		if($topicId == '') {
-			$topicId = $app["topicService"]->createTopic($request);
+			$topicId = $app["topicService"]->createTopic($request);   
 		} else {
 			$app["topicService"]->updateTopic($request);
 		}
@@ -161,11 +139,151 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 	}
 })->bind("topic_save");
 
+$forumController->post('/{campagne_id}/topic/draft', function($campagne_id, Request $request) use($app) {
+	$campagne_id = getInterneCampagneNumber($campagne_id);
+	try {
+                $topicId = $app["postService"]->createDraft($request);
+		$campagne_id = getExterneCampagneNumber($campagne_id);
+		return "Enregistrement effectué";
+	} catch(Exception $e) {
+		return "Erreur lors de l'enregistrement";
+	}
+})->bind("draft_save");
+
 $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic_id) use($app) {
 	//$page = $app["postService"]->getLastPageOfPost($topic_id);
         $page = 1;
 	return $app->redirect($app->path('topic_page', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id, 'no_page' => $page)));
 })->bind("topic");
+
+
+$forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $topic_id) use($app) {
+$campagne_id = getInterneCampagneNumber($campagne_id);
+	$posts = $app["postService"]->getAllPostsInTopic($topic_id);
+	$topic = $app["topicService"]->getTopic($topic_id);
+	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
+	$is_mj = $app["campagneService"]->isMj($campagne_id);
+	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+	$config = $app['campagneService']->getCampagneConfig($campagne_id);
+	$default_perso = '';
+	if($config != null) {
+		$default_perso = $config['default_perso_id'];
+	}
+	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
+        if($campagne_id > 0) {
+            foreach ($posts as &$post){
+                    transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
+                    replace_hide($post);
+            }
+        }
+        $campagne_id = getExterneCampagneNumber($campagne_id);
+        $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
+	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
+			"last_page" => $last_page, 'actual_page' => 0]);
+})->bind("topic_all");
+
+
+
+function getPrivateZone($txt) {
+    return '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . '</div>';
+}
+
+    
+function replace_hide(&$post)
+{
+ $post['post_content']  = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
+				function ($matches) {
+
+					$txt = '';
+					$m = '';
+					if($matches[1] != '')
+						$txt = $matches[1];
+					else
+						$txt = 'Informations masquées';
+
+					if(strpos($matches[2],"[/hide]"))
+						$m = replace_hide($matches[2]);
+					else
+						$m = $matches[2];
+
+					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
+
+				},
+				$post['post_content']
+			);
+
+	return $post;
+}
+
+
+function transformPrivateZoneForMessage(&$post, $login, $perso, $is_mj) {
+        $isThereAPrivateForMe = false;
+        $postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+        function ($matches) use($is_mj,$login,$perso,&$isThereAPrivateForMe,$post){
+
+                if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+                {
+                        $isThereAPrivateForMe = true;
+                }
+                else
+                {
+                        $users = preg_split("#,#", $matches[2]);
+                        foreach($users as $user)
+                        {
+                                if(strcasecmp($login,trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
+                                {
+                                        $isThereAPrivateForMe=true;
+                                        break;
+                                }
+                        }
+                }
+                return '';
+                },
+                $post['post_content']
+        );
+
+        $postTrim = strip_tags($postForTest);
+        //Trop gourmand ? A optimiser ?
+        $postTrim = strtr($postTrim, array_flip(get_html_translation_table(HTML_ENTITIES)));
+        $postTrim = trim($postTrim,"\t\n\r\0\x0B\xC2\xA0\xE2\x80\x89\xE2\x80\x83\xE2\x80\x82");
+
+        $postSize = strlen($postTrim);
+
+        $post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+        function ($matches) use ($is_mj,$login,$perso,$post,$postSize,$isThereAPrivateForMe){
+
+                $txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
+                $ret = '';
+                if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+                {
+                    $ret = getPrivateZone($txt . $matches[3]);
+                }
+                else
+                {
+                        $users = preg_split("#,#", $matches[2]);
+                        foreach($users as $user)
+                        {
+                                if(strcasecmp($login,trim($user)) == 0 || strcasecmp($persoName,trim($user)) == 0)
+                                {
+                                        $ret = getPrivateZone($txt . $matches[3]);
+                                        break;
+                                }
+                        }
+                }
+
+                if(!$isThereAPrivateForMe)
+                {
+                        if($postSize == 0)
+                                $ret = getPrivateZone('<br>Une partie de ce message est en privée et ne vous est pas accessible.<br>');
+                }
+
+                return $ret;
+                },
+                $post['post_content']
+        );
+        return $post;
+}
 
 $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($campagne_id, $topic_id, $no_page) use($app) {
 	$campagne_id = getInterneCampagneNumber($campagne_id);
@@ -179,84 +297,22 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
-	$campagne_id = getExterneCampagneNumber($campagne_id);
+	$config = $app['campagneService']->getCampagneConfig($campagne_id);
+	$default_perso = '';
+	if($config != null) {
+		$default_perso = $config['default_perso_id'];
+	}
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
-
-		foreach ($posts as &$post)
-		{
-			if($campagne_id > 0)
-			{
-				$isThereAPrivateForMe = false;
-				$postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-				function ($matches) use($is_mj,$app,$perso,&$isThereAPrivateForMe,$post){
-
-					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
-					{
-						$isThereAPrivateForMe = true;
-					}
-					else
-					{
-						$users = preg_split("#,#", $matches[2]);
-						foreach($users as $user)
-						{
-							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
-							{
-								$isThereAPrivateForMe=true;
-								break;
-							}
-						}
-					}
-					return '';
-					},
-					$post['post_content']
-				);
-				
-				$postTrim = strip_tags($postForTest);
-				//Trop gourmand ? A optimiser ?
-				$postTrim = strtr($postTrim, array_flip(get_html_translation_table(HTML_ENTITIES)));
-				$postTrim = trim($postTrim,"\t\n\r\0\x0B\xC2\xA0\xE2\x80\x89\xE2\x80\x83\xE2\x80\x82");
-				
-				$postSize = strlen($postTrim);
-				
-				$post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-				function ($matches) use ($is_mj,$app,$perso,$post,$postSize,$isThereAPrivateForMe){
-					
-						$txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
-						 $ret = '';
-					if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
-					{
-						$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
-					}
-					else
-					{
-						$users = preg_split("#,#", $matches[2]);
-						foreach($users as $user)
-						{
-							if(strcasecmp($app['session']->get('user')['login'],trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
-							{
-								$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . $matches[3] . '</div>';
-								
-								break;
-							}
-						}
-					}
-					
-					if(!$isThereAPrivateForMe)
-					{
-						if($postSize == 0)
-							$ret = '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px "><br>Une partie de ce message est en privée et ne vous est pas accessible.<br></div>';
-					}
-					
-					return $ret;
-					},
-					$post['post_content']
-				);
-			}
-			$post['post_content'] = replace_hide($post['post_content']);
-		}
-
+        if($campagne_id > 0) {
+            foreach ($posts as &$post){
+                    transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
+                    replace_hide($post);
+            }
+        }
+        $campagne_id = getExterneCampagneNumber($campagne_id);
+        $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
-			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages,
+			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
 })->bind("topic_page");
 
@@ -283,15 +339,31 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topicId = $request->get('topic_id');
 	$post_id = 0;
+        $isNew = false;
 	if ($request->get('id') == '') {
 		$post_id = $app["postService"]->createPost($request);
+                try {
+                    $app["postService"]->deleteDraft($request);
+                } catch (Exception $e) {
+                    //tant pis si on supprime pas le draft
+                }
+                $isNew = true;
 		$app["topicService"]->updateLastPost($topicId, $post_id);
 	} else {
 		$post_id = $request->get('id');
 		$app["postService"]->updatePost($request);
 	}
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id);
+        $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id;
+        if($isNew) {
+            $app["notificationService"]->alertPostInCampagne(
+                            $app["session"]->get('user')['id'],
+                            $campagne_id,
+                            $topicId,
+                            $url
+                            );
+        }
+	return $app->redirect($url);
 })->bind("post_save");
 
 $forumController->get('/{campagne_id}/section/delete/{section_id}', function($campagne_id, $section_id) use($app) {
@@ -301,8 +373,12 @@ $forumController->get('/{campagne_id}/section/delete/{section_id}', function($ca
 		$campagne_id = getInterneCampagneNumber($campagne_id);
 		$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
+		$campagne = $app["campagneService"]->getBlankCampagne();
+		if($campagne_id != null) {
+			$campagne = $app["campagneService"]->getCampagne($campagne_id);
+		}
 		$campagne_id = getExterneCampagneNumber($campagne_id);
-		return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error]);
+		return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error, 'campagne' => $campagne]);
 	} else {
 		$app["sectionService"]->deleteSection($section_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));

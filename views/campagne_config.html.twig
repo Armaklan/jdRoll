@@ -2,6 +2,13 @@
 <style type="text/css">
 	{% if campagne_config != null %}
 
+
+		{% if campagne_config.text_color != '' %}
+			.container {
+				color: {{ campagne_config.text_color }};
+			}
+		{% endif %}
+
 		{% if campagne_config.banniere != '' %}
 			.logo_campagne {
 				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;
@@ -65,6 +72,9 @@
 			.sidebarTop a {
 				color: {{ campagne_config.link_sidebar_color }};
 			}
+            .sidebarTop {
+				color: {{ campagne_config.link_sidebar_color }};
+            }
 			.categorie a {
 				color: {{ campagne_config.link_sidebar_color }};
 			}
@@ -74,6 +84,9 @@
             a.sidebarBtn {
                 color: black;
             }
+			.categorie a.btn {
+				color:black;
+			}
 		{% endif %}
 	{% endif %}
 </style>

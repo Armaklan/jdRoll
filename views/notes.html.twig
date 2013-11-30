@@ -1,17 +1,21 @@
-<div id="notesModal" class="modal hide fade">
-    <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3>Bloc Notes</h3>
-    </div>
-    <div class="modal-body">
-    	    <form>
-                <textarea id="contentNotes" class="wysiwyg">{{ content_notes }}</textarea>
-		    </form>
-    </div>
-    <div class="modal-footer">
-    	<button class="btn" onClick="return callUpdateNotes();">Sauvegarder</button>
-    	<button class="btn" onClick="return callUpdateNotes(); "data-dismiss="modal" aria-hidden="true">Sauvegarder et Fermer</button>
-    </div>
+<div id="notesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+		    <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    <h3>Bloc Notes</h3>
+		    </div>
+		    <div class="modal-body">
+		    	    <form>
+		                <textarea id="contentNotes" class="wysiwyg">{{ content_notes }}</textarea>
+				    </form>
+		    </div>
+		    <div class="modal-footer">
+		    	<button class="btn btn-default" onClick="return callUpdateNotes();">Sauvegarder</button>
+		    	<button class="btn btn-primary" onClick="return callUpdateNotes(); "data-dismiss="modal" aria-hidden="true">Sauvegarder et Fermer</button>
+		    </div>
+		</div>
+	</div>
 </div>
 
 

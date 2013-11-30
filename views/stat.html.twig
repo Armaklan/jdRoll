@@ -2,24 +2,40 @@
 
 {% block content %}
 
-<center><h1>Statistiques</h1></center>
-<b> Nombre de partie en-cours : {{nb_partie}} </b> <br>
-<b> Nombre de partie en préparation : {{nb_partie_prep}} </b> <br>
-<b> Nombre d'utilisateurs : </b> {{nb_user}} (Seul les utilisateurs ayant déjà posté sont comptabilisés).<br>
-<b> Nombre de posts : </b> {{nb_post}} <br>
+<center><h2>Statistiques</h2></center>
 
-<p></p>
-
-<h2>Top 10 des posteurs : </h2>
-<ul>
-{% for posteur in top_post %}
-    <li> {{posteur.username}} : {{posteur.cpt}}</li>
-{% endfor %}
-</ul>
-
-<h2>Top 10 des plus présents sur le tchat : </h2>
-{% for posteur in top_chat %}
-    <li> {{posteur.username}} : {{posteur.cpt}}</li>
-{% endfor %}
+	<div class="row">
+		<div class="col-md-12">
+			<fieldset class="titled-box">
+				<legend>Statistiques Générales</legend>
+				<b> Nombre de partie en-cours : </b> {{nb_partie}} <br>
+				<b> Nombre de partie en préparation : </b> {{nb_partie_prep}} <br>
+				<b> Nombre d'utilisateurs : </b> {{nb_user}} (Seul les utilisateurs ayant déjà posté sont comptabilisés).<br>
+				<b> Nombre de posts : </b> {{nb_post}} <br>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<fieldset class="titled-box">
+				<legend>Top 10 des posteurs</legend>
+				<ul>
+				{% for posteur in top_post %}
+				    <li> {{posteur.username}} : {{posteur.cpt}}</li>
+				{% endfor %}
+				</ul>
+			</fieldset>
+		</div>
+		<div class="col-md-6">
+			<fieldset class="titled-box">
+				<legend>Top 10 du Tchat</legend>
+				<ul>
+				{% for posteur in top_chat %}
+				    <li> {{posteur.username}} : {{posteur.cpt}}</li>
+				{% endfor %}
+				</ul>
+			</fieldset>
+		</div>
+	</div>
 
 {% endblock %}

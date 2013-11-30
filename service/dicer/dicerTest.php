@@ -21,5 +21,11 @@ echo "<p> Resultat (3d6Eg2) : " . $dicer->parse("3d6Eg2") . "</p>";
 echo "<p> Resultat (3d6l2) : " . $dicer->parse("3d6l2") . "</p>";
 echo "<p> Resultat (3d6s) : " . $dicer->parse("3d6s") . "</p>";
 echo "<p> Resultat (3d6S) : " . $dicer->parse("3d6S") . "</p>";
+echo "<p> Resultat (1d6+1d8)g1 : " . $dicer->parse("(1d6 + 1d8)g1") . "</p>";
+echo "<p> Resultat (1d6+3d8)g2 : " . $dicer->parse("(1d6 + 3d8)g2") . "</p>";
+echo "<p> Resultat (1d6+3d8)l2 : " . $dicer->parse("(1d6 + 3d8E)l2") . "</p>";
+echo "<p> Resultat (1d6+1d8)g1 + 2 : " . $dicer->parse("(1d6 + 1d8)g1 + 2") . "</p>";
+echo "<p> Resultat (2d10q) : " . $dicer->parse("2d10q") . "</p>";
+echo "<p> Resultat (2d10q + 4) : " . $dicer->parse("2d10q + 4") . "</p>";
 
 ?>

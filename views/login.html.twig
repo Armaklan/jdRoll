@@ -8,31 +8,27 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-	<form class="form-horizontal" action="{{ path('login_connect')  }}" method="POST">
-	    <div class="control-group">
-		    <label class="control-label" for="login">Login</label>
-		    <div class="controls">
-		    	<input type="text" id="login" name="login" placeholder="Nom d'utilisateur">
+	<form role="form" class="form-horizontal" action="{{ path('login_connect')  }}" method="POST">
+	    <div class="form-group">
+		    <label class="control-label col-sm-2" for="login">Login</label>
+		    <div class="col-sm-10">
+		    	<input class="form-control" type="text" id="login" name="login" placeholder="Nom d'utilisateur">
 		    </div>
 	    </div>
-	    <div class="control-group">
-		    <label class="control-label" for="pass">Mot de passe</label>
-		    <div class="controls">
-		    	<input type="password" id="pass" name="pass" placeholder="Mot de passe">
+	    <div class="form-group">
+		    <label class="control-label col-sm-2" for="pass">Mot de passe</label>
+		    <div class="col-sm-10">
+		    	<input class="form-control" type="password" id="pass" name="pass" placeholder="Mot de passe">
 		    </div>
 	    </div>
 	    <input type="hidden" name="url" value="{{ url }}" />
 	    
-	    <div class="control-group">
-		    <div class="controls">
-			    <button type="submit" class="btn">Se connecter</button>
-			    <a href="{{ path('subscribe') }}" class="btn">S'inscrire</a>
-		    </div>
+	    <div class="form-group">
+			    <button type="submit" class="btn btn-default">Se connecter</button>
+			    <a href="{{ path('subscribe') }}" class="btn btn-default">S'inscrire</a>
 	    </div>
-		<div class="control-group">
-		  <div class="controls">
-    		<a href="{{path('reset')}}">J'ai oublié mon mot de passe</a>
-			</div>
+		<div class="form-group">
+    		<a href="{{path('reset')}}">J'ai oubliÃ© mon mot de passe</a>
     	</div>
     </form>
 

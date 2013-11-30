@@ -1,7 +1,7 @@
-<div class="row-fluid" style="margin-top: 1em; margin-bottom: 2em;">
-			<div class="span10 chatbox">
-				<h5 class="categorie">Chat</h5>
-		        <div id="text" style="height: 250px; overflow: auto;">
+<div class="row" style="margin-top: 1em; margin-bottom: 2em;">
+			<div class="col-md-9 chatbox">
+				<h5 class="categorie">Tchat</h5>
+		        <div id="text" style="height: 300px; overflow: auto;">
 		            <div id="loading">
 		                <center>
 		                <span class="info" id="info">Chargement du chat en cours...</span><br />
@@ -12,37 +12,18 @@
 
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
-			        <form class="form-inline" onsubmit="postMessage(); return false;" autocomplete="off">
-				        <div class="input-append">
-						  <input class="input-xxlarge" id="messageChat" type="text" maxlength="300">
-						  <input type="submit" class="btn" value="Envoyer">
-						</div>
-
-
-					</form>
-					{% if(isAdmin) %}
-					<div >
-						  <input type="button" class="btn" value="Supprimer les 30 derniers messages" onClick="deleteLastMessages();">
-						</div>
-					{% endif %}
-					<script>
-					function postMessage() {
-						textMsg=$('#messageChat').val();
-						$('#messageChat').val('');
-						user="{{ app.session.get('user')['login'] }}";
-						$.ajax({
-						    type: "POST",
-						    url: "{{ path('chat_post') }}",
-						    data: {message: textMsg, user: user},
-						    success: function(msg){
-
-						    },
-						    error: function(msg) {
-						    	$('#messageChat').val(textMsg);
-							}
-						});
-					}
-					</script>
+				        <form role="form" class="form-inline" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
+					        <div class="input-group">
+							  <input class="form-control" id="messageChat" type="text" maxlength="300">
+							  <span class="input-group-btn">
+								  <input type="submit" class="btn btn-default" value="Envoyer">
+                                  {% if(isAdmin) %}
+                                       <a class="btn btn-default "  onClick="chatController.deleteLastMessages();">Purger 30 messages</a>
+                                  {% endif %}
+	                           </span>
+	                                                  
+							</div>
+						</form>
 					{% else %}
 		        		Il est nécessaire d'être authentifier pour poster un message
 		        	{% endif %}
@@ -51,9 +32,9 @@
 
 
 			</div>
-			<div class="span2 chatbox">
+			<div class="col-md-3 chatbox">
 				<h5 class="categorie">En ligne</h5>
-				<div style="height: 250px; overflow: auto;" id="onlineUsers">
+				<div style="height: 300px; overflow: auto;" id="onlineUsers">
 		            <div id="loading">
 		                <center>
 		                <span class="info" id="info">Chargement du chat en cours...</span><br />
@@ -65,125 +46,8 @@
 		</div>
 		<script>
 
-		var reloadTime = 2000;
-		var scrollBar = false;
-		var isFirstLoad = true;
-		var lastMsgs = '';
-		var lastMsgId = 0;
-		var waitForMsg = 0;
-
-		function deleteLastMessages() {
-
-							$.ajax({
-						    type: "POST",
-						    url: "{{ path('chat_msg_remove_last') }}",
-						    data: {nbToDelete: 30},
-						    success: function(msg){
-
-						    },
-						    error: function(msg) {
-
-							}
-						});
-
-
-		}
-
-		function getMessages() {
-
-			if(waitForMsg == 0)
-			{
-				waitForMsg = 1;
-				$.ajax({
-					type: "GET",
-					url: "{{ path('chat_last_msg') }}",
-					timeout: 5000,
-					data: {isFirst: isFirstLoad, lastId: lastMsgId},
-					success: function(msg){
-									if( $("#text").html() != msg ) {
-
-										var completeLoad = true;
-										var container = $('#text');
-										var content = $('#messageContent');
-										var height = content.height()-250;
-										var toBottom;
-
-										if(container[0].scrollTop == height)
-											toBottom = true;
-										else
-											toBottom = false;
-
-										var param =  msg.substring(0,msg.indexOf('|'));
-										var paramTab = param.split(',');
-
-
-										lastMsgId = paramTab[0];
-										msg = msg.substring(msg.indexOf('|')+1);
-
-										if(isFirstLoad) {
-											var msgs = '';
-											var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
-											var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
-											msgs = before + "</tr>" + msg + after;
-
-
-											lastMsgs = msgs;
-
-											$("#text").html(msgs);
-										} else {
-											$("#tableChat tr:last").after(msg);
-										}
-
-										for (var i=1;i<paramTab.length; i++){
-
-											$('#chat_tr_' + paramTab[i]).remove();
-										}
-
-										content = $('#messages_content');
-										height = content.height()-250;
-
-										if(toBottom == true)
-												container[0].scrollTop = container[0].scrollHeight
-
-										if(scrollBar != true) {
-												container.animate({scrollTop: container[0].scrollHeight},2000);
-											scrollBar = true;
-										}
-									}
-									
-						waitForMsg = 0;
-						if(isFirstLoad)
-							isFirstLoad = false;
-							
-					},
-					error: function(msg) {
-						waitForMsg = 0;
-					}
-				});
-				
-			}
-		}
-
-		function getOnline() {
-			$.ajax({
-			    type: "GET",
-			    url: "{{ path('chat_in_line') }}",
-			    success: function(msg){
-			    	 	$("#onlineUsers").html(msg);
-
-			    },
-			    error: function(msg) {
-
-				}
-			});
-		}
-
-
 		$(document).ready(function() {
-			 getMessages();
-			 getOnline();
-			 window.setInterval(getMessages, reloadTime);
-			 window.setInterval(getOnline, 30000);
+			 onLoadController.onLoadChat();
 		});
 
 

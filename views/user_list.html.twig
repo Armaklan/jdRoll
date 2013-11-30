@@ -1,9 +1,9 @@
-﻿{% extends "squelette.html.twig" %}
+{% extends "squelette.html.twig" %}
 
 {% block content %}
 
     <div align="right">
-	    <form class="form-search">
+	    <form role="form" class="form-search">
 	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','#userTable')"  class="input-medium search-query">
 	    </form>
     </div>

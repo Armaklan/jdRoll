@@ -29,7 +29,9 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
 
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
             $campagne = $app['campagneService']->getCampagneConfig($campagne_id);
-            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 'is_mj' => true, 'error' => ""]);
+            $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 
+                'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
         })->bind("campagne_config_edit");
 
 $securedCampagneController->post('/config/save', function(Request $request) use($app) {
@@ -46,6 +48,8 @@ $securedCampagneController->post('/config/save', function(Request $request) use(
 $securedCampagneController->get('/join/{id}', function($id) use($app) {
             try {
                 $campagne = $app['campagneService']->addJoueur($id, $app['session']->get('user')['id']);
+				$url = $app->path("campagne", ['id' => $campagne['id']]);
+				$app['notificationService']->alertJoinCampagne($campagne, $app['session']->get('user')['login'],$url);
                 return $app->redirect($app->path('campagne_my_list'));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
@@ -77,6 +81,7 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 ";
                 $destinataires = array($user['username']);
                 $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
+				$app['notificationService']->alertUserForMp("Système", $destinataires, "Inscription à une partie", $app->path('messagerie'));
                 return $app->redirect($app->path('campagne', array('id' => $id)));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
@@ -86,7 +91,10 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
 
 $securedCampagneController->get('/quit/{id}', function($id) use($app) {
             try {
-                $campagne = $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
+				$campagne = $app['campagneService']->getCampagne($id);
+                $app['campagneService']->removeJoueur($id, $app['session']->get('user')['id']);
+				$url = $app->path("campagne", ['id' => $campagne['id']]);
+				$app['notificationService']->alertQuitCampagne($campagne, $app['session']->get('user')['login'],$url);
                 return $app->redirect($app->path('campagne_my_list'));
             } catch (Exception $e) {
                 $campagnes = $app['campagneService']->getOpenCampagne();
@@ -161,6 +169,11 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
         })->bind("campagne_save");
 
 
+$securedCampagneController->get('/list_perso_js/{campagne_id}', function(Request $request, $campagne_id) use($app) {
+    $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+    return $app->render('list_perso_js.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
+})->bind("list_perso_js");
+
 $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
             $player_id = $app['session']->get('user')['id'];
             $perso = $app['persoService']->getPersonnage(false, $campagne_id, $player_id);
@@ -173,7 +186,7 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'favorised_campagne' => $favorisedCampagne,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert]);
+                        'config' => $config, 'alert' => $alert, 'is_mj' => false]);
         })->bind("sidebar_campagne_large");
 
 $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
@@ -187,7 +200,7 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             return $app->render('sidebar_mj_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso,'favorised_campagne' => $favorisedCampagne,
                         'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert]);
+                        'config' => $config, 'alert' => $alert, 'is_mj' => true]);
         })->bind("sidebar_campagne_mj_large");
 
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
@@ -237,6 +250,14 @@ $securedCampagneController->post('/persoModal/save/popup/{campagne_id}', functio
             $app['persoService']->updatePersoFields($campagne_id,$user_id,$request->get('fields'));
             return "";
         })->bind("save_perso_popup");
+
+$securedCampagneController->post('/admin_open', function(Request $request) use($app) {
+            $id = $request->get('id');
+            $state = $request->get('state');
+            $app['campagneService']->updateIsAdminOpen($id, $state);
+            return "ok";
+});
+
 
 $app->mount('/campagne', $securedCampagneController);
 ?>

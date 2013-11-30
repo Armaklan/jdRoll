@@ -40,8 +40,9 @@ class CampagneService {
 		$campagne['univers'] = '';
 		$campagne['description'] = '';
 		$campagne['statut'] = 3;
-                $campagne['rythme'] = 2;
-                $campagne['rp'] = 1;
+        $campagne['rythme'] = 2;
+        $campagne['rp'] = 1;
+        $campagne['is_admin_open'] = 0;
 		return $campagne;
     }
 
@@ -55,8 +56,8 @@ class CampagneService {
 		$campagne['univers'] = $request->get('univers');
 		$campagne['description'] = $request->get('description');
 		$campagne['statut'] = $request->get('statut');
-                $campagne['rythme'] = $request->get('rythme');
-                $campagne['rp'] = $request->get('rp');
+        $campagne['rythme'] = $request->get('rythme');
+        $campagne['rp'] = $request->get('rp');
 		return $campagne;
     }
 
@@ -69,6 +70,8 @@ class CampagneService {
     	$campagne['even_line_color'] = $request->get('even_line_color');
     	$campagne['sidebar_color'] = $request->get('sidebar_color');
     	$campagne['link_color'] = $request->get('link_color');
+    	$campagne['text_color'] = $request->get('text_color');
+    	$campagne['default_perso_id'] = $request->get('default_perso_id');
     	$campagne['link_sidebar_color'] = $request->get('link_sidebar_color');
     	$campagne['template'] = $request->get('template');
 		$campagne['template_html'] = $request->get('hiddenInput');
@@ -92,8 +95,8 @@ class CampagneService {
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("statut", $request->get('statut'));
-                $stmt->bindValue("rythme", $request->get('rythme'));
-                $stmt->bindValue("rp", $request->get('rp'));
+        $stmt->bindValue("rythme", $request->get('rythme'));
+        $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("mj_id", $this->session->get('user')['id']);
 		$stmt->execute();
 
@@ -102,9 +105,9 @@ class CampagneService {
 
     public function createCampagneConfig($campagne) {
     	$sql = "INSERT INTO campagne_config
-				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_sidebar_color, link_color, template, sidebar_text)
+				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_sidebar_color, link_color, text_color, default_perso_id, template, sidebar_text)
 				VALUES
-				(:campagne, '', '', '', '', '', '', '', '', '')";
+				(:campagne, '', '', '', '', '', '', '', '', '', '', '')";
 
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
@@ -120,12 +123,14 @@ class CampagneService {
     			even_line_color = :even_line_color,
     			sidebar_color = :sidebar_color,
     			link_color = :link_color,
+    			text_color = :text_color,
     			link_sidebar_color = :link_sidebar_color,
     			template = :template,
 				template_html = :template_html,
 				template_fields = :template_fields,
 				template_img = :template_img,
-    			sidebar_text = :sidebar_text
+    			sidebar_text = :sidebar_text,
+    			default_perso_id = :default_perso_id
     			WHERE
     			campagne_id = :campagne";
 
@@ -137,7 +142,9 @@ class CampagneService {
     	$stmt->bindValue("even_line_color", $request->get('even_line_color'));
     	$stmt->bindValue("sidebar_color", $request->get('sidebar_color'));
     	$stmt->bindValue("link_color", $request->get('link_color'));
+    	$stmt->bindValue("text_color", $request->get('text_color'));
     	$stmt->bindValue("link_sidebar_color", $request->get('link_sidebar_color'));
+    	$stmt->bindValue("default_perso_id", $request->get('default_perso_id'));
     	$stmt->bindValue("template", $request->get('template'));
 		$stmt->bindValue("template_html",$request->get('hiddenInput'));
 		if($request->get('typeFiche') == 0)
@@ -658,6 +665,7 @@ class CampagneService {
 		}
 		$this->checkIfNotParticipant($campagne_id, $user_id);
 		$this->insertParticipant($campagne_id, $user_id);
+		return $campagne;
 	}
 
         public function validJoueur($campagne_id, $user_id) {
@@ -758,6 +766,14 @@ class CampagneService {
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
+    
+    public function getFavorisInCampagne($campagne) {
+        $sql = "SELECT user_id
+                FROM campagne_favoris
+                WHERE
+                campagne_id = :campagne";
+        return $this->db->fetchAll($sql, array('campagne' => $campagne ));
+    }
 
     public function getNote($campagne, $user) {
         try {
@@ -785,6 +801,13 @@ class CampagneService {
                 VALUES (:user, :campagne, :content)";
             $this->db->executeUpdate($sql, array('user' => $user, 'campagne' => $campagne, 'content' => $content ));
         }
+    }
+
+    public function updateIsAdminOpen($campagne, $state) {
+    	$sql = "UPDATE campagne
+    			SET is_admin_open = :state
+    			WHERE id = :campagne";
+    	$this->db->executeUpdate($sql, array('campagne' => $campagne, 'state' => $state ));
     }
 }
 ?>

@@ -7,13 +7,34 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-    
-    <form class="form-inline" action="{{ path('abs_save') }}" method="POST">
-      De <input type="text" class="input-small datepicker" name="begin_date" id="dpd1" value="{{absence_form.begin_date}}">
-      à <input type="text" class="input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
-      <input type="hidden" class="input-small" name="user_id" value="{{absence_form.user_id}}">
-      <input type="hidden" class="input-small" name="id" value="{{absence_form.id}}">
-      <button type="submit" class="btn">Enregister</button>
+    <form role="form" class="form-horizontal" action="{{ path('abs_save') }}" method="POST">    
+      <fieldset class="titled-box">
+        <legend>Créer une absence</legend>
+
+        <div class="pull-right"><button type="submit" class="btn btn-primary">Enregister</button></div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <label class="control-label col-md-6" for="begin_date">Je part le... </label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control datepicker" name="begin_date" id="dpd1" value="{{absence_form.begin_date}}">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label class="control-label col-md-6">
+                  Je revient le... 
+                </label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
+                </div>
+              </div>
+            </div>
+          </div>
+        <input type="hidden" class="input-small" name="user_id" value="{{absence_form.user_id}}">
+        <input type="hidden" class="input-small" name="id" value="{{absence_form.id}}">
+      </fieldset>
     </form>
 
 
@@ -31,7 +52,7 @@
                 <td>{{ absence.begin_date }}</td>
                 <td>{{ absence.end_date }}</td>
                 <td>
-                    <a href="{{ path('abs_edit',  {id : absence.id}) }}" title="Modifier l'absence" class="btn iconeBtn"><i class="icon-edit"></i></a>
+                    <a href="{{ path('abs_edit',  {id : absence.id}) }}" title="Modifier l'absence" class="btn btn-default iconeBtn"><i class="icon-edit"></i></a>
                     <a href="{{ path('abs_remove',  {id : absence.id}) }}" title="Supprimer l'absence" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
                 </td>
             </tr>

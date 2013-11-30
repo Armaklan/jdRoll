@@ -40,7 +40,7 @@ class UserService {
 	    	throw new Exception('Mots de passe incorrect');
 	    }
 
-	    $this->session->set('user', array('id' => $user['id'], 'login' => $login, 'avatar' => $user['avatar']));
+	    $this->session->set('user', array('id' => $user['id'], 'login' => $user['username'], 'avatar' => $user['avatar']));
 	    $this->updateLastActionTime();
 	}
 

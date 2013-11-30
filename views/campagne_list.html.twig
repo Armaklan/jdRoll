@@ -10,10 +10,11 @@
 
 
     <div align="right">
-	    <form class="form-search">
+	    <form role="form" class="form-search">
 	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','#campagneTable')"  class="input-medium search-query">
 	    </form>
     </div>
+    {% if not (campagnes is empty) %}
     <table class="table table-striped table-hover" id="campagneTable">
 		<thead>
 			<tr>
@@ -55,5 +56,10 @@
 		{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+		<div class="alert alert-warning">
+			<p>Aucune partie disponible pour l'instant...</p>
+		</div>
+	{% endif %}
 
 {% endblock %}

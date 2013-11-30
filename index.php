@@ -9,6 +9,7 @@ require __DIR__.'/service/resetPwdService.php';
 require __DIR__.'/service/forum/sectionsService.php';
 require __DIR__.'/service/forum/topicsService.php';
 require __DIR__.'/service/forum/postsService.php';
+require __DIR__.'/service/notificationService.php';
 require __DIR__.'/service/absenceService.php';
 require __DIR__.'/service/dicerService.php';
 require __DIR__.'/service/chatService.php';
@@ -103,10 +104,12 @@ $app['chatService'] = function ($app) {
 $app['messagerieService'] = function ($app) {
 	return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
 };
+$app['notificationService'] = function ($app) {
+	return new NotificationService($app['db'], $app['monolog'], $app['userService'], $app['topicService'], $app['campagneService']);
+};
 $app['absenceService'] = function ($app) {
 	return new AbsenceService($app['db'], $app['session']);
 };
-
 $app['resetPwdService'] = function ($app) {
 	return new resetPwdService($app['db'], $app['session'],$app['messagerieService']);
 };
@@ -140,6 +143,7 @@ require("controller/public_campagn.php");
 require("controller/subscribe.php");
 require("controller/perso.php");
 require("controller/messagerie.php");
+require("controller/notification.php");
 require("controller/forum.php");
 require("controller/chat.php");
 require("controller/resetPwd.php");

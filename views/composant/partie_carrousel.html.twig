@@ -18,22 +18,22 @@
  		
  		<div class="{% if isFirst %} active {% endif %}item" style="height: 250px">
  				
-	 				<div align="center">
-	 					<a href="{{ path('campagne',{id: campagne.id} ) }}">
-			 			{% if campagne.banniere != "" %}
-			 				<img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 250px;">
-			 			{% else %}
-			 				<img src="{{app.request.baseUrl}}/img/ban.png" style="max-height: 200px; max-width: 250px;" />
-			 			{% endif %}
-			 			</a>
-		 			</div>
+ 				<div align="center" style="height: 150px">
+ 					<a href="{{ path('campagne',{id: campagne.id} ) }}">
+		 			{% if campagne.banniere != "" %}
+		 				<img src="{{ campagne.banniere }}" style="max-height: 200px; ">
+		 			{% else %}
+		 				<img src="{{app.request.baseUrl}}/img/ban.png" style="max-height: 200px; " />
+		 			{% endif %}
+		 			</a>
+	 			</div>
 	 			
-	 			<div class="carousel-caption">
-	 			<a href="{{ path('campagne',{id: campagne.id} ) }}">
-	 				<h4>{{ campagne.name }}</h4>
-		 			<p>Dans l'univers de {{ campagne.univers }} avec le système {{ campagne.systeme }}.</p>
-		 			<p><i>Proposé par {{ campagne.username }}</i></p>
-	 			</a>
+	 			<div class="carousel-caption" style="height: 100px;">
+		 			<a href="{{ path('campagne',{id: campagne.id} ) }}">
+		 				<h4>{{ campagne.name }}</h4>
+			 			<p>Dans l'univers de {{ campagne.univers }} avec le système {{ campagne.systeme }}.<br>
+			 			<i>Proposé par {{ campagne.username }}</i></p>
+		 			</a>
 	 			</div>
  			
  		</div>
@@ -41,6 +41,10 @@
  	{% endfor %}
   </div>
   <!-- Carousel nav -->
-  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
 </div>

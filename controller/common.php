@@ -33,6 +33,28 @@ $commonController->get('/login/{url}', function($url) use($app) {
     return $app->render('login.html.twig', ['error' => "", 'url' => $url]);
 })->bind("login_page");
 
+$commonController->get('/menu', function() use($app) {
+	$isAdmin = false;
+	$nbMsg = 0;
+	if($app['session']->get('user') != null) {
+		$isAdmin = $app["campagneService"]->IsAdmin();
+		$nbMsg = $app['messagerieService']->getNbNewMessages();
+	}
+    return $app->render('menu.html.twig', ['is_admin' => $isAdmin, 'nb_msg' => $nbMsg]);
+})->bind("menu");
+
+$commonController->get('/feed/{username}/{id}/notif.rss', function($username, $id) use($app) {
+        $user = $app["userService"]->getById($id);
+        if($user['username'] == $username) {
+            $notifs = $app['notificationService']->getNotifForUser($id);
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/rss+xml');
+            return $app->render('notification/feed.xml.twig', ['notifs' => $notifs], $response);
+        } else {
+            return "Authentification incorrect";
+        }
+})->bind("notifications_feed");
+
 $commonController->post('/login', function(Request $request) use($app) {
 
 	$login = $request->get('login');
@@ -58,7 +80,9 @@ $commonController->get('/profile/{username}', function($username) use($app) {
 	$isAdmin = $app["campagneService"]->IsAdmin();
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin]);
+    $absences = $app['absenceService']->getAllAbsence($user['id']);
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 
+        'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin, 'absences' => $absences]);
 })->bind("profile");
 
 $commonController->get('/profile/{username}/edit', function($username) use($app) {
@@ -99,7 +123,9 @@ $commonController->get('/sidebar/std_large', function() use ($app) {
 	$pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
 	$mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
 	$favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
-	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes, 'favorised_campagne' => $favorisedCampagne]);
+    $nbParties = count($pjCampagnes) + count($mjCampagnes) + count($favorisedCampagne);
+	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes, 
+        'nb_parties' => $nbParties, 'favorised_campagne' => $favorisedCampagne]);
 })->bind("sidebar_std_large");
 
 $commonController->post('/upload', function(Request $request) use ($app) {

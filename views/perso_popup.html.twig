@@ -43,8 +43,8 @@ $(function() {
 </style>
 <div id="persoModal" class="form-horizontal" title="Fiche de personnage" >
 
-		<div class="control-group" id='zoneFichepopUp'>
-
+		<div class="form-group" id='zoneFichepopUp'>
+                    {% if perso.id != null %}
 			<div >
 			{% if perso.template_html is not empty %}
 				<div class="ui-layout-center" id='zoneFicheCustomPopUp'>
@@ -69,6 +69,7 @@ $(function() {
 			{% endif %}
 		
 
+                        {% endif %}
 			</div>
 		</div>
 

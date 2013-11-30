@@ -2,21 +2,20 @@
 
 {% block content %}
 
-	<div class="container-fluid">
-		<div class="row-fluid" style="margin-bottom: 1em">
-			<div class="span10">
+		<div class="row" style="margin-bottom: 1em">
+			<div class="col-md-10">
 				<div class="page-header">
 					<h1>Bienvenue ! <small>Du jeu, du rôle, du Roll !</small></h1>
 				</div>
 			</div>
-			<div class="span2">
+			<div class="col-md-2">
 				<img src="{{app.request.baseUrl}}/img/ban.png" width="100%" style="max-width: 250px" />
 			</div>
 
 		</div>
 
 
-		<div class="row-fluid">
+		<div class="row">
 
 
 			<div class="well well-large">
@@ -27,18 +26,16 @@
 				<p>D'autres questions ? Envie de partager vos expériences ? Rejoignez la communauté via le <b>Tchat</b> ou le <b>Forum</b></p>
 			</div>
 		</div>
-		<div class="row-fluid">
-			<div class="span6">
+		<div class="row">
+			<div class="col-md-5">
 
-				<div class="container-fluid" style="margin-top: 1em">
-					<div class="row-fluid">
-						<div class="span10 offset1">
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
 							{{ include('composant/partie_carrousel.html.twig') }}
 						</div>
-					</div>
 				</div>
 			</div>
-			<div class="span5">
+			<div class="col-md-7">
 				<div style="margin-top: 1.7em"></div>
 				{% include('composant/last_post.html.twig') %}
 				<div class="well well-small statistiques" style="margin-top: 3em">
@@ -88,8 +85,6 @@
 		</div>
 
 		{% include('chat/chatbox.html.twig') %}
-
-	</div>
 
 
 {% endblock %}

@@ -64,6 +64,9 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   KEY `IDX_539B5D166A1B4FA4` (`mj_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=40 ;
 
+ALTER TABLE campagne
+ADD COLUMN
+is_admin_open int(1) default 1;
 -- --------------------------------------------------------
 
 --
@@ -83,6 +86,11 @@ CREATE TABLE IF NOT EXISTS `campagne_config` (
   `link_sidebar_color` varchar(8) NOT NULL,
   PRIMARY KEY (`campagne_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE  `campagne_config`
+ADD  `text_color` VARCHAR( 10 ) NULL,
+ADD  `default_perso_id` bigint(20) NULL;
 
 -- --------------------------------------------------------
 
@@ -285,7 +293,29 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `IDX_885DBAFA1221E019` (`perso_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6525 ;
 
+ALTER TABLE posts 
+ADD COLUMN
+editor int(1) DEFAULT 0;
+
+
 -- --------------------------------------------------------
+
+--
+-- Structure de la table `draft`
+--
+
+CREATE TABLE IF NOT EXISTS `draft` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `topic_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `perso_id` int(10) unsigned DEFAULT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DRAFT_TOPIC` (`topic_id`),
+  KEY `IDX_DRAFT_USER` (`user_id`),
+  KEY `IDX_DRAFT_PERSO` (`perso_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6525 ;
+
 
 --
 -- Structure de la table `read_post`
@@ -374,6 +404,32 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_8D93D6495126AC48` (`mail`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
 
+
+--
+-- Structure de la table `notification`
+--
+
+CREATE TABLE IF NOT EXISTS `notif` (
+  `user_id` bigint(20) NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+ALTER TABLE  `notif` ADD  `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+ADD  `url` VARCHAR( 500 ) NULL;
+
+ALTER TABLE  `notif`
+ADD  `type` VARCHAR( 10 ) NULL,
+ADD  `target_id` bigint(20) NULL;
+
+ALTER TABLE  `notif`
+ADD  `nb` int(10) NULL DEFAULT 1;
+
+ALTER TABLE  `notif`
+ADD  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
 --
 -- Contraintes pour les tables exportées
 --
@@ -414,6 +470,14 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `FK_885DBAFAA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
+-- Contraintes pour la table `draft`
+--
+ALTER TABLE `draft`
+  ADD CONSTRAINT `FK_DRAFT_PERSO` FOREIGN KEY (`perso_id`) REFERENCES `personnages` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_DRAFT_TOPIC` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_DRAFT_USER` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
 -- Contraintes pour la table `read_post`
 --
 ALTER TABLE `read_post`
@@ -432,3 +496,9 @@ ALTER TABLE `sections`
 ALTER TABLE `topics`
   ADD CONSTRAINT `FK_91F646392D053F64` FOREIGN KEY (`last_post_id`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `FK_91F64639D823E37A` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `notif`
+--
+ALTER TABLE `notif`
+  ADD CONSTRAINT `FK_NOTIF_01` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;

@@ -10,11 +10,18 @@
 				<th class="categorie" style="text-align: right">
 				{% for i in range(1, last_page) %}
 					{% if i != actual_page %}
-					<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
+						<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
 					{% else %}
-						{{ i }}
+						<u>{{ i }}</u>
 					{% endif %}
+                                                    
+                                        
 				{% endfor %}
+                                {% if actual_page == 0%}
+                                    <u>Toutes</u>
+                                {% else %}
+                                    <a href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}">Toutes</a>
+                                {% endif %}
 				</th>
 			</tr>
 			<tr>
@@ -56,18 +63,20 @@
 						<a name="post{{ post.post_id }}"></a>
 					</td>
 					<td style="text-align: right">
-						<a title="Quote" class="btn iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
-						{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
-							{% if post.user_id != null %}
-								<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
-								title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
-							{% endif %}
+						<div class="btn-group">
+							<a title="Quote" class="btn btn-default iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
+							{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
+								{% if post.user_id != null %}
+									<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
+									title="Editer" class="btn btn-primary iconeBtn"><i class="icon-edit"></i></a>
+								{% endif %}
 
-						{% endif %}
-						{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
-							<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
-								title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
-						{% endif %}
+							{% endif %}
+							{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
+								<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
+									title="Supprimer" class="btn btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+							{% endif %}
+						</div>
 						<a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
 						<a title="Aller au début de la page" href="#top"><i class="icon-double-angle-up"></i></a>
                                                 <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
@@ -82,11 +91,15 @@
 						<td>
 						</td>
 						<td>
-							<b>Lancer les dés</b>
-							<form class="form-inline">
-							    <input type="text" class="input-small" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
-							    <input type="text" class="input-medium" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
-							    <button type="submit" class="btn" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
+							<b>Lancer les dés</b><a href="#dicerHelp" role="button" data-toggle="modal" class="btn btn-link"><i class="icon-question"></i></a>
+							<form role="form" class="form-inline">
+							    <div class="form-group">
+							    	<input type="text" class="form-control" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4">
+							    </div>
+							    <div class="form-group">
+							    	<input type="text" class="form-control" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
+							    </div>
+							    <button type="submit" class="btn btn-default" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
                                 <br>
                                 <b>Résultats : </b>
 							    <span id="resultatDicerQuick">
@@ -105,42 +118,44 @@
 							<a href="#uploaderModal" role="button" data-toggle="modal"><i>Uploader une image</i></a>
 						</div>
 						<b>Poster une réponse</b>
-						<form class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+						<form role="form" class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
 							<input type="hidden" name="id" value="" >
 							<input type="hidden" name="topic_id" value="{{ topic.id }}" >
+
 							{% if is_mj %}
-							<div class="control-group">
-								<label for="perso_id">Poster en tant que...</label>
+                                <div class="form-group">
+                                <label for="perso_id">Poster en tant que...</label>
+									<select class="select2" name="perso_id">
+						                <option value="" {% if default_perso == '' %} selected="selected" {% endif %}>MJ</option>
+						                {% for personnage in personnages %}
+						                    {% if personnage.user_id != null %}
+						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>                        
+						                    {% endif %}
+						                {% endfor %}
+						                {% for personnage in personnages %}
+						                    {% if personnage.user_id == null %}
+						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>                        
+						                    {% endif %}
+						                {% endfor %}
 
-
-                                <div class="bfh-selectbox">
-                                    <input type="hidden" name="perso_id" value="">
-                                    <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
-                                        <span class="bfh-selectbox-option input-medium" data-option="">MJ</span>
-                                        <b class="caret"></b>
-                                    </a>
-                                    <div class="bfh-selectbox-options">
-                                        <input type="text" class="bfh-selectbox-filter">
-                                        <div role="listbox">
-                                            <ul role="option">
-                                                 {% for personnage in personnages %}
-                                                     <option value="{{ personnage.id }}">{{ personnage.name }}</option>
-                                                     <li><a tabindex="-1" href="#" data-option="{{ personnage.id }}">{{ personnage.name }}</a></li>
-                                                 {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-							</div>
+									</select>
+								</div>
 							{% else %}
 								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
 							{% endif %}
-						   	<div class="control-group">
+						   	<div class="form-group">
 							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
-							    	 placeholder="Votre message" rows="15" title="Réponse"></textarea>
+							    	 placeholder="Votre message" rows="15" title="Réponse">
+                                                                    {% if draft != null %} {{ draft.content }} {% endif %}
+                                                                </textarea>
 						    </div>
-						    <div class="control-group">
-							    <button type="submit" class="btn btn-primary">Répondre</button>
+						    <div class="form-group">
+						    	<div class="btn-group">
+							    	<button type="submit" class="btn btn-primary">Répondre</button>
+                                    <a class="btn btn-default" onClick="draftController.ajaxEnreg('{{campagne_id}}')">Enregistrer</a>
+                                </div>
+                                 <span id="enregResult"></span>
+
 						    </div>
 					    </form>
 					</td>
@@ -157,9 +172,14 @@
 					{% if i != actual_page %}
 					<a href="{{ path('topic_page', {'campagne_id' : campagne_id, 'topic_id' : topic.id, 'no_page' : i}) }}">{{ i }}</a>
 					{% else %}
-						{{ i }}
+						<u>{{ i }}</u>
 					{% endif %}
 				{% endfor %}
+                                {% if actual_page == 0%}
+                                    <u>Toutes</u>
+                                {% else %}
+                                    <a href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}">Toutes</a>
+                                {% endif %}
 				</th>
 			</tr>
 		</tfoot>

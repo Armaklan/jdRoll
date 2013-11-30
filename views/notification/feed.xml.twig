@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>jdRoll - Notification</title>
+        <link>http://jdroll.org</link>
+        <description>Feed de suivi des notifications</description>
+        
+        {% for notif in notifs %}
+        <item>
+            <title>{{notif.title}}</title>
+            <link>{{notif.url}}</link>
+            <guid>notif{{notif.id}}</guid>
+            <description>{{notif.content}}</description>
+            <pubDate>{{notif.create_date}}</pubDate>
+         </item>
+        {% endfor %}
+    </channel>
+</rss>
