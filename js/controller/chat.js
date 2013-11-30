@@ -31,7 +31,7 @@ var chatControllerImpl = function() {
 						var completeLoad = true;
 						var container = $('#text');
 						var content = $('#messageContent');
-						var height = content.height()-250;
+						var height = content.height()-300;
 						var toBottom;
 
 						if(container[0].scrollTop == height)
@@ -63,7 +63,7 @@ var chatControllerImpl = function() {
 						});
 
 						content = $('#messages_content');
-						height = content.height()-250;
+						height = content.height()-300;
 
 						if(toBottom == true)
 								container[0].scrollTop = container[0].scrollHeight

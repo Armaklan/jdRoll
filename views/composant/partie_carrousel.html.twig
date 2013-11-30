@@ -21,9 +21,9 @@
  				<div align="center" style="height: 150px">
  					<a href="{{ path('campagne',{id: campagne.id} ) }}">
 		 			{% if campagne.banniere != "" %}
-		 				<img src="{{ campagne.banniere }}" style="width: 100%;">
+		 				<img src="{{ campagne.banniere }}" style="max-height: 200px; ">
 		 			{% else %}
-		 				<img src="{{app.request.baseUrl}}/img/ban.png" style="max-height: 200px; max-width: 100%;" />
+		 				<img src="{{app.request.baseUrl}}/img/ban.png" style="max-height: 200px; " />
 		 			{% endif %}
 		 			</a>
 	 			</div>

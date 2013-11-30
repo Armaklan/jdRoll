@@ -413,3 +413,7 @@ div#notif .arrow-down {
 #notifContent .well {
     padding: 5px;
 }
+
+.container {
+    width: 90%;
+}
