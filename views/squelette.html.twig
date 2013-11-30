@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title>jdRoll</title>
+	<title>jdRoll - Jeu de Rôle par Forum</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plate-forme de jeu de rôle par forum">
+    <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
 
   <link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
 
@@ -46,6 +48,12 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/tinymce-release/tinymce.min.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/tinymce_conf.js"></script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-shim.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-sham.min.js"> </script>
+
+    <!--[if lt IE 9]>      
+    	<script type="text/javascript" src="{{app.request.baseUrl}}/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <![endif]-->
 
 	{% block specificHeader %}
 
