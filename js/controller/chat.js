@@ -38,7 +38,6 @@ var chatControllerImpl = function() {
 							toBottom = true;
 						else
 							toBottom = false;
-
 						
 						deleted = msg.deleted;
 						lastMsgId = msg.last_id.trim();
@@ -113,6 +112,22 @@ var chatControllerImpl = function() {
 			    },
 			    error: function(msg) {
 			    	$('#messageChat').val(textMsg);
+				}
+			});
+		},
+
+		postMessageMobile : function (user) {
+			textMsg=$('#messageChatMobile').val();
+			$('#messageChatMobile').val('');
+			$.ajax({
+			    type: "POST",
+			    url: BASE_PATH + "/chat/post",
+			    data: {message: textMsg, user: user},
+			    success: function(msg){
+
+			    },
+			    error: function(msg) {
+			    	$('#messageChatMobile').val(textMsg);
 				}
 			});
 		},

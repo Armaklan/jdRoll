@@ -44,6 +44,7 @@ $(function () {
 
 $(function () {
 	$("a.btn-danger").click(function(e) {
+       e.stopPropagation();
        e.preventDefault();
        var location = $(this).attr('href');
        bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
