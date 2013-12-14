@@ -1,15 +1,31 @@
 {
   "name": "jdRoll",
   "version": "0.0.1",
+  "authors": [
+    "Armaklan <lionel.zuber@armaklan.org>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "jquery": "~1.9.1",
-    "magicsuggest": "",
-    "tinymce-release": "",
-    "select2": "~3.4.5",
-    "bootstrap": "~3.0.2",
-    "bootbox": "~4.1.0",
-    "es5-shim": "~2.1.0",
-    "distrib-jquery-ui": "~1.10",
-    "jquery-form": "~3.46.0"
-  }
+    "angular": "~1.2.5",
+    "angular-resource": "~1.2.4",
+    "angular-cookies": "~1.2.5",
+    "angular-sanitize": "~1.2.4",
+    "json3": "~3.2.6",
+    "jquery": "~2.0.3",
+    "angular-busy": "*",
+    "angular-ui": "~0.4.0",
+    "bootstrap": "~3.0.3",
+    "angular-bootstrap": "~0.7.0",
+    "modernizr": "~2.7.1",
+    "angular-route": "~1.2.4"
+  },
+  "devDependencies": {}
 }

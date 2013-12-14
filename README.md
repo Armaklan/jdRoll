@@ -1,23 +1,17 @@
-jdRoll
-======
 
-jdRoll est une plateforme d'hébergement de jeu de rôle par Forum. Le but est de créer une plateforme réellement dédié à ce type de jeu.
+## Structure
 
-Requirment
-----------
-
-- PHP 5.3 with Openssl module
-- Mysql database
-- Node and bower (for dependencies management)
-
-
-In Windows Environment, we recommend to use Git Bash to launch sh script.
-
-
-Instruction
------------
-
-- Clone this repository
-- Launch ```prepare_env.sh``` (Download composer, install php and web dependencies)
-- Create Mysql Data Schema with ```ddl.sql```
-- Configure database in config.php
+    	lib [community convention for server-side code]
+    		db [or "models" if preferred, manages connection to DB and exposes models]
+    		handler [application logic, actual implementation of the routes]
+    		router [routes definition]
+    		config [server configuration, could be a directory with multiple files in a more complex project]
+    		server [creates and initializes the HTTP server]
+    	public [unrestricted area]
+    		css [stylesheets, could be plain CSS or preprocessor source files]
+    		img [images and icons for the web app]
+    		js [client-side javascript files]
+    	test [community convention for automated unit test files]
+    	views [templates for rendering of HTML pages, could be any Express-supported engine, Jade in this example]
+    	Makefile [use "make" to run, "make test" to test, options available, see source]
+    	app.js [dumb - no app logic - master file to assemble dependencies and start the app]

@@ -1,7 +1,0 @@
-<table class="table-striped table-condensed table-bordered" width="100%">
-	{% for user in connected_users %}
-		<tr>
-            <td><a href="{{ path('profile',{username: user.username} ) }}" class="profil{{ user.profil }}">{{ user.username }}</a></td>
-		</tr>
-	{% endfor %}
-</table>

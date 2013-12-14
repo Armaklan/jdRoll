@@ -1,20 +1,25 @@
 {
   "name": "jdRoll",
-  "version": "1.0.0",
-  "description": "jdRoll\r ======",
-  "main": "Gruntfile.js",
-  "dependencies": {},
+  "description": "Du jeu, du role, de roll",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Armaklan",
+  "dependencies": {
+    "debug": "0.x",
+    "express": "3.x",
+    "mongoose": "3.x",
+    "implementjs": "0.1.x"
+  },
   "devDependencies": {
-    "grunt-php": "~0.3.0",
-    "grunt": "~0.4.2",
+    "mocha": "*",
     "grunt-bower-task": "~0.3.4",
-    "grunt-contrib-uglify": "~0.2.7"
+    "grunt": "~0.4.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test",
+    "start": "make"
   },
-  "repository": "",
-  "author": "",
-  "license": "MIT",
-  "readmeFilename": "README.md"
+  "engines": {
+    "node": "*"
+  }
 }
