@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 
 	});
 
-	grunt.registerTask('prepare', ['bower','composer']);
+	grunt.registerTask('prepare', ['bower']);
 	grunt.registerTask('dev', ['php']);
 	grunt.registerTask('dist', ['uglify']);
 	grunt.registerTask('default', ['php']);
