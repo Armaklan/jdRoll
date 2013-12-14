@@ -81,7 +81,7 @@ class NotificationService {
 	public function alertUserForMp($expediteur, $destinataires, $msgTitle, $url) {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
-			$this->insertNotif($user['id'], "Nouveau message privée", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
+			$this->insertNotif($user['id'], "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
 		}	
 	}	
 

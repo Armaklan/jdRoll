@@ -2,11 +2,21 @@
 
 {% block content %}
 
-    <div align="right">
-	    <form role="form" class="form-search">
-	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.messageTable')"  class="input-medium search-query">
-	    	<a href="{{ path('messagerie_new') }}" class="btn btn-primary">Nouveau message</a>
-	    </form>
+
+	<div class="row">
+
+		    	<div class="col-md-10">
+		    	    <div align="right">
+	    				<form role="form" class="form-search">
+	    				<input type="text" id="searchText" onkeyup="filterTable('#searchText','.messageTable')"  class="input-medium search-query">
+	    				</form>
+		    		</div>
+	    				
+		    	</div>
+		    	<div class="col-md-2" align="right">
+		    		<a href="{{ path('messagerie_new') }}" class="btn btn-primary">Nouveau message</a>
+		    	</div>
+	    	
     </div>
 	<div class="tabbable">
 		<ul class="nav nav-tabs">

@@ -29,6 +29,14 @@
     padding: 3px 10px;
 }
 
+.sidebarTop li {
+    line-height: 15px;
+}
+
+.sidebarTop li a {
+    padding: 3px 10px;
+}
+
 .categorie {
 	background-color: #DDDDDD;
 	font-weight: bold;
@@ -416,4 +424,8 @@ div#notif .arrow-down {
 
 .container {
     width: 90%;
+}
+
+.well {
+    color: black;
 }
