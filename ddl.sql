@@ -16,6 +16,9 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+CREATE DATABASE IF NOT EXISTS JDRoll;
+USE JDRoll;
+
 --
 -- Structure de la table `absences`
 --
@@ -90,7 +93,10 @@ CREATE TABLE IF NOT EXISTS `campagne_config` (
 
 ALTER TABLE  `campagne_config`
 ADD  `text_color` VARCHAR( 10 ) NULL,
-ADD  `default_perso_id` bigint(20) NULL;
+ADD  `default_perso_id` bigint(20) NULL,
+ADD  `template_html` text,
+ADD	 `template_img` text,
+ADD	 `template_fields` text;
 
 -- --------------------------------------------------------
 
@@ -261,6 +267,10 @@ CREATE TABLE IF NOT EXISTS `personnages` (
   KEY `IDX_286738A616227374` (`campagne_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=325 ;
 
+
+ALTER TABLE  `personnages`
+ADD  `perso_fields` text;
+
 -- --------------------------------------------------------
 
 --
@@ -403,6 +413,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
   UNIQUE KEY `UNIQ_8D93D6495126AC48` (`mail`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
+
 
 
 --
