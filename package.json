@@ -7,8 +7,8 @@
   "dependencies": {
     "debug": "0.x",
     "express": "3.x",
-    "mongoose": "3.x",
-    "implementjs": "0.1.x"
+    "implementjs": "0.1.x",
+    "mysql": "~2.0.0"
   },
   "devDependencies": {
     "mocha": "*",
