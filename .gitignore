@@ -2,3 +2,4 @@ node_modules
 *.sublime-*
 bower_components
 public/vendor
+log
