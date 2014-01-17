@@ -23,8 +23,7 @@ gulp.task('default', function() {
 
 gulp.task('open', function() {
 	var openOption = {
-    	url: "http://localhost:3000",
-    	app: "firefox"
+    	url: "http://localhost:3000"
   	};
 
   	gulp.src("./public/index.html")
