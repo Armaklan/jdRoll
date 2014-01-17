@@ -9,12 +9,18 @@
     "express": "3.x",
     "implementjs": "0.1.x",
     "mysql": "~2.0.0",
-    "winston": "~0.7.2"
+    "winston": "~0.7.2",
+    "gulp-livereload": "~0.2.0",
+    "tiny-lr": "0.0.5"
   },
   "devDependencies": {
     "mocha": "*",
-    "grunt-bower-task": "~0.3.4",
-    "grunt": "~0.4.2"
+    "gulp-util": "~2.2.12",
+    "gulp": "~3.4.0",
+    "gulp-bower": "0.0.1",
+    "gulp-nodemon": "~0.1.1",
+    "gulp-wait": "0.0.2",
+    "gulp-open": "~0.2.7"
   },
   "scripts": {
     "test": "make test",
