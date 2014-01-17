@@ -11,9 +11,11 @@ var server = lr();
 
 
 var htmlDir = 'public/**/*.html';
+var indexDir = './public/index.html';
 var nodeDir = 'lib/**/*.js';
 var cssDir = 'public/**/*.css';
 var jsDir = 'public/**/*.js';
+var vendorDir = '!public/vendor/**';
 
 
 gulp.task('default', function() {
@@ -26,7 +28,7 @@ gulp.task('open', function() {
     	url: "http://localhost:3000"
   	};
 
-  	gulp.src("./public/index.html")
+  	gulp.src(indexDir)
 		.pipe(open("", openOption));
 });
 
@@ -42,18 +44,18 @@ gulp.task('refreshNodeJs', function(){
 });
 
 gulp.task('refreshHtml', function(){
-	gulp.src(htmlDir).
-	 	pipe(livereload(server));
+	gulp.src([htmlDir,vendorDir])
+	 	.pipe(livereload(server));
 });
 
 gulp.task('refreshCss', function(){
-	gulp.src(cssDir).
+	gulp.src([cssDir,vendorDir]).
 	 	pipe(livereload(server));
 });
 
 
 gulp.task('refreshjs', function(){
-	gulp.src(jsDir).
+	gulp.src([jsDir,vendorDir]).
 	 	pipe(livereload(server));
 });
 
@@ -64,7 +66,6 @@ gulp.task('test', function(){
 gulp.task('watch', function() {
 	server.listen(35729, function(err) {
 		if (err) return console.log(err);
-
 
 		gulp.watch(nodeDir, function() {
 			gulp.run('refreshNodeJs');
