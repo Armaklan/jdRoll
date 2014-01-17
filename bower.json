@@ -25,7 +25,8 @@
     "bootstrap": "~3.0.3",
     "angular-bootstrap": "~0.7.0",
     "modernizr": "~2.7.1",
-    "angular-route": "~1.2.4"
+    "angular-route": "~1.2.4",
+    "font-awesome": "~4.0.3"
   },
   "devDependencies": {}
 }
