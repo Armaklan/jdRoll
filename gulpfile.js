@@ -12,7 +12,8 @@ var server = lr();
 
 var htmlDir = 'public/**/*.html';
 var nodeDir = 'lib/**/*.js';
-var cssDir = 'public/**/*.html';
+var cssDir = 'public/**/*.css';
+var jsDir = 'public/**/*.js';
 
 
 gulp.task('default', function() {
@@ -51,6 +52,12 @@ gulp.task('refreshCss', function(){
 	 	pipe(livereload(server));
 });
 
+
+gulp.task('refreshjs', function(){
+	gulp.src(jsDir).
+	 	pipe(livereload(server));
+});
+
 gulp.task('test', function(){
 	console.log('restart');
 });
@@ -70,6 +77,10 @@ gulp.task('watch', function() {
 
 		gulp.watch(cssDir, function() {
 			gulp.run('refreshCss');
+		});
+
+		gulp.watch(jsDir, function() {
+			gulp.run('refreshJs');
 		});
 	});
 })
