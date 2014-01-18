@@ -1,0 +1,18 @@
+html {
+  height: 100%;
+}
+html body {
+  font-family: Arial, "MS Trebuchet", sans-serif;
+  padding-top: 50px;
+  overflow: hidden;
+}
+.container {
+  width: 95%;
+}
+.container #main {
+  overflow: auto;
+}
+.container #sidebar {
+  overflow: auto;
+  border-left: 1px solid #232323;
+}

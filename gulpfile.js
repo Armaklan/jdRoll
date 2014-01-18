@@ -6,6 +6,9 @@ var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var wait = require('gulp-wait');
 var open = require('gulp-open');
+var less = require('gulp-less');
+var path = require('path');
+
 
 var server = lr();
 
@@ -14,12 +17,13 @@ var htmlDir = 'public/**/*.html';
 var indexDir = './public/index.html';
 var nodeDir = 'lib/**/*.js';
 var cssDir = 'public/**/*.css';
+var lessDir = 'public/less/*.less';
 var jsDir = 'public/**/*.js';
 var vendorDir = '!public/vendor/**';
 
 
 gulp.task('default', function() {
-	gulp.run('reload', 'watch');
+	gulp.run('less', 'reload', 'watch');
 	gulp.run('open');
 });
 
@@ -36,6 +40,15 @@ gulp.task('prepare', function() {
 	bower()
 		.pipe(gulp.dest('./public/vendor/'));
 });
+
+gulp.task('less', function () {
+  gulp.src('./public/less/*.less')
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .pipe(gulp.dest('./public/css'));
+});
+
 
 gulp.task('refreshNodeJs', function(){
 	gulp.src(nodeDir)
@@ -59,10 +72,6 @@ gulp.task('refreshJs', function(){
 	 	pipe(livereload(server));
 });
 
-gulp.task('test', function(){
-	console.log('restart');
-});
-
 gulp.task('watch', function() {
 	server.listen(35729, function(err) {
 		if (err) return console.log(err);
@@ -77,6 +86,10 @@ gulp.task('watch', function() {
 
 		gulp.watch(cssDir, function() {
 			gulp.run('refreshCss');
+		});
+
+		gulp.watch(lessDir, function() {
+			gulp.run('less');
 		});
 
 		gulp.watch(jsDir, function() {

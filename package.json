@@ -12,7 +12,8 @@
     "winston": "~0.7.2",
     "gulp-livereload": "~0.2.0",
     "tiny-lr": "0.0.5",
-    "MD5": "~1.2.0"
+    "MD5": "~1.2.0",
+    "gulp-less": "~1.1.10"
   },
   "devDependencies": {
     "mocha": "*",
