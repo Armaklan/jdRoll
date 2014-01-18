@@ -3,16 +3,23 @@ html {
 }
 html body {
   font-family: Arial, "MS Trebuchet", sans-serif;
+  margin: 0;
+  padding: 0;
   padding-top: 50px;
   overflow: hidden;
 }
 .container {
-  width: 95%;
+  width: 100%;
 }
 .container #main {
   overflow: auto;
+  padding-right: 20px;
 }
 .container #sidebar {
   overflow: auto;
-  border-left: 1px solid #232323;
+  background: none repeat scroll 0 0 #F0F0F0;
+  border-radius: 3px 0 0;
+  bottom: 0;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+  padding: 12px 6px 0 12px;
 }
