@@ -4,3 +4,36 @@
 body {
 	font-family: Arial, "MS Trebuchet", sans-serif;
 }
+
+html {
+	height: 100%;
+}
+
+body {
+    padding-top: 50px;
+    overflow: hidden;
+}
+
+.container {
+    width: 95%;
+}
+
+#sp-nav {
+	padding-top: 50px;
+	display: none;
+	float: left;
+}
+
+.show {
+	display: block;
+	width: 80px;
+}
+
+#main {
+	overflow: auto;
+}
+
+#sidebar {
+	overflow: auto;
+	border-left: 1px solid #232323;
+}

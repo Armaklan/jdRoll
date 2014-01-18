@@ -54,7 +54,7 @@ gulp.task('refreshCss', function(){
 });
 
 
-gulp.task('refreshjs', function(){
+gulp.task('refreshJs', function(){
 	gulp.src([jsDir,vendorDir]).
 	 	pipe(livereload(server));
 });
