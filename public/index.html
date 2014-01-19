@@ -69,37 +69,64 @@
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form navbar-right">
+			<div ng-controller="AuthenticationController" class="navbar-right">
+			
+			<div class="btn-group" ng-show=ShowHideForm()>
+			 <ul >
+          <li class="divider-vertical"></li>
+          <li class="dropdown">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa-user"></i>Connexion<span class="caret"></span>
+                </button>
+            
+			
+            <div class="dropdown-menu auth-box">
+              <form class="navbar-form " ng-submit="authenticate()">
+				<div>
+				<div class="error-message-red">
+				{{message}}
+				</div>
+				   <div class="form-group">
+						<input class="form-control" type="text" ng-model=login id="login" name="login" placeholder="Nom d'utilisateur">
+						<input class="form-control" type="password" ng-model=password id="password" name="password" placeholder="Mot de passe">
+					</div>
+				</div>
+			    <button class="btn btn-default">Se connecter</button>
+			    <a href="{{ path('subscribe') }}" class="btn btn-default">S'inscrire</a>
+		<div class="form-group">
+    		<a href="{{path('reset')}}">J'ai oublié mon mot de passe</a>
+    	</div>
+					
 
-  <!--             <div class="form-group">
-    <input type="text" placeholder="Email" class="form-control">
-  </div>
-  <div class="form-group">
-    <input type="password" placeholder="Password" class="form-control">
-  </div>
-  <button type="submit" class="btn btn-success">Sign in</button> -->
+					</form>
+            </div>
+          </li>
+        </ul>
+		</div>
 
-              <div class="btn btn-danger">
+		<div class="navbar-form navbar-right" ng-hide=ShowHideForm()>
+			<div class="btn btn-danger">
                 <i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
               </div>
               <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-user"></i> Armaklan <span class="caret"></span>
+                  <i class="fa fa-user"></i>{{getUserName()}}<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                   <li><a ng-href="#/profil">Mon Profil</a></li>
                   <li><a ng-href="#/preferences">Mes Préférences</a></li>
                   <li><a ng-href="#/absences">Gestion des absences</a></li>
-                  <li><a ng-href="#/logout">Se deconnecter</a></li>
+                  <li><a ng-href="#/logout" ng-click=logout()>Se deconnecter</a></li>
                 </ul>
               </div>
-            </form>
+         </div>
+		 </div>
           </div><!--/.navbar-collapse -->
         </div>
       </div>
 
-
-      <div class="container">
+<div  ng-view></div>
+      <div class="container" >
         <!-- Example row of columns -->
 
         <div class="col-lg-10" id="main" ng-style="resizestyle()" resize>
@@ -232,6 +259,10 @@
     <script src="vendor/ng-mobile-menu/dist/ng-mobile-menu.min.js"></script>
 
 	<script src="js/app/app.js"></script>
+	<script src="js/app/services/session.js"></script>
+	<script src="js/app/controllers/AuthController.js"></script>
+	
+	
   <script src="js/app/directives/sidebar.js"></script>
 <!-- 
         <script>

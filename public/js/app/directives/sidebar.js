@@ -1,4 +1,4 @@
-var app = angular.module("jdRollApp", []);
+//var app = angular.module("jdRollApp", []);
 
 app.directive('resize', function ($window) {
     return function (scope, element) {
