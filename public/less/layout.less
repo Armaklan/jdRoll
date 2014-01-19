@@ -20,22 +20,37 @@ html {
 	}
 
 	#sidebar {
-		overflow: auto;
+
 	    background: none repeat scroll 0 0 #F0F0F0;
 	    border-radius: 3px 0 0;
 	    bottom: 0;
 	    box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
-	    padding: 12px 6px 0 12px;
+	    overflow: auto;
 
-	    .menu-icon {
-	    	margin-right: 20px;
-	    }
+		#widgets-panel {
+			font-size: 0.9em;
+			max-width: 100%;
+			padding: 12px 6px 0 12px;
 
-	    .panel-title {
-	    	.fa-caret-down {
-	    		float: right;
-	    		right: 10px;
+			.panel-title {
+		    	.fa-caret-down {
+		    		float: right;
+		    		right: 10px;
+		    	}
 	    	}
-	    }
+
+	    	.menu-icon {
+	    		margin-right: 20px;
+	    	}
+		}
+
+		#tabs-panel {
+			.menu-icon {
+	    		margin-right: 10px;
+	    	}
+		}
+
+
+
 	}
 }
