@@ -23,3 +23,10 @@ html body {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
   padding: 12px 6px 0 12px;
 }
+.container #sidebar .menu-icon {
+  margin-right: 20px;
+}
+.container #sidebar .panel-title .fa-caret-down {
+  float: right;
+  right: 10px;
+}
