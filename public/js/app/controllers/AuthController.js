@@ -31,24 +31,20 @@ app.controller('AuthenticationController',function($rootScope,$http,$scope,$loca
 		 $scope.password = '';
 		 
 		 UserService.authenticate(postData,function(data){
-		
-			var dataRes = JSON.stringify(data)
-			
-             if(data[0].id){
+		 
                  $rootScope.message = "";
 				 SessionService.isLogged = true;
-				 SessionService.username = data[0].username;
-				 if(data[0].profil == 0)
+				 SessionService.username = data.username;
+				 if(data.profil == 0)
 					SessionService.isAdmin = true;
 				else
 					SessionService.isAdmin = false;
                  $location.path('/');
-             }
-             else{
-                 $rootScope.message = "Login ou mot de passe incorrect";
-             }
                 
-         });
+         },function()
+		 {
+			$rootScope.message = "Login ou mot de passe incorrect";
+		 });
     }
      
 });
