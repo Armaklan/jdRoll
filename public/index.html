@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
+	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
@@ -23,109 +23,102 @@
           <!--[if lt IE 7]>
               <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
           <![endif]-->
-      <div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ng-href="#/">jdRoll</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a ng-href="#"><i class="fa fa-home"></i> Accueil</a></li>
-              <li>
-                <a  ng-href="#/messagerie" id="msgTitle">
-                  <i class="fa fa-envelope"></i> Messagerie
-                </a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle"></i> Jouer <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a ng-href="#/campagne/my">Mes campagnes</a></li>
-                  <li class="divider"></li>
-                  <li><a ng-href="#/campagne/joinlist">Rejoindre une campagne</a></li>
-                  <li><a ng-href="#/campagne/create">Créer une campagne</a></li>
-                  <li class="divider"></li>
-                  <li><a ng-href="#/campagne/all">Toutes les campagnes en-cours</a></li>
-                  <li><a ng-href="#/campagne/archive">Toutes les campagnes archivées</a></li>
-                  <li><a ng-href="#/campagne/preparation">Toutes les campagnes en préparation</a></li>
-                  <li class="divider"></li>
-                  <li><a ng-href="#/users">Liste des utilisateurs</a></li>
-                </ul>
-              </li>
-              <li><a ng-href="#/forum"><i class="fa fa-folder-open"></i> Forum</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-sign"></i> Aide <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a ng-href="#/static/guide">Guide</a></li>
-                  <li><a ng-href="#/static/faq">FAQ</a></li>
-                  <li class="divider"></li>
-                  <li><a ng-href="#/static/about">A propos de jdRoll</a></li>
-                  <li class="divider"></li>
-                  <li><a ng-href="#/stats">Quelques statistiques</a></li>
-                </ul>
-              </li>
-            </ul>
-			<div ng-controller="AuthenticationController" class="navbar-right">
-			
-			<div class="btn-group" ng-show=ShowHideForm()>
-			 <ul >
-          <li class="divider-vertical"></li>
-          <li class="dropdown">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="fa fa-user"></i>Connexion<span class="caret"></span>
-                </button>
-            
-			
-            <div class="dropdown-menu auth-box">
-              <form class="navbar-form " ng-submit="authenticate()">
-				<div>
-				<div class="error-message-red">
-				{{message}}
-				</div>
-				   <div class="form-group">
-						<input class="form-control" type="text" ng-model=login id="login" name="login" placeholder="Nom d'utilisateur">
-						<input class="form-control" type="password" ng-model=password id="password" name="password" placeholder="Mot de passe">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" ng-href="#/">jdRoll</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a ng-href="#"><i class="fa fa-home"></i> Accueil</a></li>
+					<li>
+						<a  ng-href="#/messagerie" id="msgTitle">
+							<i class="fa fa-envelope"></i> Messagerie
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle"></i> Jouer <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a ng-href="#/campagne/my">Mes campagnes</a></li>
+							<li class="divider"></li>
+							<li><a ng-href="#/campagne/joinlist">Rejoindre une campagne</a></li>
+							<li><a ng-href="#/campagne/create">Créer une campagne</a></li>
+							<li class="divider"></li>
+							<li><a ng-href="#/campagne/all">Toutes les campagnes en-cours</a></li>
+							<li><a ng-href="#/campagne/archive">Toutes les campagnes archivées</a></li>
+							<li><a ng-href="#/campagne/preparation">Toutes les campagnes en préparation</a></li>
+							<li class="divider"></li>
+							<li><a ng-href="#/users">Liste des utilisateurs</a></li>
+						</ul>
+					</li>
+					<li><a ng-href="#/forum"><i class="fa fa-folder-open"></i> Forum</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-sign"></i> Aide <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a ng-href="#/static/guide">Guide</a></li>
+							<li><a ng-href="#/static/faq">FAQ</a></li>
+							<li class="divider"></li>
+							<li><a ng-href="#/static/about">A propos de jdRoll</a></li>
+							<li class="divider"></li>
+							<li><a ng-href="#/stats">Quelques statistiques</a></li>
+						</ul>
+					</li>
+				</ul>
+				<div ng-controller="AuthenticationController" class="navbar-right">
+					<div class="btn-group" ng-show=ShowHideForm()>
+						<ul>
+							<li class="dropdown navbar-form">
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+								  <i class="fa fa-user"></i>Connexion<span class="caret"></span>
+								</button>
+								<div class="dropdown-menu auth-box">
+									<form class="navbar-form" ng-submit="authenticate()">
+										<div>
+											<div class="error-message-red">
+												{{message}}
+											</div>
+											<div class="form-group">
+												<input class="form-control" type="text" ng-model=login id="login" name="login" placeholder="Nom d'utilisateur">
+												<input class="form-control" type="password" ng-model=password id="password" name="password" placeholder="Mot de passe">
+											</div>
+										</div>
+										<button class="btn btn-default">Se connecter</button>
+											<a  class="btn btn-default">S'inscrire</a>
+										<div class="form-group">
+											<a>J'ai oublié mon mot de passe</a>
+										</div>
+									</form>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="navbar-form navbar-right" ng-hide=ShowHideForm()>
+						<div class="btn btn-danger">
+							<i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
+						</div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-user"></i>{{getUserName()}}<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a ng-href="#/profil">Mon Profil</a></li>
+								<li><a ng-href="#/preferences">Mes Préférences</a></li>
+								<li><a ng-href="#/absences">Gestion des absences</a></li>
+								<li><a ng-href="#/logout" ng-click=logout()>Se deconnecter</a></li>
+							</ul>
+					  </div>
 					</div>
 				</div>
-			    <button class="btn btn-default">Se connecter</button>
-			    <a href="{{ path('subscribe') }}" class="btn btn-default">S'inscrire</a>
-		<div class="form-group">
-    		<a href="{{path('reset')}}">J'ai oublié mon mot de passe</a>
-    	</div>
-					
-
-					</form>
-            </div>
-          </li>
-        </ul>
-		</div>
-
-		<div class="navbar-form navbar-right" ng-hide=ShowHideForm()>
-			<div class="btn btn-danger">
-                <i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
-              </div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-user"></i>{{getUserName()}}<span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a ng-href="#/profil">Mon Profil</a></li>
-                  <li><a ng-href="#/preferences">Mes Préférences</a></li>
-                  <li><a ng-href="#/absences">Gestion des absences</a></li>
-                  <li><a ng-href="#/logout" ng-click=logout()>Se deconnecter</a></li>
-                </ul>
-              </div>
-         </div>
-		 </div>
           </div><!--/.navbar-collapse -->
         </div>
-      </div>
+    </div>
 
-<div  ng-view></div>
+	  <div  ng-view></div>
       <div class="container" >
         <!-- Example row of columns -->
 
@@ -261,9 +254,7 @@
 	<script src="js/app/app.js"></script>
 	<script src="js/app/services/session.js"></script>
 	<script src="js/app/controllers/AuthController.js"></script>
-	
-	
-  <script src="js/app/directives/sidebar.js"></script>
+	<script src="js/app/directives/sidebar.js"></script>
 <!-- 
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
