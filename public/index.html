@@ -23,7 +23,7 @@
           <!--[if lt IE 7]>
               <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
           <![endif]-->
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-inverse navbar-fixed-top" ng-controller="MenuController">
         <div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -69,15 +69,15 @@
 						</ul>
 					</li>
 				</ul>
-				<div ng-controller="AuthenticationController" class="navbar-right">
-					<div class="btn-group" ng-show=ShowHideForm()>
+				<div class="navbar-right">
+					<div class="btn-group" ng-show=showHideAuthForm()>
 						<ul>
 							<li class="dropdown navbar-form">
 								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
 								  <i class="fa fa-user"></i>Connexion<span class="caret"></span>
 								</button>
-								<div class="dropdown-menu auth-box">
-									<form class="navbar-form" ng-submit="authenticate()">
+								<div class="dropdown-menu auth-box" ng-controller="AuthenticationController">
+									<form class="navbar-form" ng-submit="authenticateUser()">
 										<div>
 											<div class="error-message-red">
 												{{message}}
@@ -97,19 +97,19 @@
 							</li>
 						</ul>
 					</div>
-					<div class="navbar-form navbar-right" ng-hide=ShowHideForm()>
+					<div class="navbar-form navbar-right" ng-hide=showHideAuthForm()>
 						<div class="btn btn-danger">
 							<i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
 						</div>
 						<div class="btn-group">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-user"></i>{{getUserName()}}<span class="caret"></span>
+							<i class="fa fa-user"></i>{{getCurrentUserName()}}<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a ng-href="#/profil">Mon Profil</a></li>
 								<li><a ng-href="#/preferences">Mes Préférences</a></li>
 								<li><a ng-href="#/absences">Gestion des absences</a></li>
-								<li><a ng-href="#/logout" ng-click=logout()>Se deconnecter</a></li>
+								<li><a ng-href="#/logout" ng-controller="AuthenticationController" ng-click=logout()>Se deconnecter</a></li>
 							</ul>
 					  </div>
 					</div>
@@ -254,6 +254,7 @@
 	<script src="js/app/app.js"></script>
 	<script src="js/app/services/session.js"></script>
 	<script src="js/app/controllers/AuthController.js"></script>
+	<script src="js/app/controllers/MenuController.js"></script>
 	<script src="js/app/directives/sidebar.js"></script>
 <!-- 
         <script>

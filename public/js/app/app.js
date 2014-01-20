@@ -16,12 +16,17 @@ app.run(function ($rootScope, $location, SessionService,UserService) {
 
 	if(SessionService.username == '')
 	{
-		UserService.GetSession(null,function(data){
-		if(Object.keys(data).length && data.hasOwnProperty('username'))
-		{
+		UserService.getUserSession(null,function(data){
+		
 			SessionService.isLogged = true;
 			SessionService.username = data.username;
-		}
+			SessionService.isAdmin = data.profil == 0 ? true : false;
+			
+		},function(){
+		
+			SessionService.isLogged = false;
+			SessionService.isAdmin = false;
+			SessionService.username = '';
 		
 		});
 	}

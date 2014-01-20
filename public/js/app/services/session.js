@@ -13,7 +13,8 @@ app.factory('SessionService', function() {
 app.factory('UserService', ['$resource', function($resource) {
   return $resource('/user/:id', null,
       {
-          'authenticate': { method:'POST', isArray:false,params: {action: 'authentication'}},
-		  'GetSession': { method:'GET', isArray:false,params: {action: 'getSession'}}
+          'authenticateUser': { method:'POST', isArray:false,params: {action: 'authentication'}},
+		  'getUserSession': { method:'GET', isArray:false,params: {action: 'getUserSession'}},
+		  'deleteUserSession': { method:'DELETE', isArray:false,params: {prop: 'session'}}
       });
 }]);
