@@ -2,7 +2,9 @@ var app = angular.module("jdRollApp", ['ngResource','ngRoute']);
 
 	app.config(['$routeProvider', function($routeProvider) {
 	    $routeProvider.
+			when('/',{templateUrl: 'views/main.html'}).
 			when('/profil', {templateUrl: 'views/profile.html',Controller: 'ShowOrdersController'}).
+			when('/forgetPassword', {templateUrl: 'views/resetPwd.html',Controller: 'ShowOrdersController'}).
 	        otherwise({redirectTo: '/'});
 	}]);
 
