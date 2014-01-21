@@ -23,12 +23,46 @@ html {
     width: 250px;
 }
 
+
+
 .container {
     width: 100%;
 
 	#main {
 		overflow: auto;
 		padding-right: 20px;
+
+        .titled-box > legend {
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            padding: 3px 7px;
+            font-size: 12px;
+            font-weight: bold;
+            width: 14em;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            color: #9da0a4;
+            -webkit-border-radius: 4px 0 4px 0;
+            -moz-border-radius: 4px 0 4px 0;
+            border-radius: 4px 0 4px 0;
+        }
+
+        .titled-box {
+            position: relative;
+            padding: 10px;
+            padding-top: 50px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .titled-box > .pull-right {
+            margin-top: -40px;
+        }
 	}
 
 	#sidebar {
