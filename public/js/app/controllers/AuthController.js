@@ -1,6 +1,7 @@
 
 app.controller('AuthenticationController',function($rootScope,$http,$scope,$location,SessionService,UserService) {
 
+		$rootScope.message = '';
 		 $scope.logout=function()
 		 {		
 			 SessionService.username ='';
@@ -31,6 +32,22 @@ app.controller('AuthenticationController',function($rootScope,$http,$scope,$loca
                 
 			},function(){
 				$rootScope.message = "Login ou mot de passe incorrect";
+			});
+		}
+		
+		$scope.resetUserPassword= function(){
+		 
+			var postData = {};
+			postData.login = $scope.login;
+			UserService.resetUserPassword(postData,function(data){
+			
+			$rootScope.message = "Message envoyé !";
+               
+                
+			},function(){
+
+				$rootScope.message = "Message KO";
+				
 			});
 		}
 });

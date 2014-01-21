@@ -1,18 +1,22 @@
-<div style="margin-top: 3em"></div>
 
-	<form role="form" class="form-horizontal" action="{{ path('reset_asked')  }}" method="POST">
-	    <div class="form-group">
-		    <label class="control-label" for="login">Login</label>
-		    <div class="form-control">
-		    	<input type="text" id="login" name="login" placeholder="Nom d'utilisateur">
-		    </div>
-	    </div>
+<fieldset class="titled-box" ng-controller="AuthenticationController">
+				<legend>Réinitialisation de mot de passe</legend>
+	<form role="form" class="form-horizontal"  ng-submit="resetUserPassword()">
 	    
-	    <div class="form-group">
-		    <div class="form-control">
-			    <button type="submit" class="btn">Valider</button>
+			<div class="alert alert-warning" ng-hide="message == ''">
+				{{message}}
+			</div>
+			<div ng-show="message == ''">
+		    <label class="control-label" for="login">Login</label>
+		    <div >
+		    	<input class="form-control" type="text" id="login" name="login" placeholder="Nom d'utilisateur">
+		    </div>
+	  
+		    <div >
+			    <button type="submit" class="btn btn-primary">Valider</button>
 		    </div>
 	    </div>
     </form>
+</fieldset>
 
 

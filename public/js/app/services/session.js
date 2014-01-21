@@ -15,6 +15,7 @@ app.factory('UserService', ['$resource', function($resource) {
       {
           'authenticateUser': { method:'POST', isArray:false,params: {action: 'authentication'}},
 		  'getUserSession': { method:'GET', isArray:false,params: {action: 'getUserSession'}},
-		  'deleteUserSession': { method:'DELETE', isArray:false,params: {prop: 'session'}}
+		  'deleteUserSession': { method:'DELETE', isArray:false,params: {prop: 'session'}},
+		  'resetUserPassword': { method:'POST', isArray:false,params: {action: 'resetPassword'}},
       });
 }]);
