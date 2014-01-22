@@ -2,6 +2,8 @@
 app.controller('AuthenticationController',function($rootScope,$http,$scope,$location,SessionService,UserService) {
 
 		$rootScope.message = '';
+		$rootScope.errorMessage = '';
+
 		 $scope.logout=function()
 		 {		
 			 SessionService.username ='';
@@ -40,13 +42,14 @@ app.controller('AuthenticationController',function($rootScope,$http,$scope,$loca
 			var postData = {};
 			postData.login = $scope.login;
 			UserService.resetUserPassword(postData,function(data){
-			
-			$rootScope.message = "Message envoyé !";
-               
-                
-			},function(){
 
-				$rootScope.message = "Message KO";
+				$rootScope.errorMessage = data.message;
+				$rootScope.errorLevel = data.level;
+				
+			},function(data){
+
+				$rootScope.errorLevel = data.data.level;
+				$rootScope.errorMessage = data.data.message;
 				
 			});
 		}

@@ -3,10 +3,9 @@
 				<legend>Réinitialisation de mot de passe</legend>
 	<form role="form" class="form-horizontal"  ng-submit="resetUserPassword()">
 	    
-			<div class="alert alert-warning" ng-hide="message == ''">
-				{{message}}
-			</div>
-			<div ng-show="message == ''">
+			<div jdroll-alert level={{errorLevel}} message={{errorMessage}} ng-hide="errorMessage == ''"></div>
+			
+			<div ng-show="errorMessage == ''">
 		    <label class="control-label" for="login">Login</label>
 		    <div >
 		    	<input class="form-control" type="text" id="login" ng-model="login" name="login" placeholder="Nom d'utilisateur">
