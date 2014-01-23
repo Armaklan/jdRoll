@@ -1,21 +1,21 @@
-
-<fieldset class="titled-box" ng-controller="AuthenticationController">
-				<legend>Réinitialisation de mot de passe</legend>
-	<form role="form" class="form-horizontal"  ng-submit="resetUserPassword()">
-	    
-			<div jdroll-alert level={{errorLevel}} message={{errorMessage}} ng-hide="errorMessage == ''"></div>
-			
-			<div ng-show="errorMessage == ''">
-		    <label class="control-label" for="login">Login</label>
-		    <div >
-		    	<input class="form-control" type="text" id="login" ng-model="login" name="login" placeholder="Nom d'utilisateur">
-		    </div>
-	  
-		    <div >
-			    <button type="submit" class="btn btn-primary">Valider</button>
-		    </div>
-	    </div>
-    </form>
-</fieldset>
+<div class="row">
+	<div class="col-md-8" ng-controller="AuthenticationController">
+		<form role="form"   ng-submit="resetUserPassword()">
+			<fieldset class="titled-box">
+			<legend>Réinitialisation de mot de passe</legend>
+				<div jdroll-alert level={{errorLevel}} message={{errorMessage}} ng-hide="errorMessage == ''"/>
+				<div class="pull-right" ng-show="errorMessage == ''">
+						<button type="submit" class="btn btn-primary">Valider</button>
+				</div>
+				<div ng-show="errorMessage == ''">
+					<div class="form-group">
+						<label class="control-label" for="login">Login</label>
+						<input class="form-control" type="text" id="login" ng-model="login" name="login" placeholder="Nom d'utilisateur"/>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
 
 
