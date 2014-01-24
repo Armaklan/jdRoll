@@ -174,6 +174,7 @@ $campagne_id = getInterneCampagneNumber($campagne_id);
             foreach ($posts as &$post){
                     transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
                     replace_hide($post);
+					transformPopupZone($post);
             }
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
@@ -209,6 +210,20 @@ function replace_hide(&$post)
 
 					return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
 
+				},
+				$post['post_content']
+			);
+
+	return $post;
+}
+
+function transformPopupZone(&$post)
+{
+ $post['post_content']  = preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
+				function ($matches) {
+					
+					return '<a href="#!" rel="popover" data-title="' . $matches[1] . '" data-content="' . $matches[2] . '" data-placement="bottom" data-trigger="hover">' . $matches[3] . '</a>';
+					
 				},
 				$post['post_content']
 			);
@@ -307,6 +322,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
             foreach ($posts as &$post){
                     transformPrivateZoneForMessage($post, $app['session']->get('user')['login'], $perso, $is_mj);
                     replace_hide($post);
+					transformPopupZone($post);
             }
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
