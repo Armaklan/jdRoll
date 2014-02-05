@@ -10,20 +10,20 @@
     "implementjs": "0.1.x",
     "mysql": "~2.0.0",
     "winston": "~0.7.2",
-    "gulp-livereload": "~0.2.0",
-    "tiny-lr": "0.0.5",
     "MD5": "~1.2.0",
-    "gulp-less": "~1.1.10",
     "nodemailer": "~0.6.0"
   },
   "devDependencies": {
     "mocha": "*",
-    "gulp-util": "~2.2.12",
-    "gulp": "~3.4.0",
-    "gulp-bower": "0.0.1",
-    "gulp-nodemon": "~0.1.1",
-    "gulp-wait": "0.0.2",
-    "gulp-open": "~0.2.7"
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-nodemon": "~0.2.0",
+    "open": "0.0.4",
+    "grunt-node-inspector": "~0.1.2",
+    "grunt-concurrent": "~0.4.3",
+    "grunt-bower-task": "~0.3.4"
   },
   "scripts": {
     "test": "make test",
