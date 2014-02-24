@@ -35,11 +35,11 @@ class DicerService {
 	public function launchDice($campagne_id, $param, $description) {
 		$result = "";
 		if($param == '') {
-			throw new Exception("Aucun jet demandé");
+			throw new \Exception("Aucun jet demandé");
 		}
 
 
-        $dicer = new Dicer();
+        $dicer = new \Dicer();
         $result = $dicer->parse($param);
 
 		$this->insertDice($campagne_id, $result, $description);

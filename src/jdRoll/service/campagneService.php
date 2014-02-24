@@ -656,14 +656,14 @@ class CampagneService {
 
 		$res = $stmt->fetchColumn(0);
 		if($res > 0) {
-			throw new Exception("Vous êtes déjà inscrit");
+			throw new \Exception("Vous êtes déjà inscrit");
 		}
 	}
 
 	public function addJoueur($campagne_id, $user_id) {
 		$campagne = $this->getCampagne($campagne_id);
 		if($campagne['nb_joueurs'] <= $campagne['nb_joueurs_actuel']) {
-			throw new Exception("La partie est déjà complète");
+			throw new \Exception("La partie est déjà complète");
 		}
 		$this->checkIfNotParticipant($campagne_id, $user_id);
 		$this->insertParticipant($campagne_id, $user_id);
@@ -687,8 +687,8 @@ class CampagneService {
 	public function removeJoueur($campagne_id, $user_id) {
 		try {
 			$this->checkIfNotParticipant($campagne_id, $user_id);
-			throw new Exception("Vous n'êtes pas inscrit à cette partie.");
-		} catch (Exception $e) {
+			throw new \Exception("Vous n'êtes pas inscrit à cette partie.");
+		} catch (\Exception $e) {
 
                         if($this->isRealJoueur($campagne_id, $user_id)) {
                             $this->deleteParticipant($campagne_id, $user_id);
@@ -785,7 +785,7 @@ class CampagneService {
                     campagne_id = :campagne
                     AND user_id = :user";
             return $this->db->fetchColumn($sql, array('user' => $user, 'campagne' => $campagne ), 0);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return "";
         }
     }

@@ -135,17 +135,17 @@ function isLog($app) {
     return ($app['session']->get('user') != null);
 }
 
-require("/src/jdRoll/controller/common.php");
-require("/src/jdRoll/controller/profile.php");
-require("/src/jdRoll/controller/secure_campagn.php");
-require("/src/jdRoll/controller/public_campagn.php");
-require("/src/jdRoll/controller/subscribe.php");
-require("/src/jdRoll/controller/perso.php");
-require("/src/jdRoll/controller/messagerie.php");
-require("/src/jdRoll/controller/notification.php");
-require("/src/jdRoll/controller/forum.php");
-require("/src/jdRoll/controller/chat.php");
-require("/src/jdRoll/controller/resetPwd.php");
+require("src/jdRoll/controller/common.php");
+require("src/jdRoll/controller/profile.php");
+require("src/jdRoll/controller/secure_campagn.php");
+require("src/jdRoll/controller/public_campagn.php");
+require("src/jdRoll/controller/subscribe.php");
+require("src/jdRoll/controller/perso.php");
+require("src/jdRoll/controller/messagerie.php");
+require("src/jdRoll/controller/notification.php");
+require("src/jdRoll/controller/forum.php");
+require("src/jdRoll/controller/chat.php");
+require("src/jdRoll/controller/resetPwd.php");
 
 Request::enableHttpMethodParameterOverride();
 //$app['http_cache']->run();

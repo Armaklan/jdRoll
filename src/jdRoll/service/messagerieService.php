@@ -56,10 +56,10 @@ class MessagerieService {
         $content = $request->get('content');
         $destinataires = json_decode($request->get('to_usernames'));
         if($destinataires == null or count($destinataires) == 0) {
-            throw new Exception("Veuillez indiquer un destinataire");
+            throw new \Exception("Veuillez indiquer un destinataire");
         }
         if(trim($title) == "") {
-            throw new Exception("Le titre ne doit pas être nul");
+            throw new \Exception("Le titre ne doit pas être nul");
         }
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
@@ -78,7 +78,7 @@ class MessagerieService {
                     ->setBody($content);
 
                 $this->mailer->send($message);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // Pas de mail, tant pis...
             }
 

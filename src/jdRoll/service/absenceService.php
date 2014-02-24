@@ -10,7 +10,7 @@ namespace jdRoll\service;
  */
 
 
-class absenceService {
+class AbsenceService {
 
     private $db;
     private $session;

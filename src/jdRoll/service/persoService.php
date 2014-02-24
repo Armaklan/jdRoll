@@ -230,7 +230,7 @@ class PersoService {
     public function deletePersonnage($perso_id) {
         $perso = $this->getPersonnageById($perso_id);
         if ($perso["user_id"] != null) {
-            throw new Exception("Impossible de supprimer un PNJ existant");
+            throw new \Exception("Impossible de supprimer un PNJ existant");
         }
 
         $sql = "UPDATE personnages

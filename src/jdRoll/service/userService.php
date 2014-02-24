@@ -36,10 +36,10 @@ class UserService {
 	    $user = $this->db->fetchAssoc($sql, array($login));
 
 	    if($user == null)  {
-	    	throw new Exception('Login incorrect');
+	    	throw new \Exception('Login incorrect');
 	    }
 		if($user['password'] != md5($password)) {
-	    	throw new Exception('Mots de passe incorrect');
+	    	throw new \Exception('Mots de passe incorrect');
 	    }
 
 	    $this->session->set('user', array('id' => $user['id'], 'login' => $user['username'], 'avatar' => $user['avatar']));
@@ -53,7 +53,7 @@ class UserService {
 	public function getCurrentUser() {
 		$sessionUser = $this->session->get('user');
 		if ($sessionUser == null) {
-			throw new Exception('Non authentifié');
+			throw new \Exception('Non authentifié');
 		} else {
 			$login = $sessionUser['login'];
 			$sql = "SELECT * FROM user WHERE username = ?";
@@ -101,7 +101,7 @@ class UserService {
 	public function subscribeUser($request) {
 
 		if($request->get('password') != $request->get('password2')) {
-			throw new Exception("Les mots de passes ne correspondent pas");
+			throw new \Exception("Les mots de passes ne correspondent pas");
 		}
 
 		$sql = "INSERT INTO user
@@ -119,7 +119,7 @@ class UserService {
 	public function changePassword($request) {
 
 		if($request->get('password') != $request->get('password2')) {
-			throw new Exception("Les mots de passes ne correspondent pas");
+			throw new \Exception("Les mots de passes ne correspondent pas");
 		}
 
 		$sql = "UPDATE user
@@ -177,7 +177,7 @@ class UserService {
 			$stmt = $this->db->prepare($sql);
 			$stmt->bindValue("username", $this->session->get('user')['id']);
 			$stmt->execute();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$sql = "UPDATE last_action
 				SET
 					time = CURRENT_TIMESTAMP
