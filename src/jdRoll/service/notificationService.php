@@ -1,4 +1,6 @@
 <?php
+namespace jdRoll\service;
+
 /**
  * Notification Center
  *

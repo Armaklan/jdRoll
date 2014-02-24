@@ -1,4 +1,6 @@
 <?php
+namespace jdRoll\service;
+
 /**
  * Manage information and listing of character
  *

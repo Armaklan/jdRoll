@@ -18,10 +18,10 @@ $notificationController = $app['controllers_factory'];
 $notificationController->before($mustBeLogged);
 
 $notificationController->get('/', function() use($app) {
-        $user_id = $app["session"]->get('user')['id'];
+    $user_id = $app["session"]->get('user')['id'];
 	$notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);
-        $nbNotif = count($notifs);
-        $hasNotif = ($nbNotif > 0);
+    $nbNotif = count($notifs);
+    $hasNotif = ($nbNotif > 0);
 	return $app->render('notification/list.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
 })->bind("notifications");
 

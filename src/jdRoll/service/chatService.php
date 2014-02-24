@@ -1,4 +1,5 @@
 <?php
+namespace jdRoll\service;
 
 class ChatService {
 
