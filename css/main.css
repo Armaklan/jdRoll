@@ -410,7 +410,6 @@ div#notif .arrow-down {
   border-radius: 3px 0 0;
   bottom: 0;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
-  overflow: auto;
 }
 .container .sidebar #widgets-panel {
   font-size: 0.9em;
@@ -427,7 +426,7 @@ div#notif .arrow-down {
 .container .sidebar #tabs-panel .menu-icon {
   margin-right: 10px;
 }
-.sidebar {
+.container .sidebar {
     padding-top: 10px;
     overflow: scroll;
 }

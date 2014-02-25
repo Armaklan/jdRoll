@@ -70,35 +70,38 @@
 		    		<img src="{{ perso.avatar }}"  width="60%" style="max-width: 130px" class="img-rounded" />
 		        </div>
 	        {% endif %}
+	        <p/>
 
-	        <div class="panel panel-default">
-	          <div class="panel-heading" ng-click="">
-	            <h3 class="panel-title">
-	              <span class="fa fa-caret-down"></span>
-	              Menu
-	            </h3>
-	          </div>
-	          <div class="panel-body" align="center">
-	            <div class="btn-group btn-group-sm">
-		            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
-		            {% if perso.id != '' %}
-			            <a class="btn btn-default iconeBtn sidebarBtn" 
-			            	onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
-			                title="Mettre une alerte">
-			                    <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
-			            </a>
-		            {% endif %}
-		            {% set pull_mode = "pull-right" %}
-		            {% include("composant/perso_btm.html.twig") %}
-		            {% if perso.id != '' %}
-		            	</div>
-			            <br>
-		            	<div class="btn-group btn-group-sm">
-			            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-			            <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
-		            {% endif %}
-				</div>
+			<div id="widgets-panel">
+		        <div class="panel panel-default">
+		          <div class="panel-heading" ng-click="">
+		            <h3 class="panel-title">
+		              <span class="fa fa-caret-down"></span>
+		              Menu
+		            </h3>
+		          </div>
+		          <div class="panel-body" align="center">
+		            <div class="btn-group btn-group-sm">
+			            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
+			            {% if perso.id != '' %}
+				            <a class="btn btn-default iconeBtn sidebarBtn" 
+				            	onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+				                title="Mettre une alerte">
+				                    <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
+				            </a>
+			            {% endif %}
+			            {% set pull_mode = "pull-right" %}
+			            {% include("composant/perso_btm.html.twig") %}
+			            {% if perso.id != '' %}
+			            	</div>
+				            <br>
+			            	<div class="btn-group btn-group-sm">
+				            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+				            <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+			            {% endif %}
+					</div>
 
+		          </div>
 	          </div>
 	        </div>
 
@@ -107,9 +110,11 @@
 
 		<div class="tab-pane" id="general">
 
+	      <p/>
 		  <div align="center">
-			<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
+		 	<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
 		  </div>
+		  <p/>
 
 	      <div id="widgets-panel">
 

@@ -62,39 +62,43 @@
 				<h5>{{ campagne.name }}</h5>
 			</div>
 
-	        <div class="panel panel-default">
-	          <div class="panel-heading" ng-click="">
-	            <h3 class="panel-title">
-	              <span class="fa fa-caret-down"></span>
-	              Menu
-	            </h3>
-	          </div>
-	          <div class="panel-body" align="center">
-				<div class="btn-group btn-group-sm">
-		    	{% set pull_mode = "pull-right" %}
-		    	<a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
-		            title="Mettre une alerte">
-		            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
-		        </a>
-				<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-				<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
-				</div>
-				<br>
-				<div class="btn-group btn-group-sm">
-				<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-		        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
-		        </div>
+			<div id="widgets-panel">
+		        <div class="panel panel-default">
+		          <div class="panel-heading" ng-click="">
+		            <h3 class="panel-title">
+		              <span class="fa fa-caret-down"></span>
+		              Menu
+		            </h3>
+		          </div>
+		          <div class="panel-body" align="center">
+					<div class="btn-group btn-group-sm">
+			    	{% set pull_mode = "pull-right" %}
+			    	<a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
+			            title="Mettre une alerte">
+			            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
+			        </a>
+					<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
+					<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+					</div>
+					<br>
+					<div class="btn-group btn-group-sm">
+					<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
+			        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+			        </div>
 
-	          </div>
-	        </div>
+		          </div>
+		        </div>
+		    </div>
 		    <p/>
 			{% include("composant/campagne_accordion.html.twig") %}
 		</div>
 		<div class="tab-pane" id="general">
 
+		  <p/>
 		  <div align="center">
 			<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
 		  </div>
+		  <p/>
 
 	      <div id="widgets-panel">
 
