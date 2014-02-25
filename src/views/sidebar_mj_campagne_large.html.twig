@@ -61,8 +61,16 @@
 			<div align="center">
 				<h5>{{ campagne.name }}</h5>
 			</div>
-		    <div class="panel-body" align="center">
-		        <div class="btn-group btn-group-sm">
+
+	        <div class="panel panel-default">
+	          <div class="panel-heading" ng-click="">
+	            <h3 class="panel-title">
+	              <span class="fa fa-caret-down"></span>
+	              Menu
+	            </h3>
+	          </div>
+	          <div class="panel-body" align="center">
+				<div class="btn-group btn-group-sm">
 		    	{% set pull_mode = "pull-right" %}
 		    	<a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 		            title="Mettre une alerte">
@@ -76,7 +84,9 @@
 				<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 		        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
 		        </div>
-		    </div>
+
+	          </div>
+	        </div>
 		    <p/>
 			{% include("composant/campagne_accordion.html.twig") %}
 		</div>
