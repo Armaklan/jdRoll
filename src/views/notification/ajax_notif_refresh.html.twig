@@ -10,9 +10,11 @@
 				$('#notifNumber').html(msg.nb_notif);
 				if(msg.nb_notif > 0) {
 					console.log('ok notif');
-					$('#notifIndicator').addClass('btn-danger');
+					$('#notifIndicator').addClass('btn-notifs');
+					$('#notifIndicator').removeClass('btn-default');
 				} else {
-					$('#notifIndicator').removeClass('btn-danger');
+					$('#notifIndicator').removeClass('btn-notifs');
+					$('#notifIndicator').addClass('btn-default');
 				}
 		    },
 		    error: function(msg) {

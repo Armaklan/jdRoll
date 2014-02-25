@@ -102,7 +102,7 @@
 	    	{% block sidebar_large %}
                 {{ render(url('sidebar_std_large')) }}
             {% endblock %}
-            
+
 	    </div>
 	</div>
 
@@ -134,7 +134,7 @@
 		    	$('.maxheight').css({'height':($(window).height() - 50)+'px'});
 		    	$('.maxheight').css({'overflow':'auto'});
 			} else {
-				//$('.maxheight').css({'height':'100%'});
+				$('.maxheight').css({'height':'100%'});
 				$('.maxheight').css({'overflow':'visible'});
 			}
 		    $(window).resize(function(){
@@ -142,7 +142,7 @@
 		    		$('.maxheight').css({'height':($(window).height() - 50)+'px'});
 		    		$('.maxheight').css({'overflow':'auto'});
 				} else {
-					//$('.maxheight').css({'height':'100%'});
+					$('.maxheight').css({'height':'100%'});
 					$('.maxheight').css({'overflow':'visible'});
 				}
 		    });
