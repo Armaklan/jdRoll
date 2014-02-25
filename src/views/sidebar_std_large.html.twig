@@ -70,7 +70,7 @@
 	</div>
 {% endif %}
 
-<div class="col-md-3 col-lg-2 sidebar hidden-xs hidden-sm" style="max-width: 300px">
+<div class="col-md-3 col-lg-2 hidden-xs hidden-sm sidebar maxheight">
 
 	{% if (app.session.get('user') == null)  %}
 	<form role="form" class="" action="{{ path('login_connect')  }}" method="POST">
@@ -94,20 +94,26 @@
     	<div align="center">
     		<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
     	</div>
-	    <p/>
-	    <div align="center">
-	    	<div class="btn-group">
-				<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
+
+      <div id="widgets-panel">
+
+        <div class="panel panel-default">
+          <div class="panel-heading" ng-click="">
+            <h3 class="panel-title">
+              <span class="fa fa-caret-down"></span>
+              Menu
+            </h3>
+          </div>
+          <div class="panel-body" align="center">
+            <div class="btn-group btn-group-sm">
+            	<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
 				{{ include("button/forum_btm.html.twig") }}
 	            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
             </div>
-	    </div>
-	    <p/>
-        {% if nb_parties > 8 %}
-            {{ include("composant/sidebar_list_partie_high.html.twig") }}
-        {% else %}
-            {{ include("composant/sidebar_list_partie_std.html.twig") }}
-        {% endif %}
+          </div>
+        </div>
+
+        {{ include("composant/sidebar_list_partie_std.html.twig") }}
 
 	{% endif %}
 </div>

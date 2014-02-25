@@ -1,47 +1,77 @@
-    <ul class="nav nav-pills nav-stacked">
-			<li class='nav-header'><b>Partie active (MJ)</b></li>
-			{% for campagne in active_campagnes %}
-                <li><a
-                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
-                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                    >
-                        {% if campagne.activity > 0 %}
-							<i class="icon-asterisk"></i>
-						{% endif %}
-                        {{campagne.name}}
-                    </a>
-                </li>
-			{% endfor %}
-		</ul>
 
-		<ul class="nav nav-pills nav-stacked">
-			<li class='nav-header'><b>Partie active (PJ)</b></li>
-			{% for campagne in active_pj_campagnes %}
-                <li><a
-                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
-                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                    >
+        <div class="panel panel-default">
+          <div class="panel-heading" ng-click="">
+            <h3 class="panel-title">
+              <span class="fa fa-caret-down"></span>
+              Parties Maitrisées
+            </h3>
+          </div>
+          <ul class="list-group">
+            {% for campagne in active_campagnes %}
+                <li class="list-group-item"><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"">
                         {% if campagne.activity > 0 %}
-							<i class="icon-asterisk"></i>
-						{% endif %}
+                            <i class="icon-asterisk"></i>
+                        {% endif %}
+                        {% if campagne.campagne_alert > 0 %}
+                            <i class="icon-bell"></i>
+                        {% endif %}
                         {{campagne.name}}
                     </a>
                 </li>
-			{% endfor %}
-		</ul>
+            {% endfor %}
+          </ul>
+        </div>
 
-		<ul class="nav nav-pills nav-stacked">
-			<li class='nav-header'><b>Partie favorite</b></li>
-			{% for campagne in favorised_campagne %}
-                <li><a
-                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
-                    {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
-                    >
+
+        <div class="panel panel-default">
+          <div class="panel-heading" ng-click="">
+            <h3 class="panel-title">
+              <span class="fa fa-caret-down"></span>
+              Parties Jouées
+            </h3>
+          </div>
+          <ul class="list-group">
+            {% for campagne in active_pj_campagnes %}
+                <li class="list-group-item"><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"">
                         {% if campagne.activity > 0 %}
-							<i class="icon-asterisk"></i>
-						{% endif %}
+                            <i class="icon-asterisk"></i>
+                        {% endif %}
+                        {% if campagne.campagne_alert > 0 %}
+                            <i class="icon-bell"></i>
+                        {% endif %}
                         {{campagne.name}}
                     </a>
                 </li>
-			{% endfor %}
-		</ul>
+            {% endfor %}
+          </ul>
+        </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading" ng-click="">
+            <h3 class="panel-title">
+              <span class="fa fa-caret-down"></span>
+              Parties Favorites
+            </h3>
+          </div>
+          <ul class="list-group">
+            {% for campagne in favorised_campagne %}
+                <li class="list-group-item"><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"">
+                        {% if campagne.activity > 0 %}
+                            <i class="icon-asterisk"></i>
+                        {% endif %}
+                        {% if campagne.campagne_alert > 0 %}
+                            <i class="icon-bell"></i>
+                        {% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+
+		
