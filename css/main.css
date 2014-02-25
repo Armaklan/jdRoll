@@ -442,3 +442,7 @@ div#notif .arrow-down {
 #main {
   padding-top: 50px;
 }
+
+#content {
+  padding-top: 10px;
+}
