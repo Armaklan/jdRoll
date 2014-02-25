@@ -185,8 +185,9 @@ div#notif {
     max-width: 500px;
     width: 50%;
     position: fixed;
-    bottom: 38px;
-    right: 20px;
+    top: 12px;
+    right: 15px;
+    z-index: 990;
 }
 .notifHide {
     display: none;
@@ -213,6 +214,18 @@ div#notif .arrow-down {
     position: absolute;
     bottom: 1px;
     right: 35px;
+}
+
+div#notif .arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent; 
+    border-bottom: 13px solid #eFeFeF;
+    position: absolute;
+    top: 35px;
+    right: 130px;
+    z-index: 9999;
 }
 
 #notifContent #msg-zone {

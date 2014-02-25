@@ -1,10 +1,5 @@
-        <div id="notifIndicator" class="btn btn-default {% if has_notif %} btn-danger {% endif %} " onClick="notifController.toggleNotif()">
-            <div id="notifNumber">
-                {{nb_notif}}
-            </div>
-            <i class="icon-comments-alt "></i>
-        </div>
         <div id="notif" class="notifHide">
+            <div class="arrow-up"></div>
             <div id="notifContent">
                 <div>
                     <div class="well well-small pull-right">
@@ -32,5 +27,5 @@
                     {% endfor %}
                 </div>
            </div>
-           <div class="arrow-down"></div>
+           
         </div>

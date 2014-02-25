@@ -22,7 +22,15 @@ $notificationController->get('/', function() use($app) {
 	$notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);
     $nbNotif = count($notifs);
     $hasNotif = ($nbNotif > 0);
-	return $app->render('notification/list.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
+	return $app->render('notification/btn.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
+})->bind("notifications_btn");
+
+$notificationController->get('/list', function() use($app) {
+    $user_id = $app["session"]->get('user')['id'];
+    $notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);
+    $nbNotif = count($notifs);
+    $hasNotif = ($nbNotif > 0);
+    return $app->render('notification/list.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
 })->bind("notifications");
 
 $notificationController->get('/ajax', function() use($app) {

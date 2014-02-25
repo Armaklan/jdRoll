@@ -78,10 +78,18 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
 </head>
 <body>
+    
   
   {{ render(url('menu')) }}
-  <a name="top"></a>
 
+  {% if (app.session.get('user') != null)  %}
+    <div id="notificationCenter">
+        {{ render(url('notifications')) }}
+        {% include('notification/ajax_notif_refresh.html.twig') %}
+    </div>
+    {% endif %}
+    
+  <a name="top"></a>
    <div class="container-fluid" id="main">
 
 	    <div class="row">
@@ -106,12 +114,6 @@
 
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
 
-    {% if (app.session.get('user') != null)  %}
-	<div id="notificationCenter">
-		{{ render(url('notifications')) }}
-    	{% include('notification/ajax_notif_refresh.html.twig') %}
-	</div>
-    {% endif %}
     <a name="bottom"></a>
 
    	{% if app.session.get('user') != null %}
