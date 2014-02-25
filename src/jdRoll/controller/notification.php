@@ -38,10 +38,10 @@ $notificationController->get('/ajax', function() use($app) {
 	 $notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);
      $nbNotif = count($notifs);
      $hasNotif = ($nbNotif > 0);
-     $response = new Response();
-     $response->headers->set('Content-Type', 'application/test');
-	 $ret = $app->render('notification/list.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif], $response);
-	 return $ret;
+     $notifsList =  $app->render('notification/list.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
+     $ret["content"] = $notifsList->getContent();
+     $ret["nb_notif"] = $nbNotif;
+     return new Response(json_encode($ret), 200, array('Content-Type' => 'application/json') );
 })->bind("notifications_ajax");
 
 $notificationController->post('/del', function(Request $request) use($app) {
