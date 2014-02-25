@@ -123,7 +123,8 @@ class SectionService {
 					posts.create_date as posts_date,
 					user.username as user_username,
 					rd.post_id as read_post_id,
-					cr.topic_id as cr_topic_id
+					cr.topic_id as cr_topic_id,
+                    GROUP_CONCAT(accessible_perso.name SEPARATOR ',') as accessible_to
 				FROM sections sections
 				LEFT JOIN topics topics
 				ON
@@ -145,9 +146,32 @@ class SectionService {
 				ON
 					topics.id = cr.topic_id
 				AND cr.user_id = :user
+                LEFT JOIN can_read cr2
+                ON
+                    topics.id = cr2.topic_id
+                LEFT JOIN personnages accessible_perso
+                ON
+                    accessible_perso.user_id = cr2.user_id
+                and sections.campagne_id = accessible_perso.campagne_id
 				WHERE
 					(:campagne IS NULL and sections.campagne_id IS NULL)
 					OR (sections.campagne_id = :campagne)
+                GROUP BY
+                    section_id,
+                    section_title,
+                    section_banniere,
+                    default_collapse,
+                    topics_id,
+                    topics_title,
+                    topics_stickable,
+                    topics_is_closed,
+                    topics_is_private,
+                    posts_id,
+                    posts_username,
+                    posts_date,
+                    user_username,
+                    read_post_id,
+                    cr_topic_id
 				ORDER BY sections.ordre ASC, sections.title ASC, topics.stickable DESC, topics.ordre ASC, topics.title ASC";
 	    $campagnes = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
 	    return $campagnes;

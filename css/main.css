@@ -468,3 +468,8 @@ div#notif .arrow-up {
 .sidebar .icon-bell-alt {
   color: #F24444;
 }
+
+.accessible-to {
+  font-size: 0.9em;
+  font-style: italic;
+}
