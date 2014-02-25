@@ -1,11 +1,20 @@
 $(function(){
 	
 	$("#persoModal" ).css('display','none');
-	$("#persoModal" ).dialog({
-		height: 'auto',
-		width: 'auto',
-		autoOpen: false
-	}).removeClass('ui-widget');
+
+	if($(window).width() > 992) {
+		$("#persoModal" ).dialog({
+			height: $(window).height() - 100)+'px',
+			width: 'auto',
+			autoOpen: false
+		}).removeClass('ui-widget');
+	} else {
+		$("#persoModal" ).dialog({
+			height: 'auto',
+			width: 'auto',
+			autoOpen: false
+		}).removeClass('ui-widget');
+	}
 	
 	$('#myPerso').click(function(e){
 		

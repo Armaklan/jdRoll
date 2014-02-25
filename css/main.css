@@ -456,11 +456,15 @@ div#notif .arrow-up {
   padding-top: 10px;
 }
 .sidebar .panel a {
-  color: black;
+  color: #428bca;
 }
 .sidebar .panel {
   color: black;
 }
 .sidebar a.iconeBtn {
   color: black;
+}
+
+.sidebar .icon-bell-alt {
+  color: #F24444;
 }

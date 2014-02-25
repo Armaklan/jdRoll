@@ -18,16 +18,15 @@ $(function() {
  
 .ui-layout-center {
 	
-	
 	position: relative;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	color: #333333
-		
 	
-   
-	
-	
+}
+
+.ui-dialog {
+	top: 80px !important;
 }
 
 
@@ -40,7 +39,7 @@ $(function() {
 }
 
 </style>
-<div id="persoModal" class="form-horizontal" title="Fiche de personnage" >
+<div id="persoModal" class="form-horizontal" title="Fiche de personnage">
 
 		<div class="form-group" id='zoneFichepopUp'>
                     {% if perso.id != null %}
