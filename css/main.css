@@ -410,6 +410,7 @@ div#notif .arrow-down {
   border-radius: 3px 0 0;
   bottom: 0;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+  padding-top: 10px;
 }
 .container .sidebar #widgets-panel {
   font-size: 0.9em;
@@ -440,4 +441,13 @@ div#notif .arrow-down {
 
 #contentDiv {
   padding-top: 10px;
+}
+.sidebar .panel a {
+  color: black;
+}
+.sidebar .panel {
+  color: black;
+}
+.sidebar a.iconeBtn {
+  color: black;
 }

@@ -98,21 +98,14 @@
 
       <div id="widgets-panel">
 
-        <div class="panel panel-default">
-          <div class="panel-heading" ng-click="">
-            <h3 class="panel-title">
-              <span class="fa fa-caret-down"></span>
-              Menu
-            </h3>
-          </div>
-          <div class="panel-body" align="center">
+          <div align="center">
             <div class="btn-group btn-group-sm">
             	<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
 				{{ include("button/forum_btm.html.twig") }}
 	            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
             </div>
           </div>
-        </div>
+          <p/>
 
         {{ include("composant/sidebar_list_partie_std.html.twig") }}
 
