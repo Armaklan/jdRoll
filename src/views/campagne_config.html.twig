@@ -46,6 +46,9 @@
 			.categorie {
 				background-color: {{ campagne_config.sidebar_color }};
 			}
+			.sidebar {
+				background-color: {{ campagne_config.sidebar_color }};
+			}
 		{% endif %}
 
 		{% if campagne_config.link_color != '' %}
@@ -66,6 +69,12 @@
             }
 			.categorie a.btn {
 				color:black;
+			}
+			.sidebar a {
+				color: black;
+			}
+			.sidebar .panel {
+				color: black;
 			}
 		{% endif %}
 	{% endif %}

@@ -238,8 +238,9 @@ $(function() {
                 </div>
             </div>
 
+			<div class="col-sm-12">
                 <input type="hidden" name="campagne_id" id="campagne_id" value="{{ campagne.campagne_id }}">
-
+				
                 <fieldset class="titled-box">
 					<legend>Comportements</legend>
 
@@ -383,9 +384,13 @@ $(function() {
 		    	 placeholder="Information de la sidebar" rows="20">{{ campagne.sidebar_text }}</textarea>
 	    </div>
 
+	    </div>
+
 		<input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>
+
+
 
 {% endblock %}
 
