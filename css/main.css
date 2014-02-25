@@ -4,8 +4,8 @@
 	border-radius: 15px;
 	font-size: 0.9em;
 	margin-bottom: 1em;
-    border: 1px solid #c5c5c5;
-    box-shadow: 1px 1px 8px #888;
+  border: 1px solid #c5c5c5;
+  box-shadow: 1px 1px 8px #888;
 }
 
 .sidebar li {
@@ -187,7 +187,6 @@ div#notif {
     position: fixed;
     top: 12px;
     right: 15px;
-    z-index: 990;
 }
 .notifHide {
     display: none;

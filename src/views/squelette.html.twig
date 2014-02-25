@@ -88,16 +88,21 @@
 	    <div class="row">
 	    	<div class="col-sm-12 col-xs-12 col-md-9 col-lg-10 maxheight" id="contentDiv">  	
 
-          	{% block precontent %}
-          	{% endblock %}
-         	 <p></p>
+          		{% block precontent %}
+          		{% endblock %}
+
+         	 	<p></p>
+
 	    		{% block content %}
 				    Content of the page...
 				{% endblock %}
+
 	    	</div>
+
 	    	{% block sidebar_large %}
                 {{ render(url('sidebar_std_large')) }}
             {% endblock %}
+            
 	    </div>
 	</div>
 
@@ -129,7 +134,7 @@
 		    	$('.maxheight').css({'height':($(window).height() - 50)+'px'});
 		    	$('.maxheight').css({'overflow':'auto'});
 			} else {
-				$('.maxheight').css({'height':'100%'});
+				//$('.maxheight').css({'height':'100%'});
 				$('.maxheight').css({'overflow':'visible'});
 			}
 		    $(window).resize(function(){
@@ -137,7 +142,7 @@
 		    		$('.maxheight').css({'height':($(window).height() - 50)+'px'});
 		    		$('.maxheight').css({'overflow':'auto'});
 				} else {
-					$('.maxheight').css({'height':'100%'});
+					//$('.maxheight').css({'height':'100%'});
 					$('.maxheight').css({'overflow':'visible'});
 				}
 		    });
