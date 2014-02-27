@@ -515,3 +515,40 @@ fieldset[disabled] .btn-notifs.active {
   color: #d9534f;
   background-color: #fff;
 }
+
+.vignet-row {
+  text-align: center;
+  margin-top: 10px;
+}
+.vignet-row:before,
+.vignet-row:after {
+  display: table;
+  content: " ";
+}
+
+.vignet-row:after {
+  clear: both;
+}
+
+.vignet-row:before,
+.vignet-row:after {
+  display: table;
+  content: " ";
+}
+
+.vignet-row:after {
+  clear: both;
+}
+
+.vignet {
+  background-color: #F3F3F3;
+  border-radius: 15px;
+  width: 170px;
+  float: left;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  position: relative;
+}
