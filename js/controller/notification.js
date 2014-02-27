@@ -22,7 +22,8 @@ var notifControllerImpl = function() {
 	// Clear notification zone
 	var setToNoMsg = function() {
 	    $("#notifNumber").text("0");
-	    $("#notifIndicator").removeClass("btn-danger");
+	    $("#notifIndicator").removeClass("btn-notifs");
+	    $("#notifIndicator").addClass("btn-default");
 	    $("#msg-zone").text("");
 	}
 
