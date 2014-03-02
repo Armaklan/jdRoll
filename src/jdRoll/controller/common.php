@@ -135,7 +135,7 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 		$filename = $file->getClientOriginalName();
 		$ext = explode("/",$file->getClientMimeType())[1];
 		$filename = sha1($filename . microtime()) . "." . $ext;
-		$file->move(__DIR__.'/../files', $filename);
+		$file->move(__DIR__.'/../../../files/', $filename);
 	}
 	return $app->path('homepage') . "files/" . $filename;
 })->bind("upload");

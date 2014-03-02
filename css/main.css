@@ -424,6 +424,8 @@ div#notif .arrow-up {
   bottom: 0;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
   padding-top: 10px;
+  position: fixed;
+  right: 0;
 }
 .container .sidebar #widgets-panel {
   font-size: 0.9em;
@@ -460,12 +462,13 @@ div#notif .arrow-up {
 }
 .sidebar .panel {
   color: black;
+  font-size: 0.9em !important;
 }
 .sidebar a.iconeBtn {
   color: black;
 }
 
-.sidebar .icon-bell-alt {
+.sidebar .panel .icon-bell-alt {
   color: #F24444;
 }
 
@@ -515,40 +518,7 @@ fieldset[disabled] .btn-notifs.active {
   color: #d9534f;
   background-color: #fff;
 }
-
-.vignet-row {
-  text-align: center;
-  margin-top: 10px;
-}
-.vignet-row:before,
-.vignet-row:after {
-  display: table;
-  content: " ";
-}
-
-.vignet-row:after {
-  clear: both;
-}
-
-.vignet-row:before,
-.vignet-row:after {
-  display: table;
-  content: " ";
-}
-
-.vignet-row:after {
-  clear: both;
-}
-
-.vignet {
-  background-color: #F3F3F3;
-  border-radius: 15px;
-  width: 170px;
-  float: left;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-  position: relative;
-}
+blockquote {
+  font-size: 14px;
+}	
+	
