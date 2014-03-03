@@ -31,6 +31,7 @@ module.exports = function(grunt) {
 	        			'js/controller/draft.js', 
 	        			'js/controller/notification.js',
 	        			'js/controller/ui.js',
+	        			'js/controller/dicer.js',
 	        			'js/controller/campagne_modal.js'
 	        		]
 	      		}

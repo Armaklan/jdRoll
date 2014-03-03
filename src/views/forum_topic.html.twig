@@ -87,7 +87,7 @@
 			{% if topic.is_closed == 0 or is_mj %}
 				{% if campagne_id == 0 or perso.id != null or is_mj or topic.is_private == 2 %}
 					{% if campagne_id != 0 %}
-					<tr>
+					<tr id="quickDicerRow">
 						<td>
 						</td>
 						<td>
@@ -99,7 +99,7 @@
 							    <div class="form-group">
 							    	<input type="text" class="form-control" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 							    </div>
-							    <button type="submit" class="btn btn-default" onClick="return callLaunchDiceQuick();">Lancer les dés</button>
+							    <button type="submit" class="btn btn-default" onClick="return uiDicer.dicerLaunch({{ topic.id }});">Lancer les dés</button>
                                 <br>
                                 <b>Résultats : </b>
 							    <span id="resultatDicerQuick">
@@ -194,20 +194,5 @@ function quote(id) {
 	tinyMCE.get('content').setContent(tinyMCE.get('content').getContent() + text);
 }
 
-function callLaunchDiceQuick() {
-	param=$('#dicerParamQuick').val();
-	description=$('#dicerDescriptionQuick').val();
-	$.ajax({
-		type: "POST",
-		url: "{{ path('dicer', {"campagne_id" : campagne_id, "topic_id" : topic.id}) }}",
-		data: {param: param, description: description},
-		error: function() { alert("Jet de dé impossible"); },
-		success: function(retour){
-            $('#resultatDicerQuick').append('<br>');
-			$('#resultatDicerQuick').append(retour);
-		}
-	});
-	return false;
-}
 </script>
 {% endblock %}
