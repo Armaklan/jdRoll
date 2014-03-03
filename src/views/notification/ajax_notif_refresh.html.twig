@@ -5,7 +5,6 @@
 		    type: "GET",
 		    url: "{{ path('notifications_ajax') }}",
 		    success: function(msg){
-		    	console.log('ok ajax');
 				$('#notificationCenter').html(msg.content);
 				$('#notifNumber').html(msg.nb_notif);
 				if(msg.nb_notif > 0) {

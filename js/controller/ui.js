@@ -7,6 +7,8 @@
  */
 var uiControllerImpl = function() {
 
+    var client;
+
     function activateSelect2() {
        $('.select2').select2({width: 'element'});
     }
@@ -28,10 +30,29 @@ var uiControllerImpl = function() {
         });
     }
 
+
+    function activateZeroClipboard() {
+        ZeroClipboard.config( { moviePath: BASE_PATH + '/vendor/zeroclipboard/ZeroClipboard.swf' } );
+        client = new ZeroClipboard( $("#btn-upload-copy"));
+    }
+
+    function associateCopyBtn() {
+        client.on( "load", function(client) {
+          
+        });
+        client.on( "complete", function(client, args) {
+            // `this` is the element that was clicked
+            alert("Url copié dans le presse papier ");
+        });
+
+    }
+
     return {
         activateUi : function() {
             activateSelect2();
             activateSidebarLayout();
+            activateZeroClipboard();
+            associateCopyBtn();
         }
     };
 };
