@@ -2,13 +2,12 @@
 
 {% block content %}
 
-	{% if (error != "") %}
-	    <div class="alert alert-error">
-	    	{{ error }}
-	    </div>
-    {% endif %}
-
-	<form role="form" class="form-horizontal" action="{{ path('campagne_save')  }}" method="POST">
+	<form role="form" class="form-horizontal form-general" action="{{ path('campagne_save')  }}" method="POST">
+		{% if (error != "") %}
+		    <div class="alert alert-error">
+		    	{{ error }}
+		    </div>
+	    {% endif %}
 
 	    <div class="form-group pull-right page-btn">
 		    <button type="submit" class="btn btn-primary">
