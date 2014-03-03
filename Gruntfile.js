@@ -29,7 +29,8 @@ module.exports = function(grunt) {
 	        			'js/controller/campagne.js', 
 	        			'js/controller/chat.js', 
 	        			'js/controller/draft.js', 
-	        			'js/controller/notification.js'
+	        			'js/controller/notification.js',
+	        			'js/controller/ui.js'
 	        		]
 	      		}
 	    	}
