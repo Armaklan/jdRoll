@@ -107,6 +107,10 @@
 	    </div>
 	</div>
 
+	{% block notes %}
+		{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+	{% endblock %}
+
 	{% block specificJs %}
 
 	{% endblock %}

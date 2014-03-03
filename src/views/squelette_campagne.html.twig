@@ -36,15 +36,23 @@
 	{% endif %}
 {% endblock %}
 
+{% block notes %}
+	{% if campagne_id != 0 %}
+	    {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
+	{% else %}
+		{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+	{% endif %}
+{% endblock %}
+
 {% block specificJs %}
 
 	{{render(url("list_perso_js", {campagne_id: campagne_id} )) }}
 
 	{% if campagne_id != 0 %}
 		{{ render(url("print_dicer", {campagne_id : campagne_id}) ) }}
-                {% include("composant/dicerHelp.html.twig") %}
-                {% include("composant/help/theming.html.twig") %}
-        {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
+            {% include("composant/dicerHelp.html.twig") %}
+            {% include("composant/help/theming.html.twig") %}
+	        {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
 		{% if not is_mj %}
 			{{ render(url("perso_popup", {campagne_id : campagne_id}) ) }}
 		{% endif %}
