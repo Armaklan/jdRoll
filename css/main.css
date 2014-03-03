@@ -525,3 +525,13 @@ blockquote {
   margin-top: 50px;
   padding-right: 20px;
 }
+
+#enregResult {
+  text-align: right;
+  float: right;
+  padding-right: 15px;
+  font-weight: bold;
+}
+#enregResult i {
+  font-size: 1.3em;
+}
