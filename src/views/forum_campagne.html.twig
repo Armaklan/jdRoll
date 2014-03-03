@@ -45,9 +45,9 @@
 		</div>
 	    {% if campagne_id > 0 %}
 	        {% if is_favoris %}
-	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn"><i class="icon-star"></i></a>
+	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn" data-campagne-id="{{campagne_id}}"><i class="icon-star"></i></a>
 	        {% else %}
-	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn notFavorised"><i class="icon-star-empty"></i></a>
+	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn notFavorised" data-campagne-id="{{campagne_id}}"><i class="icon-star-empty"></i></a>
 	        {% endif %}
 	    {% endif %}
 	    

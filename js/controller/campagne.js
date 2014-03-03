@@ -23,6 +23,19 @@ var campagneControllerImpl = function() {
         }
     }
 
+    function favorised(campagne, statut) {
+        $.ajax({
+            type: "POST",
+            url: BASE_PATH + "/campagne/favoris",
+            data: {campagne: campagne, statut: statut},
+            success: function(msg){},
+            error: function(msg) {}
+        });
+    }
+
+
+
+
     return {
         onAdminOpenChanged : function() {
             $('#admMode').click(function () {
@@ -40,9 +53,26 @@ var campagneControllerImpl = function() {
                     updateAdminOpen(0);
                 }
             });
+        },
+        onFavorised : function() {
+            $('#favorised').click(function () {
+                campagne_id = $(this).attr("data-campagne-id");
+                if ( $("#favorised").hasClass("notFavorised") ) {
+                    $("#favorised").removeClass("notFavorised");
+                    $('#favorised i').removeClass("icon-star-empty");
+                    $('#favorised i').addClass("icon-star");
+                    favorised(campagne_id, 1);
+                } else {
+                    $("#favorised").addClass("notFavorised");
+                    $('#favorised i').removeClass("icon-star");
+                    $('#favorised i').addClass("icon-star-empty");
+                    favorised(campagne_id, 0);
+                }
+            });
         }
     }
 }
 
 var campagneController = campagneControllerImpl();
 onLoadController.campagnes.push(campagneController.onAdminOpenChanged);
+onLoadController.campagnes.push(campagneController.onFavorised);
