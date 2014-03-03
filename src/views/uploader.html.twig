@@ -55,6 +55,7 @@ function callUpload() {
 		error: function() { alert("Jet de dé impossible"); },
 		success: function(retour){
 			$('#urlUploader').val(retour);
+			$('#btn-upload-copy').click();
 		}
 	});
 	return false;

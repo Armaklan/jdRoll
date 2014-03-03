@@ -38,6 +38,27 @@ var notifControllerImpl = function() {
 	    });
 	}
 
+	function refreshNotif() {
+		$.ajax({
+		    type: "GET",
+		    url: BASE_PATH + "/notification/ajax",
+		    success: function(msg){
+				$('#notificationCenter').html(msg.content);
+				$('#notifNumber').html(msg.nb_notif);
+				if(msg.nb_notif > 0) {
+					$('#notifIndicator').addClass('btn-notifs');
+					$('#notifIndicator').removeClass('btn-default');
+				} else {
+					$('#notifIndicator').removeClass('btn-notifs');
+					$('#notifIndicator').addClass('btn-default');
+				}
+		    },
+		    error: function(msg) {
+
+			}
+		});
+	}
+
 	return {
 
 		// Delete specifique notification.
@@ -82,10 +103,14 @@ var notifControllerImpl = function() {
 				  	}
 			  	}
 			});
+		},
 
+		ajaxRefresh: function() {
+			window.setInterval(refreshNotif, 120000);
 		}
 	}
 
 }
 var notifController = notifControllerImpl();
+onLoadController.generals.push(notifController.ajaxRefresh);
 onLoadController.generals.push(notifController.onClickHorsDiv);
