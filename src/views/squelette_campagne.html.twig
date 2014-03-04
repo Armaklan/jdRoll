@@ -37,10 +37,12 @@
 {% endblock %}
 
 {% block notes %}
-	{% if campagne_id != 0 %}
-	    {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
-	{% else %}
-		{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+	{% if app.session.get('user') != null %}
+		{% if campagne_id != 0 %}
+		    {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
+		{% else %}
+			{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+		{% endif %}
 	{% endif %}
 {% endblock %}
 

@@ -109,7 +109,9 @@
 	</div>
 
 	{% block notes %}
-		{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+		{% if app.session.get('user') != null %}
+			{{ render(url("notes_popup", {campagne_id : 0}) ) }}
+		{% endif %}
 	{% endblock %}
 
 	{% block specificJs %}
