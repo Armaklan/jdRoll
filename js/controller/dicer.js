@@ -9,15 +9,11 @@ var uiDicerImpl = function() {
 
     var baseUrl = BASE_PATH + "/campagne/dicer/" + CAMPAGNE_ID + "/";
 
-    function ajaxLaunchDice(topic_id, param, description, success) {
-        $.ajax({
+    function ajaxLaunchDice(topic_id, param, description) {
+        return $.ajax({
             type: "POST",
             url: baseUrl + topic_id,
             data: {param: param, description: description},
-            error: function() { alert("Jet de dé impossible"); },
-            success: function(retour){
-                success(retour);
-            }
         });
     }
 
@@ -40,7 +36,10 @@ var uiDicerImpl = function() {
     function dicerLaunch(topic_id) {
         param=$('#dicerParamQuick').val();
         description=$('#dicerDescriptionQuick').val();
-        ajaxLaunchDice(topic_id, param, description, function(retour){
+
+        $('#waitingQuickLaunch').removeClass('hide');
+        ajaxLaunchDice(topic_id, param, description).
+        done(function(retour){
             $('#resultatDicerQuick').html(retour);
 
             var text = 'Vous avez lancé ' + param + ' et obtenu : ' + retour + '<br>'
@@ -52,14 +51,23 @@ var uiDicerImpl = function() {
                 '    <td>' + text + '</td>' + 
                 '</tr>'
             );
+        }).
+        fail(function() {
+            $('#resultatDicerQuick').html("Une erreur s'est produite.");
+        }).
+        always(function() {
+            $('#waitingQuickLaunch').addClass('hide');
         });
+
         return false;
     }
 
     function dicerModalLaunch() {
         param=$('#dicerParam').val();
         description=$('#dicerDescription').val();
-        ajaxLaunchDice(0, param, description, function(retour){
+        $('#waitingLaunch').removeClass('hide');
+        ajaxLaunchDice(0, param, description).
+        then(function(retour){
 
                 $('#resultatDicer').html(retour);
                 var strDate = getNowDate();
@@ -72,7 +80,13 @@ var uiDicerImpl = function() {
                     '    <td>' + retour + '</td>' +
                     '</tr>'
                 );
-        });
+        }).
+        fail(function() {
+            $('#resultatDicer').html("Une erreur s'est produite.");
+        }).
+        always(function() {
+            $('#waitingLaunch').addClass('hide');
+        });;
         return false;
     }
 
