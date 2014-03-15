@@ -10,80 +10,100 @@ var chatControllerImpl = function() {
 
 	var scrollBar = false;
 	var isFirstLoad = true;
-	var reloadTime = 2000;
+	var reloadTime = 1500;
 	var lastMsgs = '';
+	var container;
 	var lastMsgId = 0;
-	var waitForMsg = 0;
+	var msgDivHeight = 300;
 
+
+	function isAutoScrollOn(content) {
+		if(container[0].scrollTop == ( content.height() - msgDivHeight )) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function initialLoad() {
+		var msgs = '';
+		var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
+		var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
+		msgs = before + "</tr>" + lastMsg + after;
+
+
+		lastMsgs = msgs;
+
+		$("#text").html(msgs);
+	}
+
+	function appendMsg() {
+		$("#tableChat tr:last").after(lastMsg);
+	}
+
+	function deleteMsg(deleted) {
+		deleted.forEach(function(rowId) {
+			$('#chat_tr_' + rowId.messageId).remove();
+		});
+	}
+
+	function scrollToBottom(isAutoScroll) {
+		var height = $('#messages_content').height() - msgDivHeight;
+
+		if(isAutoScroll === true) {
+			container[0].scrollTop = container[0].scrollHeight;
+		}
+	}
+
+	function addScrollbar() {
+		if(scrollBar != true) {
+			container.animate({scrollTop: container[0].scrollHeight},2000);
+			scrollBar = true;
+		}
+	}
 
 	function getMessages() {
-		if(waitForMsg == 0)
-		{
-			waitForMsg = 1;
-			$.ajax({
-				type: "GET",
-				url: BASE_PATH + "/chat/last", 
-				timeout: 5000,
-				data: {isFirst: isFirstLoad, lastId: lastMsgId},
-				success: function(msg){
-					if( $("#text").html() != msg ) {
+		$.ajax({
+			type: "GET",
+			url: BASE_PATH + "/chat/last", 
+			timeout: 5000,
+			data: {isFirst: isFirstLoad, lastId: lastMsgId}
+		}).
+		done(function(msg){
+				if( $("#text").html() != msg ) {
 
-						var completeLoad = true;
-						var container = $('#text');
-						var content = $('#messageContent');
-						var height = content.height()-300;
-						var toBottom;
+					var completeLoad = true;
+					var container = $('#text');
+					var content = $('#messageContent');
 
-						if(container[0].scrollTop == height)
-							toBottom = true;
-						else
-							toBottom = false;
+					var isAutoScroll = isAutoScrollOn(content);
+				
+					lastMsgId = msg.last_id.trim();
+					lastMsg = msg.last_msg;
+
+					if(isFirstLoad) {
+						initialLoad();
+					} else {
+						appendMsg();
 						
-						deleted = msg.deleted;
-						lastMsgId = msg.last_id.trim();
-						lastMsg = msg.last_msg;
-
-						if(isFirstLoad) {
-							var msgs = '';
-							var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
-							var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
-							msgs = before + "</tr>" + lastMsg + after;
-
-
-							lastMsgs = msgs;
-
-							$("#text").html(msgs);
-						} else {
-							$("#tableChat tr:last").after(lastMsg);
-						}
-
-						deleted.forEach(function(rowId) {
-							$('#chat_tr_' + rowId.messageId).remove();
-						});
-
-						content = $('#messages_content');
-						height = content.height()-300;
-
-						if(toBottom == true)
-								container[0].scrollTop = container[0].scrollHeight
-
-						if(scrollBar != true) {
-								container.animate({scrollTop: container[0].scrollHeight},2000);
-							scrollBar = true;
-						}
 					}
-								
-					waitForMsg = 0;
-					if(isFirstLoad)
-						isFirstLoad = false;
-						
-				},
-				error: function(msg) {
-					waitForMsg = 0;
+					deleteMsg(msg.deleted);
+					
+					scrollToBottom(isAutoScroll);
+					addScrollbar();
+
+					isFirstLoad = false;
+					
 				}
-			});
-			
-		}
+		}).
+		always(function() {
+			setTimeout(getMessages,reloadTime);
+		});
+	}
+
+	function activateChat() {
+		container = $('#text');
+		getMessages();
 	}
 
 	function getOnline() {
@@ -147,8 +167,7 @@ var chatControllerImpl = function() {
 		},
 
 		initMessage: function() {
-			getMessages();
-			window.setInterval(getMessages, reloadTime);
+			activateChat();
 		},
 
 		initOnline: function() {
