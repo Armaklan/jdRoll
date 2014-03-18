@@ -43,6 +43,10 @@ class NotificationService {
     public function insertNotif($user_id, $title, $content, $url, $type, $target_id) {
         $nbNotif = 0;
 
+        // FIXIT - Contournement mis en place suite à des urls différentes accédant à la même plateforme (Bug Killian)
+        $url = str_replace("/jdRoll/", "/", $url);
+        $content = str_replace("/jdRoll/", "/", $content);
+
         if( ($type == "MSG") || ($type == "PERSO") ) {
             $sql = "SELECT count(*) as nb 
             FROM notif 
