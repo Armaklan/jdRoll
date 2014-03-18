@@ -8,14 +8,14 @@
 	    </div>
     {% endif %}
 
-    	<div class="row" style="text-align: right">
+    	<div class="col-md-12" style="text-align: right">
     		<a href="{{ path('messagerie_new_to', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-reply-all"></i> Envoyer un MP</a>
 			{% if isAdmin  and currentUser.username != user.username%}
 			<a href="{{ path('profile_edit', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-edit"></i> Editer</a>
 			{% endif %}
     	</div>
 
-    	<div class="row">
+    	<div class="col-md-12">
     		<div class="col-md-2">
     			<img src="{{ user.avatar }}" style="max-width: 130px">
     		</div>

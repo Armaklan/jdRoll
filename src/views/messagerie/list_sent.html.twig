@@ -1,10 +1,10 @@
 <form role="form" action="{{ path('messagerie_delete_my_select') }}" method="post" id="msg_sent">
-        <a class="btn btn-danger-ssctrl" onClick="if(onBtnDangerClick()){$('msg_sent').submit()} else {return false;}">
+        <a class="btn btn-danger-ssctrl" onClick="onBtnDangerClick('#msg_sent')">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </a><p></p>
         <table class="table-striped table-condensed table-bordered messageTable" width="100%">
 		<tr>
-                        <th width="20px"><input type="checkbox" class="checkAll" onClick="selectAll('#msg_sent')"></th>
+        <th width="20px"><input type="checkbox" class="checkAll" onClick="selectAll('#msg_sent')"></th>
 			<th>
 				<input type="hidden" class="filterIndex" value="HEADER">
 				Sujet
@@ -27,7 +27,7 @@
 		{% endfor %}
 	</table>
         <br>
-        <a class="btn btn-danger-ssctrl" onClick="if(onBtnDangerClick()){$('msg_sent').submit()} else {return false;}">
+        <a class="btn btn-danger-ssctrl" onClick="onBtnDangerClick('#msg_sent')">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </a>
 </form>

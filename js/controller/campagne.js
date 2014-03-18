@@ -14,7 +14,7 @@ var campagneControllerImpl = function() {
                 type: "POST",
                 url: BASE_PATH + "/campagne/admin_open",
                 data: {
-                    id: CAMPAGNE_ID,       
+                    id: CAMPAGNE_ID,
                     state: state
                 },
                 success: function(msg){},
@@ -22,6 +22,7 @@ var campagneControllerImpl = function() {
             });
         }
     }
+
 
     function favorised(campagne, statut) {
         $.ajax({
