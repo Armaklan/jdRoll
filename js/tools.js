@@ -74,7 +74,3 @@ function alarm(joueur, campagne) {
     });
 }
 
-$('.iconeBtn').tooltip();
-$('.colorpicker').colorpicker();
-
-$(".focus-elt").focus();
