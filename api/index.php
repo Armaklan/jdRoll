@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 require __DIR__.'/src/jdRoll/service/dicer/dicer.php';
 require __DIR__.'/src/jdRoll/service/dicer/JetElt.php';
