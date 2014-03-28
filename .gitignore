@@ -13,3 +13,4 @@ files/
 composer.phar
 composer.lock
 web/lib/*
+web/css
