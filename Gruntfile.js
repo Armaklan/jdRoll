@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
     var request = require('request');
     
@@ -71,23 +72,26 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true,
                 },
+            },
+            less: {
+                files: ['web/less/*.less'],
+                tasks: ['less']
             }
+
+        },
+        less: {
+          development: {
+            files: {
+              "web/css/layout.css": 'web/less/layout.less'
+            }
+          }
         },
         uglify: {
             my_target: {
                 files: {
-                    'js/controller.min.js': [
+                    'web/js/jdroll-angular.min.js': [
                         'js/tinymce_conf.js',
-                        'js/controller/onload.js',
-                        'js/controller/campagne.js',
-                        'js/controller/chat.js',
-                        'js/controller/draft.js',
-                        'js/controller/notification.js',
-                        'js/controller/ui.js',
-                        'js/controller/dicer.js',
-                        'js/controller/campagne_modal.js',
-                        'js/tools.js'
-                    ]
+                        'js/app/**/*.js'                    ]
                 }
             }
         }
@@ -96,8 +100,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('prepare', ['bower']);
     grunt.registerTask('dev', ['php']);
-    grunt.registerTask('dist', ['uglify']);
-    grunt.registerTask('default', ['concurrent:serve']);
+    grunt.registerTask('dist', ['less','uglify']);
+    grunt.registerTask('default', ['less','concurrent:serve']);
 
 };
 
