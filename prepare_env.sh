@@ -1,6 +1,5 @@
 npm install
-bower install &
-cd api
-curl -s http://getcomposer.org/installer | php
+bower install
+cp api/config.dist.yml api/config.yml
 php composer.phar install
 php composer.phar dumpautoload -o

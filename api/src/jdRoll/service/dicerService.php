@@ -1,6 +1,12 @@
 <?php
 namespace jdRoll\service;
 
+require __DIR__.'/dicer/dicer.php';
+require __DIR__.'/dicer/JetElt.php';
+require __DIR__.'/dicer/Dice.php';
+require __DIR__.'/dicer/Group.php';
+require __DIR__.'/dicer/StaticValue.php';
+
 class Jet {
 
 	public $type;

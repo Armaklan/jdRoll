@@ -1,6 +1,5 @@
 # Symfony directories
 vendor/
-*/logs/*
 */cache/*
 *.db
 files/*
@@ -10,7 +9,9 @@ jdroll.sublime-project
 jdroll.sublime-workspace
 node_modules/
 files/
-composer.phar
 composer.lock
 web/lib/*
 web/css
+api/config.yml
+logs/*
+cache
