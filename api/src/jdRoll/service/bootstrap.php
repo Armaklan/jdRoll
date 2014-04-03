@@ -17,42 +17,39 @@ use jdRoll\service\resetPwdService;
 /*
     Définition des services
 */
-$app['dbService'] = function ($app) {
-    return new DbService($app['db']);
-};
-$app['userService'] = function ($app) {
+$app['service.user'] = function ($app) {
     return new UserService($app['db'], $app['session']);
 };
-$app['persoService'] = function ($app) {
+$app['service.perso'] = function ($app) {
     return new PersoService($app['db'], $app['session']);
 };
-$app['campagneService'] = function ($app) {
-    return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService']);
+$app['service.campagne'] = function ($app) {
+    return new CampagneService($app['db'], $app['session'], $app['service.perso'], $app['service.user']);
 };
-$app['sectionService'] = function ($app) {
+$app['service.forum.section'] = function ($app) {
     return new SectionService($app['db'], $app['session']);
 };
-$app['topicService'] = function ($app) {
+$app['service.forum.topic'] = function ($app) {
     return new TopicService($app['db'], $app['session'], $app['monolog']);
 };
-$app['postService'] = function ($app) {
+$app['service.forum.post'] = function ($app) {
     return new PostService($app['db'], $app['session'], $app['monolog']);
 };
-$app['dicerService'] = function ($app) {
+$app['service.dicer'] = function ($app) {
     return new DicerService($app['db'], $app['session']);
 };
-$app['chatService'] = function ($app) {
+$app['service.chat'] = function ($app) {
     return new ChatService($app['db'], $app['session']);
 };
-$app['messagerieService'] = function ($app) {
-    return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
+$app['service.messagerie'] = function ($app) {
+    return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['service.user'], $app['mailer']);
 };
-$app['notificationService'] = function ($app) {
-    return new NotificationService($app['db'], $app['monolog'], $app['userService'], $app['topicService'], $app['campagneService']);
+$app['service.notification'] = function ($app) {
+    return new NotificationService($app['db'], $app['monolog'], $app['service.user'], $app['service.forum.topic'], $app['service.campagne']);
 };
-$app['absenceService'] = function ($app) {
+$app['service.absence'] = function ($app) {
     return new AbsenceService($app['db'], $app['session']);
 };
-$app['resetPwdService'] = function ($app) {
-    return new resetPwdService($app['db'], $app['session'],$app['messagerieService']);
+$app['service.password.reset'] = function ($app) {
+    return new resetPwdService($app['db'], $app['session'],$app['service.messagerie']);
 };

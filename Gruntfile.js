@@ -39,7 +39,6 @@ module.exports = function(grunt) {
                         function(req,res,next) {
                             if (req.url.substring(0,5) == '/api/'){
                                 var targetUrl = 'http://localhost:8001/'+req.url.substring(5);
-                                console.log(targetUrl);
                                 request(targetUrl, function (err, response, body) {
                                     if (!err && response.statusCode == 200) {
                                         res.end(body);

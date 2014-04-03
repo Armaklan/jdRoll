@@ -1,9 +1,7 @@
 <?php
-include("dicer.php");
-include("JetElt.php");
-include("Dice.php");
-include("Group.php");
-include("StaticValue.php");
+namespace jdRoll\dicer;
+
+use jdRoll\dicer\Dicer;
 
 $dicer = new Dicer();
 echo "<p> Resultat  (D6) : " . $dicer->parse("d6") . "</p>";

@@ -1,4 +1,6 @@
 <?php
+namespace jdRoll\dicer;
+
 /**
  * Standard jet element
  *

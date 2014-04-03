@@ -1,11 +1,8 @@
 <?php
 namespace jdRoll\service;
 
-require __DIR__.'/dicer/dicer.php';
-require __DIR__.'/dicer/JetElt.php';
-require __DIR__.'/dicer/Dice.php';
-require __DIR__.'/dicer/Group.php';
-require __DIR__.'/dicer/StaticValue.php';
+use jdRoll\dicer\Dicer;
+
 
 class Jet {
 
@@ -45,7 +42,7 @@ class DicerService {
 		}
 
 
-        $dicer = new \Dicer();
+        $dicer = new Dicer();
         $result = $dicer->parse($param);
 
 		$this->insertDice($campagne_id, $result, $description);

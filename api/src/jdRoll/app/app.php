@@ -75,6 +75,5 @@ $app["debug"] = $app['config']['general']['debug'];
 
 require __DIR__.'/../service/bootstrap.php';
 require __DIR__.'/../controller/bootstrap.php';
-require __DIR__.'/route.php';
 
 return $app;

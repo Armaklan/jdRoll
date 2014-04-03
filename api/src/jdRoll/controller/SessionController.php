@@ -26,4 +26,12 @@ class SessionController
     {
         return new JsonResponse("Index de l'API REST");
     }
+
+    public function loginAction() {
+
+    }
+
+    public function logoutAction() {
+        
+    }
 }

@@ -1,4 +1,8 @@
 <?php
+namespace jdRoll\dicer;
+
+use jdRoll\dicer\JetElt;
+
 /**
  * Static element in Jet
  *

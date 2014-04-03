@@ -23,7 +23,7 @@
           <!--[if lt IE 7]>
               <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
           <![endif]-->
-	<div class="navbar navbar-inverse navbar-fixed-top" ng-controller="MenuController">
+	<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -70,7 +70,7 @@
               </li>
             </ul>
 				<div class="navbar-right">
-					<div class="btn-group" ng-show=showHideAuthForm()>
+					<div class="btn-group" ng-show="!authentInfo.isLogged">
         			 <ul>
 							<li class="dropdown navbar-form">
         			      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
@@ -82,13 +82,13 @@
                   </li>
                 </ul>
         		  </div>
-					<div class="navbar-form navbar-right" ng-hide=showHideAuthForm()>
+					<div class="navbar-form navbar-right" ng-hide="!authentInfo.isLogged">
   			        <div class="btn btn-danger">
                   <i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
                 </div>
                 <div class="btn-group">
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-user"></i>{{getCurrentUserName()}}<span class="caret"></span>
+							     <i class="fa fa-user"></i><span ng-bind="authentInfo.username"></span><span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a ng-href="#/profil">Mon Profil</a></li>
@@ -237,9 +237,10 @@
 
 	<script src="js/app/config.js"></script>
 	<script src="js/app/app.js"></script>
-	<script src="js/app/services/session.js"></script>
+	<script src="js/app/services/SessionService.js"></script>
+  <script src="js/app/services/UserService.js"></script>
 	<script src="js/app/controllers/AuthController.js"></script>
-	<script src="js/app/controllers/MenuController.js"></script>
+	<script src="js/app/controllers/MainController.js"></script>
   <script src="js/app/directives/sidebar.js"></script>
 	<script src="js/app/directives/userControl.js"></script>
 	

@@ -2,6 +2,8 @@
 
 use jdRoll\controller\SessionController;
 
-$app['session.controller'] = $app->share(function() use ($app) {
-    return new SessionController($app['session'], $app['monolog']);
+$app['controller.session'] = $app->share(function() use ($app) {
+    return new SessionController($app['session'], $app['monolog'], $app['service.user']);
 });
+
+require __DIR__.'/route.php';

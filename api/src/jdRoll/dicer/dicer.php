@@ -1,4 +1,10 @@
 <?php
+namespace jdRoll\dicer;
+
+use jdRoll\dicer\Dice;
+use jdRoll\dicer\Group;
+use jdRoll\dicer\StaticValue;
+
 /**
  * Description of dicer
  *

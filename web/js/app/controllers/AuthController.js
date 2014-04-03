@@ -1,44 +1,21 @@
 
-app.controller('AuthenticationController',function($rootScope,$http,$scope,$location,SessionService,UserService) {
+app.controller('AuthenticationController',function($scope,$location,SessionService) {
 
-		$rootScope.message = '';
-		$rootScope.errorMessage = '';
+		$scope.logout=function(){		
+			SessionService.logout();
+		};
 
-		 $scope.logout=function()
-		 {		
-			 SessionService.username ='';
-			 SessionService.isLogged = false;
-			 SessionService.isAdmin = false;
-			 UserService.deleteUserSession(function(){
+        $scope.authenticateUser= function(){
+			SessionService.login($scope.login, $scope.password).
+			then(function() {
 				$location.path('/');
-			 });
-			  
-		 
-		 }
-		 
-         $scope.authenticateUser= function(){
-		
-			var postData = {};
-			postData.login = $scope.login;
-			postData.password = $scope.password;
-			$scope.login = '';
-			$scope.password = '';
-		 
-			UserService.authenticateUser(postData,function(data){
-		 
-				$rootScope.message = "";
-				SessionService.isLogged = true;
-				SessionService.username = data.username;
-				SessionService.isAdmin = data.profil == 0 ? true : false;
-                $location.path('/');
-                
-			},function(){
-				$rootScope.message = "Login ou mot de passe incorrect";
+			}).catch(function() {
+				$scope.message = "Login ou mot de passe incorrect";
 			});
-		}
+		};
 		
 		$scope.resetUserPassword= function(){
-		 
+		/*
 			var postData = {};
 			postData.login = $scope.login;
 			UserService.resetUserPassword(postData,function(data){
@@ -51,6 +28,6 @@ app.controller('AuthenticationController',function($rootScope,$http,$scope,$loca
 				$rootScope.errorLevel = data.data.level;
 				$rootScope.errorMessage = data.data.message;
 				
-			});
-		}
+			});*/
+		};
 });
