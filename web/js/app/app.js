@@ -1,4 +1,12 @@
-var app = angular.module("jdRollApp", ['ngResource','ngRoute', 'jdRoll.service.session', 'jdRoll.service.user', 'jdRoll.controller.main']);
+var app = angular.module("jdRollApp", [
+	'ngResource',
+	'ngRoute', 
+	'jdRoll.service.session', 
+	'jdRoll.service.user', 
+	'jdRoll.controller.home',
+	'jdRoll.controller.main',
+	'jdRoll.controller.authentification',
+	'jdRoll.controller.menu']);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -21,9 +29,6 @@ app.run(function ($rootScope, $location, SessionService, User) {
 			authentInformation.username = user.username;
 			authentInformation.isAdmin = (user.profil === 0);
 		});
-
-
-
 	}
 
 	if (next.isSecured && !authentInformation.isLogged) {

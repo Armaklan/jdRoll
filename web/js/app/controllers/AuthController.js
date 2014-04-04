@@ -1,5 +1,5 @@
-
-app.controller('AuthenticationController',function($scope,$location,SessionService) {
+angular.module("jdRoll.controller.authentification", ["jdRoll.service.session"]).
+controller('AuthenticationController',function($scope,$location,SessionService) {
 
 		$scope.logout=function(){		
 			SessionService.logout();
