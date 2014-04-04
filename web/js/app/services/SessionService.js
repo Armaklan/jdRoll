@@ -30,7 +30,7 @@ service('SessionService', function($http) {
         service.authentInformation.username = "";
         service.authentInformation.isAdmin = false;
         $http({
-            method: 'POST',
+            method: 'GET',
             url: 'api/logout'
         });
     };

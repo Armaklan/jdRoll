@@ -30,7 +30,7 @@ class UserController
             $user = $this->user->getCurrent();
             return new JsonResponse($user);
         } catch (\Exception $e){
-            return new \Exception("Non authentifié", 403);
+            return new JsonResponse(null);
         }
     }
 

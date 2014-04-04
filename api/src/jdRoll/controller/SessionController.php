@@ -37,11 +37,12 @@ class SessionController
             return new JsonResponse($user);
         } catch (\Exception $e) {
             $this->logger->addInfo("Not authorized for : " . $payload->username);
-            return new \Exception($e->getMessage(), 403);
+            throw new \Exception($e->getMessage(), 401);
         }
     }
 
     public function logoutAction() {
-        
+        $this->user->logout();
+        return new JsonReponse("Logout success");
     }
 }

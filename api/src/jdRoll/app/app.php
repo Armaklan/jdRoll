@@ -3,6 +3,7 @@
 require_once __DIR__.'/bootstrap.php';
 
 use Silex\Application;
+use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 $app = new Application();
@@ -76,9 +77,10 @@ $app->error(function (\Exception $e, $code) use($app) {
     } catch (\Exception $e) {
         // Nothing => No error log if monologer is out
     }
-    return new JsonResponse(array("error" => $e->getMessage()), $code);    
+    return new JsonResponse(array("error" => $e->getMessage()), $e->getCode());    
 });
 
+ErrorHandler::register(false);
 
 /**
  * General configuration
