@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-connect-proxy');
 
     var request = require('request');
     
@@ -34,33 +35,34 @@ module.exports = function(grunt) {
                 port: 8000,
                 base: 'web',
                 keepalive: true,
-                middleware : function(connect, options) {
-                    return [
-                        function(req,res,next) {
-                            if (req.url.substring(0,5) == '/api/'){
-                                var targetUrl = 'http://localhost:8001/'+req.url.substring(5);
-                                request(targetUrl, function (err, response, body) {
-                                    if (!err && response.statusCode == 200) {
-                                        res.end(body);
-                                    } else {
-                                        res.statusCode = response.statusCode;
-                                        res.end();
-                                    }
-                                });
-                            } else {
-                                return next();
-                            }
-                        },
-                        connect.static(require('path').resolve('web'))
-                    ];
+                  middleware: function (connect, options) {
+                     var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+                     return [
+                        // Include the proxy first
+                        proxy,
+                        // Serve static files.
+                        connect.static(options.base),
+                        // Make empty directories browsable.
+                        connect.directory(options.base)
+                     ];
                   }
-              }
+              },
+              proxies: [
+                {
+                    context: '/api',
+                    host: 'localhost',
+                    port: 8001,
+                    rewrite: {
+                        '^/api': '',
+                    }
+                }
+              ]
             }
         },
         concurrent: {
-            serve: ['watch', 'connect', 'php'],
+            serve: ['server', 'php'],
             options: {
-                limit: 5,
+                limit: 3,
                 logConcurrentOutput: true
             }
         },
@@ -96,6 +98,14 @@ module.exports = function(grunt) {
         }
 
     });
+
+    grunt.registerTask('server', function (target) {
+        grunt.task.run([
+            'configureProxies:server',
+            'connect:server'
+        ]);
+    });
+
 
     grunt.registerTask('prepare', ['bower']);
     grunt.registerTask('dev', ['php']);

@@ -14,11 +14,13 @@ class UserService {
 
 	private $db;
 	private $session;
+	private $logger;
 
-	public function __construct($db, $session)
+	public function __construct($db, $session, $logger)
     {
         $this->db = $db;
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     public function getNbUser() {
@@ -31,41 +33,55 @@ class UserService {
         return $this->db->fetchColumn($sql, array(), 0);
     }
 
-	public function login($login, $password) {
-		$sql = "SELECT * FROM user WHERE username = ?";
-	    $user = $this->db->fetchAssoc($sql, array($login));
+	public function login($username, $password) {
+		$sql = "SELECT 
+			user.id, 
+			user.username,
+			user.mail,
+			user.avatar,
+			user.description,
+			user.profil,
+			user.subscribe_date,
+			user.birthDate,
+			user.titre, 
+			last_action.time as last_activity
+		    FROM user
+		    LEFT OUTER JOIN
+		    last_action
+		    ON
+		    user.id = last_action.user_id
+		    WHERE username = :username
+		    AND password = :password";
+		
+		$user = $this->db->fetchAssoc($sql, array(
+			'username' => $username,
+			'password' => md5($password)));
 
 	    if($user == null)  {
-	    	throw new \Exception('Login incorrect');
+	    	throw new \Exception('Login or password incorrect');
+	    } else {
+	    	$this->session->set('user', array('id' => $user['id'], 'login' => $user['username']));
+	    	$this->logger->addInfo("Authentification de  : " . $this->session->get('user')['login']);
+	    	$this->updateLastActionTime();
 	    }
-		if($user['password'] != md5($password)) {
-	    	throw new \Exception('Mots de passe incorrect');
-	    }
-
-	    $this->session->set('user', array('id' => $user['id'], 'login' => $user['username'], 'avatar' => $user['avatar']));
-	    $this->updateLastActionTime();
+    
+	    return $user;
 	}
 
 	public function logout() {
 		$this->session->set('user', null);
 	}
 
-	public function getCurrentUser() {
+	public function getCurrent() {
 		$sessionUser = $this->session->get('user');
+		//$this->logger->addInfo("Reauthent de  : " . $this->session->get('user')['login']);
 		if ($sessionUser == null) {
+			$this->logger->addInfo("No user in session");
 			throw new \Exception('Non authentifié');
 		} else {
-			$login = $sessionUser['login'];
-			$sql = "SELECT * FROM user WHERE username = ?";
-	    	$user = $this->db->fetchAssoc($sql, array($login));
-			if($user['birthDate'] != null)
-			{
-				if($user['birthDate'] == '0000-00-00')
-					$user['birthDate'] = null;
-				else
-					$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
-			}
-	    	return $user;
+			$username = $sessionUser['login'];
+			$this->logger->addInfo("Memorize username : " . $username);
+			return $this->getByUsername($username);
 		}
 	}
 
@@ -134,7 +150,17 @@ class UserService {
 	}
 
 	public function getByUsername($username) {
-		$sql = "SELECT user.*, last_action.time as last_activity
+		$sql = "SELECT 
+					user.id, 
+					user.username,
+					user.mail,
+					user.avatar,
+					user.description,
+					user.profil,
+					user.subscribe_date,
+					user.birthDate,
+					user.titre, 
+					last_action.time as last_activity
                     FROM user
                     LEFT OUTER JOIN
                     last_action
@@ -144,10 +170,10 @@ class UserService {
 	    $user = $this->db->fetchAssoc($sql, array($username));
 		if($user['birthDate'] != null)
 		{
-				if($user['birthDate'] == '0000-00-00')
-					$user['birthDate'] = null;
-				else
-					$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
+			if($user['birthDate'] == '0000-00-00')
+				$user['birthDate'] = null;
+			else
+				$user['birthDate'] = date("d/m/Y", strtotime($user['birthDate']));
 		}
 	    return $user;
 	}

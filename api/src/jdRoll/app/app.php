@@ -3,7 +3,6 @@
 require_once __DIR__.'/bootstrap.php';
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 $app = new Application();
 
@@ -31,7 +30,7 @@ $app['session.db_options'] = array(
         'db_time_col'   => 'session_time',
 );
 $app['session.storage.handler'] = $app->share(function () use ($app) {
-    return new PdoSessionHandler(
+    return new Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
             $app['db']->getWrappedConnection(),
             $app['session.db_options'],
             $app['session.storage.options']

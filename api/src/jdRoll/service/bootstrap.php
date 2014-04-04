@@ -18,7 +18,7 @@ use jdRoll\service\resetPwdService;
     Définition des services
 */
 $app['service.user'] = function ($app) {
-    return new UserService($app['db'], $app['session']);
+    return new UserService($app['db'], $app['session'], $app['monolog']);
 };
 $app['service.perso'] = function ($app) {
     return new PersoService($app['db'], $app['session']);

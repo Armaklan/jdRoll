@@ -2,11 +2,12 @@ angular.module("jdRoll.service.session", []).
 service('SessionService', function($http) {
     var service = {};
 
-	var authentInformation = {
-		isLogged: false,
-		isAdmin: false,
-		username: ''
-	};
+    service.authentInformation = {
+        isLogged: false,
+        isAdmin: false,
+        hasCheck: false,
+        username: ''
+    };
 
     service.login = function(username, password) {
         return $http({
@@ -17,19 +18,21 @@ service('SessionService', function($http) {
                 password: password
             }
         }).then(function(response) {
-            authentInformation.isLogged = true;
+            service.authentInformation.isLogged = true;
+            service.authentInformation.username = response.data.username;
+            service.authentInformation.isAdmin = response.data.profil === 0;
             return response.data;
         });
     };
 
     service.logout = function() {
-        authentInformation.isLogged = false;
-        authentInformation.username = "";
-        authentInformation.isAdmin = false;
+        service.authentInformation.isLogged = false;
+        service.authentInformation.username = "";
+        service.authentInformation.isAdmin = false;
     };
 
     service.getAuthentInformation = function() {
-        return authentInformation;
+        return service.authentInformation;
     };
 
 	return service;

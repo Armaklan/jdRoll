@@ -14,17 +14,20 @@ app.run(function ($rootScope, $location, SessionService, User) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
 	var authentInformation = SessionService.getAuthentInformation();
-	if (next.isSecured && !authenticatedUser.isLogged) {
-		User.get({userId:''}).
-		then(function() {
+
+	if (!authentInformation.hasCheck) {
+		var user = User.current({userId:''}, function(){
 			authentInformation.isLogged = true;
-			authentInformation.username = data.username;
-			authentInformation.isAdmin = (data.profil === 0);
-			$route.reload();
-		}).
-		catch(function(){
-			$location.path('/');
+			authentInformation.username = user.username;
+			authentInformation.isAdmin = (user.profil === 0);
 		});
+
+
+
+	}
+
+	if (next.isSecured && !authentInformation.isLogged) {
+		$location.path('/');
 	}
 	
   });

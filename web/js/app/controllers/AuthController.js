@@ -7,7 +7,7 @@ app.controller('AuthenticationController',function($scope,$location,SessionServi
 
         $scope.authenticateUser= function(){
 			SessionService.login($scope.login, $scope.password).
-			then(function() {
+			then(function(data) {
 				$location.path('/');
 			}).catch(function() {
 				$scope.message = "Login ou mot de passe incorrect";
