@@ -3,8 +3,6 @@ vendor/
 */cache/*
 *.db
 files/*
-*.logs
-*.log
 jdroll.sublime-project
 jdroll.sublime-workspace
 node_modules/
@@ -13,5 +11,5 @@ composer.lock
 web/lib/*
 web/css
 api/config.yml
-logs/*
+logs/*.log
 cache

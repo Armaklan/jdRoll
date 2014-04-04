@@ -17,7 +17,9 @@ In Windows Environment, we recommend to use Git Bash to launch sh script.
 Instruction
 -----------
 
-- Clone this repository
+- Clone this repository in apache vhost
 - Launch ```prepare_env.sh``` (Download composer, install php and web dependencies)
 - Create Mysql Data Schema with ```ddl.sql```
-- Configure database in config.php
+- Configure database in `api/config.yml`
+- Launch `grunt` (generate css, activate livereload, ..)
+- Access to `web/` folder to view apps

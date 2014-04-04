@@ -5,15 +5,10 @@
   "main": "Gruntfile.js",
   "dependencies": {},
   "devDependencies": {
-    "grunt-php": "*",
     "grunt": "*",
-    "grunt-bower-task": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-concurrent": "~0.4.3",
-    "grunt-contrib-connect": "*",
     "grunt-contrib-less": "0.9.0",
-    "grunt-connect-proxy": "0.1.10",
     "request": "*"
   },
   "scripts": {
