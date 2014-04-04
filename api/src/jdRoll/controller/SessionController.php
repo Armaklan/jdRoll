@@ -42,7 +42,11 @@ class SessionController
     }
 
     public function logoutAction() {
-        $this->user->logout();
-        return new JsonReponse("Logout success");
+        try {
+            $this->user->logout();
+        } catch(\Exception $e) {
+           // Nothing
+        }
+        return new JsonResponse("Logout success");
     }
 }
