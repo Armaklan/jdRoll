@@ -1,11 +1,14 @@
 var app = angular.module("jdRollApp", [
     'ngResource',
     'ngRoute',
+    'ui',
+    'ui.bootstrap',
     'jdRoll.service.session',
     'jdRoll.service.user',
     'jdRoll.service.errors',
     'jdRoll.controller.home',
     'jdRoll.controller.main',
+    'jdRoll.controller.games.my',
     'jdRoll.controller.authentification',
     'jdRoll.controller.menu'
 ]);
@@ -16,20 +19,10 @@ app.config(['$routeProvider',
         when('/', {
             templateUrl: 'views/main.html'
         }).
-        when('/profil', {
-            templateUrl: 'views/profile.html',
-            Controller: 'ShowOrdersController',
-            isSecured: false
-        }).
-        when('/forgetPassword', {
-            templateUrl: 'views/resetPwd.html',
-            Controller: 'ShowOrdersController',
-            isSecured: false
-        }).
-        when('/resetPassword/:alea', {
-            templateUrl: 'views/resetPwd.html',
-            Controller: 'ShowOrdersController',
-            isSecured: false
+        when('/games/my', {
+            templateUrl: 'views/my_games.html',
+            controller: 'MyGamesController',
+            isSecured: true
         }).
         otherwise({
             redirectTo: '/'
@@ -52,13 +45,18 @@ app.run(function($rootScope, $location, SessionService, User) {
                     authentInformation.isLogged = true;
                     authentInformation.user = user;
                     authentInformation.isAdmin = (user.profil == 2);
+                } else {
+                    if(next.isSecured) {
+                        $location.path('/');
+                    }
                 }
             }, function() {
                 authentInformation.hasCheck = true;
+                $location.path('/');
             });
         }
 
-        if (next.isSecured && !authentInformation.isLogged) {
+        if (authentInformation.hasCheck && next.isSecured && !authentInformation.isLogged) {
             $location.path('/');
         }
 

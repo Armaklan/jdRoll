@@ -23,7 +23,7 @@ $app['service.user'] = function ($app) {
 $app['service.perso'] = function ($app) {
     return new PersoService($app['db'], $app['session']);
 };
-$app['service.campagne'] = function ($app) {
+$app['service.campaign'] = function ($app) {
     return new CampagneService($app['db'], $app['session'], $app['service.perso'], $app['service.user']);
 };
 $app['service.forum.section'] = function ($app) {

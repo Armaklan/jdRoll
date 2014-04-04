@@ -17,3 +17,10 @@ $app->mount('/api', $main);
 $user = $app['controllers_factory'];
 $user->get('/', "controller.user:currentAction");
 $app->mount('/api/user', $user);
+
+/**
+ * User Controller Routing
+ */
+$games = $app['controllers_factory'];
+$games->get('/{id}', "controller.games:searchAction");
+$app->mount('/api/games', $games);

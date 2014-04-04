@@ -358,208 +358,51 @@ class CampagneService {
 		return $campagne;
 	}
 
-	public function getMyCampagnes() {
-        $user = $this->session->get('user')['id'];
-		return $this->getMjCampagnesByStatut(0,1,3, $user);
-	}
-
-	public function getMjCampagnesByStatut($statut1, $statut2, $statut3, $user) {
-		$sql = "SELECT campagne.* ,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-				) as activity,
-                IFNULL(alert.joueur_id, 0) as campagne_alert
-				FROM campagne
-                LEFT JOIN alert
-                ON
-                    campagne.id = alert.campagne_id
-                AND campagne.mj_id = alert.joueur_id
-				WHERE mj_id = :user
-				AND campagne.statut IN (:statut1, :statut2, :statut3)
-				ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $user, 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3));
-		return $campagne;
-	}
-
-    public function getMyCampagnesWithWaiting() {
-		$sql = "SELECT DISTINCT campagne.id, campagne.name
-			FROM campagne
-                        JOIN campagne_participant cp
-                        ON campagne.id = campagne_id
-			WHERE mj_id = :user
-			AND campagne.statut <> 2
-                        AND cp.statut = 0
-			ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-		return $campagne;
-	}
-
-	public function getMyPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(0, 1, 3, 1);
-	}
-
-    public function getMyWaitingPjCampagnes() {
-            return $this->getMyPjCampagneByStatut(0, 1, 3, 0);
-	}
-
-
-        public function getMyPjCampagneByStatut($statut1, $statut2, $statut3, $cpstatut) {
+	public function getMyCampagnes($user) {
             $sql = "SELECT distinct
-		campagne.*, user.username as username,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
+                campagne.*, 
+                user.username as username,
+                ( SELECT
+                    max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+                    FROM
+                    sections
+                    JOIN topics
+                    ON sections.id = topics.section_id
+                    LEFT JOIN read_post
+                    ON read_post.topic_id = topics.id
+                    AND read_post.user_id = :user
+                    LEFT JOIN can_read
+                    ON can_read.topic_id = topics.id
+                    AND can_read.user_id = :user
+                    WHERE
+                    sections.campagne_id = campagne.id
+                    AND (
+                        (topics.is_private <> 1)
+                        OR
+                        (campagne.mj_id = :user)
+                        OR
+                        (can_read.topic_id IS NOT NULL)
+                    )
                 ) as activity,
                  IFNULL(alert.joueur_id, 0) as campagne_alert
-		FROM campagne
-		JOIN campagne_participant as cp
-		ON cp.campagne_id = campagne.id
-		JOIN user ON user.id = campagne.mj_id
+        FROM campagne
+        LEFT JOIN campagne_participant as cp
+        ON cp.campagne_id = campagne.id
+        LEFT JOIN campagne_favoris as fav
+        ON fav.campagne_id = campagne.id
+        JOIN user 
+        ON user.id = campagne.mj_id
         LEFT JOIN alert
         ON
             campagne.id = alert.campagne_id
-        AND cp.user_id = alert.joueur_id
-		WHERE cp.user_id = :user
-		AND campagne.statut IN (:statut1, :statut2, :statut3)
-        AND cp.statut = :cpstatut
-		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id'], 'statut1' => $statut1, 'statut2' => $statut2, 'statut3' => $statut3, 'cpstatut' => $cpstatut));
-		return $campagne;
-        }
-
-    public function getFavorisedCampagne() {
-            $sql = "SELECT distinct
-		campagne.*, user.username as username,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-                ) as activity,
-                 IFNULL(alert.joueur_id, 0) as campagne_alert
-		FROM campagne
-		JOIN campagne_favoris as cp
-		ON cp.campagne_id = campagne.id
-		JOIN user ON user.id = campagne.mj_id
-        LEFT JOIN alert
-        ON
-            campagne.id = alert.campagne_id
-        AND cp.user_id = alert.joueur_id
-		WHERE cp.user_id = :user
-		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-		return $campagne;
-    }
-
-	public function getMyMjArchiveCampagnes() {
-		$sql = "SELECT * ,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-				) as activity
-				FROM campagne
-				WHERE mj_id = :user
-				AND statut = 2
-				ORDER BY name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-		return $campagne;
-	}
-
-	public function getMyPjArchiveCampagnes() {
-		$sql = "SELECT
-		campagne.*, user.username as username,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-				) as activity
-		FROM campagne
-		JOIN campagne_participant as cp
-		ON cp.campagne_id = campagne.id
-		JOIN user ON user.id = campagne.mj_id
-		WHERE cp.user_id = :user
-		AND campagne.statut = 2
-		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-		return $campagne;
+        AND alert.joueur_id = :user
+        WHERE 
+            cp.user_id = :user
+        OR campagne.mj_id = :user
+        OR fav.user_id = :user
+        ORDER BY campagne.name";
+        $campagne = $this->db->fetchAll($sql, array('user' =>$user));
+        return $campagne;
 	}
 
 	private function incrementeNbJoueur($id) {

@@ -1,0 +1,44 @@
+<h2>Mes parties !</h2>
+
+<tabset justified="true">
+
+    <tab ng-repeat="tab in tabset" heading="{{ tab.label }}" active="{{ tab.active }}">
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Parties avec post en attente</h3>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="game in games | filter:tab.search | filter:hasActivity">
+                    {{ game.name }}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Parties en alertes</h3>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1}">
+                    {{ game.name }}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Autres parties </h3>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0}">
+                    {{ game.name }}
+                </div>
+            </div>
+        </div>
+
+    </tab>
+
+
+</tabset>
+

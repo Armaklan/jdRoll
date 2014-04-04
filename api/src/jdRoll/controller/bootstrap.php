@@ -1,8 +1,9 @@
 <?php
 
+use \Symfony\Component\HttpFoundation\Request;
+use jdRoll\controller\GamesController;
 use jdRoll\controller\SessionController;
 use jdRoll\controller\UserController;
-use \Symfony\Component\HttpFoundation\Request;
 
 $mustBeLogged = function (Request $request) use ($app) {
     if (!isLog($app)) {
@@ -31,5 +32,10 @@ $app['controller.session'] = $app->share(function() use ($app) {
 $app['controller.user'] = $app->share(function() use ($app) {
     return new UserController($app['session'], $app['monolog'], $app['service.user']);
 });
+
+$app['controller.games'] = $app->share(function() use ($app) {
+    return new GamesController($app['session'], $app['monolog'], $app['service.campaign']);
+});
+
 
 require __DIR__.'/route.php';
