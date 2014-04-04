@@ -4,12 +4,16 @@
 /**
  * Session Controller Routing
  */
-$app->get('/', "controller.session:indexAction");
-$app->get('/', "controller.session:indexAction");
-$app->post('/login', "controller.session:loginAction");
-$app->get('/logout', "controller.session:logoutAction");
+$main = $app['controllers_factory'];
+$main->get('/', "controller.session:indexAction");
+$main->get('/', "controller.session:indexAction");
+$main->post('/login', "controller.session:loginAction");
+$main->get('/logout', "controller.session:logoutAction");
+$app->mount('/api', $main);
 
 /**
  * User Controller Routing
  */
-$app->get('/user', "controller.user:currentAction");
+$user = $app['controllers_factory'];
+$user->get('/', "controller.user:currentAction");
+$app->mount('/api/user', $user);

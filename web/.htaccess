@@ -1,0 +1,5 @@
+SetEnv PHP_VER 5_4
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api app.php [L]
