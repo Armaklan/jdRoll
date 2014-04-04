@@ -37,7 +37,7 @@ class SessionController
             return new JsonResponse($user);
         } catch (\Exception $e) {
             $this->logger->addInfo("Not authorized for : " . $payload->username);
-            return new JsonResponse($e->getMessage(), 403);
+            return new \Exception($e->getMessage(), 403);
         }
     }
 
