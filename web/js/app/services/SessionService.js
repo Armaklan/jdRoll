@@ -6,7 +6,7 @@ service('SessionService', function($http) {
         isLogged: false,
         isAdmin: false,
         hasCheck: false,
-        username: ''
+        user: ''
     };
 
     service.login = function(username, password) {
@@ -19,15 +19,15 @@ service('SessionService', function($http) {
             }
         }).then(function(response) {
             service.authentInformation.isLogged = true;
-            service.authentInformation.username = response.data.username;
-            service.authentInformation.isAdmin = response.data.profil === 0;
+            service.authentInformation.user = response.data;
+            service.authentInformation.isAdmin = (response.data.profil == 2);
             return response.data;
         });
     };
 
     service.logout = function() {
         service.authentInformation.isLogged = false;
-        service.authentInformation.username = "";
+        service.authentInformation.user = {};
         service.authentInformation.isAdmin = false;
         $http({
             method: 'GET',

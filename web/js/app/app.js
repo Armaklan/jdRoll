@@ -47,11 +47,14 @@ app.run(function($rootScope, $location, SessionService, User) {
             var user = User.current({
                 userId: ''
             }, function() {
+                authentInformation.hasCheck = true;
                 if(user.username) {
                     authentInformation.isLogged = true;
-                    authentInformation.username = user.username;
-                    authentInformation.isAdmin = (user.profil === 0);
+                    authentInformation.user = user;
+                    authentInformation.isAdmin = (user.profil == 2);
                 }
+            }, function() {
+                authentInformation.hasCheck = true;
             });
         }
 
