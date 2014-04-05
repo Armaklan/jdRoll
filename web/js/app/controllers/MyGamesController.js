@@ -12,19 +12,22 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game']).
                 label: "En-préparation",
                 search: {
                     statut: "3"
-                }
+                },
+                active: false
             },
             {
                 label: "En-Cours",
                 search: {
                     statut: "0"
-                }
+                },
+                active: true
             },
             {
                 label: "Archivée",
                 search: {
                     statut: "2"
-                }
+                },
+                active: false
             }
         ];
 

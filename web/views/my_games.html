@@ -3,38 +3,57 @@
 <tabset justified="true">
 
     <tab ng-repeat="tab in tabset" heading="{{ tab.label }}" active="{{ tab.active }}">
-
         <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Parties avec post en attente</h3>
-            </div>
             <div class="panel-body">
-                <div ng-repeat="game in games | filter:tab.search | filter:hasActivity">
-                    {{ game.name }}
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Parties avec post en attente</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:hasActivity">
+                            <a ng-href="test">
+                                <div class="game-vignette">
+                                    <img ng-src="{{game.banniere}}"><br>
+                                    {{ game.name }}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Parties en alertes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1}">
+                            <a ng-href="test">
+                                <div class="game-vignette">
+                                    <img ng-src="{{game.banniere}}"><br>
+                                    {{ game.name }}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Autres parties </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0}">
+                            <a ng-href="test">
+                                <div class="game-vignette">
+                                    <img ng-src="{{game.banniere}}"><br>
+                                    {{ game.name }}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Parties en alertes</h3>
-            </div>
-            <div class="panel-body">
-                <div ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1}">
-                    {{ game.name }}
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Autres parties </h3>
-            </div>
-            <div class="panel-body">
-                <div ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0}">
-                    {{ game.name }}
-                </div>
-            </div>
         </div>
 
     </tab>
