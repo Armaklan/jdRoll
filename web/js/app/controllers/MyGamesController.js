@@ -9,25 +9,28 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game']).
 
         $scope.tabset = [
             {
-                label: "En-préparation",
-                search: {
-                    statut: "3"
-                },
-                active: false
-            },
-            {
                 label: "En-Cours",
                 search: {
                     statut: "0"
-                },
-                active: true
+                }
             },
             {
-                label: "Archivée",
+                label: "Favorites",
+                search: {
+                    is_favoris: "1"
+                }
+            },
+            {
+                label: "En-préparations",
+                search: {
+                    statut: "3"
+                }
+            },
+            {
+                label: "Archivées",
                 search: {
                     statut: "2"
-                },
-                active: false
+                }
             }
         ];
 

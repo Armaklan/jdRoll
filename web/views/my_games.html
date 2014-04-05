@@ -7,11 +7,14 @@
             <div class="panel-body">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Parties avec post en attente</h3>
+                        <h3 class="panel-title">
+                            Parties avec post en attente
+                            <span class="pull-right fa fa-asterisk" />
+                        </h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:hasActivity">
-                            <a ng-href="test">
+                            <a ng-href="#/forum/{{game.id}}">
                                 <div class="game-vignette">
                                     <img ng-src="{{game.banniere}}"><br>
                                     {{ game.name }}
@@ -23,11 +26,13 @@
 
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Parties en alertes</h3>
+                        <h3 class="panel-title">
+                        Parties en alertes
+                        <span class="pull-right fa fa-bell" /></h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1}">
-                            <a ng-href="test">
+                            <a ng-href="#/forum/{{game.id}}">
                                 <div class="game-vignette">
                                     <img ng-src="{{game.banniere}}"><br>
                                     {{ game.name }}
@@ -43,7 +48,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" ng-repeat="game in games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0}">
-                            <a ng-href="test">
+                            <a ng-href="#/forum/{{game.id}}">
                                 <div class="game-vignette">
                                     <img ng-src="{{game.banniere}}"><br>
                                     {{ game.name }}

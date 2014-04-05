@@ -384,7 +384,8 @@ class CampagneService {
                         (can_read.topic_id IS NOT NULL)
                     )
                 ) as activity,
-                 IFNULL(alert.joueur_id, 0) as campagne_alert
+                 IFNULL(alert.joueur_id, 0) as campagne_alert,
+                 IFNULL(fav.user_id, 0) as is_favoris
         FROM campagne
         LEFT JOIN campagne_participant as cp
         ON cp.campagne_id = campagne.id
