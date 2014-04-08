@@ -3,7 +3,7 @@ service('User', function($resource) {
 
 
    return $resource('api/user/:userId', {userId:'@id'}, {
-       current: {method: 'GET' }
+       current: {method: 'GET', url:'api/user/current' }
    });
 
 });

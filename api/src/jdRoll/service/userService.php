@@ -225,7 +225,7 @@ class UserService {
 		return implode(',', $users);
 	}
 
-        public function getAllUsers() {
+    public function getAllUsers() {
 		$sql = "SELECT user.*, last_action.time as last_activity
                         FROM user
                         LEFT JOIN last_action

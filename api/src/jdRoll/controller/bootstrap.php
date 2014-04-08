@@ -30,7 +30,7 @@ $app['controller.session'] = $app->share(function() use ($app) {
 });
 
 $app['controller.user'] = $app->share(function() use ($app) {
-    return new UserController($app['session'], $app['monolog'], $app['service.user']);
+    return new UserController($app['session'], $app['monolog'], $app['service.user'], $app['service.absence']);
 });
 
 $app['controller.games'] = $app->share(function() use ($app) {

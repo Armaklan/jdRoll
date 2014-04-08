@@ -327,37 +327,6 @@ class CampagneService {
 		}
 	}
 
-	public function getMyActiveMjCampagnes() {
-		return $this->getActiveMjCampagnes($this->session->get('user')['id']);
-	}
-
-
-	public function getActiveMjCampagnes($id) {
-		return $this->getMjCampagnesByStatut(0,3, 0, $id);
-	}
-
-	public function getMyActivePjCampagnes() {
-		return $this->getMyPjCampagneByStatut(0, 0, 0, 1);
-	}
-
-	public function getActivePjCampagnes($id) {
-		$sql = "SELECT
-		campagne.*, user.username as username, IFNULL(alert.joueur_id, 0) as campagne_alert
-		FROM campagne
-		JOIN campagne_participant as cp
-		ON cp.campagne_id = campagne.id
-		JOIN user ON user.id = campagne.mj_id
-        LEFT JOIN alert
-        ON
-            campagne.id = alert.campagne_id
-        AND cp.user_id = alert.joueur_id
-		WHERE cp.user_id = ?
-		AND campagne.statut = 0
-		ORDER BY campagne.name";
-		$campagne = $this->db->fetchAll($sql, array($id));
-		return $campagne;
-	}
-
 	public function getMyCampagnes($user) {
             $sql = "SELECT distinct
                 campagne.*, 

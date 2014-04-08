@@ -17,7 +17,8 @@ app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         when('/', {
-            templateUrl: 'views/main.html'
+            templateUrl: 'views/main.html',
+            controller: 'HomeController'
         }).
         when('/games/my', {
             templateUrl: 'views/my_games.html',
@@ -37,9 +38,7 @@ app.run(function($rootScope, $location, SessionService, User) {
         var authentInformation = SessionService.getAuthentInformation();
 
         if (!authentInformation.hasCheck) {
-            var user = User.current({
-                userId: ''
-            }, function() {
+            var user = User.current({}, function() {
                 authentInformation.hasCheck = true;
                 if(user.username) {
                     authentInformation.isLogged = true;

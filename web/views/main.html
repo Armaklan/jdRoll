@@ -9,20 +9,64 @@
     </div>
 </div>
 <div class="row well">
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <h2>De la diversité</h2>
-        <p>Du médieval fantastique jusqu'au space opéra, en passant par l'horreur, jdRoll vous permet de vivre des aventures dans des univers et des ambiances variées.</p><p> Ici, point de spécialisation, c'est la diversité qui compte !</p>
-        <p><a class="btn btn-default" href="#">Voir les parties qui recrutent &raquo;</a></p>
+        <p>De la fantasy à la science fiction, en passant par l'horreur ou l'historique. Des jeux de rôles professionnels ou amateurs. Jdroll vous permet de vivre dans des toutes les ambiances et les univers possibles.</p>
+        <p>Ici, pas de spécialisation, c'est la diversité et le plaisir de jouer qui comptent !</p>
+        <p><a class="btn btn-primary" href="#">Voir les parties qui recrutent &raquo;</a></p>
     </div>
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <h2>Des rencontres</h2>
-        <p>Jouez avec des joueurs et des conteurs venant de toutes la France. Echangez avec eux via le tchat et le Forum.</p>
-        <p>Au delà d'une simple plateforme de jeu, jdRoll c'est aussi une communauté accueillante et dynamique. </p>
-        <p><a class="btn btn-default" href="#">Voir la liste des membres &raquo;</a></p>
+        <p>Les joueurs et conteurs viennent de toute la France et même d'au-delà. En plus de jouer avec eux vous pouvez partager votre passion avec cette communauté sur le forum et le tchat.</p>
+        <p>Au delà d'une simple plate forme de jeu, jdroll est une communauté accueillante et dynamique. </p>
+        <p><a class="btn btn-primary" href="#">Voir la liste des membres &raquo;</a></p>
     </div>
-    <div class="col-lg-4">
-        <h2>Adaptée au PBF</h2>
-        <p>Conçu spécifiquement pour le jeu de rôle par forum, le site offre le maximum de fonctionnalité nécessaire à cette activité : lanceur de dés, galerie de personnages, feuille de personnages, ... </p> <p>La plateforme continue d'ailleurs à évoluée pour répondre aux sollicitations !</p>
-        <p><a class="btn btn-default" href="#">Plus d'information &raquo;</a></p>
+    <div class="col-md-4">
+        <h2>De la spécificité</h2>
+        <p>Conçu spécifiquement pour le jeu de rôle par forum, le site offre un maximum de fonctionnalités nécessaires à cette activité : lanceur de dé, galerie de personnage, feuilles de caractéristiques, sections privées, ...</p> 
+        <p>La plate-forme continue d'ailleurs d'évoluer pour répondre aux demandes des joueurs et meneurs de jeu.</p>
+        <p><a class="btn btn-primary" href="#">Plus d'information &raquo;</a></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-1 game-carousel">
+        <div class="carousel-title" style="text-align: center">
+            <h5>Recrutement en cours</h5>
+        </div>
+        <carousel interval="2000">
+        <slide ng-repeat="game in openGames" active="slide.active" style="height: 200px">    
+            <a ng-href="#/game/{{game.id}}">
+            <img ng-src="{{game.banniere}}" style="margin:auto; max-height: 200px; max-width: 80%;" >
+            <div class="carousel-caption">
+                <h4 ng-bind="game.name"></h4>
+                <p>Dans l'univers <span class="game-name" ng-bind="game.univers"/> par {{game.username}}</p>
+            </div>
+            </a>
+        </slide>
+        </carousel>
+    </div>
+    <div class="col-md-7 ">
+        <fieldset class="titled-box">
+            <legend>Information générales</legend>
+            <b>Derniers inscrits : </b>
+            <a ng-href="#/user/{{user.username}}" ng-repeat-start="user in lastSubscribe" ><span ng-bind="user.username" /></a>
+            <span ng-repeat-end ng-hide="$last">, </span>
+            <span ng-if="lastSubscribe.length == 0">Aucun</span>
+            <p></p>
+            <b>Connectés ses dernières 24 heures : </b>
+            <a ng-href="#/user/{{user.username}}" ng-repeat-start="user in recentConnected" ><span ng-bind="user.username" /></a>
+            <span ng-repeat-end ng-hide="$last">, </span>
+            <span ng-if="recentConnected.length == 0">Aucun</span>
+            <p></p>
+            <b>Actuellement absent : </b>
+            <a ng-href="#/user/{{user.username}}" ng-repeat-start="user in missingUsers" ><span ng-bind="user.username" /></a>
+            <span ng-repeat-end ng-hide="$last">, </span>
+            <span ng-if="missingUsers.length == 0">Aucun</span>
+            <p></p>
+            <b>Anniversaire du jour: </b>
+            <a ng-href="#/user/{{user.username}}" ng-repeat-start="user in birthdayUsers" ><span ng-bind="user.username" /></a>
+            <span ng-repeat-end ng-hide="$last">, </span>
+            <span ng-if="birthdayUsers.length == 0">Aucun</span>
+        </fieldset>
     </div>
 </div>
