@@ -35,7 +35,7 @@ app.config(['$routeProvider',
     }
 ]);
 
-app.run(function($rootScope, $location, SessionService, User) {
+app.run(function($rootScope, $location, SessionService, User, Errors) {
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
 
@@ -61,8 +61,8 @@ app.run(function($rootScope, $location, SessionService, User) {
         }
 
         if (authentInformation.hasCheck && next.isSecured && !authentInformation.isLogged) {
-            $location.path('/');
             Errors.add("Une authentification est nécessaire");
+            $location.path('/');
         }
 
     });
