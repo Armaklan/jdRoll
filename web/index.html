@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!DOCTYPE html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" >
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" > <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" > <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" > <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
-    <meta name="description" content="">
+    <title ng-bind="title">jdRoll - Jeu de rôle par forum</title>
+    <meta name="description" content="Plate-forme de jeu de rôle par forum">
+    <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
+    <link rel="shortcut icon" type="image/x-icon" ng-href="favicon.ico">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="vendor/angular-ui/build/angular-ui.min.css"/>
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
@@ -16,7 +18,7 @@
     <link rel="stylesheet" href="css/layout.css">
     <script src="vendor/modernizr/modernizr.js"></script>
 </head>
-<body xmlns:ng="http://angularjs.org" id="ng-app" ng-app="jdRollApp" ng-controller="MainController" class="waiting-for-angular">
+<body ng-controller="MainController" class="waiting-for-angular">
     <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
