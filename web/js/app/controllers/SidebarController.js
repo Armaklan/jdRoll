@@ -30,8 +30,10 @@ angular.module('jdRoll.controller.sidebar', ['jdRoll.service.game', 'jdRoll.serv
             },
         ];
 
-
-        $scope.games = Game.query({
-            userId: SessionService.getAuthentInformation().user.id
-        });
+        $scope.$watch('authentInfo', function() {
+            $scope.games = Game.query({
+                userId: SessionService.getAuthentInformation().user.id
+            });
+        }, true);
+        
     });

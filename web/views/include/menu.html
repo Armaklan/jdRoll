@@ -1,87 +1,89 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ng-href="#/">jdRoll</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a ng-href="#"><i class="fa fa-home"></i> Accueil</a></li>
-                <li>
-                    <a  ng-href="#/messagerie" id="msgTitle">
-                    <i class="fa fa-envelope"></i> Messagerie
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle"></i> Jouer <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-href="#/games/my">Mes campagnes</a></li>
-                        <li class="divider"></li>
-                        <li><a ng-href="#/campagne/joinlist">Rejoindre une campagne</a></li>
-                        <li><a ng-href="#/campagne/create">Créer une campagne</a></li>
-                        <li class="divider"></li>
-                        <li><a ng-href="#/campagne/all">Toutes les campagnes en-cours</a></li>
-                        <li><a ng-href="#/campagne/archive">Toutes les campagnes archivées</a></li>
-                        <li class="divider"></li>
-                        <li><a ng-href="#/users">Liste des utilisateurs</a></li>
-                    </ul>
-                </li>
-                <li><a ng-href="#/forum"><i class="fa fa-folder-open"></i> Forum</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-circle"></i> Aide <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-href="#/static/guide">Guide</a></li>
-                        <li><a ng-href="#/static/faq">FAQ</a></li>
-                        <li class="divider"></li>
-                        <li><a ng-href="#/static/about">A propos de jdRoll</a></li>
-                        <li class="divider"></li>
-                        <li><a ng-href="#/stats">Quelques statistiques</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-if="authentInfo.isAdmin">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-href="#/campagne/preparation">Campagnes en préparation</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="navbar-right">
-                <div class="navbar-loader" ng-hide="authentInfo.hasCheck">
-                    <img src="img/ajax-loader-black.gif" height="24px"/>
-                </div>
-                <div class="btn-group" ng-if="authentInfo.hasCheck" ng-show="!authentInfo.isLogged">
-                    <ul>
-                        <li class="dropdown navbar-form">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user"></i> Connexion <span class="caret"></span>
-                            </button>
-                            <div class="dropdown-menu auth-box" ng-controller="AuthenticationController">
-                                <div jdroll-authform></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar-form navbar-right" ng-if="authentInfo.isLogged">
-                    <div class="btn btn-danger">
-                        <i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
+        <div class="col-md-12">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ng-href="#/">jdRoll</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a ng-href="#"><i class="fa fa-home"></i> Accueil</a></li>
+                    <li>
+                        <a  ng-href="#/messagerie" id="msgTitle">
+                        <i class="fa fa-envelope"></i> Messagerie
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle"></i> Jouer <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-href="#/games/my">Mes campagnes</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-href="#/campagne/joinlist">Rejoindre une campagne</a></li>
+                            <li><a ng-href="#/campagne/create">Créer une campagne</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-href="#/campagne/all">Toutes les campagnes en-cours</a></li>
+                            <li><a ng-href="#/campagne/archive">Toutes les campagnes archivées</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-href="#/users">Liste des utilisateurs</a></li>
+                        </ul>
+                    </li>
+                    <li><a ng-href="#/forum"><i class="fa fa-folder-open"></i> Forum</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-circle"></i> Aide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-href="#/static/guide">Guide</a></li>
+                            <li><a ng-href="#/static/faq">FAQ</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-href="#/static/about">A propos de jdRoll</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-href="#/stats">Quelques statistiques</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" ng-if="authentInfo.isAdmin">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-href="#/campagne/preparation">Campagnes en préparation</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="navbar-right">
+                    <div class="navbar-loader" ng-hide="authentInfo.hasCheck">
+                        <img src="img/ajax-loader-black.gif" height="24px"/>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> <span ng-bind="authentInfo.user.username"></span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-href="#/profil">Mon Profil</a></li>
-                            <li><a ng-href="#/preferences">Mes Préférences</a></li>
-                            <li><a ng-href="#/absences">Gestion des absences</a></li>
-                            <li><a ng-href="#/logout" ng-controller="AuthenticationController" ng-click=logout()>Se deconnecter</a></li>
+                    <div class="btn-group" ng-if="authentInfo.hasCheck" ng-show="!authentInfo.isLogged">
+                        <ul>
+                            <li class="dropdown navbar-form">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user"></i> Connexion <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu auth-box" ng-controller="AuthenticationController">
+                                    <div jdroll-authform></div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
+                    <div class="navbar-form navbar-right" ng-if="authentInfo.isLogged">
+                        <div class="btn btn-danger">
+                            <i class="fa fa-bell"></i> Notifications <span class="badge">3</span>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> <span ng-bind="authentInfo.user.username"></span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-href="#/profil">Mon Profil</a></li>
+                                <li><a ng-href="#/preferences">Mes Préférences</a></li>
+                                <li><a ng-href="#/absences">Gestion des absences</a></li>
+                                <li><a ng-href="#/logout" ng-controller="AuthenticationController" ng-click=logout()>Se deconnecter</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                </div><!--/.navbar-collapse -->
             </div>
-            </div><!--/.navbar-collapse -->
         </div>
     </div>

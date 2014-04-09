@@ -1,5 +1,5 @@
 angular.module("jdRoll.controller.authentification", ["jdRoll.service.session"]).
-controller('AuthenticationController',function($scope,$location,SessionService) {
+controller('AuthenticationController',function($route, $scope,$location,SessionService) {
 
 		$scope.logout=function(){		
 			SessionService.logout();
@@ -8,7 +8,7 @@ controller('AuthenticationController',function($scope,$location,SessionService) 
         $scope.authenticateUser= function(){
 			SessionService.login($scope.login, $scope.password).
 			then(function(data) {
-				$location.path('/');
+				$route.reload();
 			}).catch(function() {
 				$scope.message = "Login ou mot de passe incorrect";
 			});
