@@ -2,8 +2,8 @@
  * Created by zuberl on 04/04/2014.
  */
 
-angular.module('jdRoll.controller.games.my', ['jdRoll.service.game']).
-    controller('MyGamesController', function($rootScope, $scope, Game){
+angular.module('jdRoll.controller.games.my', ['jdRoll.service.game', 'jdRoll.service.session']).
+    controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
 
@@ -39,6 +39,6 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game']).
         };
 
         $scope.games = Game.query({
-            userId: 1
+            userId: SessionService.getAuthentInformation().user.id
         });
     });
