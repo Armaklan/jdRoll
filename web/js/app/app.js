@@ -10,6 +10,7 @@ var app = angular.module("jdRollApp", [
     'jdRoll.controller.main',
     'jdRoll.controller.sidebar',
     'jdRoll.controller.games.my',
+    'jdRoll.controller.users',
     'jdRoll.controller.authentification',
     'jdRoll.controller.menu'
 ]);
@@ -23,6 +24,10 @@ app.config(['$routeProvider',
         when('/', {
             templateUrl: 'views/main.html',
             controller: 'HomeController'
+        }).
+        when('/users', {
+            templateUrl: 'views/users.html',
+            controller: 'UserController'
         }).
         when('/games/my', {
             templateUrl: 'views/my_games.html',

@@ -1,0 +1,54 @@
+<div class="row col-md-12">
+	<form role="form" class="form-search">
+		<div align="right">
+    		<input type="text" class="input-medium search-query" placeholder="Recherche" ng-model="search.username">
+    	</div>
+    </form>
+</div>
+<div class="row">
+<table class="table table-striped table-hover">
+	<thead>
+		
+		<tr>
+			<th></th>
+			<th>
+				<a ng-click="sort = 'username'; reverse=!reverse">Nom
+				<span ng-show="sort == 'username'">
+					<i class="fa" ng-class="{'fa-sort-desc': reverse, 'fa-sort-asc': !reverse }"></i>
+				</span>
+				</a>
+			</th>
+			<th>
+				<a ng-click="sort = 'subscribe_date'; reverse=!reverse">Date d'inscription
+				<span ng-show="sort == 'subscribe_date'">
+					<i class="fa" ng-class="{'fa-sort-desc': reverse, 'fa-sort-asc': !reverse }"></i>
+				</span>
+				</a>
+			</th>
+			<th>
+				<a ng-click="sort = 'last_activity'; reverse=!reverse">Dernière connexion le
+				<span ng-show="sort == 'last_activity'">
+					<i class="fa" ng-class="{'fa-sort-desc': reverse, 'fa-sort-asc': !reverse }"></i>
+				</span>
+				</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+		<tr ng-repeat="user in users | filter:search | orderBy:sort:reverse" ng-click="showUser(user)">
+			
+			<td class="col-md-1"><img ng-show="user.avatar != ''" ng-src="{{user.avatar}}" alt="{{user.username}}" style="width: 80%" class="img-rounded"></td>
+			<td>
+				<a ng-href="#/user/{{user.username}}">
+				<p ng-bind="user.username" class="user-name user-profil-{{user.profil}}"></p>
+				</a>
+				<p ng-bind="user.titre" class="user-title"></p>
+				
+			</td>
+			<td ng-bind="user.subscribe_date | mysqlDateToIso | date:'dd/MM/yyyy'"></td>
+			<td ng-bind="user.last_activity  | mysqlDateToIso | date : 'dd/MM/yyyy HH:mm' "></td>
+		</tr>
+	</tbody>
+</table>
+</div>

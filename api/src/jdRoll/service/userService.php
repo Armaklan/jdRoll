@@ -236,6 +236,7 @@ class UserService {
 		$users = $this->db->fetchAll($sql);
 		return $users;
 	}
+	
 
 	public function getConnected() {
 		$sql = "SELECT *
