@@ -16,6 +16,9 @@ var app = angular.module("jdRollApp", [
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
+        when('/404', {
+            templateUrl: 'views/404.html'
+        }).
         when('/', {
             templateUrl: 'views/main.html',
             controller: 'HomeController'
@@ -26,7 +29,7 @@ app.config(['$routeProvider',
             isSecured: true
         }).
         otherwise({
-            redirectTo: '/'
+            redirectTo: '/404'
         });
     }
 ]);
@@ -47,6 +50,7 @@ app.run(function($rootScope, $location, SessionService, User) {
                 } else {
                     if(next.isSecured) {
                         $location.path('/');
+                        Errors.add("Une authentification est nécessaire");
                     }
                 }
             }, function() {
@@ -57,6 +61,7 @@ app.run(function($rootScope, $location, SessionService, User) {
 
         if (authentInformation.hasCheck && next.isSecured && !authentInformation.isLogged) {
             $location.path('/');
+            Errors.add("Une authentification est nécessaire");
         }
 
     });
