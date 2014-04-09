@@ -8,6 +8,7 @@ var app = angular.module("jdRollApp", [
     'jdRoll.service.errors',
     'jdRoll.controller.home',
     'jdRoll.controller.main',
+    'jdRoll.controller.sidebar',
     'jdRoll.controller.games.my',
     'jdRoll.controller.authentification',
     'jdRoll.controller.menu'

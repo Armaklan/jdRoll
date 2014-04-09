@@ -354,12 +354,15 @@ class CampagneService {
                     )
                 ) as activity,
                  IFNULL(alert.joueur_id, 0) as campagne_alert,
-                 IFNULL(fav.user_id, 0) as is_favoris
+                 IF(campagne.mj_id = :user, 1, 0)  as is_mj, 
+                 IF(fav.user_id > 0, 1, 0)  as is_favoris,
+                 IF(campagne.statut < 2, 1, 0)  as is_active
         FROM campagne
         LEFT JOIN campagne_participant as cp
         ON cp.campagne_id = campagne.id
         LEFT JOIN campagne_favoris as fav
         ON fav.campagne_id = campagne.id
+        AND fav.user_id = :user
         JOIN user 
         ON user.id = campagne.mj_id
         LEFT JOIN alert
