@@ -55,3 +55,12 @@ app.directive('waitingImg', function() {
     };
 });
  
+app.directive('gamesBox', function() {
+    return {
+        scope: {
+            gamesBox: '='
+        },
+        templateUrl: 'views/directives/games-box.html'
+    };
+});
+ 
