@@ -9,7 +9,7 @@
 var campagneControllerImpl = function() {
 
     function updateAdminOpen(state) {
-        if(CAMPAGNE_ID != 0) {
+        if(CAMPAGNE_ID !== 0) {
             $.ajax({
                 type: "POST",
                 url: BASE_PATH + "/campagne/admin_open",
@@ -48,8 +48,8 @@ var campagneControllerImpl = function() {
                 } else {
                     $("#admMode").addClass("admDisabled");
                     $(".admIcone").addClass("invisible");
-                    $('#admMode i').removeClass("icon-eye-close")
-                    $('#admMode i').addClass("icon-eye-open")
+                    $('#admMode i').removeClass("icon-eye-close");
+                    $('#admMode i').addClass("icon-eye-open");
                     updateAdminOpen(0);
                 }
             });
@@ -70,8 +70,8 @@ var campagneControllerImpl = function() {
                 }
             });
         }
-    }
-}
+    };
+};
 
 var campagneController = campagneControllerImpl();
 onLoadController.campagnes.push(campagneController.onAdminOpenChanged);
