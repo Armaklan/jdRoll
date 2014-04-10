@@ -13,6 +13,18 @@ var uiControllerImpl = function() {
        $('.select2').select2({width: 'element'});
     }
 
+    function activateColorpicker() {
+       $('.colorpicker').colorpicker();
+    }
+
+    function activateTooltip() {
+        $('.iconeBtn').tooltip();
+    }
+    
+    function autofocus() {
+        $(".focus-elt").focus();
+    }
+
     function resizeSidebar() {
         if($(window).width() > 992) {
             $('.maxheight').css({'height':($(window).height() - 50)+'px'});
@@ -53,6 +65,9 @@ var uiControllerImpl = function() {
             activateSidebarLayout();
             activateZeroClipboard();
             associateCopyBtn();
+            activateColorpicker();
+            activateTooltip();
+            autofocus();
         }
     };
 };

@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css?v=20140315_003" type="text/css" media="all">
 
 	<script type="text/javascript">
+		var CAMPAGNE_ID=0;
 		var BASE_PATH = '{{app.request.baseUrl}}';
 		var AUTHENTICATED = "{{app.session.get('user') != null}}";
 		{% if app.session.get('user') != null %}
@@ -71,8 +72,9 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/ui.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/campagne_modal.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/dicer.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
   	{% else %}
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140315_003"></script>
+		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140319_001"></script>
   	{% endif %}
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
@@ -117,8 +119,6 @@
 	{% block specificJs %}
 
 	{% endblock %}
-
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
 
     <a name="bottom"></a>
 

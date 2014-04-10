@@ -5,26 +5,26 @@ function filterTable(idFilter, idTable) {
 		if(currentSearchIndex != "header") {
 			if( currentSearchIndex.indexOf(searchText) > -1) {
 				$(this).css("display", "");
+        $(this).removeClass("hide");
 			} else {
 				$(this).css("display", "none");
+        $(this).addClass("hiding");
 			}
 		}
 	});
 }
 
-function onBtnDangerClick() {
+function onBtnDangerClick(form) {
     bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
-    if(confirmed) {
-        return true;
-    } else {
-        return false;
-    }
-});
+      if(confirmed) {
+          $(form).submit();
+      } 
+  });
 }
 
 function selectAll(formName) {
     var checked = $(formName).find(".checkAll").is(':checked');
-    $(formName).find('input[type=checkbox]').attr('checked', checked);
+    $(formName).find('tr:not(.hiding)').find('input[type=checkbox]').prop('checked', checked);
 }
 
 
@@ -74,7 +74,3 @@ function alarm(joueur, campagne) {
     });
 }
 
-$('.iconeBtn').tooltip();
-$('.colorpicker').colorpicker();
-
-$(".focus-elt").focus();
