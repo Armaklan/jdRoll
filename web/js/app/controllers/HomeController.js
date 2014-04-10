@@ -3,8 +3,14 @@ controller('HomeController',function($rootScope, $scope, Game, User) {
 
     $rootScope.campaignSpace = false;
 
+    $scope.carousselLoading = true;
+
     $scope.openGames = Game.query({
         enlistmentOpen: true
+    });
+
+    $scope.openGames.$promise.then(function() {
+        $scope.carousselLoading = false;
     });
 
     $scope.lastSubscribe = User.query({

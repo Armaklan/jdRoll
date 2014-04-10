@@ -13,25 +13,28 @@
         <h2>De la diversité</h2>
         <p>De la fantasy à la science fiction, en passant par l'horreur ou l'historique. Des jeux de rôles professionnels ou amateurs. Jdroll vous permet de vivre dans des toutes les ambiances et les univers possibles.</p>
         <p>Ici, pas de spécialisation, c'est la diversité et le plaisir de jouer qui comptent !</p>
-        <p><a class="btn btn-primary" href="#">Voir les parties qui recrutent &raquo;</a></p>
+        <p><a class="btn btn-primary" href="#/games/open">Voir les parties qui recrutent &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Des rencontres</h2>
         <p>Les joueurs et conteurs viennent de toute la France et même d'au-delà. En plus de jouer avec eux vous pouvez partager votre passion avec cette communauté sur le forum et le tchat.</p>
         <p>Au delà d'une simple plate forme de jeu, jdroll est une communauté accueillante et dynamique. </p>
-        <p><a class="btn btn-primary" href="#">Voir la liste des membres &raquo;</a></p>
+        <p><a class="btn btn-primary" ng-href="#/users">Voir la liste des membres &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>De la spécificité</h2>
         <p>Conçu spécifiquement pour le jeu de rôle par forum, le site offre un maximum de fonctionnalités nécessaires à cette activité : lanceur de dé, galerie de personnage, feuilles de caractéristiques, sections privées, ...</p> 
         <p>La plate-forme continue d'ailleurs d'évoluer pour répondre aux demandes des joueurs et meneurs de jeu.</p>
-        <p><a class="btn btn-primary" href="#">Plus d'information &raquo;</a></p>
+        <p><a class="btn btn-primary" href="#/about">Plus d'information &raquo;</a></p>
     </div>
 </div>
 <div class="row">
     <div class="col-md-4 col-md-offset-1 game-carousel">
         <div class="carousel-title" style="text-align: center">
-            <h5>Recrutement en cours</h5>
+            <h5>Recrutements en cours</h5>
+        </div>
+        <div class="waiting-img">
+            <img ng-src="img/ajax-loader.gif" ng-show="carousselLoading"/>
         </div>
         <carousel interval="2000">
         <slide ng-repeat="game in openGames" active="slide.active" style="height: 200px">    
