@@ -33,9 +33,7 @@
         <div class="carousel-title" style="text-align: center">
             <h5>Recrutements en cours</h5>
         </div>
-        <div class="waiting-img" ng-show="carousselLoading">
-            <img ng-src="img/ajax-loader.gif"/>
-        </div>
+        <div waiting-img="carousselLoading" />
         <carousel interval="2000">
         <slide ng-repeat="game in openGames" active="slide.active" style="height: 200px">    
             <a ng-href="#/game/{{game.id}}">

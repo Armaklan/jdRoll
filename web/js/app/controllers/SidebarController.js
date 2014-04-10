@@ -5,7 +5,7 @@
 angular.module('jdRoll.controller.sidebar', ['jdRoll.service.game', 'jdRoll.service.session']).
     controller('SidebarController', function($rootScope, $scope, Game, SessionService){
 
-
+        $scope.gamesLoading = true;
         $scope.tabset = [
             {
                 label: "Parties Maitrisées",
@@ -31,8 +31,14 @@ angular.module('jdRoll.controller.sidebar', ['jdRoll.service.game', 'jdRoll.serv
         ];
 
         $scope.$watch('authentInfo', function() {
+            $scope.gamesLoading = true;
+
             $scope.games = Game.query({
                 userId: SessionService.getAuthentInformation().user.id
+            });
+
+            $scope.games.$promise.then(function() {
+                $scope.gamesLoading = false;
             });
         }, true);
         

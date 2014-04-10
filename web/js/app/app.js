@@ -40,7 +40,7 @@ app.config(['$routeProvider',
     }
 ]);
 
-app.run(function($rootScope, $location, SessionService, User, Errors) {
+app.run(function($rootScope, $location, $route, SessionService, User, Errors) {
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
 
@@ -53,6 +53,7 @@ app.run(function($rootScope, $location, SessionService, User, Errors) {
                     authentInformation.isLogged = true;
                     authentInformation.user = user;
                     authentInformation.isAdmin = (user.profil == 2);
+                    $route.reload();
                 } else {
                     if(next.isSecured) {
                         $location.path('/');

@@ -37,3 +37,21 @@ app.directive('autoFillSync', function($timeout) {
       }
    }
 });
+
+app.directive('autoFocus', function($timeout) {
+   return {
+      link: function(scope, elem, attrs, ngModel) {
+          elem.focus();
+      }
+   }
+});
+
+app.directive('waitingImg', function() {
+    return {
+        scope: {
+            waitingImg: '='
+        },
+        templateUrl: 'views/directives/waiting.html'
+    };
+});
+ 

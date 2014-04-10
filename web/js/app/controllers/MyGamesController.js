@@ -6,6 +6,7 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game', 'jdRoll.ser
     controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
 
         $scope.tabset = [
             {
@@ -40,5 +41,9 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game', 'jdRoll.ser
 
         $scope.games = Game.query({
             userId: SessionService.getAuthentInformation().user.id
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
         });
     });

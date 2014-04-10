@@ -25,6 +25,7 @@
                 {{tab.label}}
                 </h3>
             </div>
+            <div waiting-img="gamesLoading" />
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="game in games | filter:tab.search">
                     <a ng-href="#/forum/{{game.id}}">
