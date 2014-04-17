@@ -75,7 +75,7 @@ controller('OpenGamesController', function($rootScope, $scope, Game, SessionServ
             $scope.gamesLoading = false;
         });
 }).
-controller('ArchiveGameController', function($rootScope, $scope, Game, SessionService){
+controller('ArchiveGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
