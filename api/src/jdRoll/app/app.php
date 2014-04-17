@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/bootstrap.php';
 
+use Monolog\Logger;
 use Silex\Application;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,9 +60,18 @@ $app->register(new \Silex\Provider\HttpCacheServiceProvider(), array(
  * Logger
  */
 $app->register(new \Silex\Provider\MonologServiceProvider(), array(
-        'monolog.logfile' => $baseAppDir.'/logs/development.log',
-        'monolog.level' => $app['config']['log']['level']
+        'monolog.logfile' => $baseAppDir.'/logs/development.log'
 ));
+
+
+if($app['config']['log']['level'] == "ERROR") {
+    $app['monolog.level'] = Logger::ERROR;
+} elseif($app['config']['log']['level'] == "INFO") {
+    $app['monolog.level'] = Logger::INFO;
+} else {
+    $app['monolog.level'] = Logger::DEBUG;
+}
+
 
 /**
  * Controller provider
