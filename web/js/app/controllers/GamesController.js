@@ -2,8 +2,8 @@
  * Created by zuberl on 04/04/2014.
  */
 
-angular.module('jdRoll.controller.games.my', ['jdRoll.service.game', 'jdRoll.service.session']).
-    controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
+angular.module('jdRoll.controller.games', ['jdRoll.service.game', 'jdRoll.service.session']).
+controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -46,4 +46,17 @@ angular.module('jdRoll.controller.games.my', ['jdRoll.service.game', 'jdRoll.ser
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
-    });
+}).
+controller('EnlistGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+
+        $scope.games = Game.query({
+            enlistmentOpen: true
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+});

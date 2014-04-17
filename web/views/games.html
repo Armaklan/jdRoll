@@ -1,0 +1,13 @@
+<h2>Partie en cours de recrutement !</h2>
+
+<div class="row col-md-12">
+    <form role="form" class="form-search">
+        <div align="right">
+            <input type="text" class="input-medium search-query" placeholder="Recherche" ng-model="search.name" auto-focus>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div waiting-img="gamesLoading" />
+    <div games-box="game" ng-repeat="game in games | filter:search" />
+</div>

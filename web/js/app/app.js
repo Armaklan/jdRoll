@@ -10,7 +10,7 @@ var app = angular.module("jdRollApp", [
     'jdRoll.controller.home',
     'jdRoll.controller.main',
     'jdRoll.controller.sidebar',
-    'jdRoll.controller.games.my',
+    'jdRoll.controller.games',
     'jdRoll.controller.users',
     'jdRoll.controller.authentification',
     'jdRoll.controller.menu'
@@ -38,6 +38,11 @@ app.config(['$routeProvider',
             templateUrl: 'views/my_games.html',
             controller: 'MyGamesController',
             isSecured: true
+        }).
+        when('/games/enlist', {
+            templateUrl: 'views/games.html',
+            controller: 'EnlistGamesController',
+            isSecured: false
         }).
         otherwise({
             redirectTo: '/404'

@@ -57,6 +57,7 @@ app.directive('waitingImg', function() {
  
 app.directive('gamesBox', function() {
     return {
+        replace: true,
         scope: {
             gamesBox: '='
         },
