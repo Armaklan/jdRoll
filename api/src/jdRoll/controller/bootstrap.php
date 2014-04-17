@@ -1,6 +1,7 @@
 <?php
 
 use \Symfony\Component\HttpFoundation\Request;
+use jdRoll\controller\AbsenceController;
 use jdRoll\controller\GamesController;
 use jdRoll\controller\SessionController;
 use jdRoll\controller\UserController;
@@ -37,5 +38,8 @@ $app['controller.games'] = $app->share(function() use ($app) {
     return new GamesController($app['session'], $app['monolog'], $app['service.campaign']);
 });
 
+$app['controller.absences'] = $app->share(function() use ($app) {
+    return new AbsenceController($app['session'], $app['monolog'], $app['service.absence']);
+});
 
 require __DIR__.'/route.php';

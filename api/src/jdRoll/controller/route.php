@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Session Controller Routing
  */
@@ -17,6 +16,7 @@ $app->mount('/api', $main);
 $user = $app['controllers_factory'];
 $user->get('/', "controller.user:searchAction");
 $user->get('/current', "controller.user:currentAction");
+$user->get('/{id}', "controller.user:getAction");
 $app->mount('/api/user', $user);
 
 /**
@@ -25,3 +25,10 @@ $app->mount('/api/user', $user);
 $games = $app['controllers_factory'];
 $games->get('/', "controller.games:searchAction");
 $app->mount('/api/games', $games);
+
+/**
+ * Absence Controller Routing
+ */
+$absences = $app['controllers_factory'];
+$absences->get('/', "controller.absences:searchAction");
+$app->mount('/api/absences', $absences);

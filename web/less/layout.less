@@ -289,3 +289,38 @@ footer {
     text-align: center;
     padding: 2em;
 }
+
+.title-box {
+    position: relative;
+    margin: 15px 0 0;
+    padding: 50px 10px 15px 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.title-box:after {
+    content: attr(box-title);
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    font-size: 0.8em;
+    width: 14em;
+    background-color: #f5f5f5;
+    color: #9da0a4;
+    min-width: 15%;
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
+}
+
+.avatar-abs {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}

@@ -50,6 +50,16 @@ class UserController
         }
     }
 
+    public function getAction($id) 
+    {
+        try {
+            $user = $this->user->getByUsername($id);
+            return new JsonResponse($user);
+        } catch (\Exception $e){
+            return new JsonResponse("Not found", 204);
+        }
+    }
+
     public function currentAction() 
     {
         try {

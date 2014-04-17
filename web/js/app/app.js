@@ -1,6 +1,7 @@
 var app = angular.module("jdRollApp", [
     'ngResource',
     'ngRoute',
+    'ngSanitize',
     'ui',
     'ui.bootstrap',
     'jdRoll.service.session',
@@ -27,6 +28,10 @@ app.config(['$routeProvider',
         }).
         when('/users', {
             templateUrl: 'views/users.html',
+            controller: 'UserListController'
+        }).
+        when('/user/:id', {
+            templateUrl: 'views/user.html',
             controller: 'UserController'
         }).
         when('/games/my', {

@@ -1,0 +1,72 @@
+<div class="col-md-12" style="text-align: right">
+    <a href="" class="btn btn-primary"><i class="icon-reply-all"></i> Envoyer un MP</a>
+    <a ng-if="authentInfo.idAdmin || authentInformation.user.id == user.id" href="{{ path('profile_edit', {'username' : user.username}) }}" class="btn btn-primary"><i class="icon-edit"></i> Editer</a>
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-8 title-box" box-title="Profil" >
+    <table class="table table-striped table-hover">
+                    <div class="pull-right avatar-abs">
+                        <img src="{{ user.avatar }}" style="max-width: 130px" class="img-rounded">
+                    </div>
+                    <tbody>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de naissance : </td>
+                                <td>{{user.birthDate | mysqlDateToIso | date:'dd/MM/yyyy'}}</td>
+                            </tr>
+                            <tr ng-show="user.titre != ''">
+                                <th>Titre : </td>
+                                <td>{{ user.titre }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date d'inscription</td>
+                                <td>{{ user.subscribe_date  | mysqlDateToIso | date:'dd/MM/yyyy' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de dernière activité</td>
+                                <td>{{ user.last_activity  | mysqlDateToIso | date:'dd/MM/yyyy HH:mm'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</td>
+                                <td ng-bind-html="user.description">
+                                </td>
+                            </tr>
+                    </tbody>
+            </table>
+
+    </div>
+    <div class="col-md-4">
+        <div class="row title-box" box-title="Absences prévues">
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="absence in absences"><a>Du {{ absence.begin_date | mysqlDateToIso | date:'dd/MM/yyyy' }} Au {{ absence.end_date | mysqlDateToIso | date:'dd/MM/yyyy' }}</a></li>
+            </ul> 
+        </div>
+        <div ng-repeat="tab in tabset" class="row title-box" box-title="{{ tab.label }}">
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="campagne in games | filter:tab.search"><a href="/game/campagne.id }}">{{ campagne.name }} ({{ campagne.univers }})</a></li>
+            </ul> 
+        </div>
+
+  
+<!-- {% if not (absences is empty) %}
+    <fieldset class="titled-box">
+        <legend>Absences prévues</legend>
+        <table class="table table-striped table-condensed">
+            <tr>
+                <th>Part le... </th>
+                <th>Revient le ...</th>
+            </tr>
+        
+            {% for absence in absences %}
+            <tr>
+                <td>{{absence.begin_date}}</td>
+                <td>{{absence.end_date}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </fieldset>
+{% endif %} -->
