@@ -31,6 +31,9 @@ class GamesController
         $this->logger->addInfo("Debut search action");
         if($request->get('enlistmentOpen', false) == true) {
             $result = $this->campaign->getOpenCampagne();
+        } elseif ($request->get('statut', false) !== false ) {
+            $statut = $request->get('statut');
+            $result = $this->campaign->getAllCampagneByStatut($statut);
         } else {
             $userId = $request->get('userId');
             $result = $this->campaign->getMyCampagnes($userId);

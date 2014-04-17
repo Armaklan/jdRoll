@@ -44,6 +44,21 @@ app.config(['$routeProvider',
             controller: 'EnlistGamesController',
             isSecured: false
         }).
+        when('/games/open', {
+            templateUrl: 'views/games.html',
+            controller: 'OpenGamesController',
+            isSecured: false
+        }).
+        when('/games/prepa', {
+            templateUrl: 'views/games.html',
+            controller: 'PrepaGamesController',
+            isSecured: true
+        }).
+        when('/games/archive', {
+            templateUrl: 'views/games.html',
+            controller: 'ArchiveGamesController',
+            isSecured: false
+        }).
         otherwise({
             redirectTo: '/404'
         });

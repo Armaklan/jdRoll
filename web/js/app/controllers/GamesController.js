@@ -51,9 +51,52 @@ controller('EnlistGamesController', function($rootScope, $scope, Game, SessionSe
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en cours de recrutement";
 
         $scope.games = Game.query({
             enlistmentOpen: true
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+}).
+controller('OpenGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en cours";
+
+        $scope.games = Game.query({
+            statut: '0'
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+}).
+controller('ArchiveGameController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie archivée";
+
+        $scope.games = Game.query({
+            statut: '2'
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+}).
+controller('PrepaGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en préparation";
+
+        $scope.games = Game.query({
+            statut: '3'
         });
 
         $scope.games.$promise.then(function() {
