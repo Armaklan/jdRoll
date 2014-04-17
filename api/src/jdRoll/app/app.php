@@ -60,6 +60,7 @@ $app->register(new \Silex\Provider\HttpCacheServiceProvider(), array(
  */
 $app->register(new \Silex\Provider\MonologServiceProvider(), array(
         'monolog.logfile' => $baseAppDir.'/logs/development.log',
+        'monolog.level' => $app['config']['log']['level']
 ));
 
 /**
