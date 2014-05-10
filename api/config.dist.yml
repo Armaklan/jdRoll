@@ -7,3 +7,5 @@ database:
     charset: utf8
 general:
     debug: true
+log:
+    level: DEBUG

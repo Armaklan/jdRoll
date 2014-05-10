@@ -2,11 +2,15 @@
  * Created by zuberl on 04/04/2014.
  */
 
-angular.module('jdRoll.controller.games', ['jdRoll.service.game', 'jdRoll.service.session']).
-controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
+(function(angular){
+
+    var module = angular.module('jdRoll.controller.games', ['jdRoll.service.game', 'jdRoll.service.session']);
+
+    module.controller('MyGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
+
 
         $scope.tabset = [
             {
@@ -46,8 +50,8 @@ controller('MyGamesController', function($rootScope, $scope, Game, SessionServic
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
-}).
-controller('EnlistGamesController', function($rootScope, $scope, Game, SessionService){
+    }).
+    controller('EnlistGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -60,8 +64,8 @@ controller('EnlistGamesController', function($rootScope, $scope, Game, SessionSe
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
-}).
-controller('OpenGamesController', function($rootScope, $scope, $modal, Game, SessionService){
+    }).
+    controller('OpenGamesController', function($rootScope, $scope, $modal, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -77,17 +81,17 @@ controller('OpenGamesController', function($rootScope, $scope, $modal, Game, Ses
 
         $scope.open = function(game) {
             var modalInstance = $modal.open({
-              templateUrl: 'views/include/game-modal.html',
-              controller: ModalGameInstController,
-              resolve: {
-                game: function () {
-                  return game;
+                templateUrl: 'views/include/game-modal.html',
+                controller: ModalGameInstController,
+                resolve: {
+                    game: function () {
+                        return game;
+                    }
                 }
-              }
             });
         };
-}).
-controller('ArchiveGameController', function($rootScope, $scope, Game, SessionService){
+    }).
+    controller('ArchiveGameController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -100,8 +104,8 @@ controller('ArchiveGameController', function($rootScope, $scope, Game, SessionSe
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
-}).
-controller('PrepaGamesController', function($rootScope, $scope, Game, SessionService){
+    }).
+    controller('PrepaGamesController', function($rootScope, $scope, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -114,21 +118,82 @@ controller('PrepaGamesController', function($rootScope, $scope, Game, SessionSer
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
-});
+    });
 
 
-var ModalGameInstController = function ($scope, $modalInstance, game) {
+    var ModalGameInstController = function ($scope, $modalInstance, game) {
 
-  $scope.game = game;
+        $scope.game = game;
 
-  $scope.ok = function () {
-    $modalInstance.close();
-  };
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
 
-};
+    };
 
 
+    module.controller('EnlistGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en cours de recrutement";
+
+        $scope.games = Game.query({
+            enlistmentOpen: true
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+    });
+
+    module.controller('OpenGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en cours";
+
+        $scope.games = Game.query({
+            statut: '0'
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+    });
+
+    module.controller('ArchiveGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie archivée";
+
+        $scope.games = Game.query({
+            statut: '2'
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+    });
+
+    module.controller('PrepaGamesController', function($rootScope, $scope, Game, SessionService){
+
+        $rootScope.campaignSpace = false;
+        $scope.gamesLoading = true;
+        $scope.pageTitle="Partie en préparation";
+
+        $scope.games = Game.query({
+            statut: '3'
+        });
+
+        $scope.games.$promise.then(function() {
+            $scope.gamesLoading = false;
+        });
+    });
+
+})(angular);

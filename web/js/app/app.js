@@ -4,6 +4,7 @@ var app = angular.module("jdRollApp", [
     'ngSanitize',
     'ui',
     'ui.bootstrap',
+    'jdRoll.directives',
     'jdRoll.service.session',
     'jdRoll.service.user',
     'jdRoll.service.errors',
