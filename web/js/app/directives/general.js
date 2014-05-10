@@ -1,67 +1,70 @@
-//var app = angular.module("jdRollApp", []);
+(function(angular){
 
-app.directive('resize', function ($window) {
-    return function (scope, element) {
-        var w = angular.element($window);
-        scope.getWindowDimensions = function () {
-            return { 'h': w.height() };
-        };
-        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
-            scope.windowHeight = newValue.h;
+    var module = angular.module("jdRoll.directives.generals", []);
 
-            scope.resizestyle = function () {
-                return { 
-                    'height': (newValue.h - 50) + 'px',
-                };
+    module.directive('resize', function ($window) {
+        return function (scope, element) {
+            var w = angular.element($window);
+            scope.getWindowDimensions = function () {
+                return { 'h': w.height() };
             };
+            scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+                scope.windowHeight = newValue.h;
 
-        }, true);
+                scope.resizestyle = function () {
+                    return {
+                        'height': (newValue.h - 50) + 'px',
+                    };
+                };
 
-        w.bind('resize', function () {
-            scope.$apply();
-        });
-    }
-})
+            }, true);
 
-app.directive('autoFillSync', function($timeout) {
-   return {
-      require: 'ngModel',
-      link: function(scope, elem, attrs, ngModel) {
-          var origVal = elem.val();
-          $timeout(function () {
-              var newVal = elem.val();
-              if(ngModel.$pristine && origVal !== newVal) {
-                  ngModel.$setViewValue(newVal);
-              }
-          }, 500);
-      }
-   }
-});
+            w.bind('resize', function () {
+                scope.$apply();
+            });
+        }
+    })
 
-app.directive('autoFocus', function($timeout) {
-   return {
-      link: function(scope, elem, attrs, ngModel) {
-          elem.focus();
-      }
-   }
-});
+    module.directive('autoFillSync', function($timeout) {
+       return {
+          require: 'ngModel',
+          link: function(scope, elem, attrs, ngModel) {
+              var origVal = elem.val();
+              $timeout(function () {
+                  var newVal = elem.val();
+                  if(ngModel.$pristine && origVal !== newVal) {
+                      ngModel.$setViewValue(newVal);
+                  }
+              }, 500);
+          }
+       }
+    });
 
-app.directive('waitingImg', function() {
-    return {
-        scope: {
-            waitingImg: '='
-        },
-        templateUrl: 'views/directives/waiting.html'
-    };
-});
- 
-app.directive('gamesBox', function() {
-    return {
-        replace: true,
-        scope: {
-            gamesBox: '='
-        },
-        templateUrl: 'views/directives/games-box.html'
-    };
-});
- 
+    module.directive('autoFocus', function($timeout) {
+       return {
+          link: function(scope, elem, attrs, ngModel) {
+              elem.focus();
+          }
+       }
+    });
+
+    module.directive('waitingImg', function() {
+        return {
+            scope: {
+                waitingImg: '='
+            },
+            templateUrl: 'views/directives/waiting.html'
+        };
+    });
+
+    module.directive('gamesBox', function() {
+        return {
+            replace: true,
+            scope: {
+                gamesBox: '='
+            },
+            templateUrl: 'views/directives/games-box.html'
+        };
+    });
+
+})(angular);

@@ -1,33 +1,37 @@
-angular.module("jdRoll.controller.authentification", ["jdRoll.service.session"]).
-controller('AuthenticationController',function($route, $scope,$location,SessionService) {
+(function(angular){
+    var module = angular.module("jdRoll.controller.authentification", ["jdRoll.service.session"]);
 
-		$scope.logout=function(){		
-			SessionService.logout();
-		};
+    module.controller('AuthenticationController',function($route, $scope,$location,SessionService) {
 
-        $scope.authenticateUser= function(){
-			SessionService.login($scope.login, $scope.password).
-			then(function(data) {
-				$route.reload();
-			}).catch(function() {
-				$scope.message = "Login ou mot de passe incorrect";
-			});
-		};
-		
-		$scope.resetUserPassword= function(){
-		/*
-			var postData = {};
-			postData.login = $scope.login;
-			UserService.resetUserPassword(postData,function(data){
+            $scope.logout=function(){
+                SessionService.logout();
+            };
 
-				$rootScope.errorMessage = data.message;
-				$rootScope.errorLevel = data.level;
-				
-			},function(data){
+            $scope.authenticateUser= function(){
+                SessionService.login($scope.login, $scope.password).
+                then(function(data) {
+                    $route.reload();
+                }).catch(function() {
+                    $scope.message = "Login ou mot de passe incorrect";
+                });
+            };
 
-				$rootScope.errorLevel = data.data.level;
-				$rootScope.errorMessage = data.data.message;
-				
-			});*/
-		};
-});
+            $scope.resetUserPassword= function(){
+            /*
+                var postData = {};
+                postData.login = $scope.login;
+                UserService.resetUserPassword(postData,function(data){
+
+                    $rootScope.errorMessage = data.message;
+                    $rootScope.errorLevel = data.level;
+
+                },function(data){
+
+                    $rootScope.errorLevel = data.data.level;
+                    $rootScope.errorMessage = data.data.message;
+
+                });*/
+            };
+    });
+
+})(angular);
