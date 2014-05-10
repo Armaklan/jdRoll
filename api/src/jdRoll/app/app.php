@@ -68,19 +68,19 @@ $app->register(new \Silex\Provider\MonologServiceProvider(), array(
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
 
-/**
- * Error handler
- */
-$app->error(function (\Exception $e, $code) use($app) {
-    try {
-        $app['monolog']->addError("Error handling : " . $e->getMessage());
-    } catch (\Exception $e) {
-        // Nothing => No error log if monologer is out
-    }
-    return new JsonResponse(array("error" => $e->getMessage()), $e->getCode());    
-});
+// /**
+//  * Error handler
+//  */
+// $app->error(function (\Exception $e, $code) use($app) {
+//     try {
+//         $app['monolog']->addError("Error handling : " . $e->getMessage());
+//     } catch (\Exception $e) {
+//         // Nothing => No error log if monologer is out
+//     }
+//     return new JsonResponse(array("error" => $e->getMessage()), $e->getCode());    
+// });
 
-ErrorHandler::register(false);
+// ErrorHandler::register(false);
 
 /**
  * General configuration

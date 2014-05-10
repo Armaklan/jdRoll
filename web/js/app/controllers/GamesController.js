@@ -61,7 +61,7 @@ controller('EnlistGamesController', function($rootScope, $scope, Game, SessionSe
             $scope.gamesLoading = false;
         });
 }).
-controller('OpenGamesController', function($rootScope, $scope, Game, SessionService){
+controller('OpenGamesController', function($rootScope, $scope, $modal, Game, SessionService){
 
         $rootScope.campaignSpace = false;
         $scope.gamesLoading = true;
@@ -74,6 +74,18 @@ controller('OpenGamesController', function($rootScope, $scope, Game, SessionServ
         $scope.games.$promise.then(function() {
             $scope.gamesLoading = false;
         });
+
+        $scope.open = function(game) {
+            var modalInstance = $modal.open({
+              templateUrl: 'views/include/game-modal.html',
+              controller: ModalGameInstController,
+              resolve: {
+                game: function () {
+                  return game;
+                }
+              }
+            });
+        };
 }).
 controller('ArchiveGameController', function($rootScope, $scope, Game, SessionService){
 
@@ -103,3 +115,20 @@ controller('PrepaGamesController', function($rootScope, $scope, Game, SessionSer
             $scope.gamesLoading = false;
         });
 });
+
+
+var ModalGameInstController = function ($scope, $modalInstance, game) {
+
+  $scope.game = game;
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+
+};
+
+

@@ -1,8 +1,6 @@
 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-    <a ng-href="#/forum/{{gamesBox.id}}">
-        <div class="game-vignette" popover-title="{{gamesBox.univers}} par {{gamesBox.username}}" popover="Joueurs : {{gamesBox.nb_joueurs_actuel}} / {{gamesBox.nb_joueurs}}" popover-trigger="mouseenter">
-            {{ gamesBox.name }}<br>
-            <img ng-src="{{gamesBox.banniere}}" >
-        </div>
-    </a>
+    <div class="game-vignette" popover-title="{{gamesBox.univers}} par {{gamesBox.username}}" popover="Joueurs : {{gamesBox.nb_joueurs_actuel}} / {{gamesBox.nb_joueurs}}" popover-trigger="mouseenter">
+        {{ gamesBox.name }}<br>
+        <img ng-src="{{gamesBox.banniere}}" >
+    </div>
 </div>

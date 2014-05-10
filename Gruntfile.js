@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
 
     var request = require('request');
-    
+
     grunt.initConfig({
         watch: {
             src: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
     });
 
 
-    grunt.registerTask('dist', ['less','uglify']);
+    grunt.registerTask('dist', ['less']);
     grunt.registerTask('default', ['less','watch']);
 
 };

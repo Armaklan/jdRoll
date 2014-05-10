@@ -9,5 +9,5 @@
 </div>
 <div class="row">
     <div waiting-img="gamesLoading" />
-    <div games-box="game" ng-repeat="game in games | filter:search" />
+    <div games-box="game" ng-repeat="game in games | filter:search" ng-click="open(game)" />
 </div>
