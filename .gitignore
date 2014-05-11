@@ -10,6 +10,8 @@ files/
 composer.lock
 web/lib/*
 web/css
+web/js/jdroll.min.js
+web/js/templates.min.js
 api/config.yml
 logs/*.log
 cache
