@@ -1,26 +1,25 @@
 {
-    "name": "jdRoll",
-    "version": "1.0.0",
-    "description": "jdRoll\r ======",
-    "main": "Gruntfile.js",
-    "private": true,
-    "scripts": {
-        "preinstall": "php composer.phar update && php composer.phar dumpautoload -o",
-        "install": "bower install",
-        "postinstall": "cp api/config.dist.yml api/config.yml",
-        "start": "grunt default",
-        "dist": "grunt dist"
-    },
-    "dependencies": {},
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "grunt-contrib-less": "0.9.0",
-        "request": "*"
-    },
-    "repository": "",
-    "author": "",
-    "license": "MIT",
-    "readmeFilename": "README.md"
+  "name": "jdRoll",
+  "version": "1.0.0",
+  "description": "jdRoll\r ======",
+  "main": "Gruntfile.js",
+  "private": true,
+  "scripts": {
+    "postinstall": "./bin/prepare.sh",
+    "start": "grunt default",
+    "dist": "grunt dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "^1.3.3",
+    "grunt": "*",
+    "grunt-contrib-less": "0.9.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "request": "*"
+  },
+  "repository": "",
+  "author": "",
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }
