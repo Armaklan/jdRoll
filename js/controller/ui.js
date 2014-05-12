@@ -19,6 +19,7 @@ var uiControllerImpl = function() {
 
     function activateTooltip() {
         $('.iconeBtn').tooltip();
+        $('.popover-elt').popover();
     }
 
     function autofocus() {
@@ -59,15 +60,20 @@ var uiControllerImpl = function() {
 
     }
 
+    function activateCarousel() {
+        $('.carousel-control.right').trigger('click');
+    }
+
     return {
         activateUi : function() {
             activateSelect2();
             activateSidebarLayout();
             activateZeroClipboard();
             associateCopyBtn();
-            activateColorpicker();
             activateTooltip();
             autofocus();
+            activateCarousel();
+            activateColorpicker();
         }
     };
 };

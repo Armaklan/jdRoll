@@ -14,11 +14,28 @@ function filterTable(idFilter, idTable) {
 	});
 }
 
+
+function filterList(idFilter, idTable) {
+	searchText = $(idFilter).val().toLowerCase();
+	$(idTable + " div ").each(function(i){
+		currentSearchIndex = $(this).find('.filterIndex').val().toLowerCase();
+		if(currentSearchIndex != "header") {
+			if( currentSearchIndex.indexOf(searchText) > -1) {
+				$(this).css("display", "");
+        $(this).removeClass("hide");
+			} else {
+				$(this).css("display", "none");
+        $(this).addClass("hiding");
+			}
+		}
+	});
+}
+
 function onBtnDangerClick(form) {
     bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
       if(confirmed) {
           $(form).submit();
-      } 
+      }
   });
 }
 
