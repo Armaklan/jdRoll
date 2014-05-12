@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                         'js/controller/dicer.js',
                         'js/controller/campagne_modal.js',
                         'js/controller/persoPopup.js',
+                        'js/controller/theme-preview.js',
                         'js/tools.js'
                     ]
                 }
