@@ -14,8 +14,8 @@
 					{% else %}
 						<u>{{ i }}</u>
 					{% endif %}
-                                                    
-                                        
+
+
 				{% endfor %}
                                 {% if actual_page == 0%}
                                     <u>Toutes</u>
@@ -126,19 +126,22 @@
 							{% if is_mj %}
                                 <div class="form-group">
                                 <label for="perso_id">Poster en tant que...</label>
-									<select class="select2" name="perso_id">
+									<select class="select2" name="perso_id" style="min-width: 200px">
 						                <option value="" {% if default_perso == '' %} selected="selected" {% endif %}>MJ</option>
+                                        <optgroup label="Personnages Joueurs">
 						                {% for personnage in personnages %}
 						                    {% if personnage.user_id != null %}
-						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>                        
+						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>{{ personnage.name }}</option>
 						                    {% endif %}
 						                {% endfor %}
+                                        </optgroup>
+                                        <optgroup label="Personnages Non-Joueurs">
 						                {% for personnage in personnages %}
 						                    {% if personnage.user_id == null %}
-						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>                        
+						                        <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>{{ personnage.name }}</option>
 						                    {% endif %}
 						                {% endfor %}
-
+                                        </optgroup>
 									</select>
 								</div>
 							{% else %}

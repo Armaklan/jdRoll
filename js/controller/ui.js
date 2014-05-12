@@ -10,7 +10,7 @@ var uiControllerImpl = function() {
     var client;
 
     function activateSelect2() {
-       $('.select2').select2({width: 'element'});
+       $('.select2').select2({width: 'resolve'});
     }
 
     function activateColorpicker() {
@@ -20,7 +20,7 @@ var uiControllerImpl = function() {
     function activateTooltip() {
         $('.iconeBtn').tooltip();
     }
-    
+
     function autofocus() {
         $(".focus-elt").focus();
     }
@@ -50,7 +50,7 @@ var uiControllerImpl = function() {
 
     function associateCopyBtn() {
         client.on( "load", function(client) {
-          
+
         });
         client.on( "complete", function(client, args) {
             // `this` is the element that was clicked
