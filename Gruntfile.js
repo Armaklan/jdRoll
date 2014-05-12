@@ -33,6 +33,7 @@ module.exports = function(grunt) {
                         'js/controller/ui.js',
                         'js/controller/dicer.js',
                         'js/controller/campagne_modal.js',
+                        'js/controller/persoPopup.js',
                         'js/tools.js'
                     ]
                 }

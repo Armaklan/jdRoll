@@ -81,7 +81,7 @@ $commonController->get('/profile/{username}', function($username) use($app) {
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
     $absences = $app['absenceService']->getAllAbsence($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes, 
+    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes,
         'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin, 'absences' => $absences]);
 })->bind("profile");
 
@@ -124,7 +124,7 @@ $commonController->get('/sidebar/std_large', function() use ($app) {
 	$mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
 	$favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
     $nbParties = count($pjCampagnes) + count($mjCampagnes) + count($favorisedCampagne);
-	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes, 
+	return $app->render('sidebar_std_large.html.twig', ['active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
         'nb_parties' => $nbParties, 'favorised_campagne' => $favorisedCampagne]);
 })->bind("sidebar_std_large");
 

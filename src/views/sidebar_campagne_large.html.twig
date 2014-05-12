@@ -30,7 +30,7 @@
 				<ul class="nav nav-stacked">
 					<li><b>Personnages</b></li>
 					{% for perso in allPerso %}
-							<li><a href="{{ path('perso_view', {perso_id : perso.id, campagne_id: campagne_id}) }}">{{ perso.name }} ({{ perso.username }})</a></li>
+							<li><a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">{{ perso.name }} ({{ perso.username }})</a></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -77,7 +77,7 @@
 		            <div class="btn-group btn-group-sm">
 			            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
 			            {% if perso.id != '' %}
-				            <a class="btn btn-default iconeBtn sidebarBtn" 
+				            <a class="btn btn-default iconeBtn sidebarBtn"
 				            	onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 				                title="Mettre une alerte">
 				                    <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
