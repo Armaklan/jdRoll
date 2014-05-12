@@ -7,29 +7,23 @@
  */
 var uiCharacterModalControllerImpl = function() {
 
-    function sizeModal() {
-       $("#persoModal" ).dialog({
-                    height: 'auto',
-                    width: 'auto',
-                    autoOpen: false
-        }).removeClass('ui-widget');
-    }
-
     function openModal() {
-        if(!$("#persoModal").dialog("isOpen")) {
-            $("#persoModal").dialog("open");
-        }        
+        $("#persoModal").modal("show");
     }
 
     function addButtonBar() {
+        $('#persoModal .btn-bar').html('');
+        /*
+        FIXIT - Supprimer le temps de refaire correctement
         if($('#zoneFichepopUp').has('#zoneFicheCustomPopUp').length > 0)
         {
-            $('.ui-dialog-titlebar').append('<a href="#" id="SaveFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Sauvegarder" role="button"><span><i class="icon-save"></i></span></a>');
-            $('.ui-dialog-titlebar').append('<a href="#" id="EditFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Editer la fiche" role="button"><span><i class="icon-edit"></i></span></a>');
+            $('#persoModal .btn-bar').append('<a href="#" id="SaveFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Sauvegarder" role="button"><span><i class="icon-save"></i></span></a>');
+            $('#persoModal .btn-bar').append('<a href="#" id="EditFDP" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Editer la fiche" role="button"><span><i class="icon-edit"></i></span></a>');
         }
+        */
         var url = BASE_PATH + "/perso/view_all/" + CAMPAGNE_ID;
-        $('.ui-dialog-titlebar').append('<a id="SwitchFDP" href="' + url + '" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Personnages" role="button"><span><i class="icon-user"></i></span></a>');
-        
+        $('#persoModal .btn-bar').append('<a id="SwitchFDP" href="' + url + '" class="btn iconeBtn sidebarBtn quickLink2 FDPToolBarBtn" title="Personnages" role="button"><span><i class="icon-user"></i></span></a>');
+
     }
 
     function onEditFdp() {
@@ -39,25 +33,25 @@ var uiCharacterModalControllerImpl = function() {
             } else {
                 $('#SaveFDP').css('display','none');
             }
-            
+
             $('#zoneFichepopUp .editable').each(function(e) {
-                
+
                 if($(this).css('color') == 'rgb(0, 136, 204)') {
-                    $(this).css('color','').editable('toggleDisabled'); 
+                    $(this).css('color','').editable('toggleDisabled');
                 } else {
                     $(this).css('color','#0088cc').editable('toggleDisabled');
                 }
-                
+
                 if($(this).css('display') == 'none') {
                     $(this).css('display','');
                     $(this).addClass("editable-empty");
                 }
-                
+
                 if($(this).hasClass("editable-empty")) {
                     if($('#SaveFDP').css('display') == 'none')
                         $(this).css('display','none');
                     $(this).css('color','#DD1144');
-                }   
+                }
             });
         });
     }
@@ -87,8 +81,6 @@ var uiCharacterModalControllerImpl = function() {
 
     return {
         prepareModal : function() {
-            $("#persoModal" ).css('display','none');
-            sizeModal();
             onEditFdp();
             onSaveFdp();
         },

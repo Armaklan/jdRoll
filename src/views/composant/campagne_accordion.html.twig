@@ -13,7 +13,7 @@
           <li class="list-group-item"><a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">{{ perso.name }} ({{ perso.username }})</a></li>
         {% else %}
           {% if perso.username == app.session.get('user')['login'] %}
-            <li class="list-group-item"><a id='myPerso' href="#!">{{ perso.name }} ({{ perso.username }})</a></li>
+            <li class="list-group-item"><a id='myPerso'>{{ perso.name }} ({{ perso.username }})</a></li>
           {% else %}
             <li class="list-group-item">
               <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
