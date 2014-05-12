@@ -53,7 +53,7 @@
         $template = "";
 
         $param = ['campagne_id' => $campagne_id, 'perso' => $perso, 'is_mj' => $isMj];
-		if( $isMj || ($perso["user_id"] != $userId) ) {
+		if( $isMj || ($perso["user_id"] == $userId) ) {
 			$template = $app->render('perso_view_all_ajax.html.twig', $param);
 		} else {
             $template = $app->render('perso_public_ajax.html.twig', $param);
