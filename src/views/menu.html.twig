@@ -60,14 +60,17 @@
   				      </ul>
   			     </li>
             </ul>
-              
+
 
             <div class="navbar-right navbar-form">
                   {% if (app.session.get('user') == null)  %}
                     <a class="btn btn-primary"  href="{{ path('login_page', {url : '!'})  }}">
-                      <i class="fa fa-user"></i> Connexion <span class="caret"></span>
+                      <i class="icon-user"></i> Connexion</span>
                     </a>
                   {% else %}
+                    <button type="button" onclick="feedbackService.openModal()" class="btn btn-default dropdown-toggle">
+                        <i class="icon-comments"></i> Feedback</span>
+                     </button>
                     {{ render(url('notifications_btn')) }}
                     <div class="btn-group">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
