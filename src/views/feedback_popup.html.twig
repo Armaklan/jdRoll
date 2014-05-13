@@ -1,0 +1,31 @@
+<div id="feedbackPopup" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-name">Faire un feedback</h3>
+      </div>
+      <div class="modal-body">
+        <div class="msg">
+
+        </div>
+        <form class="form" role="form">
+          <div class="form-group">
+            <label for="feedbackTitle">Titre</label>
+            <input type="text" class="form-control" id="feedbackTitle" placeholder="Titre de votre feedback">
+          </div>
+          <div class="form-group">
+            <label for="feedbackTitle">Description</label>
+            <textarea class="form-control note-wysiwyg" id="feedbackContent"
+                      placeholder="Description de votre feedback"
+                      rows="10">
+            </textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="feedbackService.pushFeedback()">Soumettre</button>
+      </div>
+    </div>
+  </div>
+</div>

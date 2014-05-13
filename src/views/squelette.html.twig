@@ -74,9 +74,10 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/dicer.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/persoPopup.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/theme-preview.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/feedback.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
   	{% else %}
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140512_005"></script>
+		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140513_001"></script>
   	{% endif %}
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
@@ -127,6 +128,7 @@
    	{% if app.session.get('user') != null %}
 	{% endif %}
     {% include('uploader.html.twig') %}
+    {% include('feedback_popup.html.twig') %}
 
   {% if (app.session.get('user') != null)  %}
     <div id="notificationCenter">

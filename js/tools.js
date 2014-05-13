@@ -17,7 +17,7 @@ function filterTable(idFilter, idTable) {
 
 function filterList(idFilter, idTable) {
 	searchText = $(idFilter).val().toLowerCase();
-	$(idTable + " div ").each(function(i){
+	$(idTable + " > div ").each(function(i){
 		currentSearchIndex = $(this).find('.filterIndex').val().toLowerCase();
 		if(currentSearchIndex != "header") {
 			if( currentSearchIndex.indexOf(searchText) > -1) {

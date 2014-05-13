@@ -1,0 +1,44 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+{% if (error != "") %}
+<div class="alert alert-error">
+  {{ error }}
+</div>
+{% endif %}
+
+
+<div align="right">
+  <form role="form" class="form-search">
+    <input type="text" id="searchText" onkeyup="filterList('#searchText','#feedbacks')"  class="input-medium search-query focus-elt">
+  </form>
+</div>
+{% if not (feedbacks is empty) %}
+
+<div class="col-xs-12" id="feedbacks">
+  {% for feedback in feedbacks %}
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ feedback.title }}</h3>
+    </div>
+    <div class="panel-body">
+      {% autoescape false %}
+      {{ feedback.content }}
+      {% endautoescape %}
+    </div>
+    <input type="hidden"
+           class="filterIndex"
+           value="{{ feedback.title }}">
+  </div>
+  {% endfor %}
+</div>
+
+
+{% else %}
+<div class="alert alert-warning">
+  <p>Aucun feedback pour l'instant...</p>
+</div>
+{% endif %}
+
+{% endblock %}
