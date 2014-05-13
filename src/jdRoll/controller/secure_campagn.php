@@ -30,7 +30,7 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
             $campagne = $app['campagneService']->getCampagneConfig($campagne_id);
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
-            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne, 
+            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne,
                 'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
         })->bind("campagne_config_edit");
 
@@ -63,7 +63,7 @@ $securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $use
                 $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
                 $config = $app['campagneService']->getCampagneConfig($id);
                 $app['persoService']->setTechnical($perso['id'], $config['template']);
-				
+
 
                 $user = $app['userService']->getById($user_id);
                 $campagne = $app['campagneService']->getCampagne($id);
@@ -237,15 +237,15 @@ $securedCampagneController->post('/notes/update/{campagne_id}', function($campag
             $app['campagneService']->updateNote($campagne_id, $user_id, $content);
             return "";
         })->bind("notes_update");
-		
+
 $securedCampagneController->get('/persoModal/view/popup/{campagne_id}', function($campagne_id) use($app) {
             $user_id = $app['session']->get('user')['id'];
             $perso = $app['persoService']->getPersonnage(false,$campagne_id,$user_id);
             return $app->render('perso_popup.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso]);
         })->bind("perso_popup");
-		
+
 $securedCampagneController->post('/persoModal/save/popup/{campagne_id}', function($campagne_id,Request $request) use($app) {
-			
+
             $user_id = $app['session']->get('user')['id'];
             $app['persoService']->updatePersoFields($campagne_id,$user_id,$request->get('fields'));
             return "";

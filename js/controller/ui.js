@@ -10,7 +10,7 @@ var uiControllerImpl = function() {
     var client;
 
     function activateSelect2() {
-       $('.select2').select2({width: 'element'});
+       $('.select2').select2({width: 'resolve'});
     }
 
     function activateColorpicker() {
@@ -19,8 +19,9 @@ var uiControllerImpl = function() {
 
     function activateTooltip() {
         $('.iconeBtn').tooltip();
+        $('.popover-elt').popover();
     }
-    
+
     function autofocus() {
         $(".focus-elt").focus();
     }
@@ -50,7 +51,7 @@ var uiControllerImpl = function() {
 
     function associateCopyBtn() {
         client.on( "load", function(client) {
-          
+
         });
         client.on( "complete", function(client, args) {
             // `this` is the element that was clicked
@@ -59,15 +60,20 @@ var uiControllerImpl = function() {
 
     }
 
+    function activateCarousel() {
+        $('.carousel-control.right').trigger('click');
+    }
+
     return {
         activateUi : function() {
             activateSelect2();
             activateSidebarLayout();
             activateZeroClipboard();
             associateCopyBtn();
-            activateColorpicker();
             activateTooltip();
             autofocus();
+            activateCarousel();
+            activateColorpicker();
         }
     };
 };

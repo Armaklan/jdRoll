@@ -70,7 +70,7 @@ blockquote p {
 }
 
 .spoiler {
-	
+
 }
 
 .postContent {
@@ -206,10 +206,10 @@ div#notif #notifContent {
 }
 
 div#notif .arrow-down {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 10px solid transparent;
-    border-right: 10px solid transparent;	
+    border-right: 10px solid transparent;
     border-top: 13px solid #eFeFeF;
     position: absolute;
     bottom: 1px;
@@ -217,10 +217,10 @@ div#notif .arrow-down {
 }
 
 div#notif .arrow-up {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 10px solid transparent;
-    border-right: 10px solid transparent; 
+    border-right: 10px solid transparent;
     border-bottom: 13px solid #eFeFeF;
     position: absolute;
     top: -10px;
@@ -262,31 +262,6 @@ div#notif .arrow-up {
 
 .grey-accordion-group {
     border: 1px solid #999 !important;
-}
-
-#EditFDP
-{
-    margin: -15px 0 0 0;
-    top: 50%;
-    position:absolute;
-    right: 90px;   
-}
-
-#SaveFDP
-{
-    margin: -15px 0 0 0;
-    top: 50%;
-    position:absolute;
-    right: 134px;
-    display:none;
-}
-
-#SwitchFDP
-{
-    margin: -15px 0 0 0;
-    top: 50%;
-    position:absolute;
-    right: 50px;
 }
 
 .sidebar .nav-pills>li>a {
@@ -520,7 +495,7 @@ fieldset[disabled] .btn-notifs.active {
 }
 blockquote {
   font-size: 14px;
-}	
+}
 .form-general {
   margin-top: 50px;
   padding-right: 20px;
@@ -534,4 +509,11 @@ blockquote {
 }
 #enregResult i {
   font-size: 1.3em;
+}
+.game-vignette img {
+    max-width: 80%;
+    max-height: 150px;
+}
+.game-vignette {
+    height: 200px;
 }

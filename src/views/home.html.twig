@@ -2,89 +2,99 @@
 
 {% block content %}
 
-		<div class="row" style="margin-bottom: 1em">
-			<div class="col-md-10">
-				<div class="page-header">
-					<h1>Bienvenue ! <small>Du jeu, du rôle, du Roll !</small></h1>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<img src="{{app.request.baseUrl}}/img/ban.png" width="100%" style="max-width: 250px" />
-			</div>
+<div class="row" style="margin-bottom: 1em">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>Bienvenue ! <small>Du jeu, du rôle, du Roll !</small></h1>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <img ng-src="img/ban.png" width="100%" style="max-width: 250px">
+  </div>
+</div>
+<div class="row well">
+  <div class="col-md-4">
+    <h2>De la diversité</h2>
+    <p>Vous êtes fan de sciences fiction? Vous êtes plutôt épée et bouclier contre un vil félon?
+      Vous préférez cramer du zombies avec des copains? Ou alors découvrir la dernière sortie indé?
+    </p><p>
+    JDRoll est fait pour vous.
+    </p><p>
+    Tout ce que l'on vous demande, c'est de prendre plaisir à jouer.
+    Et grâce au PbF, rien ne vous empêche de vous amuser sur plusieurs parties en même temps!</p>
+    <p><a class="btn btn-primary" href="{{ path('campagne_list') }}">Voir les parties qui recrutent &raquo;</a></p>
+  </div>
+  <div class="col-md-4">
+    <h2>Des rencontres</h2>
+    <p>La barrière des distances n'existant pas, vous rencontrerez ici de joueurs/euses venus de tous horizons.
+    </p><p>
+    Une grand communauté francophone est prête à vous accueillir autour du Jeu de Rôle pour partager des bon moments, à toute heure.
+    Ouvert même les jours fériés! </p>
+    <p><a class="btn btn-primary" href="{{ path('user_list' )}}">Voir la liste des membres &raquo;</a></p>
+  </div>
+  <div class="col-md-4">
+    <h2>De la spécificité</h2>
+    <p>jdRoll a été conçu spécialement pour le jeu de rôle. C'est pour cela que vous aurez à votre disposition tout le matériel
+      nécessaire afin d'organiser une partie ou de la jouer: bloc-note, lanceur de dés, fiche de personnage,...
+      <p></p>
+    Tout ici a été conçu pour le confort des MJ et des joueurs. Et l'endroit est en perpétuelle évolution!
+  </p>
+  <p><a class="btn btn-primary" href="{{path('about')}}">Plus d'information &raquo;</a></p>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-md-offset-1 game-carousel">
+    {{ include('composant/partie_carrousel.html.twig') }}
+  </div>
+  <div class="col-md-6 col-md-offset-1">
+    <fieldset class="titled-box">
+      <legend>Information générales</legend>
+      <p><b>Derniers inscrits :</b>
+        {% set isFirst = true %}
+        {% for user in last_users %}
+        {% if not isFirst %}
+        ,
+        {% endif %}
+        <a href="{{ path('profile',{username: user.username} ) }}">{{ user.username }}</a>
+        {% set isFirst = false %}
+        {% endfor %}
+      </p>
+      <p><b>Connectés durant ses 24 dernières heures ({{connected_24H_users|length}}) : </b>
+        {% set isFirst = true %}
+        {% for user in connected_24H_users %}
+        {% if not isFirst %}
+        ,
+        {% endif %}
+        <a href="{{ path('profile',{username: user.username} ) }}" class="profil{{user.profil}}">{{ user.username }}</a>
+        {% set isFirst = false %}
+        {% endfor %}
+        <p><b>Actuellement absent : </b>
+          {% set isFirst = true %}
+          {% for absence in absences %}
+          {% if not isFirst %}
+          ,
+          {% endif %}
+          <a href="{{ path('profile',{username: absence.username} ) }}" class="profil{{absence.profil}}">{{ absence.username }}</a>
+          {% set isFirst = false %}
+          {% endfor %}
+          {% if birthDays is empty %}
+          <p><b>Anniversaires du jour : aucun.</b>
+            {% else %}
+            <p><b>Anniversaires du jour :</b>
+              {% endif %}
+              {% set isFirst = true %}
+              {% for birthDay in birthDays %}
+              {% if not isFirst %}
+              ,
+              {% endif %}
+              <a href="{{ path('profile',{username: birthDay.username} ) }}" class="profil{{birthDay.profil}}">{{ birthDay.username }}</a>
+              {% set isFirst = false %}
+              {% endfor %}
+      </fieldset>
+  </div>
+</div>
 
-		</div>
-
-
-		<div class="row">
-
-
-			<div class="well well-large">
-				<p></p>
-				<p>Envie de rejoindre une partie ? Regardez les campagnes qui recrutent dans <b>Jouer > Rejoindre une campagne</b></p>
-				<p>Envie de proposer une partie ? Allez sur <b>Jouer > Créer une campagne.</b></p>
-				<p></p>
-				<p>D'autres questions ? Envie de partager vos expériences ? Rejoignez la communauté via le <b>Tchat</b> ou le <b>Forum</b></p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-5">
-
-					<div class="row">
-						<div class="col-md-10 col-md-offset-1">
-							{{ include('composant/partie_carrousel.html.twig') }}
-						</div>
-				</div>
-			</div>
-			<div class="col-md-7">
-				<div style="margin-top: 1.7em"></div>
-				{% include('composant/last_post.html.twig') %}
-				<div class="well well-small statistiques" style="margin-top: 3em">
-					<p><b>Derniers inscrits :</b>
-					{% set isFirst = true %}
-					{% for user in last_users %}
-						{% if not isFirst %}
-							,
-						{% endif %}
-						<a href="{{ path('profile',{username: user.username} ) }}">{{ user.username }}</a>
-						{% set isFirst = false %}
-					{% endfor %}
-					</p>
-					<p><b>Connectés durant ses 24 dernières heures ({{connected_24H_users|length}}) : </b>
-					{% set isFirst = true %}
-					{% for user in connected_24H_users %}
-						{% if not isFirst %}
-							,
-						{% endif %}
-                        <a href="{{ path('profile',{username: user.username} ) }}" class="profil{{user.profil}}">{{ user.username }}</a>
-						{% set isFirst = false %}
-					{% endfor %}
-                     <p><b>Actuellement absent : </b>
-					{% set isFirst = true %}
-					{% for absence in absences %}
-						{% if not isFirst %}
-							,
-						{% endif %}
-                        <a href="{{ path('profile',{username: absence.username} ) }}" class="profil{{absence.profil}}">{{ absence.username }}</a>
-						{% set isFirst = false %}
-					{% endfor %}
-					{% if birthDays is empty %}
-						<p><b>Anniversaires du jour : aucun.</b>
-					{% else %}
-						<p><b>Anniversaires du jour :</b>
-					{% endif %}
-					{% set isFirst = true %}
-					{% for birthDay in birthDays %}
-						{% if not isFirst %}
-							,
-						{% endif %}
-                        <a href="{{ path('profile',{username: birthDay.username} ) }}" class="profil{{birthDay.profil}}">{{ birthDay.username }}</a>
-						{% set isFirst = false %}
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-
-		{% include('chat/chatbox.html.twig') %}
+{% include('chat/chatbox.html.twig') %}
 
 
 {% endblock %}

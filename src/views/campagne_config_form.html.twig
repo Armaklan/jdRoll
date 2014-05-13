@@ -2,6 +2,8 @@
 
 {% block content %}
 
+
+<div id="theme-container">
 	{% if (error != "") %}
 	    <div class="alert alert-error">
 	    	{{ error }}
@@ -13,7 +15,7 @@
 	var mode = 0;
 	function nextIndex()
 	{
-	
+
 		if(document.getElementById('hiddenFieldsCount'))
 		{
 			count  = document.getElementById('hiddenFieldsCount').value;
@@ -28,7 +30,7 @@
 			else
 				$('#zoneFiche').append("<div id='JDRollUserControl_0'><input type='hidden' id='hiddenFieldsCount' value='1' /></div>");
 		}
-	
+
 		return count;
 
 	}
@@ -66,16 +68,16 @@ $(function() {
          cancel: null,
          containment: "parent"
     });
-	 
+
 	$(".JDRollDroppedUserControl").draggable({
          cursor: 'move',
          containment: "parent"
     }).resizable().resizable('destroy');
-	 
+
 	$(".JDRollDroppedUserControl").resizable();
-	
+
 	$('a[id^="JDRollUserControlLink"]').each(function(){
-	
+
 		if($(this).hasClass("editable-empty"))
 		{
 			$(this).editable({
@@ -91,37 +93,37 @@ $(function() {
 		}
 
 	});
-		
-  	
+
+
 	$('.ui-layout-center').droppable({
          activeClass: 'ui-state-hover',
          accept: '.JDRollUserControl',
-         drop: function(event, ui) 
+         drop: function(event, ui)
 		 {
              if (!ui.draggable.hasClass("JDRollDroppedUserControl"))
 					{
-				
+
                        var cle = jQuery(ui.draggable).clone();
 					   xx = event.pageY - $(this).position().top - event.offsetY - 5;
-					   
+
 					   cle.css({
 						  position:"absolute",
 						  top: xx ,
 						  left: event.pageX - $(this).position().left -  event.offsetX
 						});
-					   cle.attr('id', 'JDRollUserControl_' + nextIndex()).removeClass("JDRollUserControl").addClass("JDRollDroppedUserControl").draggable({		   
+					   cle.attr('id', 'JDRollUserControl_' + nextIndex()).removeClass("JDRollUserControl").addClass("JDRollDroppedUserControl").draggable({
 							cursor: 'move',
 							containment: "parent"
 						}).resizable();
-						
+
 					   cle.children('a').editable({adminmode: 1}).attr('id','JDRollUserControlLink' + count + '_child');
 					   $(this).append(cle);
 				   }
          }
     });
-	
+
 	$('#bynEditionMode').click(function(e){
-	
+
 		if($('#zoneFicheCustomWYSIWIG').is(':hidden'))
 		{
 			$('#zoneFicheCustom').css('display','none');
@@ -136,19 +138,19 @@ $(function() {
 		{
 			var fields = '';
 			$('#zoneFicheCustom').find('div[id^="JDRollUserControl_"]').each(function(){
-	
+
 				fields += $(this)[0].outerHTML;
-	
+
 			});
-			$('#zoneFicheCustom').html(tinymce.get('templatev2').getContent() + fields);	
+			$('#zoneFicheCustom').html(tinymce.get('templatev2').getContent() + fields);
 			$('#zoneFicheCustom').css('display','block');
 			$('#zoneFicheCustomWYSIWIG').css('display','none');
-			
+
 			$(".JDRollDroppedUserControl").draggable({
 				cursor: 'move',
 				containment: "parent"
 			}).resizable().resizable('destroy');
-	 
+
 			$(".JDRollDroppedUserControl").resizable();
 			$('#LbCtrl').css('display','block');
 			$('#DivText').css('display','block');
@@ -157,7 +159,7 @@ $(function() {
 			$('#WYSIWIGBtn').css('display','block');
 		}
 	});
-	
+
 	$('#saveConfig').click(function(e) {
 		e.preventDefault();
 		var fieldsValue = '';
@@ -166,29 +168,29 @@ $(function() {
 			cloneDiv = $('#zoneFiche').clone();
 		else
 			cloneDiv = $('#zoneFicheCustom').clone();
-		
+
 		cloneDiv.find('.editable-popup').each(function(){$(this).remove();});
 		cloneDiv.find('div[id^="JDRollUserControl_"]').each(function(){
 			fieldsValue +=$(this)[0].outerHTML;
 			$(this).remove();
 		});
-		
-		
-		
+
+
+
 		$('#hiddenInput').val(cloneDiv.html());
 		$('#hiddenInputFields').val(fieldsValue);
 		$("form:first").submit();
 	});
-	
-	
-	
+
+
+
 
 	$('#validBG').click(function(e) {
-	
+
 		$('#zoneImg').attr("src",$('#imgBG').val());
 
 	});
-	
+
 	{% if campagne.template_img is empty %}
 		$('#radWYSWIG').attr('checked','checked');
 		changeFicheType(0);
@@ -196,19 +198,19 @@ $(function() {
 		$('#radImg').attr('checked','checked');
 		changeFicheType(1);
 	{% endif %}
-    
-    
+
+
 		});
-	
-	
-	
+
+
+
 
 </script>
 
  <style type='text/css'>
     .ui-layout-center {
-	
-	
+
+
 	position: relative;
     border: 1px solid black;
 }
@@ -240,7 +242,7 @@ $(function() {
 
 			<div class="col-sm-12">
                 <input type="hidden" name="campagne_id" id="campagne_id" value="{{ campagne.campagne_id }}">
-				
+
                 <fieldset class="titled-box">
 					<legend>Comportements</legend>
 
@@ -250,12 +252,12 @@ $(function() {
 			                <option value="" {% if not campagne.default_perso_id == '' %} selected="selected" {% endif %}>MJ</option>
 			                {% for personnage in personnages %}
 			                    {% if personnage.user_id != null %}
-			                        <option value="{{ personnage.id }}" {% if campagne.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>                        
+			                        <option value="{{ personnage.id }}" {% if campagne.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>
 			                    {% endif %}
 			                {% endfor %}
 			                {% for personnage in personnages %}
 			                    {% if personnage.user_id == null %}
-			                        <option value="{{ personnage.id }}" {% if campagne.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>                        
+			                        <option value="{{ personnage.id }}" {% if campagne.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>
 			                    {% endif %}
 			                {% endfor %}
 			            </select>
@@ -286,6 +288,10 @@ $(function() {
                 <fieldset class="titled-box">
 					<legend>Thème couleurs</legend>
 						<div class="pull-right">
+                            <button type="button" onclick="themeService.refresh()" title="refresh" class="btn btn-default">
+                                <i class="icon-refresh"></i>
+                            </button>
+
 							<a href="#themingHelp" role="button" data-toggle="modal" class="btn btn-info">
 								<i class="icon-question"></i>
 							</a>
@@ -296,7 +302,7 @@ $(function() {
 				                    <label class="control-label" for="odd_line_color">Couleur des lignes paires</label>
 				                    <input type="text" id="odd_line_color" name="odd_line_color" class="form-control colorpicker" placeholder="#356803" value="{{ campagne.odd_line_color }}">
 				                </div>
-		
+
 				                <div class="form-group">
 				                    <label class="control-label" for="even_line_color">Couleur des lignes impaires</label>
 				                    <input type="text" id="even_line_color" name="even_line_color" class="form-control colorpicker" placeholder="#746484" value="{{ campagne.even_line_color }}">
@@ -304,32 +310,50 @@ $(function() {
 
 				                <div class="form-group">
 				                    <label class="control-label" for="sidebar_color">Couleur de la barre latérale</label>
-				                    <input type="text" id="sidebar_color" name="sidebar_color" class="form-control colorpicker" placeholder="#363673" value="{{ campagne.sidebar_color }}">
+				                    <input type="text" id="sidebar_color"
+                                        name="sidebar_color" class="form-control colorpicker"
+                                        placeholder="#363673"
+                                        onchange="themeService.onSidebarColorChange(this.value)"
+                                        value="{{ campagne.sidebar_color }}">
 				                </div>
 
 							</div>
 							<div class="col-md-5">
+
 								<h3>Couleur des textes</h3>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_color">Couleur du texte</label>
-				                    <input type="text" id="text_color" name="text_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.text_color }}">
+				                    <input type="text" id="text_color"
+                                    name="text_color"
+                                    class="form-control colorpicker"
+                                    placeholder="#223356"
+                                    onchange="themeService.onTextColorChange(this.value)"
+                                    value="{{ campagne.text_color }}"
+                                    >
 				                </div>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_color">Couleur des liens</label>
-				                    <input type="text" id="link_color" name="link_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.link_color }}">
+				                    <input type="text" id="link_color" name="link_color"
+                                    class="form-control colorpicker" placeholder="#223356"
+                                    onchange="themeService.onLinkColorChange(this.value)"
+                                    value="{{ campagne.link_color }}">
 				                </div>
 
 				                <div class="form-group">
 				                    <label class="control-label" for="link_sidebar_color">Couleur des liens dans la sidebar</label>
-				                    <input type="text" id="link_sidebar_color" name="link_sidebar_color" class="form-control colorpicker" placeholder="#223356" value="{{ campagne.link_sidebar_color }}">
+				                    <input type="text" id="link_sidebar_color"
+                                    name="link_sidebar_color" class="form-control
+                                    colorpicker" placeholder="#223356"
+                                    onchange="themeService.onSidebarLinkColorChange(this.value)"
+                                    value="{{ campagne.link_sidebar_color }}">
 				                </div>
 							</div>
 
                 </fieldset>
 
-                
+
                 <div class="form-group">
                     <label class="control-label" for="template">Template de personnage</label>
                     <textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template"
@@ -337,11 +361,11 @@ $(function() {
                     <br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
                 </div>
 
-		
+
 		<div class="form-group" id='zoneFicheCustomControl'>
 			<label class="control-label" for="template">Fiche de personnage</label>
 
-				
+
 				<div id='WYSIWIGBtn'>
 					<input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="changeFicheType(0);"/> Utiliser un fond Custom WYSIWIG
 					<input type="radio" id="radImg" name="typeFiche" value="1" onClick="changeFicheType(1);"/> Utiliser une image pour le fond
@@ -362,13 +386,13 @@ $(function() {
 				<div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
 				<div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
 				<div id='zoneFicheCustomWYSIWIG'>
-					<textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2" 
+					<textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
 					 placeholder="Template de la fiche de personnage" rows="20">{% if campagne.template_img is empty %}{{ campagne.template_html }}{%endif%}</textarea>
 				</div>
-			
-				
+
+
 				<div class="ui-layout-center" id='zoneFicheCustom'>{% if campagne.template_img is empty %}{% autoescape false %}{{ campagne.template_html }}{% endautoescape %}{% autoescape false %}{{ campagne.template_fields }}{% endautoescape %}{% endif %}</div>
-		
+
 				<div class="ui-layout-center" id='zoneFiche'>
 					<img id='zoneImg' src="{{ campagne.template_img }}"/>
 					{% if campagne.template_img is not empty %}
@@ -380,7 +404,7 @@ $(function() {
 
 	    <div class="form-group">
 		    <label class="control-label" for="sidebar_text">Information dans la sidebar</label>
-		    <textarea input class="input-xxlarge wysiwyg" type="text" id="sidebar_text" name="sidebar_text" 
+		    <textarea input class="input-xxlarge wysiwyg" type="text" id="sidebar_text" name="sidebar_text"
 		    	 placeholder="Information de la sidebar" rows="20">{{ campagne.sidebar_text }}</textarea>
 	    </div>
 
@@ -390,7 +414,7 @@ $(function() {
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>
 
-
+</div>
 
 {% endblock %}
 

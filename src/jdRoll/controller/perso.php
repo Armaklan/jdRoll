@@ -10,6 +10,7 @@
 
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
 
 	/*
 	    Controller de campagne (sécurisé)
@@ -28,6 +29,9 @@
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
+        if(! $is_mj) {
+            return $app->redirect($app->path('perso_view', ['campagne_id' => $campagne_id, 'perso_id' => $perso_id]));
+        }
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_edit_mj");
@@ -41,10 +45,27 @@
 			return $app->redirect($app->path('perso_view_all', ['campagne_id' => $campagne_id]));
 		}
 	})->bind("perso_view");
-	
 
+	$persoController->get('/ajax/{campagne_id}/{perso_id}', function(Request $request, $campagne_id, $perso_id) use($app) {
+		$perso = $app['persoService']->getPersonnageById($perso_id);
+        $isMj = $app["campagneService"]->isMj($campagne_id);
+        $userId = $app['session']->get('user')['id'];
+        $template = "";
+
+        $param = ['campagne_id' => $campagne_id, 'perso' => $perso, 'is_mj' => $isMj];
+		if( $isMj || ($perso["user_id"] == $userId) ) {
+			$template = $app->render('perso_view_all_ajax.html.twig', $param);
+		} else {
+            $template = $app->render('perso_public_ajax.html.twig', $param);
+		}
+        return new JsonResponse(['name' => $perso['name'], 'content' => $template->getContent()]);
+	})->bind("perso_view_ajax");
 
 	$persoController->get('/view_all_mj/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+        $is_mj = $app["campagneService"]->isMj($campagne_id);
+        if(! $is_mj) {
+            return $app->redirect($app->path('perso_view', ['campagne_id' => $campagne_id, 'perso_id' => $perso_id]));
+        }
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		return $app->render('perso_view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
@@ -63,12 +84,12 @@
 		$perso_id = $request->get('perso_id');
 		try {
 			if ($perso_id != "") {
-				
+
 	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
 	    		if ($perso["user_id"] != null) {
 					$app["notificationService"]->alertModifPerso(
-						$app['session']->get('user')['id'], 
+						$app['session']->get('user')['id'],
 						$perso,
 						$campagne_id,
 						$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
@@ -84,7 +105,7 @@
 			}
 		} catch(Exception $e) {
 			$perso = $app['persoService']->getPersonnageById($perso_id);
-                        $cats = $app['persoService']->getAllPnjCat($campagne_id);
+            $cats = $app['persoService']->getAllPnjCat($campagne_id);
 			return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'cats' => $cats]);
 		}
 	})->bind("perso_save");
