@@ -20,7 +20,7 @@ class FeedbackService {
                 user
                 ON feedback.user_id = user.id
 				WHERE feedback.id = :id";
-        $result = $this->db->fetchAssoc($sql, array("id" => $id));
+       return $this->db->fetchAssoc($sql, array("id" => $id));
     }
 
     public function create($user, $title, $content) {
@@ -35,6 +35,19 @@ class FeedbackService {
         $stmt->bindValue("content", $content);
         $stmt->execute();
         return $this->get($this->db->lastInsertId());
+    }
+
+    public function getOpenFeedbacks() {
+        $this->logger->addInfo(' Get open feedbacks');
+        $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar
+                FROM feedback
+                JOIN
+                user
+                ON feedback.user_id = user.id
+                WHERE
+                feedback.closed = :closed
+        ";
+        return $this->db->fetchAll($sql, array("closed" => 0));
     }
 
 

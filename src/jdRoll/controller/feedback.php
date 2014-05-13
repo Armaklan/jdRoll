@@ -31,7 +31,8 @@
 	})->bind("feedback_get")->before($mustBeLogged);
 
     $feedbackController->get('/', function() use($app) {
-
+		$feedbacks = $app['feedbackService']->getOpenFeedbacks();
+        return $app->render('feedbacks.html.twig', ['feedbacks' => $feedbacks, 'error' => ""]);
 	})->bind("feedback_list")->before($mustBeLogged);
 
 	$app->mount('/feedback', $feedbackController);

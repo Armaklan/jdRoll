@@ -77,7 +77,7 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/feedback.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
   	{% else %}
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140512_005"></script>
+		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20140513_001"></script>
   	{% endif %}
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
@@ -116,7 +116,6 @@
 	{% block notes %}
 		{% if app.session.get('user') != null %}
 			{{ render(url("notes_popup", {campagne_id : 0}) ) }}
-            {% include('feedback_popup.html.twig') %}
 		{% endif %}
 	{% endblock %}
 
@@ -129,6 +128,7 @@
    	{% if app.session.get('user') != null %}
 	{% endif %}
     {% include('uploader.html.twig') %}
+    {% include('feedback_popup.html.twig') %}
 
   {% if (app.session.get('user') != null)  %}
     <div id="notificationCenter">

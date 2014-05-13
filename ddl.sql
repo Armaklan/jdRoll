@@ -425,6 +425,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `vote` int(11) DEFAULT '0',
   `user_id` bigint(20) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `closed` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -23,7 +23,7 @@ var feedbackService = (function(){
 
     var resetModal = function() {
         $('#feedbackPopup #feedbackTitle').val('');
-        $('#feedbackPopup #feedbackContent').val('');
+        tinyMCE.get('feedbackContent').setContent('');
     };
 
     var setModalMsg = function(msg) {
@@ -31,6 +31,7 @@ var feedbackService = (function(){
     };
 
     var saveFeedback = function() {
+        tinyMCE.triggerSave();
         return $.ajax({
             type: "POST",
             url: getUrlToPush(),
