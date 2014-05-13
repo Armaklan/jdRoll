@@ -26,6 +26,7 @@ use jdRoll\service\MessagerieService;
 use jdRoll\service\NotificationService;
 use jdRoll\service\AbsenceService;
 use jdRoll\service\resetPwdService;
+use jdRoll\service\FeedbackService;
 
 class MyApplication extends Application
 {
@@ -115,6 +116,9 @@ $app['absenceService'] = function ($app) {
 $app['resetPwdService'] = function ($app) {
     return new resetPwdService($app['db'], $app['session'],$app['messagerieService']);
 };
+$app['feedbackService'] = function ($app) {
+    return new FeedbackService($app['db'], $app['monolog']);
+};
 
 $mustBeLogged = function (Request $request) use ($app) {
     if (!isLog($app)) {
@@ -145,6 +149,7 @@ require("src/jdRoll/controller/messagerie.php");
 require("src/jdRoll/controller/notification.php");
 require("src/jdRoll/controller/forum.php");
 require("src/jdRoll/controller/chat.php");
+require("src/jdRoll/controller/feedback.php");
 require("src/jdRoll/controller/resetPwd.php");
 
 Request::enableHttpMethodParameterOverride();

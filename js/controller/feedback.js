@@ -14,20 +14,20 @@ var feedbackService = (function(){
     };
 
     var getTitle = function() {
-        return $('#feedbackPopup feedbackTitle').val();
+        return $('#feedbackPopup #feedbackTitle').val();
     };
 
     var getContent = function() {
-        return $('#feedbackPopup feedbackContent').val();
+        return $('#feedbackPopup #feedbackContent').val();
     };
 
     var resetModal = function() {
-        $('#feedbackPopup feedbackTitle').val('');
-        $('#feedbackPopup feedbackContent').val('');
+        $('#feedbackPopup #feedbackTitle').val('');
+        $('#feedbackPopup #feedbackContent').val('');
     };
 
     var setModalMsg = function(msg) {
-        return $("#feedbackPopup msg").html(msg);
+        return $("#feedbackPopup .msg").html(msg);
     };
 
     var saveFeedback = function() {

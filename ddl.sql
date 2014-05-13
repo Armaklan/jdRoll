@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `IDX_885DBAFA1221E019` (`perso_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6525 ;
 
-ALTER TABLE posts 
+ALTER TABLE posts
 ADD COLUMN
 editor int(1) DEFAULT 0;
 
@@ -414,6 +414,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_8D93D6495126AC48` (`mail`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
 
+--
+-- Structure de la table `feedback`
+--
+
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `vote` int(11) DEFAULT '0',
+  `user_id` bigint(20) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
