@@ -8,38 +8,41 @@
 	    </div>
     {% endif %}
 
-	<form role="form" class="form-horizontal" action="{{ path('subscribe_save')  }}" method="POST">
+  <div class="col-xs-12 col-md-4 col-md-offset-4">
+	<form role="form" class="form" action="{{ path('subscribe_save')  }}" method="POST">
 	    <div class="form-group">
 		    <label class="control-label" for="login">Login</label>
-		    <div class="form-control">
-		    	<input type="text" id="username" name="username" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
-		    </div>
+
+		    	<input class="form-control" type="text" id="username" name="username" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
+
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="mail">Email</label>
-		    <div class="form-control">
-		    	<input type="text" class="input-xxlarge"  id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
-		    </div>
+
+		    	<input class="form-control" type="text" class="input-xxlarge"  id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
+
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="password">Mot de passe</label>
-		    <div class="form-control">
-		    	<input type="password" id="password" name="password" placeholder="Mot de passe">
-		    </div>
+
+		    	<input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe">
+
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
-		    <div class="form-control">
-		    	<input type="password" id="password"2 name="password2" placeholder="Mot de passe">
-		    </div>
+
+		    	<input class="form-control" type="password" id="password"2 name="password2" placeholder="Mot de passe">
+
 	    </div>
 	    <input type="hidden" name="url" value="!" />
-	    
+
 	    <div class="form-group">
-		    <div class="form-control">
-			    <button type="submit" class="btn btn-primary">S'enregistrer</button>
+          <center>
+			      <button type="submit" class="btn btn-primary">S'enregistrer</button>
+          </center>
 		    </div>
 	    </div>
     </form>
+  </div>
 
 {% endblock %}
