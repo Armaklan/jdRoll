@@ -46,6 +46,7 @@ class FeedbackService {
                 ON feedback.user_id = user.id
                 WHERE
                 feedback.closed = :closed
+                ORDER BY id DESC
         ";
         return $this->db->fetchAll($sql, array("closed" => 0));
     }
