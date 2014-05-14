@@ -89,21 +89,22 @@ class FeedbackService {
         return $this->get($id);
     }
 
-    public function getOpenFeedbacks() {
+    public function getOpenFeedbacks($user) {
         $this->logger->addInfo(' Get open feedbacks');
-        $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar, feedback.vote, vote.id as vote_id 
+        $sql = "SELECT feedback.* , user.username, user.id as user_id, 
+                user.avatar, feedback.vote, feedback_vote.id as vote_id 
                 FROM feedback
                 JOIN
                 user
                 ON feedback.user_id = user.id
-                LEFT JOIN feedback_vote vote
-                ON feedback.user_id = vote.user_id
-                AND feedback.id = vote.id
+                LEFT JOIN feedback_vote
+                ON feedback_vote.user_id = :user
+                AND feedback.id = feedback_vote.id
                 WHERE
                 feedback.closed = :closed
-                ORDER BY id DESC
+                ORDER BY feedback.vote DESC
         ";
-        return $this->db->fetchAll($sql, array("closed" => 0));
+        return $this->db->fetchAll($sql, array("closed" => 0, "user" => $user['id']));
     }
 
 

@@ -42,7 +42,9 @@
         </button>
       {% endif %}
       {% if is_admin %} 
-          <button class="btn btn-danger" onClick="feedbackService.close({{ feedback.id }})">
+          <button class="btn btn-danger" onClick="
+          
+          feedbackService.close({{ feedback.id }})">
             Fermer le feedback
           </button>
       {% endif %}

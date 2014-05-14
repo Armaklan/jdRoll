@@ -48,7 +48,8 @@
     })->bind("feedback_vote")->before($mustBeLogged);
 
     $feedbackController->get('/', function() use($app) {
-		$feedbacks = $app['feedbackService']->getOpenFeedbacks();
+        $user = $app['session']->get('user');
+		$feedbacks = $app['feedbackService']->getOpenFeedbacks($user);
         $isAdmin = $app["campagneService"]->IsAdmin();
         return $app->render('feedbacks.html.twig', ['feedbacks' => $feedbacks, 'is_admin' => $isAdmin, 'error' => ""]);
 	})->bind("feedback_list")->before($mustBeLogged);

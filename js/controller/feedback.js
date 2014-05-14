@@ -81,11 +81,15 @@ var feedbackService = (function(){
     };
 
     component.close = function(id) {
-        setFeedbackMsg('');
-        closeFeedback(id).
-        done(function(){
-            setFeedbackMsg('<div class="alert alert-success">Feedback modifié avec succès</div>');
-            $('#feedback' + id).css('display', 'none');
+        bootbox.confirm("Fermer ce feedback ?", function(confirmed) {
+          if(confirmed) {
+            setFeedbackMsg('');
+            closeFeedback(id).
+            done(function(){
+                setFeedbackMsg('<div class="alert alert-success">Feedback modifié avec succès</div>');
+                $('#feedback' + id).css('display', 'none');
+            });
+          }
         });
     };
 
