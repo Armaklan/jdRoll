@@ -5,8 +5,12 @@ var feedbackService = (function(){
 
     var baseUrl = BASE_PATH + "/feedback/";
 
-    var getUrlToPush = function(campagne, id) {
+    var getUrlToPush = function() {
         return baseUrl;
+    };
+
+    var getUrlToClose = function(id) {
+        return baseUrl + id;
     };
 
     var getModal = function() {
@@ -30,6 +34,10 @@ var feedbackService = (function(){
         return $("#feedbackPopup .msg").html(msg);
     };
 
+    var setFeedbackMsg = function(msg) {
+        return $("#feedbacksMsg").html(msg);
+    };
+
     var saveFeedback = function() {
         tinyMCE.triggerSave();
         return $.ajax({
@@ -42,12 +50,28 @@ var feedbackService = (function(){
         });
     };
 
+    var closeFeedback = function(id) {
+        return $.ajax({
+            type: "DELETE",
+            url: getUrlToClose(id)
+        });
+    };
+
     component.pushFeedback = function() {
         setModalMsg('');
         saveFeedback().
         done(function(){
             setModalMsg('<div class="alert alert-success">Merci pour votre contribution !</div>');
             resetModal();
+        });
+    };
+
+    component.close = function(id) {
+        setFeedbackMsg('');
+        closeFeedback(id).
+        done(function(){
+            setFeedbackMsg('<div class="alert alert-success">Feedback modifié avec succès</div>');
+            $('#feedback' + id).css('display', 'none');
         });
     };
 

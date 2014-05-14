@@ -30,9 +30,15 @@
 
 	})->bind("feedback_get")->before($mustBeLogged);
 
+    $feedbackController->delete('/{id}', function($id) use($app) {
+        $feedback = $app['feedbackService']->delete($id);
+        return new JsonResponse($feedback, 200);
+    })->bind("feedback_get")->before($mustBeLogged);
+
     $feedbackController->get('/', function() use($app) {
 		$feedbacks = $app['feedbackService']->getOpenFeedbacks();
-        return $app->render('feedbacks.html.twig', ['feedbacks' => $feedbacks, 'error' => ""]);
+        $isAdmin = $app["campagneService"]->IsAdmin();
+        return $app->render('feedbacks.html.twig', ['feedbacks' => $feedbacks, 'is_admin' => $isAdmin, 'error' => ""]);
 	})->bind("feedback_list")->before($mustBeLogged);
 
 	$app->mount('/feedback', $feedbackController);

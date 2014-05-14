@@ -37,6 +37,18 @@ class FeedbackService {
         return $this->get($this->db->lastInsertId());
     }
 
+    public function delete($id) {
+        $this->logger->addInfo(' Delete : ' . $id );
+        $sql = "UPDATE feedback
+                SET closed = :closed
+                WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("id", $id);
+        $stmt->bindValue("closed", 1);
+        $stmt->execute();
+        return $this->get($id);
+    }
+
     public function getOpenFeedbacks() {
         $this->logger->addInfo(' Get open feedbacks');
         $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar
