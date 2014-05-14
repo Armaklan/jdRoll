@@ -35,6 +35,18 @@
         return new JsonResponse($feedback, 200);
     })->bind("feedback_get")->before($mustBeLogged);
 
+    $feedbackController->post('/{id}/vote', function(Request $request, $id) use($app) {
+        $score = $request->get('score');
+        $user = $app['session']->get('user');
+        $app['monolog']->addInfo('Vote : ' . $score);
+        if ($score >= '0') {
+            $feedback = $app['feedbackService']->voteUp($id, $user);
+        } else {
+            $feedback = $app['feedbackService']->voteDown($id, $user);
+        }
+        return new JsonResponse($feedback, 200);
+    })->bind("feedback_vote")->before($mustBeLogged);
+
     $feedbackController->get('/', function() use($app) {
 		$feedbacks = $app['feedbackService']->getOpenFeedbacks();
         $isAdmin = $app["campagneService"]->IsAdmin();

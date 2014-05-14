@@ -429,6 +429,12 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `feedback_vote` (
+  `id` int(10) unsigned NOT NULL,
+  `user_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE  `feedback_vote` ADD PRIMARY KEY (  `id` ,  `user_id` ) ;
 
 --
 -- Structure de la table `notification`

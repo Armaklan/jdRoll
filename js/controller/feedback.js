@@ -9,8 +9,12 @@ var feedbackService = (function(){
         return baseUrl;
     };
 
-    var getUrlToClose = function(id) {
+    var getUrlToUpdate = function(id) {
         return baseUrl + id;
+    };
+
+    var getUrlToVote = function(id) {
+        return baseUrl + id + '/vote';
     };
 
     var getModal = function() {
@@ -53,7 +57,17 @@ var feedbackService = (function(){
     var closeFeedback = function(id) {
         return $.ajax({
             type: "DELETE",
-            url: getUrlToClose(id)
+            url: getUrlToUpdate(id)
+        });
+    };
+
+    var voteFeedback = function(id, score) {
+        return $.ajax({
+            type: "POST",
+            url: getUrlToVote(id),
+            data: {
+                score: score
+            }
         });
     };
 
@@ -72,6 +86,30 @@ var feedbackService = (function(){
         done(function(){
             setFeedbackMsg('<div class="alert alert-success">Feedback modifié avec succès</div>');
             $('#feedback' + id).css('display', 'none');
+        });
+    };
+
+    component.voteUp = function(id) {
+        setFeedbackMsg('');
+        voteFeedback(id, 1).
+        done(function(){
+            setFeedbackMsg('<div class="alert alert-success">Vote enregistré avec succès</div>');
+            $('#feedbackVote' + id).css('display', 'none');
+        }).
+        fail(function(){
+            setFeedbackMsg('<div class="alert alert-danger">Vote non enregistré</div>');
+        });
+    };
+
+    component.voteDown = function(id) {
+        setFeedbackMsg('');
+        voteFeedback(id, -1).
+        done(function(){
+            setFeedbackMsg('<div class="alert alert-success">Vote enregistré avec succès</div>');
+            $('#feedbackVote' + id).css('display', 'none');
+        }).
+        fail(function(){
+            setFeedbackMsg('<div class="alert alert-danger">Vote non enregistré</div>');
         });
     };
 

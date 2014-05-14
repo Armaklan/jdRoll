@@ -49,13 +49,56 @@ class FeedbackService {
         return $this->get($id);
     }
 
+    public function voteUp($id, $user) {
+        $this->logger->addInfo(' Vote Up : ' . $id );
+        $sql = "INSERT INTO feedback_vote
+                (user_id, id)
+                VALUES
+                (:user, :id)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("user", $user['id']);
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+
+        $sql = "UPDATE feedback
+                SET vote = vote + 1
+                WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+        return $this->get($id);
+    }
+
+    public function voteDown($id, $user) {
+        $this->logger->addInfo(' Vote down : ' . $id );
+        $sql = "DELETE FROM feedback_vote
+                WHERE 
+                user_id = :user
+                AND id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("user", $user['id']);
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+
+        $sql = "UPDATE feedback
+                SET vote = vote - 1
+                WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+        return $this->get($id);
+    }
+
     public function getOpenFeedbacks() {
         $this->logger->addInfo(' Get open feedbacks');
-        $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar
+        $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar, feedback.vote, vote.id as vote_id 
                 FROM feedback
                 JOIN
                 user
                 ON feedback.user_id = user.id
+                LEFT JOIN feedback_vote vote
+                ON feedback.user_id = vote.user_id
+                AND feedback.id = vote.id
                 WHERE
                 feedback.closed = :closed
                 ORDER BY id DESC
