@@ -48,13 +48,19 @@ blockquote p {
     font-weight: bold;
 }
 
-
 .pensee {
     color: #8844CC;
     font-weight: bold;
     font-style:italic;
 }
 
+.rp1 {
+  color: '#ff6600';
+}
+
+.rp2 {
+  color: '#5EFF6C';
+}
 
 .hrp {
     background: none repeat scroll 0 0 #F7F5F2;
