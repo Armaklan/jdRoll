@@ -1,4 +1,7 @@
 <form role="form" action="{{ path('messagerie_delete_my_select') }}" method="post" id="msg_sent">
+        <div align="center">
+            <h3>Messages envoyés</h3>
+        </div>
         <a class="btn btn-danger-ssctrl" onClick="onBtnDangerClick('#msg_sent')">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </a><p></p>
@@ -13,7 +16,7 @@
 			<th width="150px">Date</th>
 			<th width="20px"></th>
 		</tr>
-		{% for msg in sent_messages %} 
+		{% for msg in sent_messages %}
 			<tr>
                                 <td><input type="checkbox" name="del_id[]" value="{{ msg.id }}"></td>
 				<td>

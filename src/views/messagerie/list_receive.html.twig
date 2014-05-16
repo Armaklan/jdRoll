@@ -1,10 +1,13 @@
 
 <form role="form" action="{{ path('messagerie_delete_select') }}" method="post" id="msg_receive">
+        <div align="center">
+            <h3>Messages reçus</h3>
+        </div>
 		<a class="btn btn-danger-ssctrl" onClick="onBtnDangerClick('#msg_receive')">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </a></p>
         <table class="table-striped table-condensed table-bordered messageTable" width="100%">
-    
+
 		<tr>
         <th width="20px"><input type="checkbox" class="checkAll" onClick="selectAll('#msg_receive')"></th>
 			<th width="20px"></th>
@@ -16,7 +19,7 @@
 			<th width="150px">Date</th>
 			<th width="20px"></th>
 		</tr>
-		{% for msg in messages %} 
+		{% for msg in messages %}
 			<tr>
                 <td><input type="checkbox" name="del_id[]" value="{{ msg.id }}"></td>
 				<td>{% if msg.statut_read == 0 %} <i class="icon-asterisk"></i> {% endif %}</td>
@@ -29,12 +32,11 @@
 				<td><a href="{{ path('messagerie_delete', {'id' : msg.id}) }}" class="btn btn-danger"><i class="icon-remove"></i></a></td>
 			</tr>
 		{% endfor %}
-                
-        
+
+
 	</table>
         <br>
         <a class="btn btn-danger-ssctrl" onClick="onBtnDangerClick('#msg_receive')">
             <i class="icon-remove"></i> Supprimer les messages selectionnés
         </a>
     </form>
-    
