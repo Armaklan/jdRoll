@@ -46,15 +46,15 @@ function selectAll(formName) {
 
 
 $(function () {
-	$(".collapserLink").click(function(e) {
+	$(document).on('click', ".collapserLink", function(e) {
        e.preventDefault();
-       var sign = $(this).children('i');
-       if(sign.hasClass('icon-chevron-sign-down')) {
-        sign.removeClass("icon-chevron-sign-down").addClass("icon-chevron-sign-up");
-    } else {
-        sign.removeClass("icon-chevron-sign-up").addClass("icon-chevron-sign-down");
-    }
-});
+         var sign = $(this).children('i');
+         if(sign.hasClass('icon-chevron-sign-down')) {
+            sign.removeClass("icon-chevron-sign-down").addClass("icon-chevron-sign-up");
+        } else {
+            sign.removeClass("icon-chevron-sign-up").addClass("icon-chevron-sign-down");
+        }
+    });
 });
 
 
