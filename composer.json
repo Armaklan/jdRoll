@@ -18,11 +18,12 @@
         "symfony/monolog-bridge": ">=2.1",
         "symfony/twig-bridge": ">=2.1",
         "swiftmailer/swiftmailer": "4.1.*",
-        "doctrine/dbal": "2.2.*"
+        "doctrine/dbal": "2.2.*",
+        "deralex/yaml-config-service-provider": "1.0.x-dev"
     },
     "autoload": {
-        "psr-0": {
-            "jdRoll": "src/"
+        "psr-4": {
+            "jdRoll\\": "src/"
         }
     }
 }

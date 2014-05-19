@@ -12,3 +12,4 @@ node_modules/
 files/
 composer.phar
 composer.lock
+config.y
