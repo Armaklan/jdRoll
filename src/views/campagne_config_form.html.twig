@@ -6,7 +6,8 @@
   <li class="active"><a href="#desc" data-toggle="tab">Description</a></li>
   <li><a href="#theme" data-toggle="tab">Theme graphique</a></li>
   <li><a href="#car" data-toggle="tab">Feuilles de Personnages</a></li>
-  <li><a href="#divers" data-toggle="tab">Diverses</a></li>
+  <li><a href="#divers" data-toggle="tab">Divers</a></li>
+  <li><a href="#joueurs" data-toggle="tab">Joueurs</a></li>
 </ul>
 
 <div class="tab-content">
@@ -21,6 +22,9 @@
   </div>
   <div class="tab-pane" id="theme">
     {% include('campagne/edit_config.html.twig') %}
+  </div>
+  <div class="tab-pane" id="joueurs">
+    {% include('campagne/joueurs.html.twig') %}
   </div>
 
 </div>
