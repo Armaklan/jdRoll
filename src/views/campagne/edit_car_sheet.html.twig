@@ -1,0 +1,284 @@
+  <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
+
+  <script type='text/javascript'>
+    var count = 0;
+    var mode = 0;
+    function nextIndex()
+    {
+
+      if(document.getElementById('hiddenFieldsCount'))
+      {
+        count  = document.getElementById('hiddenFieldsCount').value;
+        count++;
+        document.getElementById('hiddenFieldsCount').value = count;
+      }
+      else
+      {
+        count = 1;
+        if(mode == 0)
+          $('#zoneFicheCustom').append("<div id='JDRollUserControl_0'><input type='hidden' id='hiddenFieldsCount' value='1' /></div>");
+        else
+          $('#zoneFiche').append("<div id='JDRollUserControl_0'><input type='hidden' id='hiddenFieldsCount' value='1' /></div>");
+      }
+
+      return count;
+
+    }
+
+    function changeFicheType(v)
+    {
+      mode = v;
+      if(v == 1)
+      {
+        $('#zoneFicheCustom').css('display','none');
+        $('#bynEditionMode').css('display','none');
+        $('#zoneFiche').css('display','');
+        $('#SaveTemplateWYSIWIG').css('display','none');
+        $('#uploadImg').css('display','');
+        $('#validBG').css('display','');
+        $('#imgBG').css('display','');
+      }
+      else
+      {
+        $('#zoneFiche').css('display','none');
+        $('#bynEditionMode').css('display','block');
+        $('#zoneFicheCustom').css('display','block');
+        $('#SaveTemplateWYSIWIG').css('display','block');
+        $('#uploadImg').css('display','none');
+        $('#validBG').css('display','none');
+        $('#imgBG').css('display','none');
+      }
+    }
+
+    $(function() {
+
+      $(".JDRollUserControl").draggable({
+        helper: 'clone',
+        cursor: 'move',
+        cancel: null,
+        containment: "parent"
+      });
+
+      $(".JDRollDroppedUserControl").draggable({
+        cursor: 'move',
+        containment: "parent"
+      }).resizable().resizable('destroy');
+
+      $(".JDRollDroppedUserControl").resizable();
+
+      $('a[id^="JDRollUserControlLink"]').each(function(){
+
+        if($(this).hasClass("editable-empty"))
+        {
+          $(this).editable({
+            adminmode: 1
+          });
+          $(this).addClass("editable-empty");
+        }
+        else
+        {
+          $(this).editable({
+            adminmode: 1
+          });
+        }
+
+      });
+
+
+      $('.ui-layout-center').droppable({
+        activeClass: 'ui-state-hover',
+        accept: '.JDRollUserControl',
+        drop: function(event, ui)
+        {
+          if (!ui.draggable.hasClass("JDRollDroppedUserControl"))
+          {
+
+            var cle = jQuery(ui.draggable).clone();
+            xx = event.pageY - $(this).position().top - event.offsetY - 5;
+
+            cle.css({
+              position:"absolute",
+              top: xx ,
+              left: event.pageX - $(this).position().left -  event.offsetX
+            });
+            cle.attr('id', 'JDRollUserControl_' + nextIndex()).removeClass("JDRollUserControl").addClass("JDRollDroppedUserControl").draggable({
+              cursor: 'move',
+              containment: "parent"
+            }).resizable();
+
+            cle.children('a').editable({adminmode: 1}).attr('id','JDRollUserControlLink' + count + '_child');
+            $(this).append(cle);
+          }
+        }
+      });
+
+      $('#bynEditionMode').click(function(e){
+
+        if($('#zoneFicheCustomWYSIWIG').is(':hidden'))
+        {
+          $('#zoneFicheCustom').css('display','none');
+          $('#zoneFicheCustomWYSIWIG').css('display','block');
+          $('#LbCtrl').css('display','none');
+          $('#DivText').css('display','none');
+          $('#DivSelect').css('display','none');
+          $('#DivTextArea').css('display','none');
+          $('#WYSIWIGBtn').css('display','none');
+        }
+        else
+        {
+          var fields = '';
+          $('#zoneFicheCustom').find('div[id^="JDRollUserControl_"]').each(function(){
+
+            fields += $(this)[0].outerHTML;
+
+          });
+          $('#zoneFicheCustom').html(tinymce.get('templatev2').getContent() + fields);
+          $('#zoneFicheCustom').css('display','block');
+          $('#zoneFicheCustomWYSIWIG').css('display','none');
+
+          $(".JDRollDroppedUserControl").draggable({
+            cursor: 'move',
+            containment: "parent"
+          }).resizable().resizable('destroy');
+
+          $(".JDRollDroppedUserControl").resizable();
+          $('#LbCtrl').css('display','block');
+          $('#DivText').css('display','block');
+          $('#DivSelect').css('display','block');
+          $('#DivTextArea').css('display','block');
+          $('#WYSIWIGBtn').css('display','block');
+        }
+      });
+
+      $('#saveConfig').click(function(e) {
+        e.preventDefault();
+        var fieldsValue = '';
+        var cloneDiv;
+        if(mode == 1)
+          cloneDiv = $('#zoneFiche').clone();
+        else
+          cloneDiv = $('#zoneFicheCustom').clone();
+
+        cloneDiv.find('.editable-popup').each(function(){$(this).remove();});
+        cloneDiv.find('div[id^="JDRollUserControl_"]').each(function(){
+          fieldsValue +=$(this)[0].outerHTML;
+          $(this).remove();
+        });
+
+
+
+        $('#hiddenInput').val(cloneDiv.html());
+        $('#hiddenInputFields').val(fieldsValue);
+        $("form:first").submit();
+      });
+
+
+
+
+      $('#validBG').click(function(e) {
+
+        $('#zoneImg').attr("src",$('#imgBG').val());
+
+      });
+
+      {% if config.template_img is empty %}
+      $('#radWYSWIG').attr('checked','checked');
+       changeFicheType(0);
+       {% else %}
+       $('#radImg').attr('checked','checked');
+        changeFicheType(1);
+        {% endif %}
+
+
+        });
+
+
+
+
+  </script>
+
+  <style type='text/css'>
+    .ui-layout-center {
+
+
+      position: relative;
+      border: 1px solid black;
+    }
+
+    .JDRollDroppedUserControl {
+      display: inline-block;
+      border:1px dotted black;
+      z-index:1000;
+    }
+
+    .JDRollUserControl {
+      display: inline-block;
+      border:1px dotted black;
+    }
+
+    #zoneFicheCustomWYSIWIG
+    {
+      display:none;
+    }
+  </style>
+
+    <div class="control-group">
+      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+        <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+
+      <div class="form-group">
+        <label class="control-label" for="template">Template de personnage</label>
+        <textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template"
+                  placeholder="Template de la fiche de personnage" rows="20">{{ config.template }}</textarea>
+        <br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
+      </div>
+
+
+      <div class="form-group" id='zoneFicheCustomControl'>
+        <label class="control-label" for="template">Fiche de personnage</label>
+
+
+        <div id='WYSIWIGBtn'>
+          <input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="changeFicheType(0);"/> Utiliser un fond Custom WYSIWIG
+          <input type="radio" id="radImg" name="typeFiche" value="1" onClick="changeFicheType(1);"/> Utiliser une image pour le fond
+        </div>
+        <br>
+        <input type="button" id='bynEditionMode' value="Ouvrir / Fermer l'éditeur" />
+        <br>
+        <label   id='LbimgBG'>Image de fond : </label>
+        <div class="input-group">
+          <input class="form-control" type="text" id="imgBG" name="imgBG" placeholder="http://" value="{{ config.template_img }}">
+          <span class="input-group-btn">
+            <a id='uploadImg' href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+            <a  href="" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="" id="validBG">OK</a>
+          </span>
+        </div>
+        <label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
+        <div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
+        <div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
+        <div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
+        <div id='zoneFicheCustomWYSIWIG'>
+          <textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
+                    placeholder="Template de la fiche de personnage" rows="20">{% if config.template_img is empty %}{{ config.template_html }}{%endif%}</textarea>
+        </div>
+
+
+        <div class="ui-layout-center" id='zoneFicheCustom'>{% if config.template_img is empty %}{% autoescape false %}{{ config.template_html }}{% endautoescape %}{% autoescape false %}{{ config.template_fields }}{% endautoescape %}{% endif %}</div>
+
+        <div class="ui-layout-center" id='zoneFiche'>
+          <img id='zoneImg' src="{{ config.template_img }}"/>
+          {% if config.template_img is not empty %}
+          {% autoescape false %}{{ config.template_fields }}{% endautoescape %}
+          {% endif %}
+        </div>
+      </div>
+
+    <input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
+    <input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
+
+    </div>
+  </form>

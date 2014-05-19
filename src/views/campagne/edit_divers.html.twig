@@ -1,0 +1,54 @@
+
+<div id="divers-container">
+  {% if (error != "") %}
+  <div class="alert alert-error">
+    {{ error }}
+  </div>
+  {% endif %}
+
+  <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
+
+    <div class="control-group">
+      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+        <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <input type="hidden" name="campagne_id" id="campagne_id" value="{{ config.campagne_id }}">
+
+      <fieldset class="titled-box">
+        <legend>Comportements</legend>
+
+        <div class="form-group">
+          <label for="perso_id">Le MJ poste par défaut en tant que...</label>
+          <select class="select2" name="default_perso_id">
+            <option value="" {% if not config.default_perso_id == '' %} selected="selected" {% endif %}>MJ</option>
+            {% for personnage in personnages %}
+            {% if personnage.user_id != null %}
+            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>
+            {% endif %}
+            {% endfor %}
+            {% for personnage in personnages %}
+            {% if personnage.user_id == null %}
+            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label class="control-label" for="sidebar_text">Information dans la sidebar</label>
+        <textarea class="wysiwyg" type="text" id="sidebar_text" name="sidebar_text"
+                  placeholder="Information de la sidebar" rows="20">
+          {{ config.sidebar_text }}
+        </textarea>
+      </div>
+
+    </div>
+
+
+  </form>
+
+</div>
