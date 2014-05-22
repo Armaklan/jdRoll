@@ -35,6 +35,7 @@ module.exports = function(grunt) {
                         'js/controller/campagne_modal.js',
                         'js/controller/persoPopup.js',
                         'js/controller/theme-preview.js',
+                        'js/controller/campagne-config.js',
                         'js/controller/feedback.js',
                         'js/tools.js'
                     ]

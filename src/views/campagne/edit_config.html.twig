@@ -18,27 +18,6 @@
       <input type="hidden" name="campagne_id" id="campagne_id" value="{{ config.campagne_id }}">
 
       <fieldset class="titled-box">
-        <legend>Comportements</legend>
-
-        <div class="form-group">
-          <label for="perso_id">Le MJ poste par défaut en tant que...</label>
-          <select class="select2" name="default_perso_id">
-            <option value="" {% if not config.default_perso_id == '' %} selected="selected" {% endif %}>MJ</option>
-            {% for personnage in personnages %}
-            {% if personnage.user_id != null %}
-            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>
-            {% endif %}
-            {% endfor %}
-            {% for personnage in personnages %}
-            {% if personnage.user_id == null %}
-            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>
-            {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-      </fieldset>
-
-      <fieldset class="titled-box">
         <legend>Illustrations</legend>
 
         <div class="form-group">
@@ -60,7 +39,7 @@
       </fieldset>
 
       <fieldset class="titled-box">
-        <legend>Thème couleurs</legend>
+        <legend>Couleurs Principales </legend>
         <div class="pull-right">
           <button type="button" onclick="themeService.refresh()" title="refresh" class="btn btn-default">
             <i class="icon-refresh"></i>
@@ -122,6 +101,47 @@
                                                     colorpicker" placeholder="#223356"
                    onchange="themeService.onSidebarLinkColorChange(this.value)"
                    value="{{ config.link_sidebar_color }}">
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset class="titled-box">
+        <legend>Couleurs Principales </legend>
+        <div class="pull-right">
+          <button type="button" onclick="themeService.refresh()" title="refresh" class="btn btn-default">
+            <i class="icon-refresh"></i>
+          </button>
+
+          <a href="#themingHelp" role="button" data-toggle="modal" class="btn btn-info">
+            <i class="icon-question"></i>
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>Couleur des styles</h3>
+          <div class="form-group">
+            <label class="control-label" for="dialogue_color">Dialogues</label>
+            <input type="text" id="dialogue_color" name="dialogue_color" class="form-control colorpicker" placeholder="#356803" value="{{ config.odd_line_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="pensee_color">Pensées</label>
+            <input type="text" id="pensee_color" name="pensee_color" class="form-control colorpicker" placeholder="#746484" value="{{ config.even_line_color }}">
+          </div>
+
+        </div>
+        <div class="col-md-5">
+
+          <h3>&nbsp;</h3>
+
+          <div class="form-group">
+            <label class="control-label" for="rp1_color">RP1</label>
+            <input type="text" id="rp1_color" name="rp1_color" class="form-control colorpicker" placeholder="#356803" value="{{ config.odd_line_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="rp2_color">RP2</label>
+            <input type="text" id="rp2_color" name="rp2_color" class="form-control colorpicker" placeholder="#746484" value="{{ config.even_line_color }}">
           </div>
         </div>
 

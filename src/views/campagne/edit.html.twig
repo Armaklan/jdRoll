@@ -1,18 +1,29 @@
 
-	<form role="form" class="form-horizontal form-general" action="{{ path('campagne_save')  }}" method="POST">
-		{% if (error != "") %}
+  {% if(campagne['id'] == '') %}
+	  <form role="form" class="form-horizontal form-general"
+          action="{{ path('campagne_save')  }}" method="POST">
+  {% else %}
+    <form role="form" class="form-horizontal form-general"
+          id="gameDescForm"
+          onSubmit="return campagneConfig.saveDescription({{campagne.id}})">
+  {% endif %}
+      <span id="descError">
+		  {% if (error != "") %}
 		    <div class="alert alert-error">
 		    	{{ error }}
 		    </div>
 	    {% endif %}
+      </span>
 
 	    <div class="form-group pull-right page-btn">
-		    <button type="submit" class="btn btn-primary">
-		    {% if(campagne['id'] == '') %}
-		    	Créer la campagne
-		    {% else %}
-		    	Mettre à jour la campagne
-		    {% endif %}
+
+		      <button type="submit" class="btn btn-primary">
+            {% if(campagne['id'] == '') %}
+		    	    Créer la campagne
+		        {% else %}
+              <i class="icon-save"></i> Sauvegarder
+            {% endif %}
+          </button>
 		    </button>
 	    </div>
 			<div class="row">

@@ -10,6 +10,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
   Controller de campagne (sécurisé)
@@ -132,6 +133,7 @@ $securedCampagneController->post('/alarm', function(Request $request) use($app) 
             }
             return "";
         })->bind("alarm");
+
 $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
             $user = $app['userService']->getById($user_id);
             $campagne = $app['campagneService']->getCampagne($id);
@@ -175,6 +177,19 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
                 return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_save");
+
+$securedCampagneController->post('/{id}/desc', function(Request $request, $id) use($app) {
+            try {
+                if ($id > 0) {
+                    $app['campagneService']->updateCampagne($request);
+                    return new JsonResponse('Mise à jour efectuée');
+                } else {
+                    return new JsonResponse('Campagne invalide', 400);
+                }
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        })->bind("campagne_save_ajax");
 
 
 $securedCampagneController->get('/list_perso_js/{campagne_id}', function(Request $request, $campagne_id) use($app) {

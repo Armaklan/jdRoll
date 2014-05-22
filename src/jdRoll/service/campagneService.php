@@ -178,8 +178,8 @@ class CampagneService {
 		$stmt->bindValue("systeme", $request->get('systeme'));
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("statut", $request->get('statut'));
-                $stmt->bindValue("rythme", $request->get('rythme'));
-                $stmt->bindValue("rp", $request->get('rp'));
+        $stmt->bindValue("rythme", $request->get('rythme'));
+        $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("id", $request->get('id'));
@@ -768,7 +768,7 @@ class CampagneService {
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
-    
+
     public function getFavorisInCampagne($campagne) {
         $sql = "SELECT user_id
                 FROM campagne_favoris
