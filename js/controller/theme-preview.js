@@ -48,6 +48,10 @@ var themeService = (function () {
         $('.container-fluid .rp2').css('color', color);
     };
 
+    var updateQuote = function(color) {
+        $('.container-fluid blockquote p').css('color', color);
+    };
+
     var updateHr = function() {
         var value = $('#hr').val();
         $('hr').css('background-image',"url('" + value + "')");
@@ -71,6 +75,7 @@ var themeService = (function () {
         updateRp2($('#rp2_color').val());
         updateHr();
         updateBann();
+        updateQuote($('#quote_color').val());
     };
 
     return component;

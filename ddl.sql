@@ -104,6 +104,10 @@ ADD  `pensee_color` VARCHAR( 10 ) NULL,
 ADD  `rp1_color` VARCHAR( 10 ) NULL,
 ADD  `rp2_color` VARCHAR( 10 ) NULL;
 
+
+ALTER TABLE  `campagne_config`
+ADD  `quote_color` VARCHAR( 10 ) NULL;
+
 -- --------------------------------------------------------
 
 --

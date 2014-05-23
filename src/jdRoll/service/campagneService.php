@@ -154,7 +154,8 @@ class CampagneService {
                 dialogue_color = :dialogue_color,
                 pensee_color = :pensee_color,
                 rp1_color = :rp1_color,
-                rp2_color = :rp2_color
+                rp2_color = :rp2_color,
+                quote_color = :quote_color
     			WHERE
     			campagne_id = :campagne";
 
@@ -171,6 +172,7 @@ class CampagneService {
     	$stmt->bindValue("pensee_color", $request->get('pensee_color'));
     	$stmt->bindValue("rp1_color", $request->get('rp1_color'));
     	$stmt->bindValue("rp2_color", $request->get('rp2_color'));
+    	$stmt->bindValue("quote_color", $request->get('quote_color'));
     	$stmt->bindValue("link_sidebar_color", $request->get('link_sidebar_color'));
     	$stmt->execute();
     }
