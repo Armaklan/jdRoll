@@ -76,7 +76,11 @@ $commonController->post('/login', function(Request $request) use($app) {
 
 $commonController->get('/profile/{username}', function($username) use($app) {
     $user = $app["userService"]->getByUsername($username);
-	$currentUser = $app["userService"]->getCurrentUser();
+    try {
+	    $currentUser = $app["userService"]->getCurrentUser();
+    } catch(\Exception $e) {
+        $currentUser = null;
+    }
 	$isAdmin = $app["campagneService"]->IsAdmin();
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
