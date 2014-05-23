@@ -116,7 +116,31 @@ class CampagneService {
     	$stmt->execute();
     }
 
-    public function updateCampagneConfig($request) {
+
+
+    public function updateCampagneConfigSheet($request) {
+    	$sql = "UPDATE campagne_config
+    			SET
+    			template = :template,
+				template_html = :template_html,
+				template_fields = :template_fields,
+				template_img = :template_img
+    			WHERE
+    			campagne_id = :campagne";
+
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $request->get('id'));
+    	$stmt->bindValue("template", $request->get('template'));
+		$stmt->bindValue("template_html",$request->get('hiddenInput'));
+		if($request->get('typeFiche') == 0)
+			$stmt->bindValue("template_img",NULL);
+		else
+			$stmt->bindValue("template_img",$request->get('imgBG'));
+		$stmt->bindValue("template_fields",$request->get('hiddenInputFields'));
+    	$stmt->execute();
+    }
+
+    public function updateCampagneConfigTheme($request) {
     	$sql = "UPDATE campagne_config
     			SET
     			banniere = :banniere,
@@ -127,12 +151,10 @@ class CampagneService {
     			link_color = :link_color,
     			text_color = :text_color,
     			link_sidebar_color = :link_sidebar_color,
-    			template = :template,
-				template_html = :template_html,
-				template_fields = :template_fields,
-				template_img = :template_img,
-    			sidebar_text = :sidebar_text,
-    			default_perso_id = :default_perso_id
+                dialogue_color = :dialogue_color,
+                pensee_color = :pensee_color,
+                rp1_color = :rp1_color,
+                rp2_color = :rp2_color
     			WHERE
     			campagne_id = :campagne";
 
@@ -145,15 +167,25 @@ class CampagneService {
     	$stmt->bindValue("sidebar_color", $request->get('sidebar_color'));
     	$stmt->bindValue("link_color", $request->get('link_color'));
     	$stmt->bindValue("text_color", $request->get('text_color'));
+    	$stmt->bindValue("dialogue_color", $request->get('dialogue_color'));
+    	$stmt->bindValue("pensee_color", $request->get('pensee_color'));
+    	$stmt->bindValue("rp1_color", $request->get('rp1_color'));
+    	$stmt->bindValue("rp2_color", $request->get('rp2_color'));
     	$stmt->bindValue("link_sidebar_color", $request->get('link_sidebar_color'));
+    	$stmt->execute();
+    }
+
+    public function updateCampagneConfigDivers($request) {
+    	$sql = "UPDATE campagne_config
+    			SET
+    			sidebar_text = :sidebar_text,
+    			default_perso_id = :default_perso_id
+    			WHERE
+    			campagne_id = :campagne";
+
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $request->get('campagne_id'));
     	$stmt->bindValue("default_perso_id", $request->get('default_perso_id'));
-    	$stmt->bindValue("template", $request->get('template'));
-		$stmt->bindValue("template_html",$request->get('hiddenInput'));
-		if($request->get('typeFiche') == 0)
-			$stmt->bindValue("template_img",NULL);
-		else
-			$stmt->bindValue("template_img",$request->get('imgBG'));
-		$stmt->bindValue("template_fields",$request->get('hiddenInputFields'));
     	$stmt->bindValue("sidebar_text", $request->get('sidebar_text'));
     	$stmt->execute();
     }
@@ -178,8 +210,8 @@ class CampagneService {
 		$stmt->bindValue("systeme", $request->get('systeme'));
 		$stmt->bindValue("univers", $request->get('univers'));
 		$stmt->bindValue("statut", $request->get('statut'));
-                $stmt->bindValue("rythme", $request->get('rythme'));
-                $stmt->bindValue("rp", $request->get('rp'));
+        $stmt->bindValue("rythme", $request->get('rythme'));
+        $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("id", $request->get('id'));

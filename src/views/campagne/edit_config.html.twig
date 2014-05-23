@@ -1,0 +1,163 @@
+
+<div id="theme-container">
+  {% if (error != "") %}
+  <div class="alert alert-error">
+    {{ error }}
+  </div>
+  {% endif %}
+
+  <form role="form"
+          id="gameThemeForm"
+          onSubmit="return campagneConfig.saveTheme({{campagne.id}})">
+
+    <div class="control-group">
+      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+        <button type="submit" class="btn btn-primary">
+          <i class="icon-save"></i> Sauvegarder
+        </button>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <input type="hidden" name="campagne_id" id="campagne_id" value="{{ config.campagne_id }}">
+
+      <fieldset class="titled-box">
+        <legend>Illustrations</legend>
+
+        <div class="form-group">
+          <label class="control-label" for="banniere">Bannière</label>
+          <div class="input-group">
+            <input class="form-control" type="text" name="banniere" placeholder="http://" value="{{ config.banniere }}">
+            <span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
+          </div>
+          <br><i>Affichée en haut de chaque page. Taille attendue : 450px X 150px.</i>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="hr">Barre de séparation</label>
+          <div class="input-group">
+            <input class="form-control" type="text" id="hr" name="hr" placeholder="http://" value="{{ config.hr }}">
+            <span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
+          </div>
+          <br><i>Image affichée sur les barres de séparation (HR)</i>
+        </div>
+      </fieldset>
+
+      <fieldset class="titled-box">
+        <legend>Couleurs Principales </legend>
+        <div class="pull-right">
+          <button type="button" onclick="themeService.refresh()" title="refresh" class="btn btn-default">
+            <i class="icon-refresh"></i>
+          </button>
+
+          <a href="#themingHelp" role="button" data-toggle="modal" class="btn btn-info">
+            <i class="icon-question"></i>
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>Couleur de fond</h3>
+          <div class="form-group">
+            <label class="control-label" for="odd_line_color">Couleur des lignes paires</label>
+            <input type="text" id="odd_line_color" name="odd_line_color" class="form-control colorpicker" placeholder="#356803" value="{{ config.odd_line_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="even_line_color">Couleur des lignes impaires</label>
+            <input type="text" id="even_line_color" name="even_line_color" class="form-control colorpicker" placeholder="#746484" value="{{ config.even_line_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="sidebar_color">Couleur de la barre latérale</label>
+            <input type="text" id="sidebar_color"
+                   name="sidebar_color" class="form-control colorpicker"
+                   placeholder="#363673"
+                   onchange="themeService.onSidebarColorChange(this.value)"
+                   value="{{ config.sidebar_color }}">
+          </div>
+
+        </div>
+        <div class="col-md-5">
+
+          <h3>Couleur des textes</h3>
+
+          <div class="form-group">
+            <label class="control-label" for="link_color">Couleur du texte</label>
+            <input type="text" id="text_color"
+                   name="text_color"
+                   class="form-control colorpicker"
+                   placeholder="#223356"
+                   onchange="themeService.onTextColorChange(this.value)"
+                   value="{{ config.text_color }}"
+                   >
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="link_color">Couleur des liens</label>
+            <input type="text" id="link_color" name="link_color"
+                   class="form-control colorpicker" placeholder="#223356"
+                   onchange="themeService.onLinkColorChange(this.value)"
+                   value="{{ config.link_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="link_sidebar_color">Couleur des liens dans la sidebar</label>
+            <input type="text" id="link_sidebar_color"
+                   name="link_sidebar_color" class="form-control
+                                                    colorpicker" placeholder="#223356"
+                   onchange="themeService.onSidebarLinkColorChange(this.value)"
+                   value="{{ config.link_sidebar_color }}">
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset class="titled-box">
+        <legend>Couleurs Principales </legend>
+        <div class="pull-right">
+          <button type="button" onclick="themeService.refresh()" title="refresh" class="btn btn-default">
+            <i class="icon-refresh"></i>
+          </button>
+
+          <a href="#themingHelp" role="button" data-toggle="modal" class="btn btn-info">
+            <i class="icon-question"></i>
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>Couleur des styles</h3>
+          <div class="form-group">
+            <label class="control-label" for="dialogue_color">Dialogues</label>
+            <input type="text" id="dialogue_color" name="dialogue_color"
+                   class="form-control colorpicker" placeholder="#356803" value="{{ config.dialogue_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="pensee_color">Pensées</label>
+            <input type="text" id="pensee_color" name="pensee_color"
+                   class="form-control colorpicker" placeholder="#746484" value="{{ config.pensee_color }}">
+          </div>
+
+        </div>
+        <div class="col-md-5">
+
+          <h3>&nbsp;</h3>
+
+          <div class="form-group">
+            <label class="control-label" for="rp1_color">RP1</label>
+            <input type="text" id="rp1_color" name="rp1_color"
+                   class="form-control colorpicker" placeholder="#356803" value="{{ config.rp1_color }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="rp2_color">RP2</label>
+            <input type="text" id="rp2_color" name="rp2_color"
+                   class="form-control colorpicker" placeholder="#746484" value="{{ config.rp2_color }}">
+          </div>
+        </div>
+
+      </fieldset>
+
+    </div>
+
+
+  </form>
+
+</div>

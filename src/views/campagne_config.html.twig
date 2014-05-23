@@ -12,6 +12,30 @@
 			}
 		{% endif %}
 
+		{% if campagne_config.dialogue_color != '' %}
+			.container-fluid .dialogue {
+				color: {{ campagne_config.dialogue_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.pensee_color != '' %}
+			.container-fluid .pensee {
+				color: {{ campagne_config.pensee_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.rp1_color != '' %}
+			.container-fluid .rp1 {
+				color: {{ campagne_config.rp1_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.rp2_color != '' %}
+			.container-fluid .rp2 {
+				color: {{ campagne_config.rp2_color }};
+			}
+		{% endif %}
+
 		{% if campagne_config.banniere != '' %}
 			.logo_campagne {
 				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;

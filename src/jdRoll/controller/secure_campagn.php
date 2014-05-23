@@ -10,6 +10,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
   Controller de campagne (sécurisé)
@@ -28,9 +29,17 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
         })->bind("campagne_edit");
 
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
-            $campagne = $app['campagneService']->getCampagneConfig($campagne_id);
+            $campagne = $app['campagneService']->getCampagne($campagne_id);
+            $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
-            return $app->render('campagne_config_form.html.twig', ['campagne_id' => $campagne['campagne_id'], 'campagne' => $campagne,
+            $is_mj = $app["campagneService"]->isMj($campagne_id);
+            $participants = $app["campagneService"]->getParticipant($campagne_id);
+            return $app->render('campagne_config_form.html.twig', [
+                'campagne_id' => $campagne_id,
+                'config' => $config,
+                'is_mj' => $is_mj,
+                'participants' => $participants,
+                'campagne' => $campagne,
                 'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
         })->bind("campagne_config_edit");
 
@@ -57,37 +66,6 @@ $securedCampagneController->get('/join/{id}', function($id) use($app) {
             }
         })->bind("campagne_join");
 
-$securedCampagneController->get('/join/{id}/valid/{user_id}', function($id, $user_id) use($app) {
-            try {
-                $app['campagneService']->validJoueur($id, $user_id);
-                $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
-                $config = $app['campagneService']->getCampagneConfig($id);
-                $app['persoService']->setTechnical($perso['id'], $config['template']);
-
-
-                $user = $app['userService']->getById($user_id);
-                $campagne = $app['campagneService']->getCampagne($id);
-                $campagne_name = $campagne['name'];
-                $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
-                $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
-                $content = "
-                    <p>Votre inscription à '$campagne_name' a été validé par le MJ.</p>
-                    <p>Nous t'invitons à te manifester sur le Mod-Off de la partie.
-                    Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p>
-                    <p>Ta <a href='$url_perso'>fiche de personnage est accessible ici.</a></p>
-                    <br>
-                    <p>Nous te souhaitons une bonne partie.</p>
-                    <p>Ludiquement.</p>
-                ";
-                $destinataires = array($user['username']);
-                $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
-				$app['notificationService']->alertUserForMp("Système", $destinataires, "Inscription à une partie", $app->path('messagerie'));
-                return $app->redirect($app->path('campagne', array('id' => $id)));
-            } catch (Exception $e) {
-                $campagnes = $app['campagneService']->getOpenCampagne();
-                return $app->render('campagne_list.html.twig', ['campagnes' => $campagnes, 'error' => $e->getMessage()]);
-            }
-        })->bind("campagne_join_valid");
 
 $securedCampagneController->get('/quit/{id}', function($id) use($app) {
             try {
@@ -124,6 +102,39 @@ $securedCampagneController->post('/alarm', function(Request $request) use($app) 
             }
             return "";
         })->bind("alarm");
+
+
+$securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id) use($app) {
+            try {
+                $app['campagneService']->validJoueur($id, $user_id);
+                $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
+                $config = $app['campagneService']->getCampagneConfig($id);
+                $app['persoService']->setTechnical($perso['id'], $config['template']);
+
+
+                $user = $app['userService']->getById($user_id);
+                $campagne = $app['campagneService']->getCampagne($id);
+                $campagne_name = $campagne['name'];
+                $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
+                $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
+                $content = "
+                    <p>Votre inscription à '$campagne_name' a été validé par le MJ.</p>
+                    <p>Nous t'invitons à te manifester sur le Mod-Off de la partie.
+                    Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p>
+                    <p>Ta <a href='$url_perso'>fiche de personnage est accessible ici.</a></p>
+                    <br>
+                    <p>Nous te souhaitons une bonne partie.</p>
+                    <p>Ludiquement.</p>
+                ";
+                $destinataires = array($user['username']);
+                $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
+				$app['notificationService']->alertUserForMp("Système", $destinataires, "Inscription à une partie", $app->path('messagerie'));
+                return new JsonResponse("Joueur accepté");
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        })->bind("campagne_join_valid");
+
 $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) use($app) {
             $user = $app['userService']->getById($user_id);
             $campagne = $app['campagneService']->getCampagne($id);
@@ -132,7 +143,7 @@ $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) u
             $content = "Vous avez désinscrit de la partie de $campagne_name par le MJ (Refus d'inscription ou désinscription forcée).";
             $destinataires = array($user['username']);
             $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription partie", $content, $destinataires);
-            return $app->redirect($app->path('campagne', array('id' => $id)));
+            return new JsonResponse("Joueur désinscrit");
         })->bind("campagne_ban");
 
 $securedCampagneController->get('/my_list', function() use($app) {
@@ -157,8 +168,9 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
                     $modoff = $app['sectionService']->createSectionWith($campagne_id, "Mod-Off", 2, 0, "");
                     $app['topicService']->createTopicWith($modoff, "Recrutement", 0, 0, 0, 2);
                     $app['sectionService']->createSectionWith($campagne_id, "Système et Contexte", 3, 0, "");
-                    return $app->redirect($app->path('campagne_my_list'));
+                    return $app->redirect($app->path('campagne_edit', ['id' => $campagne_id]));
                 } else {
+                    // FIX - Obsolète
                     $app['campagneService']->updateCampagne($request);
                     return $app->redirect($app->path('campagne_my_list'));
                 }
@@ -168,6 +180,45 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
             }
         })->bind("campagne_save");
 
+$securedCampagneController->post('/{id}/desc', function(Request $request, $id) use($app) {
+            try {
+                if ($id > 0) {
+                    $app['campagneService']->updateCampagne($request);
+                    return new JsonResponse('Mise à jour efectuée');
+                } else {
+                    return new JsonResponse('Campagne invalide', 400);
+                }
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        })->bind("campagne_save_ajax");
+
+$securedCampagneController->post('/{id}/sheet', function(Request $request) use($app) {
+            try {
+                $app['campagneService']->updateCampagneConfigSheet($request);
+                return new JsonResponse('Mise à jour effectuée', 200);
+            } catch (Exception $e) {
+                return new JsonResponse('Problème durant la mise à jour', 500);
+            }
+        })->bind("campagne_config_sheet");
+
+$securedCampagneController->post('/{id}/theme', function(Request $request) use($app) {
+            try {
+                $app['campagneService']->updateCampagneConfigTheme($request);
+                return new JsonResponse('Mise à jour effectuée', 200);
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        })->bind("campagne_config_theme");
+
+$securedCampagneController->post('/{id}/divers', function(Request $request) use($app) {
+            try {
+                $app['campagneService']->updateCampagneConfigDivers($request);
+                return new JsonResponse('Mise à jour effectuée', 200);
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(), 500);
+            }
+        })->bind("campagne_config_divers");
 
 $securedCampagneController->get('/list_perso_js/{campagne_id}', function(Request $request, $campagne_id) use($app) {
     $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);

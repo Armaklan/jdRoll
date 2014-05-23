@@ -1,0 +1,127 @@
+
+  {% if(campagne['id'] == '') %}
+	  <form role="form" class="form-horizontal form-general"
+          action="{{ path('campagne_save')  }}" method="POST">
+  {% else %}
+    <form role="form" class="form-horizontal form-general"
+          id="gameDescForm"
+          onSubmit="return campagneConfig.saveDescription({{campagne.id}})">
+  {% endif %}
+      <span id="descError">
+		  {% if (error != "") %}
+		    <div class="alert alert-error">
+		    	{{ error }}
+		    </div>
+	    {% endif %}
+      </span>
+
+	    <div class="form-group pull-right page-btn">
+
+		      <button type="submit" class="btn btn-primary">
+            {% if(campagne['id'] == '') %}
+		    	    Créer la campagne
+		        {% else %}
+              <i class="icon-save"></i> Sauvegarder
+            {% endif %}
+          </button>
+		    </button>
+	    </div>
+			<div class="row">
+				<div class="col-md-7">
+					<fieldset class="titled-box">
+						<legend>Informations principales</legend>
+						<input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
+					    <div class="form-group">
+						    <label class="control-label col-sm-2" for="name">Nom</label>
+						    <div class="col-sm-10">
+						    	<input class="form-control" type="text" id="name" name="name" placeholder="Nom de la campagne" value="{{ campagne['name'] }}">
+						    </div>
+					    </div>
+					    <div class="form-group">
+						    <label class="control-label col-sm-2" for="systeme">Univers</label>
+						    <div class="col-sm-10">
+						    	<input class="form-control" type="text" id="univers" name="univers" placeholder="Univers de jeu" value="{{ campagne['univers'] }}">
+						    </div>
+					    </div>
+					    <div class="form-group">
+						    <label class="control-label col-sm-2" for="systeme">Système</label>
+
+					    	<div class="col-sm-10">
+					    		<input class="form-control" type="text" id="systeme" name="systeme" placeholder="Système de jeu utilisé" value="{{ campagne['systeme'] }}">
+					    	</div>
+
+					    </div>
+					    <div class="form-group">
+						    <label class="control-label col-sm-4" for="nb_joueurs">Nombre de joueurs</label>
+
+						    <div class="col-sm-4">
+						    	<input class="form-control" type="text" id="nb_joueurs" name="nb_joueurs" placeholder="Nombre de joueurs" value="{{ campagne['nb_joueurs'] }}">
+						    </div>
+
+					    </div>
+					    <div class="form-group">
+						    <label class="control-label col-sm-3" for="statut">Statut</label>
+						    <div class="col-sm-9">
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation</label>
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé</label>
+						    </div>
+					    </div>
+					</fieldset>
+				</div>
+				<div class="col-md-5">
+					<fieldset class="titled-box">
+						<legend>Style de partie</legend>
+			            <div class="form-group">
+						    <label class="control-label col-sm-3" for="statut">Rythme</label>
+						    <div class="col-sm-9">
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="rythme" value="0" {% if campagne.rythme == 0 %} checked {% endif %} title="1 post par mois"> Tortue</label>
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="rythme" value="1" {% if campagne.rythme == 1 %} checked {% endif %} title="1 post par semaine"> Ralenti</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="rythme" value="2" {% if campagne.rythme == 2 %} checked {% endif %} title="1 post pour 3 jours"> Standard</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="rythme" value="3" {% if campagne.rythme == 3 %} checked {% endif %} title="1 post par jour"> Intense</label>
+				                <label class="radio-inline"><input type="radio" class="iconeBtn" name="rythme" value="4" {% if campagne.rythme == 4 %} checked {% endif %} title="Plusieurs posts par jour"> Extrême</label>
+						    </div>
+					    </div>
+			            <div class="form-group">
+						    <label class="control-label col-sm-3" for="statut">Exigence</label>
+						    <div class="col-sm-9">
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="rp" value="0" {% if campagne.rp == 0 %} checked {% endif %} title="Peu d'exigence en terme de Roleplay"> Roman de gare</label>
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="rp" value="1" {% if campagne.rp == 1 %} checked {% endif %} title="Exigence standard : action décrite correctement, quelques pensées, ..."> Standard</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="rp" value="2" {% if campagne.rp == 2 %} checked {% endif %} title="Exigence forte : la description prime, il faudra faire des efforts."> Théâtre</label>
+								<label class="radio-inline"><input type="radio" class="iconeBtn" name="rp" value="3" {% if campagne.rp == 3 %} checked {% endif %} title="De haut vol : le roleplay est au centre même de la partie !"> Cyrano</label>
+						    </div>
+					    </div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset class="titled-box">
+						<legend>Descriptions</legend>
+					    <div class="form-group">
+						    <label class="control-label col-sm-2" for="banniere">Bannière</label>
+						    <div class="input-group col-sm-10">
+						    	<input type="text" class="form-control" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ campagne['banniere'] }}">
+							    <span class="input-group-btn">
+							    	<a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+						    	</span>
+						    </div>
+						    <br>
+						    <div class="col-sm-10 col-sm-offset-2"><i>Taille attendue : 150px X 150px</i></div>
+					    </div>
+
+					    <div class="form-group">
+					    	<div class="col-sm-12">
+						    	<label class="control-label" for="description">Votre description</label>
+						    </div>
+						    <div class="col-sm-12">
+							    <textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description"
+							    	 placeholder="Votre description" rows="10">{{ campagne['description'] }}</textarea>
+						   	</div>
+					    </div>
+				    </fieldset>
+				</div>
+			</div>
+
+    </form>
