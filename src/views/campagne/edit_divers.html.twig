@@ -6,11 +6,15 @@
   </div>
   {% endif %}
 
-  <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
+  <form role="form"
+          id="gameDiversForm"
+          onSubmit="return campagneConfig.saveDivers({{campagne.id}})">
 
     <div class="control-group">
       <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
-        <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
+        <button type="submit" class="btn btn-primary" >
+          <i class="icon-save"></i> Sauvegarder
+        </button>
       </div>
     </div>
 

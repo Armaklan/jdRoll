@@ -2,7 +2,7 @@
 
 {% block content %}
 
-	{% if (error != "") %}
+null	{% if (error != "") %}
 	    <div class="alert alert-error">
 	    	{{ error }}
 	    </div>
@@ -101,7 +101,7 @@
 						                                        {% else %}
 						                                                    <a href="{{ path('campagne_close_subscribe', {id: campagne.id}) }}" class="btn iconeBtn btn-danger" title="Fermer le recrutement"><i class="icon-lock"></i></a>
 						                                        {% endif %}
-						<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+						<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					</div>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
 					</td>
@@ -214,7 +214,7 @@
 					<td>
 						<div class="btn-group">
 						<a href="{{ path('campagne', {id: campagne.id}) }}" class="btn  btn-default iconeBtn" title="Détail"><i class="icon-search"></i></a>
-						<a href="{{ path('campagne_edit', {id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+						<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
 					</div>
 					<input type="hidden" class="filterIndex" value="{{ campagne.name }}{{ campagne.univers }}{{ campagne.systeme }}">
 					</td>

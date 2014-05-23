@@ -6,15 +6,16 @@
 			</thead>
 			<tbody>
 				{% for participant in participants %}
-				<tr>
+				<tr id="inscription{{participant.id}}">
 					<td>{{ participant.username }}</td>
-					<td width="90px" style="text-align : right" >
+					<td width="90px" style="text-align : right">
 					{% if is_mj and participant.part_statut == 1 %}
-						<a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Désinscrire" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+						<a onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
+               title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></a>
           {% else %}
             {% if is_mj %}
-              <a href="{{ path('campagne_join_valid', {id : campagne.id, user_id: participant.id}) }}" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
-              <a href="{{ path('campagne_ban', {id : campagne.id, user_id: participant.id}) }}" title="Refuser l'inscription" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>
+              <a href="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
+              <a href="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></a>
             {% endif %}
 					{% endif %}
 					</td>

@@ -1,5 +1,12 @@
-  <form role="form" action="{{ path('campagne_config_save')  }}" method="POST">
+    <form role="form"
+          id="gameSheetForm"
+          onSubmit="return campagneConfig.saveSheet({{campagne.id}})">
 
+    <div class="control-group">
+      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+        <button type="submit" class="btn btn-primary" > <i class="icon-save"></i> Sauvegarder</button>
+      </div>
+    </div>
   <script type='text/javascript'>
     var count = 0;
     var mode = 0;
@@ -222,13 +229,8 @@
     }
   </style>
 
-    <div class="control-group">
-      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
-        <button type="submit" class="btn btn-primary" id='saveConfig' >Mettre à jour la configuration</button>
-      </div>
-    </div>
-
     <div class="col-sm-12">
+      <input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
 
       <div class="form-group">
         <label class="control-label" for="template">Template de personnage</label>
