@@ -250,8 +250,8 @@ class CampagneService {
 				FROM campagne
 				JOIN user ON user.id = campagne.mj_id
 				WHERE campagne.STATUT = 0
-				ORDER BY campagne.id desc
-				LIMIT 0, 5";
+				ORDER BY Rand() ASC
+				LIMIT 0, 10";
 		$campagnes = $this->db->fetchAll($sql);
 		return $campagnes;
 	}
@@ -768,7 +768,7 @@ class CampagneService {
         $result = $this->db->fetchColumn($sql, array('joueur' => $joueur, 'campagne' => $campagne ), 0);
         return ($result != null);
     }
-    
+
     public function getFavorisInCampagne($campagne) {
         $sql = "SELECT user_id
                 FROM campagne_favoris
