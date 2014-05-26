@@ -37,7 +37,9 @@ $forumController->get('/', function() use($app) {
 	$is_mj = $app["campagneService"]->isMj(null);
 	$isAdmin = $app["campagneService"]->isAdmin();
 	$campagne = $app["campagneService"]->getBlankCampagne();
-	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
+	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0,
+                                                     'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
+                                                     'is_participant' => false,
 		'isAdmin' => $isAdmin, 'campagne' => $campagne]);
 })->bind("forum");
 
@@ -51,11 +53,14 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
     $isAdmin = $app["campagneService"]->isAdmin();
+    $isParticipant = $app["campagneService"]->isParticipant($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
     $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
     $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
-	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris, 'campagne_id' => $campagne_id, 'topics' => $topics, 
+	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
+                                                     'campagne_id' => $campagne_id, 'topics' => $topics,
+                                                     'is_participant' => $isParticipant,
             'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);
 })->bind("forum_campagne");
 
@@ -121,7 +126,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 	$topicId = $request->get('id');
 	try {
 		if($topicId == '') {
-			$topicId = $app["topicService"]->createTopic($request);   
+			$topicId = $app["topicService"]->createTopic($request);
 		} else {
 			$app["topicService"]->updateTopic($request);
 		}
@@ -190,7 +195,7 @@ function getPrivateZone($txt) {
     return '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . '</div>';
 }
 
-    
+
 function replace_hide(&$post)
 {
  $post['post_content']  = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
@@ -221,9 +226,9 @@ function transformPopupZone(&$post)
 {
  $post['post_content']  = preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
 				function ($matches) {
-					
+
 					return '<a href="#!" rel="popover" data-title="' . $matches[1] . '" data-content="' . $matches[2] . '" data-placement="bottom" data-trigger="hover">' . $matches[3] . '</a>';
-					
+
 				},
 				$post['post_content']
 			);

@@ -44,6 +44,9 @@
 		{% endif %}
 		</div>
 	    {% if campagne_id > 0 %}
+          {% if is_participant > 0 %}
+            <a href="{{ path('campagne_quit', {id : campagne_id}) }}" title="Quitter" class="btn btn-danger btn-sm iconeBtn"><i class="icon-remove"></i> Quitter la partie</a>
+          {% endif %}
 	        {% if is_favoris %}
 	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn" data-campagne-id="{{campagne_id}}"><i class="icon-star"></i></a>
 	        {% else %}
