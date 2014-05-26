@@ -7,32 +7,32 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-	
+
 	<script type='text/javascript'>
 $(function() {
 
 	initFDP($('#zoneFicheCustom'),true);
-	
+
 	$('.ui-resizable-handle').remove();
-	
-	 
+
+
 	$('#saveBtn').click(function(e){
 		e.preventDefault();
 		var fieldsValue = '';
 		$('#zoneFicheCustom').find('input[id$="hidden"]').each(function(){
 			fieldsValue +=$(this)[0].outerHTML;
 		});
-	
+
 		$('#hiddenInputFields').val(fieldsValue);
 			$("form:first").submit();
 		});
 });
 
-   
+
 </script>
 
 <style>
-.ui-layout-center {	
+.ui-layout-center {
 	position: relative;
     border: 1px solid black;
 }
@@ -59,9 +59,9 @@ $(function() {
 				{{ cat.name }}</option>
                             {% endfor %}
 						</select>
-                </div>  
+                </div>
             {% else %}
-		<input type="hidden" name="cat_id">  
+		<input type="hidden" name="cat_id">
 	    {% endif %}
 	    <div class="form-group">
 		    <label class="control-label" for="name">Avatar</label>
@@ -72,18 +72,21 @@ $(function() {
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Votre description public</label>
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="publicDescription" name="publicDescription" 
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="publicDescription" name="publicDescription"
 		    	 placeholder="Votre description public (visible par tous)" rows="10">{{ perso['publicDescription'] }}</textarea>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Votre description privée</label>
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="privateDescription" name="privateDescription" 
+		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="privateDescription" name="privateDescription"
 		    	 placeholder="Votre description privée (visible par vous et le MJ)" rows="10">{{ perso['privateDescription'] }}</textarea>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="description">Information technique</label>
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="technical" name="technical" 
-		    	 placeholder="Votre personnage selon les règles" rows="10">{{ perso['technical'] }}</textarea>
+		    	<textarea input class="input-xxlarge wysiwyg"
+                    type="text" id="technical"
+                    name="technical"
+		    	          placeholder="Votre personnage selon les règles"
+                    rows="10">{{ perso['technical'] }}</textarea>
 	    </div>
 		<div class="form-group" id='zoneFicheCustomControl'>
 			<label class="control-label" for="template">Fiche de personnage</label>
@@ -98,12 +101,12 @@ $(function() {
 			    <br>
 			    <label class="radio-inline"><input type="radio" name="statut" value="0" {% if perso.statut == 0 %} checked {% endif %}> Visible</label>
 				<label class="radio-inline"><input type="radio" name="statut" value="2" {% if perso.statut == 2 %} checked {% endif %}> Non-Visible</label>
-			    
-		    </div>  
+
+		    </div>
 		{% else %}
-			<input type="hidden" name="statut" value="{{ perso.statut }}">  
+			<input type="hidden" name="statut" value="{{ perso.statut }}">
 	    {% endif %}
-            
+
 	    <div class="form-group">
 			    <button type="submit" class="btn btn-primary" id='saveBtn'>Sauvegarder</button>
 	    </div>

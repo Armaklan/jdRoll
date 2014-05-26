@@ -91,7 +91,7 @@
 					$app["notificationService"]->alertModifPerso(
 						$app['session']->get('user')['id'],
 						$perso,
-						$campagne_id,
+    					$campagne_id,
 						$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
 						$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
 					);
@@ -121,8 +121,15 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getBlankPnj($campagne_id);
+        $config = $app['campagneService']->getCampagneConfig($campagne_id);
+        $perso['technical'] = $config['template'];
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
-		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
+		return $app->render('perso_form.html.twig', [
+            'campagne_id' => $campagne_id,
+            'perso' => $perso,
+            'error' => "",
+            'is_mj' => $is_mj,
+            'cats' => $cats]);
 	})->bind("perso_pnj_add");
 
 	$persoController->get('/remove/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
