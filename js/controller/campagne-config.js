@@ -52,6 +52,22 @@ var campagneConfig = (function (tinyMCE) {
 
     component.saveSheet = function(campagne) {
         tinyMCE.triggerSave();
+
+        var fieldsValue = '';
+        var cloneDiv;
+        if(mode == 1)
+          cloneDiv = $('#zoneFiche').clone();
+        else
+          cloneDiv = $('#zoneFicheCustom').clone();
+
+        cloneDiv.find('.editable-popup').each(function(){$(this).remove();});
+        cloneDiv.find('div[id^="JDRollUserControl_"]').each(function(){
+          fieldsValue +=$(this)[0].outerHTML;
+          $(this).remove();
+        });
+
+        $('#hiddenInput').val(cloneDiv.html());
+        $('#hiddenInputFields').val(fieldsValue);
         var data = $('#gameSheetForm').serialize();
         save('sheet', campagne, data).
         done(function() {

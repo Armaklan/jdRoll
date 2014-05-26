@@ -108,6 +108,9 @@ ADD  `rp2_color` VARCHAR( 10 ) NULL;
 ALTER TABLE  `campagne_config`
 ADD  `quote_color` VARCHAR( 10 ) NULL;
 
+ALTER TABLE  `campagne_config`
+ADD  `width` VARCHAR( 8 ) NULL DEFAULT '600px';
+
 -- --------------------------------------------------------
 
 --
