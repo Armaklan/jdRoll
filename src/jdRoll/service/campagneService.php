@@ -631,15 +631,18 @@ class CampagneService {
 	}
 
 	public function getParticipantByStatus($campagne_id,$status) {
-		$sql = "SELECT count(user_id) as nb_users
+		$sql = "SELECT user.*, cp.statut as part_statut
 				FROM campagne_participant cp
+				JOIN
+				user
+				ON user.id = cp.user_id
 				WHERE
 				cp.campagne_id = :campagne and cp.statut = :status";
 		$stmt = $this->db->prepare($sql);
 		$stmt->bindValue("campagne", $campagne_id);
 		$stmt->bindValue("status", $status);
 		$stmt->execute();
-		return $stmt->fetchColumn();
+		return $stmt->fetchAll();
 	}
 
 	private function insertParticipant($campagne_id, $user_id) {

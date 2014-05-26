@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div class"col-md-12">
 	{% if (error != "") %}
 	    <div class="alert alert-error">
 	    	{{ error }}
@@ -9,7 +10,7 @@
     {% endif %}
 
 	<form role="form" class="form-horizontal" action="{{ path('topic_save', {campagne_id : campagne_id}) }}" method="POST">
-	       
+
 	    <div class="pull-right page-btn">
 			<button type="submit" class="btn btn-primary">Sauvegarder</button>
 	    </div>
@@ -24,7 +25,7 @@
 	    <div class="form-group">
 	    	<label class="control-label col-sm-2"  for="section_id">Catégories</label>
 			<div class="col-sm-10">
-				
+
 				<select name="section_id" class="select2">
 				 {% for section in sections %}
 					 <option value="{{ section.id }}" {% if section.id == topic.section_id %} SELECTED="SELECTED" {% endif %}>
@@ -38,14 +39,14 @@
 		    <div class="col-sm-3">
 		    	<input class="form-control" type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ topic.ordre }}">
 		    </div>
-	    </div>	
+	    </div>
 	    <div class="form-group">
 		    <label class="control-label col-sm-2" for="stickable">Type</label>
 		    <div class="col-sm-10">
 		    	<label class="radio-inline"><input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard</label>
 				<label class="radio-inline"><input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it</label>
 		    </div>
-	    </div>  
+	    </div>
 	    <div class="form-group">
 		    <label class="control-label col-sm-2" for="is_closed">Etat</label>
 		    <div class="col-sm-10">
@@ -73,8 +74,8 @@
 			    {% endfor %}
 			    </select>
 		    </div>
-	    </div>  
-	    </fieldset> 
+	    </div>
+	    </fieldset>
     </form>
-
+</div>
 {% endblock %}

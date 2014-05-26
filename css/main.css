@@ -36,6 +36,12 @@ th.categorie {
     border-radius: 0px;
 }
 
+blockquote {
+	font-weight: 100;
+	font-size: 1em;
+	color: #339966;
+}
+
 blockquote p {
 	font-weight: 100;
 	font-size: 1em;

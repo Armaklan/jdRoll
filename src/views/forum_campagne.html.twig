@@ -2,11 +2,12 @@
 
 {% block content %}
 
-	{% if (error != "") %}
+	  {% if (error != "") %}
 	    <div class="alert alert-error">
 	    	{{ error }}
 	    </div>
     {% endif %}
+    <div id="campagneMsg"></div>
 
     {% if (absences is not empty) %}
 	    <div class="alert alert-warning">
@@ -17,13 +18,29 @@
                 </ul>
 	    </div>
     {% endif %}
-	 {% if (waitingUsers is defined and waitingUsers > 0 and is_mj) %}
-            <div class="alert alert-warning">
-                    Des inscriptions à la partie sont en attentes de validations. <br>
-                    <a href="{{ path('campagne', { 'id' : campagne_id}) }}">Cliquez ici pour voir la liste des inscrits.</a>
-                    <p></p>
-                    <p>Les inscriptions à la partie seront fermées automatiquement quand vous aurez accepté le nombre de joueurs que vous avez indiqué comme requis.</p>
+	  {% if is_mj %}
+      {% for user in waitingUsers %}
+          <div class="alert alert-warning" id="inscription{{user.id}}">
+                    <p>L'inscription de
+                      <a href="{{ path('profile', {username: user.username}) }}">
+                         {{user.username}}</a>
+                      est en attente de validation.<p>
+                      <p>Les inscriptions à la partie seront fermées automatiquement quand vous aurez
+                      accepté le nombre de joueurs que vous avez indiqué comme requis.</p>
+                    <p>&nbsp;</p>
+                    <div class="pull-right">
+                      <a onClick="campagneConfig.addParticipant({{campagne.id}}, {{user.id}});">
+                        Accepter
+                      </a>
+                      <a style="margin-left: 2em"
+                         onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{user.id}});">
+                        Refuser
+                      </a>
+                    </div>
+                    <p>&nbsp;</p>
             </div>
+      {% endfor %}
+
     {% endif %}
 
 

@@ -95,6 +95,7 @@ var campagneConfig = (function (tinyMCE) {
                 done(function() {
                     setMsg("success", "Joueur désinscrit");
                     $('#inscription'+user).css('display', 'none');
+                    $('div#inscription'+ user).css('display', 'none');
                 }).
                 fail(function(err) {
                     setMsg("danger", err);
@@ -107,6 +108,7 @@ var campagneConfig = (function (tinyMCE) {
     component.addParticipant = function(campagne, user) {
         inscription('valid', campagne, user).
         done(function() {
+            $('div#inscription'+ user).css('display', 'none');
             $('#inscription'+ user + ' button').css('display', 'none');
             setMsg("success", "Joueur accepté");
         }).

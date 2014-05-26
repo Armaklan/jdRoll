@@ -29,6 +29,9 @@ var formats = [{
     }, {
         title: 'Titre 3',
         block: 'h3'
+    }, {
+        title: 'Citation',
+        block: 'blockquote'
     }];
 
 var configBase = {

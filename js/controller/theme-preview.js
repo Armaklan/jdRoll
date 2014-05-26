@@ -50,6 +50,7 @@ var themeService = (function () {
 
     var updateQuote = function(color) {
         $('.container-fluid blockquote p').css('color', color);
+        $('.container-fluid blockquote').css('color', color);
     };
 
     var updateHr = function() {

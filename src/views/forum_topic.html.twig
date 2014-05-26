@@ -194,7 +194,7 @@
 $("a[rel=popover]").popover();
 
 function quote(id) {
-	text = "<blockquote style='color: #339966'><p>" + $('#contentDiv' + id).html().trim() + "</blockquote></p><p></p>";
+	text = "<blockquote><p>" + $('#contentDiv' + id).html().trim() + "</p></blockquote><p></p>";
 	tinyMCE.get('content').setContent(tinyMCE.get('content').getContent() + text);
 }
 
