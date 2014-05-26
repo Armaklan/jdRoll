@@ -18,7 +18,7 @@
                 </ul>
 	    </div>
     {% endif %}
-	  {% if is_mj %}
+	  {% if is_mj and waitingUsers is defined %}
       {% for user in waitingUsers %}
           <div class="alert alert-warning" id="inscription{{user.id}}">
                     <p>L'inscription de
