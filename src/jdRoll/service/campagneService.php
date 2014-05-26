@@ -200,6 +200,7 @@ class CampagneService {
     				univers = :univers,
     				nb_joueurs = :nb_joueurs,
     				description = :description,
+                    is_recrutement_open = :recrutement,
     				statut = :statut,
                                 rythme = :rythme,
                                 rp = :rp
@@ -216,6 +217,7 @@ class CampagneService {
         $stmt->bindValue("rp", $request->get('rp'));
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
+		$stmt->bindValue("recrutement", $request->get('is_recrutement_open'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }

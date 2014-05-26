@@ -168,7 +168,7 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
                     $modoff = $app['sectionService']->createSectionWith($campagne_id, "Mod-Off", 2, 0, "");
                     $app['topicService']->createTopicWith($modoff, "Recrutement", 0, 0, 0, 2);
                     $app['sectionService']->createSectionWith($campagne_id, "Système et Contexte", 3, 0, "");
-                    return $app->redirect($app->path('campagne_edit', ['id' => $campagne_id]));
+                    return $app->redirect($app->path('campagne_config_edit', ['campagne_id' => $campagne_id]));
                 } else {
                     // FIX - Obsolète
                     $app['campagneService']->updateCampagne($request);

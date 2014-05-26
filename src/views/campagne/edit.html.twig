@@ -68,6 +68,15 @@
 								<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé</label>
 						    </div>
 					    </div>
+              {% if campagne.is_recrutement_open is defined %}
+					    <div class="form-group">
+						    <label class="control-label col-sm-3" for="statut">Recrutement</label>
+						    <div class="col-sm-9">
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="is_recrutement_open" value="1" {% if campagne.is_recrutement_open == 1 %} checked {% endif %} title="Recrutement ouvert"> Ouvert</label>
+						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="is_recrutement_open" value="0" {% if campagne.is_recrutement_open == 0 %} checked {% endif %} title="Recrutement terminé."> Fermé</label>
+						    </div>
+					    </div>
+              {% endif %}
 					</fieldset>
 				</div>
 				<div class="col-md-5">
