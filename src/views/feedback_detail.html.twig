@@ -21,7 +21,7 @@
     <table width="100%">
       <tr>
         <td style="width: 200px">
-          <img src="{{ feedback.avatar }}"/><br>
+          <img src="{{ feedback.avatar }}" width="60%"/><br>
           <p><a href="{{ path('profile', {username: feedback.username}) }}" class="profil{{ feedback.profil }}"><b>{{ feedback.username }}</b></a></p>
 					<p><i>Le {{ feedback.create_date }}</i></p>
         </td>
@@ -51,7 +51,7 @@
 {% for comment in comments %}
   <tr>
     <td style="width: 200px">
-      <img src="{{ comment.avatar }}"/><br>
+      <img src="{{ comment.avatar }}" width="60%"/><br>
       <p><a href="{{ path('profile', {username: comment.username}) }}" class="profil{{ comment.profil }}"><b>{{ comment.username }}</b></a></p>
       <p><i>Le {{ comment.create_date }}</i></p>
     </td>
