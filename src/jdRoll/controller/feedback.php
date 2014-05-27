@@ -27,13 +27,20 @@
 	})->bind("feedback_post")->before($mustBeLogged);
 
     $feedbackController->get('/{id}', function($id) use($app) {
-
+        $feedback = $app['feedbackService']->get($id);
+        $comments = $app['feedbackService']->getComments($id);
+        $isAdmin = $app["campagneService"]->IsAdmin();
+        return $app->render('feedback_detail.html.twig', [
+            'feedback' => $feedback,
+            'comments' => $comments,
+            'is_admin' => $isAdmin,
+            'error' => ""]);
 	})->bind("feedback_get")->before($mustBeLogged);
 
     $feedbackController->delete('/{id}', function($id) use($app) {
         $feedback = $app['feedbackService']->delete($id);
         return new JsonResponse($feedback, 200);
-    })->bind("feedback_get")->before($mustBeLogged);
+    })->bind("feedback_delete")->before($mustBeLogged);
 
     $feedbackController->post('/{id}/vote', function(Request $request, $id) use($app) {
         $score = $request->get('score');
@@ -46,6 +53,13 @@
         }
         return new JsonResponse($feedback, 200);
     })->bind("feedback_vote")->before($mustBeLogged);
+
+    $feedbackController->post('/{id}/comment', function(Request $request, $id) use($app) {
+        $content = $request->get('content');
+        $user = $app['session']->get('user');
+        $feedback = $app['feedbackService']->createComments($id, $user, $content);
+        return $app->redirect($app->path('feedback_get', array('id' => $id)));
+    })->bind("feedback_comment")->before($mustBeLogged);
 
     $feedbackController->get('/', function() use($app) {
         $user = $app['session']->get('user');

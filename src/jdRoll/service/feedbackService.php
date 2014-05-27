@@ -14,13 +14,24 @@ class FeedbackService {
 
     public function get($id) {
         $this->logger->addInfo(' Get feedback : ' . $id );
-        $sql = "SELECT feedback.* , user.username, user.id as user_id, user.avatar
+        $sql = "SELECT feedback.* , user.username, user.avatar, user.username, user.profil
                 FROM feedback
                 JOIN
                 user
                 ON feedback.user_id = user.id
 				WHERE feedback.id = :id";
        return $this->db->fetchAssoc($sql, array("id" => $id));
+    }
+
+    public function getComments($id) {
+        $this->logger->addInfo(' Get feedback comments : ' . $id );
+        $sql = "SELECT feedback_comment.*, user.username, user.avatar, user.username, user.profil
+                FROM feedback_comment
+                JOIN
+                user
+                ON feedback_comment.user_id = user.id
+				WHERE feedback_comment.feedback_id = :id";
+       return $this->db->fetchAll($sql, array("id" => $id));
     }
 
     public function create($user, $title, $content) {
@@ -32,6 +43,19 @@ class FeedbackService {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("user", $user['id']);
         $stmt->bindValue("title", $title);
+        $stmt->bindValue("content", $content);
+        $stmt->execute();
+        return $this->get($this->db->lastInsertId());
+    }
+
+    public function createComments($feedbackId, $user, $content) {
+    	$sql = "INSERT INTO feedback_comment
+                (user_id,  feedback_id, content)
+                VALUES
+                (:user, :feedback_id, :content)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("user", $user['id']);
+        $stmt->bindValue("feedback_id", $feedbackId);
         $stmt->bindValue("content", $content);
         $stmt->execute();
         return $this->get($this->db->lastInsertId());
@@ -72,7 +96,7 @@ class FeedbackService {
     public function voteDown($id, $user) {
         $this->logger->addInfo(' Vote down : ' . $id );
         $sql = "DELETE FROM feedback_vote
-                WHERE 
+                WHERE
                 user_id = :user
                 AND id = :id";
         $stmt = $this->db->prepare($sql);
@@ -91,8 +115,8 @@ class FeedbackService {
 
     public function getOpenFeedbacks($user) {
         $this->logger->addInfo(' Get open feedbacks');
-        $sql = "SELECT feedback.* , user.username, user.id as user_id, 
-                user.avatar, feedback.vote, feedback_vote.id as vote_id 
+        $sql = "SELECT feedback.* , user.username, user.id as user_id,
+                user.avatar, feedback.vote, feedback_vote.id as vote_id
                 FROM feedback
                 JOIN
                 user
