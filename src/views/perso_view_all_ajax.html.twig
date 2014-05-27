@@ -97,14 +97,22 @@
     <tr>
       <td colspan="2">
         <a data-toggle="collapse" data-target="#technical" class="collapserLink">
-          <i class="icon-chevron-sign-down"></i>
+          {% if perso.template_html is not empty %}
+            <i class="icon-chevron-sign-up"></i>
+          {% else %}
+            <i class="icon-chevron-sign-down"></i>
+          {% endif %}
           Description technique
         </a>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <div class="topics collapse in" id="technical">
+        {% if perso.template_html is not empty %}
+          <div class="topics collapse out" id="technical">
+        {% else %}
+          <div class="topics collapse in" id="technical">
+        {% endif %}
         {% autoescape false %}{{ perso.technical }}{% endautoescape %}
         </div>
       </td>
