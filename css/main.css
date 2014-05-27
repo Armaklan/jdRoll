@@ -89,6 +89,10 @@ blockquote p {
 	text-align: justify;
 }
 
+#zoneImg {
+    width: 600px;
+}
+
 .carouseltitle {
 	-webkit-background-clip: border-box;
 	-webkit-background-origin: padding-box;
