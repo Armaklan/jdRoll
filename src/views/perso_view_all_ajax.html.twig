@@ -110,21 +110,36 @@
       </td>
     </tr>
 
+    {% if perso.template_html is not empty %}
+    <tr>
+      <td colspan="2">
+        <a data-toggle="collapse" data-target="#sheet" class="collapserLink">
+          <i class="icon-chevron-sign-down"></i>
+          Feuille de personnages
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="topics collapse in" id="sheet">
+          <div class="form-horizontal" id="FakeTD">
+            <div id='zoneFiche'>
+              <div>
+                <div class="ui-layout-center" id='zoneFicheCustom'>
+                  {% autoescape false %}{{ perso.template_html }}{% endautoescape %}
+                  {% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
+                  {% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p> &nbsp; </p>
+      </td>
+    </tr>
+    {% endif %}
+
   </tbody>
 </table>
-{% if perso.template_html is not empty %}
-<div class="form-horizontal" id="FakeTD">
-  <div class="form-group" id='zoneFiche'>
-    <label class="control-label" for="template">Fiche de personnage</label>
-    <div>
-      <div class="ui-layout-center" id='zoneFicheCustom'>
-        {% autoescape false %}{{ perso.template_html }}{% endautoescape %}
-        {% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
-        {% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
-      </div>
-    </div>
-  </div>
-</div>
-{% endif %}
-<p> &nbsp; </p>
+
 
