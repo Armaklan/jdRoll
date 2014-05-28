@@ -36,6 +36,15 @@
 			}
 		{% endif %}
 
+		{% if campagne_config.quote_color != '' %}
+			blockquote {
+				color: {{ campagne_config.quote_color }};
+			}
+      blockquote p {
+				color: {{ campagne_config.quote_color }};
+			}
+		{% endif %}
+
 		{% if campagne_config.banniere != '' %}
 			.logo_campagne {
 				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;
