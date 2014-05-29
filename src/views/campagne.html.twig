@@ -77,12 +77,12 @@
 					<td>{{ participant.username }}</td>
 					<td width="90px" style="text-align : right" >
           {% if is_mj and participant.part_statut == 1 %}
-						<a onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
-               title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></a>
+						<button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
+               title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
           {% else %}
             {% if is_mj %}
-              <a href="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></a>
-              <a href="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></a>
+              <button onClick="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></button>
+              <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
             {% endif %}
 					{% endif %}
 					</td>
