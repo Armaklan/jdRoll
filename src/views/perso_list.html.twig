@@ -67,7 +67,12 @@ null	    	{{ error }}
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
               <a onclick="persoModalService.openPerso({{campagne_id}}, {{ perso.id }})">
                 <p>{{ perso.name }}</p>
-                <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
+
+                {% if perso.avatar != "" %}
+                  <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
+                {% else %}
+                  <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
+                {% endif %}
               </a>
             </div>
 

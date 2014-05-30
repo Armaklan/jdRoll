@@ -28,7 +28,11 @@
                 data-title="<h5>{{gamesBox.univers}} par {{gamesBox.username}}</h5>"
                 data-content="<b>Joueurs :</b> {{gamesBox.nb_joueurs_actuel}} / {{gamesBox.nb_joueurs}}">
                 <p>{{ gamesBox.name }}</p>
-                <img src="{{gamesBox.banniere}}" />
+                {% if gamesBox.banniere != "" %}
+                  <img class="img-rounded" src="{{gamesBox.banniere}}" />
+                {% else %}
+                  <img class="img-rounded" src="{{app.request.baseUrl}}/img/ban.png"/>
+                {% endif %}
             </a>
             <input type="hidden" class="filterIndex" value="{{ gamesBox.name }}{{ gamesBox.univers }}{{ gamesBox.systeme }}{{ gamesBox.username }}{{ gamesBox.statut }}">
         </div>
