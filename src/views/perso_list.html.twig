@@ -7,7 +7,7 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-    
+
     <div align="right">
 	    <form role="form" class="form-search">
 	    	<input type="text" id="searchText" onkeyup="filterTable('#searchText','.persoTable')"  class="input-medium search-query">
@@ -19,7 +19,7 @@
         {% if is_mj %}
             <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
 	    <a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
-	{% endif %}			
+	{% endif %}
     </div>
     {% set cat_name = -1 %}
     {% set is_first = true %}
@@ -48,14 +48,14 @@
 		</thead>
 		<tbody>
 
-            
+
             {% set is_first = false %}
         {% endif %}
-    
-	{% if perso.id is not null %}		
+
+	{% if perso.id is not null %}
             {% if is_mj or perso.statut == 0 %}
             {% set colorStyle = "" %}
-            {% if perso.statut == 2 %} 
+            {% if perso.statut == 2 %}
                      {% set colorStyle = "style=\"background-color: #DDC7B7\"" %}
             {% endif %}
             <tr>
@@ -68,7 +68,8 @@
                             {% endif %}
                     </td>
                     <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="25%">{{ perso.concept }}</td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="20%">{% if is_mj %}
+                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="20%">
+                           {% if is_mj %}
                                     <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
                                     <a href="{{ path('attach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Transférer"><i class="icon-share-alt"></i></a>
                                     <a href="{{ path('perso_pnj_del', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
@@ -82,8 +83,8 @@
             </tr>
             {% endif %}
        {% endif %}
-			
-		
+
+
     {% endfor %}
         </tbody>
     </table>

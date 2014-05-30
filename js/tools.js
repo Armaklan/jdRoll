@@ -60,7 +60,7 @@ $(function () {
 
 
 $(function () {
-	$("a.btn-danger").click(function(e) {
+	$(document).on("click", "a.btn-danger", function(e) {
        e.stopPropagation();
        e.preventDefault();
        var location = $(this).attr('href');
