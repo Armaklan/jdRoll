@@ -145,7 +145,7 @@
 		} else {
 			$error = "Vous n'êtes pas le MJ de cette partie";
 		}
-		$persos = $app['persoService']->getPNJInCampagne($campagne_id);
+		$persos = $app['persoService']->getPNJInCampagne($campagne_id, $is_mj);
 		return $app->render('perso_list.html.twig', ['campagne_id' => $campagne_id,'persos' => $persos, 'error' => $error, 'is_mj' => $is_mj]);
 	})->bind("perso_pnj_del");
 

@@ -17,7 +17,7 @@ null	    	{{ error }}
 
     <div class="pull-right">
       {% if is_mj %}
-           <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
+          <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
           <a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
       {% endif %}
     </div>
@@ -38,13 +38,32 @@ null	    	{{ error }}
 		<thead>
 			<tr>
 				<th  width="85%" colspan="3" class="categorie">
-                                    {% if cat_name is not null %} {{cat_name}} {% else %} Non classé {% endif %}
+
+            {% if cat_name is not null %}
+              <a data-toggle="collapse" data-target="#cat{{ perso.cat_id  }}" class="collapserLink">
+                {% if perso.cat_default_collapse == 0 %}
+                  <i class="icon-chevron-sign-down"></i>
+                {% else %}
+                  <i class="icon-chevron-sign-up"></i>
+                {% endif %}
+				    		 {{cat_name}}
+				    	</a>
+            {% else %}
+              <a data-toggle="collapse" data-target="#catNC" class="collapserLink">
+                {% if perso.cat_default_collapse == 0 %}
+                  <i class="icon-chevron-sign-down"></i>
+                {% else %}
+                  <i class="icon-chevron-sign-up"></i>
+                {% endif %}
+				    		Non classé
+				    	</a>
+            {% endif %}
                                     <input type="hidden" class="filterIndex" value="HEADER">
                                 </th>
                                 <th  width="15%" class="categorie">
-                                    {% if perso.cate_id is not null and is_mj %}
-                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cate_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
-                                        <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.cate_id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
+                                    {% if cat_name is not null and is_mj %}
+                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
+                                        <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer la catégorie"><i class="icon-remove-sign"></i></a>
                                     {% endif %}
                                 </th>
 			</tr>
@@ -52,7 +71,8 @@ null	    	{{ error }}
 		<tbody>
       <tr>
         <td colspan="4">
-          <div class="col-md-12">
+          <div class="col-md-12 topics collapse {% if perso.cat_default_collapse == 0 %} in {% else %} out {% endif %}"
+               id="{% if cat_name is not null %}cat{{ perso.cat_id  }}{% else %}catNC{% endif %}">
 
 
             {% set is_first = false %}

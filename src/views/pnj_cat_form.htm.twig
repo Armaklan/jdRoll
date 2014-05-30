@@ -25,8 +25,18 @@
 			    	<input class="form-control" type="text" id="title" name="name" placeholder="Nom de la catégorie" value="{{ cat.name }}">
 			    </div>
 		    </div>
+		    <div class="control-group">
+			    <label class="control-label col-sm-2" for="name">Situation par défaut</label>
+			    <div class="col-sm-10">
+			    	<label class="radio-inline">
+			    		<input type="radio" name="default_collapse" value="0" {% if cat.default_collapse == 0 %} checked {% endif %}> Déplier
+			    	</label>
+			    	<label class="radio-inline">
+						<input type="radio" name="default_collapse" value="1" {% if cat.default_collapse == 1 %} checked {% endif %}> Plier
+			    </div>
+		    </div>
 		</fieldset>
-	
+
     </form>
 
 {% endblock %}

@@ -299,6 +299,10 @@ CREATE TABLE IF NOT EXISTS `pnj_category` (
 
 -- --------------------------------------------------------
 
+ALTER TABLE pnj_category
+ADD COLUMN
+default_collapse int(1) unsigned NOT NULL DEFAULT 0;
+
 --
 -- Structure de la table `posts`
 --

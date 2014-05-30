@@ -103,7 +103,10 @@ class PersoService {
     public function getPNJInCampagne($campagne_id, $is_mj) {
         $sql = "
             SELECT perso.* FROM
-            (   SELECT pnj.*, cat.name as cat_name, cat.id as cate_id
+            (   SELECT pnj.*,
+                    cat.name as cat_name,
+                    cat.default_collapse as cat_default_collapse
+
                 FROM
                 personnages pnj
                 LEFT JOIN
@@ -115,7 +118,9 @@ class PersoService {
                 AND     pnj.statut IN (0, 2)
                 AND     (:is_mj = true or pnj.statut = 0)
             UNION
-                SELECT pnj.*, cat.name as cat_name, cat.id as cate_id
+                SELECT pnj.*,
+                    cat.name as cat_name,
+                    cat.default_collapse as cat_default_collapse
                 FROM
                 personnages pnj
                 RIGHT JOIN
@@ -189,7 +194,7 @@ class PersoService {
         $stmt->bindValue("technical", $template);
         $stmt->execute();
     }
-	
+
 	    public function updatePersoFields($campagne_id,$user_id, $fields) {
 
         $sql = "UPDATE personnages
@@ -281,6 +286,7 @@ class PersoService {
         $cat["campagne_id"] = $campagne_id;
         $cat["name"] = "";
         $cat["id"] = 0;
+        $cat["default_collapse"] = 0;
         return $cat;
     }
 
@@ -289,17 +295,19 @@ class PersoService {
         $cat["campagne_id"] = $request->get('campagne_id');
         $cat["name"] = $request->get('name');
         $cat["id"] = $request->get('id');
+        $cat["default_collapse"] = $request->get('default_collapse');
         return $cat;
     }
 
     public function insertPnjCat($request) {
         $sql = "INSERT INTO pnj_category
-		(name, campagne_id)
+		(name, campagne_id, default_collapse)
 		VALUES
-		(:name, :campagne)";
+		(:name, :campagne, :default_collapse)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("name", $request->get('name'));
+        $stmt->bindValue("default_collapse", $request->get('default_collapse'));
         $stmt->bindValue("campagne", $request->get('campagne_id'));
         $stmt->execute();
     }
@@ -307,13 +315,15 @@ class PersoService {
     public function updatePnjCat($request) {
         $sql = "UPDATE
                     pnj_category
-                SET name = :name
+                SET name = :name,
+                default_collapse = :default_collapse
                 WHERE
                     id = :id";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("name", $request->get('name'));
         $stmt->bindValue("id", $request->get('id'));
+        $stmt->bindValue("default_collapse", $request->get('default_collapse'));
         $stmt->execute();
     }
 
