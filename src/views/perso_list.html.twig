@@ -4,7 +4,7 @@
 
 	{% if (error != "") %}
 	    <div class="alert alert-error">
-	    	{{ error }}
+null	    	{{ error }}
 	    </div>
     {% endif %}
 
@@ -16,10 +16,10 @@
 
 
     <div class="pull-right">
-        {% if is_mj %}
-            <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
-	    <a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
-	{% endif %}
+      {% if is_mj %}
+           <a href="{{ path('pnj_cat_add', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Ajouter une catégorie de PNJ"><i class="icon-tags"></i></a>
+          <a href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Ajouter un PNJ"><i class="icon-plus"></i></a>
+      {% endif %}
     </div>
     {% set cat_name = -1 %}
     {% set is_first = true %}
@@ -28,6 +28,9 @@
         {% if cat_name != perso.cat_name %}
             {% set cat_name = perso.cat_name %}
             {% if is_first  != true %}
+                              </div>
+                            </td>
+                          </tr>
                         </tbody>
                 </table>
             {% endif %}
@@ -47,45 +50,35 @@
 			</tr>
 		</thead>
 		<tbody>
+      <tr>
+        <td colspan="4">
+          <div class="col-md-12">
 
 
             {% set is_first = false %}
         {% endif %}
 
-	{% if perso.id is not null %}
+	    {% if perso.id is not null %}
             {% if is_mj or perso.statut == 0 %}
             {% set colorStyle = "" %}
             {% if perso.statut == 2 %}
                      {% set colorStyle = "style=\"background-color: #DDC7B7\"" %}
             {% endif %}
-            <tr>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="10%"><img src="{{ perso.avatar }}" width="70%"/></td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="45%">
-                            {% if is_mj %}
-                                    <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}">{{ perso.name }}</a>
-                            {% else %}
-                                    <a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: perso.id}) }}">{{ perso.name }}</a>
-                            {% endif %}
-                    </td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="25%">{{ perso.concept }}</td>
-                    <td {% autoescape false %} {{colorStyle}} {% endautoescape %} width="20%">
-                           {% if is_mj %}
-                                    <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Feuille de personnage"><i class="icon-tasks"></i></a>
-                                    <a href="{{ path('attach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Transférer"><i class="icon-share-alt"></i></a>
-                                    <a href="{{ path('perso_pnj_del', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
+              <a onclick="persoModalService.openPerso({{campagne_id}}, {{ perso.id }})">
+                <p>{{ perso.name }}</p>
+                <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
+              </a>
+            </div>
 
-
-                            {% else %}
-                                    <a href="{{ path('perso_view', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn iconeBtn sidebarBtn" title="Plus de détail..."><i class="icon-search"></i></a>
-                            {% endif %}
-                            <input type="hidden" class="filterIndex" value="{{ perso.name }}{{ perso.publicDescription }}{{ perso.concept }}{{ perso.cat_name }}">
-                    </td>
-            </tr>
             {% endif %}
        {% endif %}
 
 
     {% endfor %}
-        </tbody>
+          </div>
+        </td>
+      </tr>
+    </tbody>
     </table>
 {% endblock %}
