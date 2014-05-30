@@ -64,8 +64,15 @@
     $feedbackController->get('/', function() use($app) {
         $user = $app['session']->get('user');
 		$feedbacks = $app['feedbackService']->getOpenFeedbacks($user);
+        $lastFeedbacks = $app['feedbackService']->getLastFeedbacks();
+        $lastComments = $app['feedbackService']->getLastComments();
         $isAdmin = $app["campagneService"]->IsAdmin();
-        return $app->render('feedbacks.html.twig', ['feedbacks' => $feedbacks, 'is_admin' => $isAdmin, 'error' => ""]);
+        return $app->render('feedbacks.html.twig', [
+            'feedbacks' => $feedbacks,
+            'last_feedbacks' => $lastFeedbacks,
+            'last_comments' => $lastComments,
+            'is_admin' => $isAdmin,
+            'error' => ""]);
 	})->bind("feedback_list")->before($mustBeLogged);
 
 	$app->mount('/feedback', $feedbackController);

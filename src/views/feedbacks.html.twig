@@ -20,6 +20,28 @@
 </div>
 {% if not (feedbacks is empty) %}
 
+<div class="col-xs-12">
+  <div class="col-xs-6">
+    <fieldset class="titled-box">
+			<legend>Derniers feedbacks</legend>
+      <ul class="list-group">
+        {% for feedback in last_feedbacks %}
+          <li class="list-group-item"><a href="{{ path('feedback_get', {'id': feedback.id}) }}">{{feedback.title}}</a></li>
+        {% endfor %}
+      </ul>
+		</fieldset>
+  </div>
+  <div class="col-xs-6">
+    <fieldset class="titled-box">
+			<legend>Derniers feedbacks commentées</legend>
+      <ul class="list-group">
+        {% for feedback in last_comments %}
+          <li class="list-group-item"><a href="{{ path('feedback_get', {'id': feedback.id}) }}">{{feedback.title}}</a></li>
+        {% endfor %}
+      </ul>
+		</fieldset>
+  </div>
+</div>
 <div class="col-xs-12" id="feedbacks">
   {% for feedback in feedbacks %}
   <div class="panel panel-success" id="feedback{{ feedback.id }}">

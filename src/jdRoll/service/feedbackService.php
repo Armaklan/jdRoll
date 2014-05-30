@@ -34,6 +34,27 @@ class FeedbackService {
        return $this->db->fetchAll($sql, array("id" => $id));
     }
 
+    public function getLastFeedbacks() {
+        $sql = "SELECT feedback.* , user.username, user.avatar, user.username, user.profil
+                FROM feedback
+                JOIN
+                user
+                ON feedback.user_id = user.id
+				ORDER BY feedback.id DESC
+                LIMIT 5";
+       return $this->db->fetchAll($sql);
+    }
+
+    public function getLastComments() {
+        $sql = "SELECT DISTINCT feedback.*
+                FROM feedback_comment
+                JOIN feedback
+                ON feedback_comment.feedback_id = feedback.id
+                ORDER BY feedback_comment.id DESC
+                LIMIT 5";
+       return $this->db->fetchAll($sql);
+    }
+
     public function create($user, $title, $content) {
         $this->logger->addInfo(' Create : ' . $title );
     	$sql = "INSERT INTO feedback
