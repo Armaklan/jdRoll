@@ -14,10 +14,29 @@
 		            </div>
 			    </div><p/>
 	    	</div>
-	    	<div class="col-md-3">
-                    
-                    
-            	<ul class="nav nav-pills nav-stacked">
+	    	<div class="col-md-2">
+
+
+          <ul class="nav nav-pills nav-stacked">
+					<li class='nav-header'><b>Partie en préparation</b></li>
+					{% for campagne in prepa_campagnes %}
+						<li><a
+                            href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"
+                            {% if campagne.campagne_alert > 0 %} class="campagne_alert" {% endif %}
+                            >
+                                {% if campagne.activity > 0 %}
+                                    <i class="icon-asterisk"></i>
+                                {% endif %}
+                                {{campagne.name}}
+                            </a>
+                        </li>
+					{% endfor %}
+				</ul>
+			</div>
+	    	<div class="col-md-2">
+
+
+          <ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie active (MJ)</b></li>
 					{% for campagne in active_campagnes %}
 						<li><a
@@ -33,7 +52,7 @@
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie active (PJ)</b></li>
 					{% for campagne in active_pj_campagnes %}
@@ -50,7 +69,7 @@
 					{% endfor %}
 				</ul>
 	    	</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<ul class="nav nav-pills nav-stacked">
 					<li class='nav-header'><b>Partie favorites</b></li>
 					{% for campagne in favorised_campagne %}
@@ -90,7 +109,7 @@
     		<a href="{{path('reset')}}">J'ai oublié mon mot de passe</a>
     	</div>
     </form>
-	 
+
     {% else %}
     	<div align="center">
     		<img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />

@@ -232,10 +232,15 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $campagne = $app['campagneService']->getCampagne($campagne_id);
             $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
             $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
+            $prepaCampagnes = $app['campagneService']->getMyActivePrepaCampagnes();
             $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
-            return $app->render('sidebar_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'favorised_campagne' => $favorisedCampagne,
+            return $app->render('sidebar_campagne_large.html.twig', [
+                'campagne_id' => $campagne_id,
+                'perso' => $perso,
+                'favorised_campagne' => $favorisedCampagne,
+                'prepa_campagnes' => $prepaCampagnes,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
                         'config' => $config, 'alert' => $alert, 'is_mj' => false]);
         })->bind("sidebar_campagne_large");
@@ -246,10 +251,15 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $campagne = $app['campagneService']->getCampagne($campagne_id);
             $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
             $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
+            $prepaCampagnes = $app['campagneService']->getMyActivePrepaCampagnes();
             $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
-            return $app->render('sidebar_mj_campagne_large.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso,'favorised_campagne' => $favorisedCampagne,
+            return $app->render('sidebar_mj_campagne_large.html.twig', [
+                'campagne_id' => $campagne_id,
+                'allPerso' => $allPerso,
+                'favorised_campagne' => $favorisedCampagne,
+                'prepa_campagnes' => $prepaCampagnes,
                         'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
                         'config' => $config, 'alert' => $alert, 'is_mj' => true]);
         })->bind("sidebar_campagne_mj_large");

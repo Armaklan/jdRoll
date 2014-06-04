@@ -367,9 +367,16 @@ class CampagneService {
 		return $this->getActiveMjCampagnes($this->session->get('user')['id']);
 	}
 
+	public function getMyActivePrepaCampagnes() {
+		return $this->getActivePrepaCampagnes($this->session->get('user')['id']);
+	}
+
+    public function getActivePrepaCampagnes($id) {
+		return $this->getMjCampagnesByStatut(3,3,3, $id);
+	}
 
 	public function getActiveMjCampagnes($id) {
-		return $this->getMjCampagnesByStatut(0,3, 0, $id);
+		return $this->getMjCampagnesByStatut(0, 0, 0, $id);
 	}
 
 	public function getMyActivePjCampagnes() {

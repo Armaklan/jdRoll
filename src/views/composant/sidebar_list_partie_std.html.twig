@@ -1,6 +1,34 @@
 
+
+       {% if not (prepa_campagnes is empty) %}
         <div class="panel panel-default">
           <div class="panel-heading" ng-click="">
+            <h3 class="panel-title">
+              <span class="fa fa-caret-down"></span>
+              Parties en préparation
+            </h3>
+          </div>
+          <ul class="list-group">
+            {% for campagne in prepa_campagnes %}
+                <li class="list-group-item"><a
+                    href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}"">
+                        {% if campagne.activity > 0 %}
+                            <i class="icon-asterisk"></i>
+                        {% endif %}
+                        {% if campagne.campagne_alert > 0 %}
+                            <i class="icon-bell-alt"></i>
+                        {% endif %}
+                        {{campagne.name}}
+                    </a>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if not (active_campagnes is empty) %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
             <h3 class="panel-title">
               <span class="fa fa-caret-down"></span>
               Parties Maitrisées
@@ -22,8 +50,9 @@
             {% endfor %}
           </ul>
         </div>
+        {% endif %}
 
-
+        {% if not (active_pj_campagnes is empty) %}
         <div class="panel panel-default">
           <div class="panel-heading" ng-click="">
             <h3 class="panel-title">
@@ -47,8 +76,10 @@
             {% endfor %}
           </ul>
         </div>
+        {% endif %}
 
 
+        {% if not (favorised_campagne is empty) %}
         <div class="panel panel-default">
           <div class="panel-heading" ng-click="">
             <h3 class="panel-title">
@@ -72,6 +103,6 @@
             {% endfor %}
           </ul>
         </div>
+        {% endif %}
 
 
-		
