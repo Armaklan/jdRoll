@@ -56,9 +56,6 @@
          {% include("composant/help/theming.html.twig") %}
 	       {{ render(url("notes_popup", {campagne_id : campagne_id}) ) }}
          {% include("gen_perso_popup.html.twig") %}
-		{% if not is_mj %}
-			{{ render(url("perso_popup", {campagne_id : campagne_id}) ) }}
-		{% endif %}
 	{% endif %}
 
     <script type="text/javascript">
