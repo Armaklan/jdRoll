@@ -1,0 +1,22 @@
+<select class="select2 navigationSelect" style="width: 100%">
+  <option value="" selected="selected">Sujets...</option>
+  {% set section_id = -1 %}
+
+  {% for topic in topics %}
+
+    {% if topic.section_id != section_id and section_id != -1 %}
+      </optgroup>
+    {% endif %}
+
+    {% if topic.section_id != section_id %}
+      {% set section_id = topic.section_id %}
+      <optgroup label="{{ topic.section_title }}">
+    {% endif %}
+
+    <option value="{{ path('topic', {campagne_id : campagne_id, topic_id : topic.topics_id}) }}#post{{ topic.read_post_id }}">{{topic.topics_title}}</option>
+
+
+  {% endfor %}
+  </optgroup>
+</select>
+<p>&nbsp;</p>

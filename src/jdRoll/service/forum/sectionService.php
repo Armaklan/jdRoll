@@ -177,6 +177,39 @@ class SectionService {
 	    return $campagnes;
 	}
 
+public function getQuickAllSectionInCampagne($campagne_id) {
+   		$user_id = $this->session->get('user')['id'];
+		$sql = "SELECT DISTINCT
+					sections.id as section_id,
+					sections.title as section_title,
+					sections.banniere as section_banniere,
+					sections.default_collapse as default_collapse,
+					topics.id as topics_id,
+					topics.title as topics_title,
+					topics.stickable as topics_stickable,
+					topics.is_closed as topics_is_closed,
+					topics.is_private as topics_is_private,
+                    rd.post_id as read_post_id
+				FROM sections sections
+				LEFT JOIN topics topics
+				ON
+					sections.id = topics.section_id
+				LEFT JOIN read_post rd
+				ON
+					topics.id = rd.topic_id
+				AND rd.user_id = :user
+				LEFT JOIN can_read cr
+				ON
+					topics.id = cr.topic_id
+				AND cr.user_id = :user
+				WHERE
+					(:campagne IS NULL and sections.campagne_id IS NULL)
+					OR (sections.campagne_id = :campagne)
+				ORDER BY sections.ordre ASC, sections.title ASC, topics.stickable DESC, topics.ordre ASC, topics.title ASC";
+	    $campagnes = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
+	    return $campagnes;
+	}
+
 	public function getLastPostInForum() {
 		$sql = "SELECT DISTINCT
 					sections.title as section_title,

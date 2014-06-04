@@ -9,8 +9,18 @@ var uiControllerImpl = function() {
 
     var client;
 
+    var changeLocation = function(url) {
+        if(url != "") {
+            window.location = url;
+        }
+    };
+
     function activateSelect2() {
+
        $('.select2').select2({width: 'resolve'});
+       $('.navigationSelect').on("select2-selecting", function(val, object) {
+           changeLocation(val.val);
+       });
     }
 
     function activateColorpicker() {

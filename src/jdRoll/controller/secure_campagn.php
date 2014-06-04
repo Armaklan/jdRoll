@@ -236,11 +236,13 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
+            $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
             return $app->render('sidebar_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'perso' => $perso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
+                'topics' => $topics,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
                         'config' => $config, 'alert' => $alert, 'is_mj' => false]);
         })->bind("sidebar_campagne_large");
@@ -255,11 +257,13 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
+            $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
             return $app->render('sidebar_mj_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'allPerso' => $allPerso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
+                'topics' => $topics,
                         'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
                         'config' => $config, 'alert' => $alert, 'is_mj' => true]);
         })->bind("sidebar_campagne_mj_large");
