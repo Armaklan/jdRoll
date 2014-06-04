@@ -46,11 +46,16 @@ class FeedbackService {
     }
 
     public function getLastComments() {
-        $sql = "SELECT DISTINCT feedback.*
-                FROM feedback_comment
-                JOIN feedback
+        $sql = "SELECT feedback.id, feedback.title, 
+                feedback.vote, feedback.content,
+                feedback.user_id, feedback.create_date,
+                feedback.closed, MAX(feedback_comment.id) as comment
+                FROM 
+                feedback
+                JOIN feedback_comment
                 ON feedback_comment.feedback_id = feedback.id
-                ORDER BY feedback_comment.id DESC
+                GROUP BY feedback.id, feedback.title, feedback.vote, feedback.content, feedback.user_id, feedback.create_date, feedback.closed
+                ORDER BY comment DESC
                 LIMIT 5";
        return $this->db->fetchAll($sql);
     }
