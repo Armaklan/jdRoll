@@ -69,15 +69,15 @@
 
     <tr>
       <td colspan="2">
-        <a data-toggle="collapse" data-target="#private" class="collapserLink">
+        <a data-toggle="collapse" data-target="#public" class="collapserLink">
           <i class="icon-chevron-sign-up"></i>
-          Description public
+          Description publique
         </a>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <div class="topics collapse out" id="private">
+        <div class="topics collapse out" id="public">
         {% autoescape false %}{{ perso.publicDescription }}{% endautoescape %}
         </div>
       </td>
@@ -85,7 +85,7 @@
 
     <tr>
       <td  colspan="2">
-        <a data-toggle="collapse" data-target="#public" class="collapserLink">
+        <a data-toggle="collapse" data-target="#private" class="collapserLink">
           <i class="icon-chevron-sign-up"></i>
           Description privée
         </a>
@@ -93,7 +93,7 @@
     </tr>
     <tr>
       <td  colspan="2">
-        <div class="topics collapse out" id="public">
+        <div class="topics collapse out" id="private">
         {% autoescape false %}{{ perso.privateDescription }}{% endautoescape %}
         </div>
       </td>

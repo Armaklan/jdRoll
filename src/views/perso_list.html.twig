@@ -61,7 +61,7 @@ null	    	{{ error }}
                                     <input type="hidden" class="filterIndex" value="HEADER">
                                 </th>
                                 <th  width="15%" class="categorie">
-                                    {% if cat_name is not null and is_mj %}
+                                    {% if perso.cat_name is not null and perso.cat_id is not null and perso.cat_id > 0 and is_mj %}
                                         <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
                                         <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer la catégorie"><i class="icon-remove-sign"></i></a>
                                     {% endif %}
