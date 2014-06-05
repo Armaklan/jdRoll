@@ -9,9 +9,13 @@ var uiControllerImpl = function() {
 
     var client;
 
-    var changeLocation = function(url) {
+    var changeLocation = function(url, ctrlKey) {
         if(url != "") {
-            window.location = url;
+            if(ctrlKey) {
+                window.open(url);
+            } else {
+                window.location = url;
+            }
         }
     };
 
@@ -19,7 +23,7 @@ var uiControllerImpl = function() {
 
        $('.select2').select2({width: 'resolve'});
        $('.navigationSelect').on("select2-selecting", function(val, object) {
-           changeLocation(val.val);
+           changeLocation(val.val, event.ctrlKey);
        });
     }
 
