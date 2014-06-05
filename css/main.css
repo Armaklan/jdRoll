@@ -528,4 +528,8 @@ blockquote {
 }
 .game-vignette {
     height: 200px;
+    text-align: center;
+}
+.game-vignette:hover {
+    background-color: rgba(180,180,180,0.35);
 }

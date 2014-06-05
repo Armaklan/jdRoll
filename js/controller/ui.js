@@ -27,6 +27,17 @@ var uiControllerImpl = function() {
        });
     }
 
+    function activateAffix() {
+       $(".affix").affix({
+           offset: {
+               top: 200;
+           },
+           bottom: function () {
+               return (this.bottom = $('.footer').outerHeight(true))
+           }
+       });
+    }
+
     function activateColorpicker() {
        $('.colorpicker').colorpicker();
     }
@@ -81,6 +92,7 @@ var uiControllerImpl = function() {
     return {
         activateUi : function() {
             activateSelect2();
+            activateAffix();
             activateSidebarLayout();
             activateZeroClipboard();
             associateCopyBtn();
