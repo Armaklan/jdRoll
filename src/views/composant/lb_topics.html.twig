@@ -12,8 +12,9 @@
       {% set section_id = topic.section_id %}
       <optgroup label="{{ topic.section_title }}">
     {% endif %}
-
+    {% if topic.topics_id is not null %}
     <option value="{{ path('topic', {campagne_id : campagne_id, topic_id : topic.topics_id}) }}#post{{ topic.read_post_id }}">{{topic.topics_title}}</option>
+    {% endif %}
 
 
   {% endfor %}
