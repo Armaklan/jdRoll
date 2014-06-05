@@ -189,7 +189,8 @@ public function getQuickAllSectionInCampagne($campagne_id) {
 					topics.stickable as topics_stickable,
 					topics.is_closed as topics_is_closed,
 					topics.is_private as topics_is_private,
-                    rd.post_id as read_post_id
+                    rd.post_id as read_post_id,
+                    cr.topic_id as cr_topic_id
 				FROM sections sections
 				LEFT JOIN topics topics
 				ON
