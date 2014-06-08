@@ -8,6 +8,7 @@
 var uiControllerImpl = function() {
 
     var client;
+    var keyIsDown = false;
 
     var changeLocation = function(url, ctrlKey) {
         if(url != "") {
@@ -22,15 +23,28 @@ var uiControllerImpl = function() {
     function activateSelect2() {
 
        $('.select2').select2({width: 'resolve'});
+
+        $(document).on('keydown', function(e){
+            keyIsDown = e.ctrlKey;
+        });
+
+        $(document).on('keyup', function(e){
+            keyIsDown = e.ctrlKey;
+        });
+
+        $(document).on('keypress', function(e){
+            keyIsDown = e.ctrlKey;
+        });
+
        $('.navigationSelect').on("select2-selecting", function(val, object) {
-           changeLocation(val.val, event.ctrlKey);
+           changeLocation(val.val, keyIsDown);
        });
     }
 
     function activateAffix() {
        $(".affix").affix({
            offset: {
-               top: 200;
+               top: 200
            },
            bottom: function () {
                return (this.bottom = $('.footer').outerHeight(true))

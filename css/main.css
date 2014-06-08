@@ -533,3 +533,6 @@ blockquote {
 .game-vignette:hover {
     background-color: rgba(180,180,180,0.35);
 }
+ul.nav-tabs li.active {
+    border-bottom: 2px solid #D86;
+}
