@@ -107,12 +107,12 @@ $securedCampagneController->post('/alarm', function(Request $request) use($app) 
 $securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id) use($app) {
             try {
                 $app['campagneService']->validJoueur($id, $user_id);
-                $perso = $app['persoService']->getPersonnage(true, $id, $user_id);
+                $user = $app['userService']->getById($user_id);
+                $perso = $app['persoService']->createPersonnage($id, $user_id, $user['username']);
                 $config = $app['campagneService']->getCampagneConfig($id);
                 $app['persoService']->setTechnical($perso['id'], $config['template']);
 
 
-                $user = $app['userService']->getById($user_id);
                 $campagne = $app['campagneService']->getCampagne($id);
                 $campagne_name = $campagne['name'];
                 $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
