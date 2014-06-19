@@ -76,7 +76,6 @@ blockquote p {
     font-family: "dejavu sans mono","monaco","lucida console","courier new",monospace;
     font-size: x-small;
     line-height: 1.5em;
-    max-height: 24em;
     padding: 3px 1em;
     color: black !important;
 }
