@@ -27,7 +27,12 @@ var draftControllerImpl = function() {
         $('#waitingPost').removeClass('hide');
         id = $("input[name=id]").val();
         topic_id = $("input[name=topic_id]").val();
-        perso_id = $("input[name=perso_id]").val();
+        var perso_id;
+        if( $("input[name=perso_id]").length ) {
+            perso_id = $("input[name=perso_id]").val();
+        } else {
+            perso_id = $('select[name=perso_id]').select2('val');
+        }
         tinyMCE.triggerSave();
         content = $("#content").val();
 
@@ -48,15 +53,27 @@ var draftControllerImpl = function() {
                 '<span class="alert alert-danger">Impossible de poster le message <i class="icon-save"></i></span>'
             );
         }).
-        finally(function() {
+        always(function() {
           $('#waitingPost').addClass('hide');
         });
 
     }
 
+    function preview() {
+        tinyMCE.triggerSave();
+        content = $("#content").val();
+        $("#previewCell").html(content);
+        $("tr#previewRow").removeClass("hide");
+    }
+
     function ajaxEnreg() {
         topic_id = $("input[name=topic_id]").val();
-        perso_id = $("input[name=perso_id]").val();
+        var perso_id;
+        if( $("input[name=perso_id]").length ) {
+            perso_id = $("input[name=perso_id]").val();
+        } else {
+            perso_id = $('select[name=perso_id]').select2('val');
+        }
         tinyMCE.triggerSave();
         content = $("#content").val();
 
@@ -85,7 +102,8 @@ var draftControllerImpl = function() {
     return {
         ajaxEnreg : ajaxEnreg,
         autoSave: autoSave,
-        ajaxPost: ajaxPost
+        ajaxPost: ajaxPost,
+        preview: preview
     };
 };
 

@@ -84,6 +84,14 @@
 					</td>
 				</tr>
 			{% endfor %}
+      <tr id="previewRow" class="hide">
+        <td>
+        </td>
+        <td>
+          <span id="previewCell"></span>
+          <div class="alert alert-info">Les balises private, hide, et popup ne sont pas interprété par cette prévisualisation</div>
+        </td>
+      </tr>
 			{% if topic.is_closed == 0 or is_mj %}
 				{% if campagne_id == 0 or perso.id != null or is_mj or topic.is_private == 2 %}
 					{% if campagne_id != 0 %}
@@ -126,7 +134,7 @@
 							{% if is_mj %}
                                 <div class="form-group">
                                 <label for="perso_id">Poster en tant que...</label>
-									<select class="select2" name="perso_id" style="min-width: 200px">
+									<select class="select2" id="perso_id" name="perso_id" style="min-width: 200px">
 						                <option value="" {% if default_perso == '' %} selected="selected" {% endif %}>MJ</option>
                                         <optgroup label="Personnages Joueurs">
 						                {% for personnage in personnages %}
@@ -156,6 +164,7 @@
 						    <div class="form-group">
 						    	<div class="btn-group">
 							    	<a class="btn btn-primary" onClick="draftController.ajaxPost()">Répondre</a>
+                    <a class="btn btn-default" id="btn-preview" onClick="draftController.preview()">Prévisualiser</a>
                     <a class="btn btn-default" id="btn-enreg" onClick="draftController.ajaxEnreg()">Enregistrer</a>
                   </div>
                   <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
