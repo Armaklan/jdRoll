@@ -12,15 +12,18 @@ class FeedbackService {
         $this->logger = $logger;
     }
 
-    public function get($id) {
+    public function get($id, $user) {
         $this->logger->addInfo(' Get feedback : ' . $id );
-        $sql = "SELECT feedback.* , user.username, user.avatar, user.username, user.profil
+        $sql = "SELECT feedback.* , user.username, user.avatar, user.username, user.profil, feedback_vote.id as vote_id
                 FROM feedback
                 JOIN
                 user
                 ON feedback.user_id = user.id
+                LEFT JOIN feedback_vote
+                ON feedback_vote.user_id = :user
+                AND feedback.id = feedback_vote.id
 				WHERE feedback.id = :id";
-       return $this->db->fetchAssoc($sql, array("id" => $id));
+       return $this->db->fetchAssoc($sql, array("id" => $id, "user" => $user['id']));
     }
 
     public function getComments($id) {
@@ -46,11 +49,11 @@ class FeedbackService {
     }
 
     public function getLastComments() {
-        $sql = "SELECT feedback.id, feedback.title, 
+        $sql = "SELECT feedback.id, feedback.title,
                 feedback.vote, feedback.content,
                 feedback.user_id, feedback.create_date,
                 feedback.closed, MAX(feedback_comment.id) as comment
-                FROM 
+                FROM
                 feedback
                 JOIN feedback_comment
                 ON feedback_comment.feedback_id = feedback.id
@@ -87,7 +90,7 @@ class FeedbackService {
         return $this->get($this->db->lastInsertId());
     }
 
-    public function delete($id) {
+    public function delete($id, $user) {
         $this->logger->addInfo(' Delete : ' . $id );
         $sql = "UPDATE feedback
                 SET closed = :closed
@@ -96,7 +99,7 @@ class FeedbackService {
         $stmt->bindValue("id", $id);
         $stmt->bindValue("closed", 1);
         $stmt->execute();
-        return $this->get($id);
+        return $this->get($id, $user);
     }
 
     public function voteUp($id, $user) {
@@ -116,7 +119,7 @@ class FeedbackService {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("id", $id);
         $stmt->execute();
-        return $this->get($id);
+        return $this->get($id, $user);
     }
 
     public function voteDown($id, $user) {
@@ -136,7 +139,7 @@ class FeedbackService {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("id", $id);
         $stmt->execute();
-        return $this->get($id);
+        return $this->get($id, $user);
     }
 
     public function getOpenFeedbacks($user) {
@@ -157,6 +160,28 @@ class FeedbackService {
         return $this->db->fetchAll($sql, array("closed" => 0, "user" => $user['id']));
     }
 
+    public function getStats() {
+        $this->logger->addInfo(' Get stats feedbacks');
+        $sql = "SELECT count(*) as total
+                FROM feedback";
+        $total = $this->db->fetchColumn($sql, array(),0);
+
+        $sql = "SELECT count(*) as total
+                 FROM feedback
+                 WHERE closed = :closed";
+        $open = $this->db->fetchColumn($sql, array("closed" => 0),0);
+
+        $sql = "SELECT count(*) as total
+                 FROM feedback_vote
+                 ";
+        $vote = $this->db->fetchColumn($sql, array(),0);
+
+        return array(
+            'total' => $total,
+            'open' => $open,
+            'vote' => $vote
+        );
+    }
 
 }
 ?>

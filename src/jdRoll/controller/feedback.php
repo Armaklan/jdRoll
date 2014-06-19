@@ -27,7 +27,8 @@
 	})->bind("feedback_post")->before($mustBeLogged);
 
     $feedbackController->get('/{id}', function($id) use($app) {
-        $feedback = $app['feedbackService']->get($id);
+        $user = $app['session']->get('user');
+        $feedback = $app['feedbackService']->get($id, $user);
         $comments = $app['feedbackService']->getComments($id);
         $isAdmin = $app["campagneService"]->IsAdmin();
         return $app->render('feedback_detail.html.twig', [
@@ -38,7 +39,8 @@
 	})->bind("feedback_get")->before($mustBeLogged);
 
     $feedbackController->delete('/{id}', function($id) use($app) {
-        $feedback = $app['feedbackService']->delete($id);
+        $user = $app['session']->get('user');
+        $feedback = $app['feedbackService']->delete($id, $user);
         return new JsonResponse($feedback, 200);
     })->bind("feedback_delete")->before($mustBeLogged);
 

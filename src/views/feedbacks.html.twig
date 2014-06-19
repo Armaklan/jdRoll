@@ -26,7 +26,15 @@
 			<legend>Derniers feedbacks</legend>
       <ul class="list-group">
         {% for feedback in last_feedbacks %}
-          <li class="list-group-item"><a href="{{ path('feedback_get', {'id': feedback.id}) }}">{{feedback.title}}</a></li>
+          <li class="list-group-item">
+            {% if feedback.closed == 1 %}
+            <s>
+            {% endif %}
+              <a href="{{ path('feedback_get', {'id': feedback.id}) }}">{{feedback.title}}</a>
+            {% if feedback.closed == 1 %}
+            </s>
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
 		</fieldset>
@@ -36,7 +44,13 @@
 			<legend>Derniers feedbacks commentées</legend>
       <ul class="list-group">
         {% for feedback in last_comments %}
+            {% if feedback.closed == 1 %}
+            <s>
+            {% endif %}
           <li class="list-group-item"><a href="{{ path('feedback_get', {'id': feedback.id}) }}">{{feedback.title}}</a></li>
+            {% if feedback.closed == 1 %}
+            </s>
+            {% endif %}
         {% endfor %}
       </ul>
 		</fieldset>

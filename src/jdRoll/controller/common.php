@@ -162,8 +162,9 @@ $commonController->get('/stat', function() use ($app) {
     $nbPost = $app['postService']->getNbPost();
     $topPost = $app['postService']->getTop10Post();
     $topChat = $app['chatService']->getTop10Chat();
+    $feedback = $app['feedbackService']->getStats();
     return $app->render('stat.html.twig', ['nb_partie' => $nbPartie, 'nb_partie_prep' => $nbPartiePrep, 'nb_user' => $nbUser, 'nb_post' => $nbPost,
-        'top_post' => $topPost, 'top_chat' => $topChat]);
+        'top_post' => $topPost, 'top_chat' => $topChat, 'feedback' => $feedback]);
 })->bind("stat");
 
 $app->mount('/', $commonController);

@@ -5,13 +5,21 @@
 <center><h2>Statistiques</h2></center>
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<fieldset class="titled-box">
-				<legend>Statistiques Générales</legend>
+				<legend>Générales</legend>
 				<b> Nombre de partie en-cours : </b> {{nb_partie}} <br>
 				<b> Nombre de partie en préparation : </b> {{nb_partie_prep}} <br>
-				<b> Nombre d'utilisateurs : </b> {{nb_user}} (Seul les utilisateurs ayant déjà posté sont comptabilisés).<br>
+				<b> Nombre d'utilisateurs ayant posté : </b> {{nb_user}}<br>
 				<b> Nombre de posts : </b> {{nb_post}} <br>
+			</fieldset>
+		</div>
+		<div class="col-md-6">
+			<fieldset class="titled-box">
+				<legend>Feedbacks</legend>
+				<b> Nombre de retours enregistrés: </b> {{ feedback.total }} <br>
+				<b> Nombre de retours encore ouverts : </b> {{feedback.open}} <br>
+				<b> Nombre de votes : </b> {{feedback.vote}}<br>
 			</fieldset>
 		</div>
 	</div>
