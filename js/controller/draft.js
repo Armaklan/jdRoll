@@ -25,6 +25,7 @@ var draftControllerImpl = function() {
 
     function ajaxPost() {
         $('#waitingPost').removeClass('hide');
+        id = $("input[name=id]").val();
         topic_id = $("input[name=topic_id]").val();
         perso_id = $("input[name=perso_id]").val();
         tinyMCE.triggerSave();
@@ -34,6 +35,7 @@ var draftControllerImpl = function() {
             type: "POST",
             url: BASE_PATH + "/forum/" + CAMPAGNE_ID + "/post/save",
             data: {
+                id: id,
                 topic_id: topic_id,
                 perso_id: perso_id,
                 content: content

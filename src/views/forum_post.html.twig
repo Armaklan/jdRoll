@@ -5,7 +5,7 @@
 	<div align="right">
 		<a href="#uploaderModal" role="button" data-toggle="modal"><i>Uploader une image</i></a>
 	</div>
-	<form role="form" class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+	<form role="form" class="form-horizontal" >
 		<input type="hidden" name="id" value="{{ post.id }}" >
 		<input type="hidden" name="topic_id" value="{{ post.topic_id }}" >
         {% if is_mj %}
