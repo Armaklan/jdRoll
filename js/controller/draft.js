@@ -46,7 +46,7 @@ var draftControllerImpl = function() {
                 content: content
             }}).
         done(function(msg){
-            location.replace(msg);
+            window.location.assign(BASE_PATH + msg);
         }).
         fail(function(msg) {
             $("#enregResult").html(
