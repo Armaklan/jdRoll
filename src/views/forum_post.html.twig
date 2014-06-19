@@ -37,8 +37,11 @@
 		    	 placeholder="Votre message" rows="15">{{ post.content }}</textarea>
 	    </div>
 	    <div class="form-group">
-		    <button type="submit" class="btn btn-primary">Enregistrer</button>
+			  <a class="btn btn-primary" onClick="draftController.ajaxPost()">Enregistrer</a>
+        <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
+        <span id="enregResult"></span>
 	    </div>
+
     </form>
   </div>
 

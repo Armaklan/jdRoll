@@ -9,6 +9,7 @@
 
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
  Controller de campagne (sécurisé)
@@ -360,31 +361,31 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$topicId = $request->get('topic_id');
 	$post_id = 0;
-        $isNew = false;
+    $isNew = false;
 	if ($request->get('id') == '') {
 		$post_id = $app["postService"]->createPost($request);
-                try {
-                    $app["postService"]->deleteDraft($request);
-                } catch (Exception $e) {
-                    //tant pis si on supprime pas le draft
-                }
-                $isNew = true;
+        try {
+            $app["postService"]->deleteDraft($request);
+        } catch (Exception $e) {
+            //tant pis si on supprime pas le draft
+        }
+        $isNew = true;
 		$app["topicService"]->updateLastPost($topicId, $post_id);
 	} else {
 		$post_id = $request->get('id');
 		$app["postService"]->updatePost($request);
 	}
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-        $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id;
-        if($isNew) {
-            $app["notificationService"]->alertPostInCampagne(
-                            $app["session"]->get('user')['id'],
-                            $campagne_id,
-                            $topicId,
-                            $url
-                            );
-        }
-	return $app->redirect($url);
+    $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id;
+    if($isNew) {
+        $app["notificationService"]->alertPostInCampagne(
+            $app["session"]->get('user')['id'],
+            $campagne_id,
+            $topicId,
+            $url
+        );
+    }
+    return new JsonResponse($url);
 })->bind("post_save");
 
 $forumController->get('/{campagne_id}/section/delete/{section_id}', function($campagne_id, $section_id) use($app) {

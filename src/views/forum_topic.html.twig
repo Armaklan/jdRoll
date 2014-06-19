@@ -119,7 +119,7 @@
 							<a href="#uploaderModal" role="button" data-toggle="modal"><i>Uploader une image</i></a>
 						</div>
 						<b>Poster une réponse</b>
-						<form role="form" class="form-horizontal" action="{{ path('post_save', {campagne_id : campagne_id}) }}" method="POST">
+						<form role="form" class="form-horizontal" >
 							<input type="hidden" name="id" value="" >
 							<input type="hidden" name="topic_id" value="{{ topic.id }}" >
 
@@ -155,10 +155,11 @@
 						    </div>
 						    <div class="form-group">
 						    	<div class="btn-group">
-							    	<button type="submit" class="btn btn-primary">Répondre</button>
-                                    <a class="btn btn-default" id="btn-enreg" onClick="draftController.ajaxEnreg()">Enregistrer</a>
-                                </div>
-                                 <span id="enregResult"></span>
+							    	<a class="btn btn-primary" onClick="draftController.ajaxPost()">Répondre</a>
+                    <a class="btn btn-default" id="btn-enreg" onClick="draftController.ajaxEnreg()">Enregistrer</a>
+                  </div>
+                  <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
+                  <span id="enregResult"></span>
 
 						    </div>
 					    </form>

@@ -10,18 +10,46 @@ var draftControllerImpl = function() {
 
     function getNowHour() {
         var nowDate = new Date();
-        return nowDate.getHours()
-                    + ":" 
-                    + nowDate.getMinutes()
-                    + ":" 
-                    + nowDate.getSeconds()
-                    ;
+        return nowDate.getHours() +
+                    ":" +
+                    nowDate.getMinutes() +
+                    ":" +
+                    nowDate.getSeconds();
     }
 
     function refreshSaveTime() {
         $("#enregResult").html(
             'Enregistré à ' + getNowHour() + ' <i class="icon-save"></i>'
         );
+    }
+
+    function ajaxPost() {
+        $('#waitingPost').removeClass('hide');
+        topic_id = $("input[name=topic_id]").val();
+        perso_id = $("input[name=perso_id]").val();
+        tinyMCE.triggerSave();
+        content = $("#content").val();
+
+        $.ajax({
+            type: "POST",
+            url: BASE_PATH + "/forum/" + CAMPAGNE_ID + "/post/save",
+            data: {
+                topic_id: topic_id,
+                perso_id: perso_id,
+                content: content
+            }}).
+        done(function(msg){
+            location.replace(msg);
+        }).
+        fail(function(msg) {
+            $("#enregResult").html(
+                '<span class="alert alert-danger">Impossible de poster le message <i class="icon-save"></i></span>'
+            );
+        }).
+        finally(function() {
+          $('#waitingPost').addClass('hide');
+        });
+
     }
 
     function ajaxEnreg() {
@@ -54,9 +82,10 @@ var draftControllerImpl = function() {
 
     return {
         ajaxEnreg : ajaxEnreg,
-        autoSave: autoSave
-    }
-}
+        autoSave: autoSave,
+        ajaxPost: ajaxPost
+    };
+};
 
 var draftController = draftControllerImpl();
 onLoadController.generals.push(draftController.autoSave);

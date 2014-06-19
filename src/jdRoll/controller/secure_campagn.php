@@ -118,7 +118,7 @@ $securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id)
                 $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
                 $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
                 $content = "
-                    <p>Votre inscription à '$campagne_name' a été validé par le MJ.</p>
+                    <p>Votre inscription à '$campagne_name' a été validée par le MJ.</p>
                     <p>Nous t'invitons à te manifester sur le Mod-Off de la partie.
                     Le <a href='$url_forum'>forum de celle-ci est accessible ici.</a></p>
                     <p>Ta <a href='$url_perso'>fiche de personnage est accessible ici.</a></p>
@@ -127,7 +127,7 @@ $securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id)
                     <p>Ludiquement.</p>
                 ";
                 $destinataires = array($user['username']);
-                $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validé", $content, $destinataires);
+                $app['messagerieService']->sendMessageWith($app['session']->get('user')['id'], $app['session']->get('user')['login'], "Notification système - inscription validée", $content, $destinataires);
 				$app['notificationService']->alertUserForMp("Système", $destinataires, "Inscription à une partie", $app->path('messagerie'));
                 return new JsonResponse("Joueur accepté");
             } catch (Exception $e) {
