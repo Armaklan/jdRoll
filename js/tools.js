@@ -76,10 +76,10 @@ function alarm(joueur, campagne) {
     var statutAlarm = 0;
     if ($(".alarm-pj").hasClass("alarm-on") ) {
         $(".alarm-pj").removeClass("alarm-on");
-        var statutAlarm = 0;
+        statutAlarm = 0;
     } else {
         $(".alarm-pj").addClass("alarm-on");
-        var statutAlarm = 1;
+        statutAlarm = 1;
     }
 
     $.ajax({

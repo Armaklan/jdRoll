@@ -292,7 +292,7 @@
 		<script>
 
 		jQuery(document).ready(function($) {
-		      $(".clickable_row").click(function(obj) {
+		      $(document).on(".clickable_row",function(obj) {
 		      	if(!obj.ctrlKey) {
 		      		window.document.location = $(this).attr("data-url");
 		      	}
