@@ -25,6 +25,7 @@ var draftControllerImpl = function() {
 
     function ajaxPost() {
         $('#waitingPost').removeClass('hide');
+        $('#btn-reply').attr("disabled","disabled");
         id = $("input[name=id]").val();
         topic_id = $("input[name=topic_id]").val();
         var perso_id;
@@ -52,6 +53,7 @@ var draftControllerImpl = function() {
             $("#enregResult").html(
                 '<span class="alert alert-danger">Impossible de poster le message <i class="icon-save"></i></span>'
             );
+            $('#btn-reply').removeAttr("disabled");
         }).
         always(function() {
           $('#waitingPost').addClass('hide');
