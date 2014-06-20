@@ -66,7 +66,8 @@ $profileController->get('/config', function() use($app) {
 $profileController->get('/stat', function() use($app) {
     $user = $app["userService"]->getCurrentUser();
     $data = $app['postService']->getStatPost($user);
-    return $app->render('mystat.html.twig', ['data' => $data]);
+    $games = $app['postService']->getStatByGame($user);
+    return $app->render('mystat.html.twig', ['data' => $data, 'game_data' => $games]);
 })->bind("user_stat");
 
 $app->mount('/my_profile', $profileController);

@@ -334,5 +334,25 @@ class PostService {
 
     }
 
+    public function getStatByGame($user) {
+        $sql = "SELECT 
+            campagne.name as game,
+            count(*) as cpt
+            FROM posts
+            WHERE user_id = :user
+            LEFT JOIN topics 
+                ON topics.id = posts.topic_id
+            LEFT JOIN sections
+                ON sections.id = topics.section_id
+            LEFT JOIN campagne
+                ON campagne.id = sections.campagne_id
+            GROUP BY game";
+
+        return $this->db->fetchAll($sql,
+                array("user" => $user['id'])
+            );
+
+    }
+
 }
 ?>
