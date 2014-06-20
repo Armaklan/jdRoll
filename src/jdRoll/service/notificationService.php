@@ -26,10 +26,16 @@ class NotificationService {
     }
     
     public function getNotifForUser($user_id) {
-        $sql = "SELECT *
+        $sql = "SELECT notif.*, campagne.name as game
                 FROM notif
+                LEFT JOIN topics
+                ON topics.id = notif.target_id
+                LEFT JOIN sections
+                ON sections.id = topics.section_id
+                LEFT JOIN campagne
+                ON campagne.id = sections.campagne_id
                 WHERE user_id = :user
-                ORDER BY id DESC;";
+                ORDER BY game, notif.id DESC;";
         return $this->db->fetchAll($sql, array('user' => $user_id));
     }
     

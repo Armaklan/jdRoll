@@ -9,7 +9,14 @@
                 </div>
                  
                 <div id="msg-zone">
+                    {% set game = -1 %}
                     {% for notif in notifs %}
+                        {% if notif.game != game %}
+                            <div class="well well-sm" style="text-align:center">
+                            <b>{{ notif.game|default("Générales") }}</b>
+                            </div>
+                            {% set game = notif.game %}
+                        {% endif %}
                         <div class="well well-small notifMsg" id="notif{{notif.id}}">
                             <a class="close" data-dismiss="alert" href="#" onClick="notifController.deleteNotif({{notif.id}})">&times;</a>
                             <b>{{notif.title}}</b>
