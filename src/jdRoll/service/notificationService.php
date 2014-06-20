@@ -30,11 +30,17 @@ class NotificationService {
                 FROM notif
                 LEFT JOIN topics
                 ON topics.id = notif.target_id
+                AND notif.type = 'MSG'
                 LEFT JOIN sections
                 ON sections.id = topics.section_id
+                LEFT JOIN personnages
+                ON personnages.id = notif.target_id
+                AND notif.type = 'PERSO'
                 LEFT JOIN campagne
-                ON campagne.id = sections.campagne_id
-                WHERE user_id = :user
+                ON (campagne.id = sections.campagne_id
+                OR campagne.id = personnages.campagne_id)
+                WHERE notif.user_id = :user
+
                 ORDER BY game, notif.id DESC;";
         return $this->db->fetchAll($sql, array('user' => $user_id));
     }
