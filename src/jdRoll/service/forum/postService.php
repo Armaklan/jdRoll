@@ -94,7 +94,7 @@ class PostService {
 
     	return $this->db->fetchColumn($sql, array("topic_id" => $topic_id, "page_size" => $this->page_size));
     }
-    
+
     public function getAllPostsInTopic($topic_id) {
     	$sql = "SELECT
     				post.id AS post_id,
@@ -125,7 +125,7 @@ class PostService {
     			array("topic" => $topic_id)
     		);
     }
-    
+
     public function getPostsInTopic($topic_id, $page) {
     	$debutPage = ( $page - 1) * $this->page_size;
     	$sql = "SELECT * FROM ( SELECT
@@ -183,11 +183,11 @@ class PostService {
 				WHERE topic_id = :topic_id";
 		return $this->db->fetchColumn($sql, array("topic_id" => $request->get('topic_id')), 0);
     }
-    
-    
+
+
     public function deleteDraft($request) {
             $sql = "DELETE FROM draft
-                    WHERE 
+                    WHERE
                     topic_id = :topic
                     AND user_id = :user";
 
@@ -196,10 +196,10 @@ class PostService {
             $stmt->bindValue("user", $this->session->get('user')['id']);
             $stmt->execute();
     }
-                
+
     public function createDraft($request) {
                 $this->deleteDraft($request);
-                
+
 		$sql = "INSERT INTO draft
 				(topic_id, perso_id, user_id, content)
 				VALUES
@@ -216,9 +216,9 @@ class PostService {
 		$stmt->bindValue("content", $request->get('content'));
 		$stmt->execute();
     }
-    
+
     public function getDraft($topic_id, $user_id) {
-		$sql = "SELECT * 
+		$sql = "SELECT *
                         FROM draft
                         WHERE user_id = :user
                         AND topic_id = :topic";
@@ -320,11 +320,24 @@ class PostService {
     	$stmt->execute();
     }
 
+    public function getTotalPost($user) {
+        $sql = "SELECT
+            count(*) as cpt
+            FROM `posts`
+            WHERE user_id = :user";
+
+        return $this->db->fetchColumn($sql,
+                array("user" => $user['id']),
+                0
+            );
+
+    }
+
     public function getStatPost($user) {
-        $sql = "SELECT 
+        $sql = "SELECT
             DATE_FORMAT(create_date, '%Y,%m,%d') as dat,
             count(*) as cpt
-            FROM `posts` 
+            FROM `posts`
             WHERE user_id = :user
             GROUP BY dat";
 
@@ -335,17 +348,18 @@ class PostService {
     }
 
     public function getStatByGame($user) {
-        $sql = "SELECT 
+        $sql = "SELECT
             campagne.name as game,
             count(*) as cpt
             FROM posts
-            WHERE user_id = :user
-            LEFT JOIN topics 
+            LEFT JOIN topics
                 ON topics.id = posts.topic_id
             LEFT JOIN sections
                 ON sections.id = topics.section_id
             LEFT JOIN campagne
                 ON campagne.id = sections.campagne_id
+            WHERE
+            posts.user_id = :user
             GROUP BY game";
 
         return $this->db->fetchAll($sql,
