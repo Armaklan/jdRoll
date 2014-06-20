@@ -18,7 +18,7 @@ class ChatService {
     			FROM chat WHERE id > ?
     			ORDER BY time DESC
     			LIMIT 0, 100) chat
-    			ORDER BY time ASC";
+    			ORDER BY time, id ASC";
     	return $this->db->fetchAll($sql,array($id));
     }
 
