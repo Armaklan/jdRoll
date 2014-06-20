@@ -63,6 +63,12 @@ $profileController->get('/config', function() use($app) {
     return $app->render('config.html.twig', []);
 })->bind("user_conf");
 
+$profileController->get('/stat', function() use($app) {
+    $user = $app["userService"]->getCurrentUser();
+    $data = $app['postService']->getStatPost($user);
+    return $app->render('mystat.html.twig', ['data' => $data]);
+})->bind("user_stat");
+
 $app->mount('/my_profile', $profileController);
 
 ?>
