@@ -149,7 +149,7 @@ class NotificationService {
                 }
             }
             if($user_id != $campagne['mj_id']) {
-                $this->insertNotif($campagne['mj_id'], $title, $content, 'MSG', $topic_id);
+                $this->insertNotif($campagne['mj_id'], $title, $content, $url, 'MSG', $topic_id);
             }
             
         }

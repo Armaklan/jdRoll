@@ -39,6 +39,7 @@ var draftControllerImpl = function() {
 
         $.ajax({
             type: "POST",
+            timeout:10000,
             url: BASE_PATH + "/forum/" + CAMPAGNE_ID + "/post/save",
             data: {
                 id: id,
