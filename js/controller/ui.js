@@ -47,7 +47,7 @@ var uiControllerImpl = function() {
                top: 200
            },
            bottom: function () {
-               return (this.bottom = $('.footer').outerHeight(true))
+               return ( this.bottom = $('.footer').outerHeight(true));
            }
        });
     }

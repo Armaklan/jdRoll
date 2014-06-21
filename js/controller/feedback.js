@@ -1,5 +1,4 @@
 var feedbackService = (function(){
-    "use strict";
 
     var component = {};
 
@@ -35,11 +34,11 @@ var feedbackService = (function(){
     };
 
     var setModalMsg = function(msg) {
-        return $("#feedbackPopup .msg").html(msg);
+        $("#feedbackPopup .msg").html(msg);
     };
 
     var setFeedbackMsg = function(msg) {
-        return $("#feedbacksMsg").html(msg);
+        $("#feedbacksMsg").html(msg);
     };
 
     var saveFeedback = function() {
@@ -75,8 +74,8 @@ var feedbackService = (function(){
         setModalMsg('');
         saveFeedback().
         done(function(){
-            setModalMsg('<div class="alert alert-success">Merci pour votre contribution !</div>');
             resetModal();
+            setModalMsg('<div class="alert alert-success">Merci pour votre contribution !</div>');
         });
     };
 

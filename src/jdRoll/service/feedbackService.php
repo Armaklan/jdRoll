@@ -74,7 +74,7 @@ class FeedbackService {
         $stmt->bindValue("title", $title);
         $stmt->bindValue("content", $content);
         $stmt->execute();
-        return $this->get($this->db->lastInsertId());
+        return $this->get($this->db->lastInsertId(), $user);
     }
 
     public function createComments($feedbackId, $user, $content) {
@@ -87,7 +87,7 @@ class FeedbackService {
         $stmt->bindValue("feedback_id", $feedbackId);
         $stmt->bindValue("content", $content);
         $stmt->execute();
-        return $this->get($this->db->lastInsertId());
+        return $this->get($this->db->lastInsertId(), $user);
     }
 
     public function delete($id, $user) {
