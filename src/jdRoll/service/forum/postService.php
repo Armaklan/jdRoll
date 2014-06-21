@@ -320,6 +320,20 @@ class PostService {
     	$stmt->execute();
     }
 
+    public function getStatGeneralPost() {
+        $sql = "SELECT
+            DATE_FORMAT(create_date, '%Y,%m,%d') as dat,
+            count(*) as cpt
+            FROM `posts`
+            GROUP BY dat";
+
+        return $this->db->fetchAll($sql,
+                array()
+            );
+
+    }
+
+
     public function getTotalPost($user) {
         $sql = "SELECT
             count(*) as cpt
