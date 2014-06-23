@@ -45,7 +45,7 @@
 			</fieldset>
 		</div>
 		<div class="col-xs-12">
-			<h3>Messages au fil du temps</h3>
+			<h3>Messages au fil du temps, par mois</h3>
 			<div id="placeholder" class="col-md-10 col-md-offset-1" style="height: 400px;"></div>
 		</div>
 
@@ -116,10 +116,9 @@ $(function () {
                 var x = new Date(item.datapoint[0] * 1),
                     y = item.datapoint[1];
 
-                var day = x.getDate();
                 var month = x.getMonth() + 1;
                 var year = x.getFullYear();
-                var fulldate = day + "/" + month + "/" + year;
+                var fulldate = month + "/" + year;
 
                 showTooltip(item.pageX, item.pageY,
                             item.series.label + " : " + y + " le " +

@@ -322,7 +322,7 @@ class PostService {
 
     public function getStatGeneralPost() {
         $sql = "SELECT
-            DATE_FORMAT(create_date, '%Y,%m,%d') as dat,
+            DATE_FORMAT(create_date, '%Y,%m,01') as dat,
             count(*) as cpt
             FROM `posts`
             GROUP BY dat";
