@@ -333,6 +333,36 @@ class PostService {
 
     }
 
+    public function getStatGeneralByGame() {
+        $sql = "SELECT
+            campagne.name as game,
+            count(*) as cpt
+            FROM posts
+            LEFT JOIN topics
+                ON topics.id = posts.topic_id
+            LEFT JOIN sections
+                ON sections.id = topics.section_id
+            LEFT JOIN campagne
+                ON campagne.id = sections.campagne_id
+            GROUP BY game";
+
+        return $this->db->fetchAll($sql,
+                array()
+            );
+
+    }
+
+    public function getTotalGeneralPost() {
+        $sql = "SELECT
+            count(*) as cpt
+            FROM `posts`";
+
+        return $this->db->fetchColumn($sql,
+                array(),
+                0
+            );
+
+    }
 
     public function getTotalPost($user) {
         $sql = "SELECT
