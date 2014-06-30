@@ -109,6 +109,7 @@ class PostService {
     				topic.title AS topic_title,
     				perso.id AS perso_id,
     				perso.name AS perso_name,
+                    perso.concept AS perso_concept,
                     perso.avatar AS perso_avatar
     			FROM posts post
     			JOIN topics topic
