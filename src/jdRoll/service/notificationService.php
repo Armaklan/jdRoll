@@ -33,12 +33,17 @@ class NotificationService {
                 AND notif.type = 'MSG'
                 LEFT JOIN sections
                 ON sections.id = topics.section_id
-                LEFT JOIN personnages
-                ON personnages.id = notif.target_id
-                AND notif.type = 'PERSO'
                 LEFT JOIN campagne
                 ON (campagne.id = sections.campagne_id
-                OR campagne.id = personnages.campagne_id)
+                OR (
+                    campagne.id = notif.target_id
+                    AND (
+                        notif.type = 'JOIN'
+                        OR notif.type = 'QUIT'
+                        OR notif.type = 'PERSO'
+                        )
+                    )
+                )
                 WHERE notif.user_id = :user
 
                 ORDER BY game, notif.id DESC;";

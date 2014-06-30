@@ -5,7 +5,7 @@
 <center><h2>Mes Statistiques</h2></center>
 
 <div class="col-xs-12">
-<h3>Messages au fil du temps ( total : {{ total }} )</h3>
+<h3>Messages cumulé au fil du temps ( total : {{ total }} )</h3>
 <div id="placeholder" class="col-md-10 col-md-offset-1" style="height: 400px;"></div>
 </div>
 <div class="col-xs-12">
@@ -24,9 +24,11 @@ $(function () {
         return new Date(year, month - 1, day).getTime();
     }
 
+    {% set actTotal = 0 %}
     var data = [
     {% for line in data %}
-        [ gd({{line.dat}}),{{line.cpt}}],
+        {% set actTotal = actTotal + line.cpt %}
+        [ gd({{line.dat}}),{{actTotal}}],
     {% endfor %}
     ];
 
@@ -47,6 +49,11 @@ $(function () {
             grid: { hoverable: true },
             series: {
                 shadowSize: 5
+            },zoom: {
+            interactive: true
+            },
+            pan: {
+                interactive: true
             }
         }
     );
@@ -67,6 +74,7 @@ $(function () {
 
 
     var previousPoint = null;
+    var previousTotal = 0;
     $("#placeholder").bind("plothover", function (event, pos, item) {
 
         if (item) {
@@ -75,16 +83,20 @@ $(function () {
 
                 $("#tooltip").remove();
                 var x = new Date(item.datapoint[0] * 1),
-                    y = item.datapoint[1];
+                    y = parseInt(item.datapoint[1]);
 
                 var day = x.getDate();
                 var month = x.getMonth() + 1;
                 var year = x.getFullYear();
+
+                var val = y - previousTotal;
+                previousTotal = previousTotal + y;
                 var fulldate = day + "/" + month + "/" + year;
 
                 showTooltip(item.pageX, item.pageY,
                             item.series.label + " : " + y + " le " +
                             fulldate);
+
             }
         }
         else {
