@@ -98,12 +98,12 @@
 	})->bind("chat_in_line");
 
 	$chatController->post('/post', function(Request $request) use($app) {
-		$app['chatService']->postMsg($request->get('user'), $request->get('message'));
+		$app['chatService']->postMsg($request->get('user'), $request->get('message'), $request->get('to'));
 		return "ok";
 	})->bind("chat_post")->before($mustBeLogged);
 
     $chatController->get('/post/{user}/{message}', function($user, $message) use($app) {
-		$app['chatService']->postMsg($user, $message);
+		$app['chatService']->postMsg($user, $message, '');
 		return "ok";
 	})->bind("chat_post_get")->before($mustBeLogged);
 

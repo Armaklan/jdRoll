@@ -122,11 +122,12 @@ var chatControllerImpl = function() {
 	return {
 		postMessage : function (user) {
 			textMsg=$('#messageChat').val();
-			$('#messageChat').val('');
+            $('#messageChat').val('');
+			to=$('#chatTo').val();
 			$.ajax({
 			    type: "POST",
 			    url: BASE_PATH + "/chat/post",
-			    data: {message: textMsg, user: user},
+			    data: {message: textMsg, user: user, to: to},
 			    success: function(msg){
 
 			    },
@@ -138,11 +139,12 @@ var chatControllerImpl = function() {
 
 		postMessageMobile : function (user) {
 			textMsg=$('#messageChatMobile').val();
-			$('#messageChatMobile').val('');
+            $('#messageChatMobile').val('');
+            to="";
 			$.ajax({
 			    type: "POST",
 			    url: BASE_PATH + "/chat/post",
-			    data: {message: textMsg, user: user},
+			    data: {message: textMsg, user: user, to: to},
 			    success: function(msg){
 
 			    },

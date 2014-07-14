@@ -535,3 +535,7 @@ blockquote {
 ul.nav-tabs li.active {
     border-bottom: 2px solid #D86;
 }
+
+#messageContent .private {
+    color: #3e8f3e;
+}

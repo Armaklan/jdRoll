@@ -24,7 +24,7 @@ class NotificationService {
         $this->topicService = $topicService;
         $this->campagneService = $campagneService;
     }
-    
+
     public function getNotifForUser($user_id) {
         $sql = "SELECT notif.*, campagne.name as game
                 FROM notif
@@ -49,14 +49,14 @@ class NotificationService {
                 ORDER BY game, notif.id DESC;";
         return $this->db->fetchAll($sql, array('user' => $user_id));
     }
-    
+
     public function deleteNotif($id) {
             $sql = "DELETE FROM notif WHERE id = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("id", $id);
             $stmt->execute();
     }
-    
+
     public function insertNotif($user_id, $title, $content, $url, $type, $target_id) {
         $nbNotif = 0;
 
@@ -65,9 +65,9 @@ class NotificationService {
         $content = str_replace("/jdRoll/", "/", $content);
 
         if( ($type == "MSG") || ($type == "PERSO") ) {
-            $sql = "SELECT count(*) as nb 
-            FROM notif 
-            WHERE 
+            $sql = "SELECT count(*) as nb
+            FROM notif
+            WHERE
                 user_id = :user
             AND type = :type
             AND target_id = :target_id";
@@ -86,9 +86,9 @@ class NotificationService {
             $stmt->bindValue("target_id", $target_id);
             $stmt->execute();
         } else {
-            $sql = "UPDATE notif 
+            $sql = "UPDATE notif
                     SET nb = nb + 1
-                    WHERE 
+                    WHERE
                         user_id = :user
                     AND type = :type
                     AND target_id = :target_id
@@ -100,13 +100,13 @@ class NotificationService {
             $stmt->execute();
         }
     }
-   	
+
 	public function alertUserForMp($expediteur, $destinataires, $msgTitle, $url) {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
 			$this->insertNotif($user['id'], "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
-		}	
-	}	
+		}
+	}
 
 	public function alertModifPerso($user_id, $perso, $campagne_id, $urlPj, $urlMj) {
 		$persoUser = $perso['user_id'];
@@ -125,14 +125,14 @@ class NotificationService {
 	public function alertJoinCampagne($campagne, $joueur, $url) {
 		$user = $campagne['mj_id'];
 		$title = "Nouvelle inscription - " . $campagne['name'];
-		$content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>"; 
+		$content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>";
 		$this->insertNotif($user, $title, $content, $url, 'JOIN', 0);
 	}
 
 	public function alertQuitCampagne($campagne, $joueur, $url) {
 		$user = $campagne['mj_id'];
 		$title = "Désinscription - " . $campagne['name'];
-		$content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>"; 
+		$content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>";
 		$this->insertNotif($user, $title, $content, $url, 'QUIT', 0);
 	}
 
@@ -168,7 +168,7 @@ class NotificationService {
             if($user_id != $campagne['mj_id']) {
                 $this->insertNotif($campagne['mj_id'], $title, $content, $url, 'MSG', $topic_id);
             }
-            
+
         }
     }
 

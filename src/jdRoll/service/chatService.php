@@ -13,13 +13,26 @@ class ChatService {
     }
 
     public function getLastMsg($id) {
+        $username = '';
+        if($this->session->get('user')) {
+            $username = $this->session->get('user')['login'];
+        }
 
-    	$sql = "SELECT * FROM (SELECT *
-    			FROM chat WHERE id > ?
-    			ORDER BY time DESC
-    			LIMIT 0, 100) chat
+    	$sql = "SELECT * FROM (
+                    SELECT *
+                    FROM chat
+                    WHERE id > :id
+                    AND (
+                        to_username = ''
+                        OR to_username = :user
+                        OR username = :user
+                    )
+                    ORDER BY time DESC
+                    LIMIT 0, 100) chat
     			ORDER BY time, id ASC";
-    	return $this->db->fetchAll($sql,array($id));
+    	return $this->db->fetchAll($sql,array(
+            'id' => $id,
+            'user' => $username));
     }
 
     public function getTop10Chat() {
@@ -35,13 +48,13 @@ class ChatService {
     		);
 
     }
-    public function postMsg($user, $text) {
+    public function postMsg($user, $text, $to) {
         if ($text != "") {
-			//On remplace le caractère '<' par son équivalent HTML
+			//On remplace le caractï¿½re '<' par son ï¿½quivalent HTML
 			$text = $this->escapeLowerAngleBracket($text);
 			//On strip les tags HTML
             $text = strip_tags($text);
-			//On remplace la forme HTML du '<' par son équivalent ascii
+			//On remplace la forme HTML du '<' par son ï¿½quivalent ascii
 			$text = str_replace("&lt;", "<", $text);
             $text = $this->urllink($text);
             $text = str_replace(":)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-smile.gif' alt=''>", $text);
@@ -61,12 +74,13 @@ class ChatService {
 			}
 
             $sql = "INSERT INTO chat
-                            (message, username)
-                            VALUES (:message, :user) ";
+                            (message, username, to_username)
+                            VALUES (:message, :user, :to) ";
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue("message", $text);
             $stmt->bindValue("user", $user);
+            $stmt->bindValue("to", $to);
             $stmt->execute();
         }
     }

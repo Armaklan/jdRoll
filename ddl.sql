@@ -167,6 +167,8 @@ CREATE TABLE IF NOT EXISTS `chat` (
   KEY `Date` (`time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20647 ;
 
+ALTER TABLE chat ADD COLUMN `to` varchar(200) DEFAULT '';
+
 -- --------------------------------------------------------
 
 --

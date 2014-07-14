@@ -38,19 +38,24 @@ $forumController->get('/', function() use($app) {
 	$is_mj = $app["campagneService"]->isMj(null);
 	$isAdmin = $app["campagneService"]->isAdmin();
 	$campagne = $app["campagneService"]->getBlankCampagne();
+    $users = $app['userService']->getAllUsers();
 	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0,
                                                      'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
+                                                     'users '=> $users,
                                                      'is_participant' => false,
 		'isAdmin' => $isAdmin, 'campagne' => $campagne]);
 })->bind("forum");
 
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $user_id = $app['session']->get('user')['id'];
+    $users = [];
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$campagne = $app["campagneService"]->getBlankCampagne();
 	if($campagne_id != null) {
 		$campagne = $app["campagneService"]->getCampagne($campagne_id);
-	}
+	} else {
+        $users = $app['userService']->getAllUsers();
+    }
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
     $isAdmin = $app["campagneService"]->isAdmin();
@@ -62,6 +67,7 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
                                                      'campagne_id' => $campagne_id, 'topics' => $topics,
                                                      'is_participant' => $isParticipant,
+                                                     'users '=> $users,
             'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);
 })->bind("forum_campagne");
 

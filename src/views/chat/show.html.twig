@@ -14,7 +14,12 @@
 			<tr id='chat_tr_{{msg.id}}'>
                                 <td>{{ msg.time|date("H:i:s") }}</td>
                                 <td style="margin-left: 6px;">{{ msg.username }}</td>
-								<td>{% autoescape false %} {{ msg.message }} {% endautoescape %}</td>
+								<td {% if msg.to_username != '' %}class="private"{% endif %}>
+                                    {% if msg.to_username != '' and msg.to_username != msg.username %}
+                                        ( => {{ msg.to_username }})
+                                    {% endif %}
+                                    {% autoescape false %} {{ msg.message }} {% endautoescape %}
+                                </td>
 								{% if(isAdmin) %}
 								<td><a  onClick="deleteChatMessage({{ msg.id }});" title="supprimer le message" class="iconeBtn"><i class="icon-remove-sign" style="color: red"></i></a></td>
 								{% endif %}
