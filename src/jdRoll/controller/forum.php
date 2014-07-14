@@ -41,7 +41,7 @@ $forumController->get('/', function() use($app) {
     $users = $app['userService']->getAllUsers();
 	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0,
                                                      'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
-                                                     'users '=> $users,
+                                                     'users' => $users,
                                                      'is_participant' => false,
 		'isAdmin' => $isAdmin, 'campagne' => $campagne]);
 })->bind("forum");
@@ -67,7 +67,7 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
 	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
                                                      'campagne_id' => $campagne_id, 'topics' => $topics,
                                                      'is_participant' => $isParticipant,
-                                                     'users '=> $users,
+            'users' => $users,
             'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);
 })->bind("forum_campagne");
 
