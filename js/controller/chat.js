@@ -106,6 +106,15 @@ var chatControllerImpl = function() {
 		getMessages();
 	}
 
+    function keyEvent() {
+        $('#messageChat').on('keyup', function(e) {
+            if(  $('#messageChat').val() == '@') {
+                $('#chatTo').select2('open');
+                $('#messageChat').val('');
+            }
+        });
+    }
+
 	function getOnline() {
 		$.ajax({
 		    type: "GET",
@@ -170,6 +179,7 @@ var chatControllerImpl = function() {
 
 		initMessage: function() {
 			activateChat();
+            keyEvent();
 		},
 
 		initOnline: function() {
