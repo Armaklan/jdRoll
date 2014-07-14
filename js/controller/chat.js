@@ -108,10 +108,12 @@ var chatControllerImpl = function() {
 
     function keyEvent() {
         $('#messageChat').on('keyup', function(e) {
+
             if(  $('#messageChat').val() == '@') {
                 $('#chatTo').select2('open');
                 $('#messageChat').val('');
             }
+            
         });
     }
 
