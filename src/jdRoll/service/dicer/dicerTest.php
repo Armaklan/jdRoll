@@ -27,5 +27,5 @@ echo "<p> Resultat (1d6+3d8)l2 : " . $dicer->parse("(1d6 + 3d8E)l2") . "</p>";
 echo "<p> Resultat (1d6+1d8)g1 + 2 : " . $dicer->parse("(1d6 + 1d8)g1 + 2") . "</p>";
 echo "<p> Resultat (2d10q) : " . $dicer->parse("2d10q") . "</p>";
 echo "<p> Resultat (2d10q + 4) : " . $dicer->parse("2d10q + 4") . "</p>";
-
+echo "<p> Resultat (1d10a) : " . $dicer->parse("1d10a") . "</p>";
 ?>
