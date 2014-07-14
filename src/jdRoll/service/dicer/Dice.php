@@ -83,6 +83,8 @@ class Dice extends JetElt {
             $result = $result . "e";
         } elseif($this->explosif) {
             $result = $result . "E";
+        } elseif($this->arsStyle) {
+            $result = $result . "A";
         }
         $result = $result . " ( " . $this->resultat . " ) ";
         return $result;
