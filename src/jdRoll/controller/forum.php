@@ -35,11 +35,13 @@ function getExterneCampagneNumber($campagne_id) {
 
 $forumController->get('/', function() use($app) {
 	$topics = $app["sectionService"]->getAllSectionInCampagne(null);
+    $annonces = $app['annonceService']->get();
 	$is_mj = $app["campagneService"]->isMj(null);
 	$isAdmin = $app["campagneService"]->isAdmin();
 	$campagne = $app["campagneService"]->getBlankCampagne();
     $users = $app['userService']->getAllUsers();
 	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0,
+                                                     'annonces' => $annonces,
                                                      'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
                                                      'users' => $users,
                                                      'is_participant' => false,
@@ -49,12 +51,14 @@ $forumController->get('/', function() use($app) {
 $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $user_id = $app['session']->get('user')['id'];
     $users = [];
+    $annonces = [];
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$campagne = $app["campagneService"]->getBlankCampagne();
 	if($campagne_id != null) {
 		$campagne = $app["campagneService"]->getCampagne($campagne_id);
 	} else {
         $users = $app['userService']->getAllUsers();
+        $annonces = $app['annonceService']->get();
     }
 	$topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
@@ -66,6 +70,7 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
 	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
                                                      'campagne_id' => $campagne_id, 'topics' => $topics,
+                                                     'annonces' => $annonces,
                                                      'is_participant' => $isParticipant,
             'users' => $users,
             'isAdmin' => $isAdmin, 'is_mj' => $is_mj, 'error' => '','waitingUsers' => $waitingUsers, 'campagne' => $campagne]);

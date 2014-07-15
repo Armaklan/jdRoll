@@ -18,18 +18,13 @@ var chatControllerImpl = function() {
 
 
 	function isAutoScrollOn(content) {
-		if(container[0].scrollTop == ( content.height() - msgDivHeight )) {
-			return true;
-		} else {
-			return false;
-		}
+		return container[0].scrollTop == ( content.height() - msgDivHeight );
 	}
 
 	function initialLoad() {
-		var msgs = '';
 		var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
 		var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
-		msgs = before + "</tr>" + lastMsg + after;
+		var msgs = before + "</tr>" + lastMsg + after;
 
 
 		lastMsgs = msgs;
@@ -113,7 +108,7 @@ var chatControllerImpl = function() {
                 $('#chatTo').select2('open');
                 $('#messageChat').val('');
             }
-            
+
         });
     }
 

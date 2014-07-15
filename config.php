@@ -32,7 +32,8 @@ $app['session.db_options'] = array(
 );
 $app['session.storage.handler'] = $app->share(function () use ($app) {
     return new Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
-            $app['db']->getWrappedConnection(),
+            $app['db']->
+                getWrappedConnection(),
             $app['session.db_options'],
             $app['session.storage.options']
     );

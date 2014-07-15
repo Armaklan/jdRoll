@@ -491,6 +491,21 @@ ADD  `nb` int(10) NULL DEFAULT 1;
 ALTER TABLE  `notif`
 ADD  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
+
+--
+-- Structure de la table `annonce`
+--
+
+CREATE TABLE IF NOT EXISTS `annonce` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `create_date` timestamp NOT NULL,
+  `end_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Contraintes pour les tables exportées
 --

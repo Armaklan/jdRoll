@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 $commonController = $app['controllers_factory'];
 
 $commonController->get('/', function() use ($app) {
+    $annonces = $app['annonceService']->get();
     $campagnes = $app['campagneService']->getLastCampagne();
     $open_campagne = $app["campagneService"]->getOpenCampagne();
     $last_users = $app['userService']->getLastSubscribe();
@@ -29,6 +30,7 @@ $commonController->get('/', function() use ($app) {
     return $app->render('home.html.twig', ['open_campagne' => $open_campagne, 'campagnes' => $campagnes,
             'last_users' => $last_users,
             'users' => $users,
+            'annonces' => $annonces,
     		'connected_24H_users' => $connected_24H_users,
             'last_posts' => $last_posts, 'absences' => $absences,
             'birthDays' => $birthDay,'isAdmin' => $isAdmin]);

@@ -7,6 +7,22 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
+
+    {% if (annonces is not empty) %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for annonce in annonces %}
+                <div class="alert alert-info" role="alert">
+                    <h4>{{ annonce.title }}</h4>
+                    {% autoescape false %}
+                    {{ annonce.content }}
+                    {% endautoescape %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
     <div id="campagneMsg"></div>
 
     {% if (absences is not empty) %}

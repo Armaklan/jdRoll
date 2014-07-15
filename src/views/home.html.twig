@@ -12,6 +12,21 @@
     <img ng-src="img/ban.png" width="100%" style="max-width: 250px">
   </div>
 </div>
+{% if (annonces is not empty) %}
+    <div class="row">
+        <div class="col-md-12">
+        {% for annonce in annonces %}
+            <div class="alert alert-info" role="alert">
+                <h4>{{ annonce.title }}</h4>
+                <p>&nbsp;</p>
+                {% autoescape false %}
+                    {{ annonce.content }}
+                {% endautoescape %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endif %}
 <div class="row well">
   <div class="col-md-4">
     <h2>Du choix</h2>
