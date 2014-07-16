@@ -6,9 +6,9 @@ jdRoll est une plateforme d'hébergement de jeu de rôle par Forum. Le but est d
 Requirment
 ----------
 
-- PHP 5.3 with Openssl module
+- PHP 5.4 with Openssl module
 - Mysql database
-- Node and bower (for dependencies management)
+- Node
 
 
 In Windows Environment, we recommend to use Git Bash to launch sh script.
@@ -18,6 +18,5 @@ Instruction
 -----------
 
 - Clone this repository
-- Launch ```prepare_env.sh``` (Download composer, install php and web dependencies)
-- Create Mysql Data Schema with ```ddl.sql```
-- Configure database in config.php
+- Launch ```bin/bootstrap.sh``` (Download composer, install php and web dependencies)
+- Configure database in config.yml
