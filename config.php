@@ -11,7 +11,6 @@ $app->register(new \Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/src/views',
 ));
 
-//ceci est un test de merge
 
 /**
  * Database
