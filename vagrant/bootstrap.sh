@@ -29,3 +29,4 @@ export user=root
 export pass=vagrant
 export db=jdRoll
 cd /vagrant && bin/bootstrap.sh -q
+chmod -R 777 /vagrant
