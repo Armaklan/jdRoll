@@ -35,14 +35,14 @@ faire défiler et faire votre choix !
 
 Les absents du moment y sont également visibles.
 
- ![](img/1_menu.png)
+ ![](/img/1_menu.png)
 
 Toujours présente lors de la navigation, la barre de navigation est très
 ergonomique : il est facile de trouver son chemin sur le site. Vous y
 retrouvez les principales catégories et un accès facilité aux
 importantes parties du site.
 
- ![](img/2_sidebar.png)
+ ![](/img/2_sidebar.png)
 
 
 La sidebar vous accompagnera sur tout le site. Y figurent votre avatar,
@@ -93,7 +93,7 @@ Votre priorité sera de choisir : la barre de navigation vous permet
 d'accéder rapidement et facilement aux campagnes qui recrutent : Jouer
 \> Rejoindre une campagne.
 
- ![](img/3_recrutement.png)
+ ![](/img/3_recrutement.png)
 
 __Petit Plus :__ le slider en page d'accueil vous donne un aperçu des
 parties en cours de recrutement !
@@ -132,7 +132,7 @@ très simple, il suffit de cliquer sur le bouton « Rejoindre la partie »,
 que vous trouverez soit sur la page de la campagne, soit sur la page de
 recrutement.
 
- ![](img/4_join.png)
+ ![](/img/4_join.png)
 
 Votre inscription ne sera effective que lorsque le Maître l'aura validée
 (vous serez prévenu via un message privé), et vous pourrez alors
@@ -153,7 +153,7 @@ le menu « Format » les différents codes d'écriture que vous devrez
 utiliser en jeu.
 
 
-![](img/5_editeur.png)
+![](/img/5_editeur.png)
 
 
 __Petit Plus :__ Une mise en page plus poussée est possible via les balises
@@ -167,11 +167,11 @@ devrez signaler une absence via Profil \> Signaler une absence. Il ne
 vous restera plus qu'à rentrer les dates prévues, et elle sera affichée
 sur la page d'accueil.
 
- ![](img/6_absent_home.png)
+ ![](/img/6_absent_home.png)
 
 Ainsi que sur le forum de votre partie.
 
- ![](img/7_absent_partie.png)
+ ![](/img/7_absent_partie.png)
 
 Concrètement, si le nombre de joueurs est suffisant, la partie
 continuera, votre personnage n'interagissant pas ce temps. Si elle est
@@ -179,7 +179,7 @@ longue, il se transformera en PNJ et sera joué par le Maître selon les
 directives que vous pourriez avoir laissé dans vos descriptions
 publiques et privées.
 
- ![](img/8_sidebar_partie.png)
+ ![](/img/8_sidebar_partie.png)
 
 Lorsque vous accéderez au forum de votre partie, vous constaterez que la
 barre de navigation latérale a changé : votre navigation est alors
@@ -202,7 +202,7 @@ Enfin, vous trouverez les noms des différents personnages participants,
 ainsi que les pseudos des joueurs qui se cachent derrière. Vous pouvez
 accéder à leur description publique en cliquant sur leur nom.
 
- ![](img/9_favoris.png)
+ ![](/img/9_favoris.png)
 
 __Petit Plus :__ vous pouvez suivre une partie en tant que lecteur. Il vous
 suffit de vous rendre sur le forum de la partie, et de cliquer sur ce
