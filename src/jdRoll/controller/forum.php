@@ -239,7 +239,7 @@ function transformPopupZone(&$post)
  $post['post_content']  = preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
 				function ($matches) {
 
-					return '<a href="#!" rel="popover" data-title="' . $matches[1] . '" data-content="' . $matches[2] . '" data-placement="bottom" data-trigger="hover">' . $matches[3] . '</a>';
+					return '<a href="#!" rel="popover" data-title="' . $matches[1] . '" data-content="' . $matches[3] . '" data-placement="bottom" data-trigger="hover">' . $matches[2] . '</a>';
 
 				},
 				$post['post_content']

@@ -45,7 +45,7 @@ var configBase = {
     convert_urls: false,
     spellchecker_languages: "+French=fr",
     spellchecker_rpc_url: "/tinymce/plugins/spellchecker/rpc.php",
-    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide",
+    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide popup",
     style_formats: formats,
     autosave_ask_before_unload: false,
     setup: function(editor) {
@@ -83,6 +83,29 @@ var configBase = {
             onclick: function() {
                 var content = tinyMCE.activeEditor.selection.getContent();
                 editor.insertContent('[hide]' + content + '[/hide]');
+            }
+        });
+		editor.addButton('popup', {
+            text: 'Pop',
+            icon: false,
+            onclick: function() {
+                editor.windowManager.open({
+                    title: 'Informations Popup',
+                    body: [{
+                        type: 'textbox',
+                        name: 'title',
+                        label: 'Titre :'
+                    },
+					{
+						type: 'textbox',
+						name: 'link',
+						label: 'Lien affiché :'
+					}],
+                    onsubmit: function(e) {
+                        var content = tinyMCE.activeEditor.selection.getContent();
+                        editor.insertContent('[popup=' + e.data.title + ',' + e.data.link + ']' + content + '[/popup]');
+                    }
+                });
             }
         });
     }
