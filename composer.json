@@ -19,7 +19,8 @@
         "symfony/twig-bridge": ">=2.1",
         "swiftmailer/swiftmailer": "4.1.*",
         "doctrine/dbal": "2.2.*",
-        "deralex/yaml-config-service-provider": "1.0.x-dev"
+        "deralex/yaml-config-service-provider": "1.0.x-dev",
+        "erusev/parsedown": "1.0.1"
     },
     "autoload": {
         "psr-4": {

@@ -125,6 +125,15 @@ $commonController->get('/static/{page}', function($page) use($app) {
 	return $app->render('static/' . $page . '.html.twig');
 })->bind("static");
 
+$commonController->get('/md/{page}', function($page, Request $request) use($app) {
+    $Parsedown = new Parsedown();
+    $content = $Parsedown->text(file_get_contents(__DIR__ . '/../../../doc/' . $page . '.md'));
+    $content = str_replace('/img/','/doc/img/', $content);
+    return $app->render('md.html.twig', array(
+        'content' => $content
+    ));
+})->bind("markdown");
+
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
     return $app->redirect($app->path('homepage'));
