@@ -51,9 +51,9 @@ importantes parties du site.
 La sidebar vous accompagnera sur tout le site. Y figurent votre avatar,
 ainsi qu'une barre de navigation :
 
-1 : accédez en un clic à une page récapitulative de vos parties !
-2 : rejoignez le forum du site.
-3 : accédez à vos messages privés.
+1. Accédez en un clic à une page récapitulative de vos parties !
+2. Rejoignez le forum du site.
+3. Accédez à vos messages privés.
 
 
 Suivie de la liste de vos parties, classées selon que vous en êtes le
@@ -191,13 +191,13 @@ réduite à cette partie du site.
 Surmontée par le titre de votre campagne et l'avatar de votre
 personnage, se trouve une nouvelle barre de navigation :
 
-1 : naviguez entre les forums de vos différentes parties.
-2 : revenez au forum de cette partie.
-3 : accédez à la fiche de votre personnage.
-4 : jetez un œil aux PNJ déjà rencontrés !
-5 : effectuez vos lancers de dés hors-topic [Cf FAQ](http://jdroll.org/static/faq)
-6 : rédigez vos posts et sauvegardez les.
-7 : messages lus, mais non répondus ? Mettez une partie en évidence !
+1. naviguez entre les forums de vos différentes parties.
+2. revenez au forum de cette partie.
+3. accédez à la fiche de votre personnage.
+4. jetez un œil aux PNJ déjà rencontrés !
+5. effectuez vos lancers de dés hors-topic [Cf FAQ](http://jdroll.org/static/faq)
+6. rédigez vos posts et sauvegardez les.
+7. messages lus, mais non répondus ? Mettez une partie en évidence !
 
 Elle sera affichée en rouge dans votre sidebar
 
@@ -211,5 +211,4 @@ Petit Plus : vous pouvez suivre une partie en tant que lecteur. Il vous
 suffit de vous rendre sur le forum de la partie, et de cliquer sur ce
 bouton. La partie apparaîtra dans votre sidebar en tant que partie
 favorite.
-
  
