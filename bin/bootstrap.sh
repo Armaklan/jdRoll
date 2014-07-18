@@ -5,8 +5,6 @@ echo " - Installer node"
 echo "Voulez vous continuer (y/n) ? "
 read cont
 if [ "$cont" = "y" ]; then
-    echo "******** Installation d'une configuration par défaut ********"
-    cp config.dist.yml config.yml
     echo "******** Installation des dependances Php ********"
     curl -s http://getcomposer.org/installer | php
     php composer.phar install
@@ -30,8 +28,12 @@ if [ "$cont" = "y" ]; then
     cat ddl.sql | mysql -u $user -p$pass -D $db
     echo "Initialisation des données"
     cat bin/data.sql | mysql -u $user -p$pass -D $db
+    echo "******** Installation de la configuration ********"
+    cp config.dist.yml config.yml
+    sed 's\YOUR_USER\'$user'\g' config.yml -i config.yml
+    sed 's\YOUR_DB\'$db'\g' config.yml -i config.yml
+    sed 's\YOUR_PWD\'$pass'\g' config.yml -i config.yml
     echo "******** Fin de préparation de l'environnement ********"
-    echo "Pour terminer de configurer votre environnement, editez le fichier config.yml"
     echo "Par la suite, vous pouvez lancer un serveur http avec la commande : grunt dev"
     echo "Deux comptes sont disponible : "
     echo "Login : Admin, Password: Admin"

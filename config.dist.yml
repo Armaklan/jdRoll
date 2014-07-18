@@ -1,9 +1,9 @@
 database:
     driver: pdo_mysql
     host: localhost
-    dbname: jdRoll
-    user: root
-    password:
+    dbname: YOUR_DB
+    user: YOUR_USER
+    password: YOUR_PWD
     charset: utf8
 general:
     debug: true
