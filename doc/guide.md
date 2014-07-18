@@ -27,7 +27,7 @@ recopier le contenu de votre post de présentation. C'est sur cette page
 que vous pourrez gérer les informations de votre compte : date de
 naissance, changement d'adresse mail, de mot de passe notamment.
 
- (Petit Plus : la plate-forme autorise l'hébergement d'image. [Cf FAQ](http://jdroll.org/static/faq))
+ (__Petit Plus :__ la plate-forme autorise l'hébergement d'image. [Cf FAQ](http://jdroll.org/static/faq))
 
 
 ### Présentation générale du site : la page d'accueil
@@ -98,7 +98,7 @@ d'accéder rapidement et facilement aux campagnes qui recrutent : Jouer
 
  ![](img/3_recrutement.png)
 
-Petit Plus : le slider en page d'accueil vous donne un aperçu des
+__Petit Plus :__ le slider en page d'accueil vous donne un aperçu des
 parties en cours de recrutement !
 
 Vous voici sur la page de recrutement. Un rapide récapitulatif des
@@ -125,7 +125,7 @@ campagne : vous serez dirigés vers sa page détaillée :
 - Une description de la campagne annoncée 
 - Ainsi que le(s) joueur(s) déjà inscrit(s) 
 
-Petit Plus : Pensez à demander aux maîtres de jeu de parties dont
+__Petit Plus :__ Pensez à demander aux maîtres de jeu de parties dont
 l'inscription est déjà fermée si elles vous plaisent : lorsque
 l'intrigue n'est pas entièrement lancée, un nouveau personnage peut
 facilement s'ajouter au groupe !
@@ -159,7 +159,7 @@ utiliser en jeu.
 ![](img/5_editeur.png)
 
 
-Petit Plus : Une mise en page plus poussée est possible via les balises
+__Petit Plus :__ Une mise en page plus poussée est possible via les balises
 spéciales
 
 La participation est régie par les règles présentées à votre
@@ -207,7 +207,7 @@ accéder à leur description publique en cliquant sur leur nom.
 
  ![](img/9_favoris.png)
 
-Petit Plus : vous pouvez suivre une partie en tant que lecteur. Il vous
+__Petit Plus :__ vous pouvez suivre une partie en tant que lecteur. Il vous
 suffit de vous rendre sur le forum de la partie, et de cliquer sur ce
 bouton. La partie apparaîtra dans votre sidebar en tant que partie
 favorite.
