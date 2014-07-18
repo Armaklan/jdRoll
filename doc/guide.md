@@ -1,9 +1,6 @@
 
-Petit Guide Illustré de JdRoll
-==============================
-
-Membre
-------
+Petit Guide Illustré de JdRoll - Membre
+=======================================
 
 ### Première visite
 
