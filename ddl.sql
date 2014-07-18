@@ -1,24 +1,8 @@
--- phpMyAdmin SQL Dump
--- version OVH
--- http://www.phpmyadmin.net
---
--- Client: mysql51-101.bdb
--- Généré le : Sam 07 Septembre 2013 à 16:03
--- Version du serveur: 5.1.66
--- Version de PHP: 5.3.8
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
 --
 -- Base de données: `armaklanjdrollgd`
 --
 
 -- --------------------------------------------------------
-
-CREATE DATABASE IF NOT EXISTS JDRoll;
-USE JDRoll;
-
 --
 -- Structure de la table `absences`
 --
@@ -478,8 +462,7 @@ CREATE TABLE IF NOT EXISTS `notif` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
-ALTER TABLE  `notif` ADD  `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-ADD  `url` VARCHAR( 500 ) NULL;
+ALTER TABLE  `notif` ADD `url` VARCHAR( 500 ) NULL;
 
 ALTER TABLE  `notif`
 ADD  `type` VARCHAR( 10 ) NULL,

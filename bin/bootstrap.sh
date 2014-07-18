@@ -1,5 +1,5 @@
 echo "Avant d'exécuter ce script il faut : "
-echo " - Installer Mysql et créer une base de donnée vierge"
+echo " - Installer Mysql"
 echo " - Installer php"
 echo " - Installer node"
 echo "Voulez vous continuer (y/n) ? "
@@ -19,10 +19,21 @@ if [ "$cont" = "y" ]; then
     echo "******** Initialisation de la base de données ********"
     echo "Veuillez saisir votre utilisateur mysql : "
     read user
+    echo "Veuillez saisir le mot de passe de la base de données : "
+    read pass
     echo "Veuillez saisir le nom de la base de données : "
     read db
-    cat ddl.sql | mysql -u $user -p -D $db
+    echo "Suppression de la base actuel"
+    mysql -u $user -p$pass -e "DROP DATABASE $db" 2> /dev/null
+    mysql -u $user -p$pass -e "CREATE DATABASE $db"
+    echo "Création du schéma"
+    cat ddl.sql | mysql -u $user -p$pass -D $db
+    echo "Initialisation des données"
+    cat bin/data.sql | mysql -u $user -p$pass -D $db
     echo "******** Fin de préparation de l'environnement ********"
     echo "Pour terminer de configurer votre environnement, editez le fichier config.yml"
     echo "Par la suite, vous pouvez lancer un serveur http avec la commande : grunt dev"
+    echo "Deux comptes sont disponible : "
+    echo "Login : Admin, Password: Admin"
+    echo "Login : User, Password: User"
 fi
