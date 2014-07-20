@@ -45,7 +45,7 @@ var configBase = {
     convert_urls: false,
     spellchecker_languages: "+French=fr",
     spellchecker_rpc_url: "/tinymce/plugins/spellchecker/rpc.php",
-    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide popup",
+    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide popup perso perso2",
     style_formats: formats,
     autosave_ask_before_unload: false,
     setup: function(editor) {
@@ -54,26 +54,27 @@ var configBase = {
             icon: false,
             onclick: function() {
                 editor.windowManager.open({
-                    title: 'Message privée',
-                    body: [{
-                        type: 'listbox',
-                        name: 'users',
-                        multiple: 'true',
-                        size: 'large',
-                        width: '200',
-                        values: specificValue,
-                        onselect: function(e) {
-                            if (selected.indexOf(e.control.value()) == -1) {
-                                selected.push(e.control.value());
-                            } else {
-                                selected.splice(e.control.value());
+                    title: 'Message privé',
+                    url: '/editor/tagPrivate/' + CAMPAGNE_ID,
+					height: "280",
+					buttons: [{
+                            text: 'OK',
+                            classes: 'widget btn primary first abs-layout-item',
+                            disabled: false,
+                            onclick: function(e){
+                              
+								var find_src = '/editor/tagPrivate/' + CAMPAGNE_ID;
+								var items = [];
+								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").each(function() {
+										   items.push($(this).val());
+										});
+								editor.execCommand( 'mceInsertContent', 0, "[private=" + items.join(',') + "]" + editor.selection.getContent() + "[/private]" );
+                                editor.windowManager.close();
                             }
-                        }
-                    }],
-                    onsubmit: function(e) {
-                        var content = tinyMCE.activeEditor.selection.getContent();
-                        editor.insertContent('[private=' + selected.join() + ']' + content + '[/private]');
-                    }
+                        }, {
+                            text: 'Cancel',
+                            onclick: 'close'
+                        }]
                 });
             }
         });
@@ -105,6 +106,32 @@ var configBase = {
                         var content = tinyMCE.activeEditor.selection.getContent();
                         editor.insertContent('[popup=' + e.data.title + ',' + e.data.link + ']' + content + '[/popup]');
                     }
+                });
+            }
+        });
+		editor.addButton('perso', {
+            text: 'PNJ',
+            icon: false,
+            onclick: function() {
+                editor.windowManager.open({
+                    title: 'Lien vers fiche PNJ',
+                    url: '/editor/tagPerso/' + CAMPAGNE_ID,
+					height: "280",
+					buttons: [{
+                            text: 'OK',
+                            classes: 'widget btn primary first abs-layout-item',
+                            disabled: false,
+                            onclick: function(e){
+                              
+								var find_src = '/editor/tagPerso/' + CAMPAGNE_ID;
+								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
+								editor.execCommand( 'mceInsertContent', 0, "[perso=" + val + "]" + editor.selection.getContent() + "[/perso]" );
+                                editor.windowManager.close();
+                            }
+                        }, {
+                            text: 'Cancel',
+                            onclick: 'close'
+                        }]
                 });
             }
         });
