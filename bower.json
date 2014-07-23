@@ -2,7 +2,7 @@
   "name": "jdRoll",
   "version": "0.0.1",
   "dependencies": {
-    "jquery": "~1.9.1",
+    "jquery": "~2.1.1",
     "magicsuggest": "",
     "tinymce-release": "",
     "select2": "~3.4.5",
