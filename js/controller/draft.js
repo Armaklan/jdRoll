@@ -26,13 +26,13 @@ var draftControllerImpl = function() {
     function ajaxPost() {
         $('#waitingPost').removeClass('hide');
         $('#btn-reply').attr("disabled","disabled");
-        id = $("input[name=id]").val();
-        topic_id = $("input[name=topic_id]").val();
-        var perso_id;
+        var id = $("input[name=id]").val();
+        var topicId = $("input[name=topic_id]").val();
+        var persoId;
         if( $("input[name=perso_id]").length ) {
-            perso_id = $("input[name=perso_id]").val();
+            persoId = $("input[name=perso_id]").val();
         } else {
-            perso_id = $('select[name=perso_id]').select2('val');
+            persoId = $('select[name=perso_id]').select2('val');
         }
         tinyMCE.triggerSave();
         content = $("#content").val();
@@ -43,8 +43,8 @@ var draftControllerImpl = function() {
             url: BASE_PATH + "/forum/" + CAMPAGNE_ID + "/post/save",
             data: {
                 id: id,
-                topic_id: topic_id,
-                perso_id: perso_id,
+                topic_id: topicId,
+                perso_id: persoId,
                 content: content
             }}).
         done(function(msg){
@@ -64,7 +64,7 @@ var draftControllerImpl = function() {
 
     function preview() {
         tinyMCE.triggerSave();
-        content = $("#content").val();
+        var content = $("#content").val();
         $("#previewCell").html(content);
         $("tr#previewRow").removeClass("hide");
     }

@@ -71,7 +71,7 @@ var notifControllerImpl = function() {
 		// Call all display notification
 		clearNotif : function() {
 		    $(".notifMsg").each(function(number, elt) {
-		        idNotif = $(this).attr("id").replace("notif", "");
+		        var idNotif = $(this).attr("id").replace("notif", "");
 		        ajaxDeleteNotif(idNotif);
 		    });
 		    setToNoMsg();

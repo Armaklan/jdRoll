@@ -57,17 +57,17 @@ var campagneControllerImpl = function() {
         },
         onFavorised : function() {
             $('#favorised').click(function () {
-                campagne_id = $(this).attr("data-campagne-id");
+                var campagneId = $(this).attr("data-campagne-id");
                 if ( $("#favorised").hasClass("notFavorised") ) {
                     $("#favorised").removeClass("notFavorised");
                     $('#favorised i').removeClass("icon-star-empty");
                     $('#favorised i').addClass("icon-star");
-                    favorised(campagne_id, 1);
+                    favorised(campagneId, 1);
                 } else {
                     $("#favorised").addClass("notFavorised");
                     $('#favorised i').removeClass("icon-star");
                     $('#favorised i').addClass("icon-star-empty");
-                    favorised(campagne_id, 0);
+                    favorised(campagneId, 0);
                 }
             });
         }
