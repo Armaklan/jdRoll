@@ -9,7 +9,7 @@
     <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
 
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-multiselect/css/bootstrap-multiselect.css">
 	
 	<script type="text/javascript">
 		var BASE_PATH = '{{app.request.baseUrl}}';
@@ -19,7 +19,8 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/jquery.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+
 	
 	<!-- Application specific controller -->
 	
@@ -29,8 +30,8 @@
   	
 </head>
 <body>
-	<div class="col-md-4" >
-		<select class="select2" id="perso_id" name="perso_id" style="min-width: 270px" multiple>
+	<div class="col-md-4" style="margin-top:5px !important;">
+		<select class="multiselect" id="perso_id" name="perso_id" style="max-width:200px;" multiple>
 		
 		{% for perso in allPerso %}  
 			<option value="{{ perso.username }}">{{ perso.name }} ({{perso.username}})</option>
@@ -41,13 +42,22 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
-			onLoadController.onLoadGenerals();
-			
-			$('select').select2()
-			.on("select2-focus", function() {
-			  $('select').select2("open");
-			});
-			$('select').select2().select2("open");
+		//	onLoadController.onLoadGenerals();
+		 $('.multiselect').trigger('show');
+			 $('.multiselect').multiselect({
+			        	enableCaseInsensitiveFiltering: true,
+			        	maxHeight: 150,
+						numberDisplayed: 1,
+						nonSelectedText: "Sélection des personnages",
+						buttonWidth: 290,
+						 onDropdownHide: function(e) {
+							e.preventDefault();
+                        },
+                        onDropdownShow: function() {
+                           
+                        }
+				});
+			 $('.multiselect').click();
 		});
 	</script>					
 </body>

@@ -12,6 +12,7 @@
     "distrib-jquery-ui": "~1.10",
     "jquery-form": "~3.46.0",
     "zeroclipboard": "~1.3.2",
-    "bootstrap-colorpicker": "*"
+    "bootstrap-colorpicker": "*",
+	"bootstrap-multiselect": ""
   }
 }

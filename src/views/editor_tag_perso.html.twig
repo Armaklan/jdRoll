@@ -10,6 +10,7 @@
 
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
+	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css?v=20140723_001" type="text/css" media="all">
 	
 	<script type="text/javascript">
 		var BASE_PATH = '{{app.request.baseUrl}}';
@@ -26,11 +27,13 @@
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/ui.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
+
+
   	
 </head>
 <body>
 	<div class="col-md-4" >
-		<select class="select2" id="perso_id" name="perso_id" style="min-width: 270px">
+		<select class="select2" id="perso_id" name="perso_id" style="min-width: 290px; margin-top:5px;">
 		{% set cat_name = -1 %}
 		{% set is_first = true %}
 	
@@ -54,7 +57,11 @@
 			.on("select2-close", function() {
 			  $('select').select2("open");
 			});
-			$('select').select2().select2("open");
+			$('select').select2().select2({
+				containerCssClass: "Select2ContainerEditor",
+				dropdownCssClass: "Select2DropDownEditor"
+			}).select2("open");
+			
 		});
 	</script>					
 </body>

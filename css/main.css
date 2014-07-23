@@ -539,3 +539,16 @@ ul.nav-tabs li.active {
 #messageContent .private {
     color: #3e8f3e;
 }
+
+.Select2ContainerEditor>a
+{
+	font-size:20px;
+	text-align:center;
+	border:none !important;
+	
+}
+
+.Select2DropDownEditor
+{
+	border:none;
+}

@@ -125,7 +125,7 @@ var configBase = {
                               
 								var find_src = '/editor/tagPerso/' + CAMPAGNE_ID;
 								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
-								editor.execCommand( 'mceInsertContent', 0, "[perso=" + val + "]" + editor.selection.getContent() + "[/perso]" );
+								editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + editor.selection.getContent() + "[/pnj]" );
                                 editor.windowManager.close();
                             }
                         }, {
