@@ -11,7 +11,7 @@ var uiControllerImpl = function() {
     var keyIsDown = false;
 
     var changeLocation = function(url, ctrlKey) {
-        if(url != "") {
+        if(url != '') {
             if(ctrlKey) {
                 window.open(url);
             } else {
@@ -36,13 +36,13 @@ var uiControllerImpl = function() {
             keyIsDown = e.ctrlKey;
         });
 
-       $('.navigationSelect').on("select2-selecting", function(val, object) {
+       $('.navigationSelect').on('select2-selecting', function(val, object) {
            changeLocation(val.val, keyIsDown);
        });
     }
 
     function activateAffix() {
-       $(".affix").affix({
+       $('.affix').affix({
            offset: {
                top: 200
            },
@@ -62,7 +62,7 @@ var uiControllerImpl = function() {
     }
 
     function autofocus() {
-        $(".focus-elt").focus();
+        $('.focus-elt').focus();
     }
 
     function resizeSidebar() {
@@ -85,16 +85,16 @@ var uiControllerImpl = function() {
 
     function activateZeroClipboard() {
         ZeroClipboard.config( { moviePath: BASE_PATH + '/vendor/zeroclipboard/ZeroClipboard.swf' } );
-        client = new ZeroClipboard( $("#btn-upload-copy"));
+        client = new ZeroClipboard( $('#btn-upload-copy'));
     }
 
     function associateCopyBtn() {
-        client.on( "load", function(client) {
+        client.on( 'load', function(client) {
 
         });
-        client.on( "complete", function(client, args) {
+        client.on( 'complete', function(client, args) {
             // `this` is the element that was clicked
-            alert("Url copié dans le presse papier ");
+            alert('Url copié dans le presse papier ');
         });
 
     }

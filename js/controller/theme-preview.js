@@ -1,5 +1,5 @@
 var themeService = (function () {
-    "use strict";
+    'use strict';
 
     var component = {};
 
@@ -55,12 +55,12 @@ var themeService = (function () {
 
     var updateHr = function() {
         var value = $('#hr').val();
-        $('hr').css('background-image',"url('" + value + "')");
+        $('hr').css('background-image','url('' + value + '')');
     };
 
     var updateBann = function() {
         var value = $('#bann').val();
-        $('.logo_campagne').css('background-image',"url('" + value + "')");
+        $('.logo_campagne').css('background-image','url('' + value + '')');
     };
 
     component.refresh = function() {
