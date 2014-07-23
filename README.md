@@ -34,3 +34,14 @@ In Windows Environment, we recommend to use Git Bash to launch sh script.
 - Launch ```bin/bootstrap.sh``` (Download composer, install php and web dependencies, initialize database)
 - Launch ```grunt dev```
 - Access to http://localhost:8000
+
+Update your environment
+-----------------------
+
+To update automaticaly you're environment, launch ```bin/update.sh```.
+
+This script :
+ - Update git repository (pull)
+ - Update dependencies (tools, php, js)
+
+Enjoy ! :)
