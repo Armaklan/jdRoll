@@ -1,14 +1,14 @@
 function filterTable(idFilter, idTable) {
-	searchText = $(idFilter).val().toLowerCase();
-	$(idTable + " tr ").each(function(i){
+	var searchText = $(idFilter).val().toLowerCase();
+	$(idTable + " tr ").each(function(){
 		currentSearchIndex = $(this).find('.filterIndex').val().toLowerCase();
 		if(currentSearchIndex != "header") {
 			if( currentSearchIndex.indexOf(searchText) > -1) {
-				$(this).css("display", "");
-        $(this).removeClass("hide");
+				$(this).css('display', '');
+        $(this).removeClass('hide');
 			} else {
-				$(this).css("display", "none");
-        $(this).addClass("hiding");
+				$(this).css('display', 'none');
+        $(this).addClass('hiding');
 			}
 		}
 	});
@@ -16,15 +16,15 @@ function filterTable(idFilter, idTable) {
 
 
 function filterList(idFilter, idTable) {
-	searchText = $(idFilter).val().toLowerCase();
-	$(idTable + " > div ").each(function(i){
+	var searchText = $(idFilter).val().toLowerCase();
+	$(idTable + " > div ").each(function(){
 		currentSearchIndex = $(this).find('.filterIndex').val().toLowerCase();
-		if(currentSearchIndex != "header") {
+		if(currentSearchIndex != 'header') {
 			if( currentSearchIndex.indexOf(searchText) > -1) {
-				$(this).css("display", "");
-        $(this).removeClass("hide");
+				$(this).css('display', '');
+        $(this).removeClass('hide');
 			} else {
-				$(this).css("display", "none");
+				$(this).css('display', 'none');
         $(this).addClass("hiding");
 			}
 		}
@@ -32,7 +32,7 @@ function filterList(idFilter, idTable) {
 }
 
 function onBtnDangerClick(form) {
-    bootbox.confirm("L'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ", function(confirmed) {
+    bootbox.confirm('L\'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ', function(confirmed) {
       if(confirmed) {
           $(form).submit();
       }
@@ -40,7 +40,7 @@ function onBtnDangerClick(form) {
 }
 
 function selectAll(formName) {
-    var checked = $(formName).find(".checkAll").is(':checked');
+    var checked = $(formName).find('.checkAll').is(':checked');
     $(formName).find('tr:not(.hiding)').find('input[type=checkbox]').prop('checked', checked);
 }
 
@@ -50,9 +50,9 @@ $(function () {
        e.preventDefault();
          var sign = $(this).children('i');
          if(sign.hasClass('icon-chevron-sign-down')) {
-            sign.removeClass("icon-chevron-sign-down").addClass("icon-chevron-sign-up");
+            sign.removeClass('icon-chevron-sign-down').addClass('icon-chevron-sign-up');
         } else {
-            sign.removeClass("icon-chevron-sign-up").addClass("icon-chevron-sign-down");
+            sign.removeClass('icon-chevron-sign-up').addClass('icon-chevron-sign-down');
         }
     });
 });
@@ -74,11 +74,12 @@ $(function () {
 
 function alarm(joueur, campagne) {
     var statutAlarm = 0;
-    if ($(".alarm-pj").hasClass("alarm-on") ) {
-        $(".alarm-pj").removeClass("alarm-on");
+    var alarm = $(".alarm-pj");
+    if (alarm.hasClass("alarm-on") ) {
+        alarm.removeClass("alarm-on");
         statutAlarm = 0;
     } else {
-        $(".alarm-pj").addClass("alarm-on");
+        alarm.addClass("alarm-on");
         statutAlarm = 1;
     }
 

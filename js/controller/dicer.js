@@ -7,12 +7,12 @@
  */
 var uiDicerImpl = function() {
 
-    var baseUrl = BASE_PATH + "/campagne/dicer/" + CAMPAGNE_ID + "/";
+    var baseUrl = BASE_PATH + '/campagne/dicer/' + CAMPAGNE_ID + '/';
 
-    function ajaxLaunchDice(topic_id, param, description) {
+    function ajaxLaunchDice(topicId, param, description) {
         return $.ajax({
-            type: "POST",
-            url: baseUrl + topic_id,
+            type: 'POST',
+            url: baseUrl + topicId,
             data: {param: param, description: description},
         });
     }
@@ -20,25 +20,25 @@ var uiDicerImpl = function() {
     function getNowDate() {
         var nowDate = new Date();
         return nowDate.getFullYear()
-                    + "-" 
+                    + '-' 
                     + nowDate.getMonth() + 1
-                    + "-" 
+                    + '-' 
                     + nowDate.getDate()
-                    + " "
+                    + ' '
                     + nowDate.getHours()
-                    + ":" 
+                    + ':' 
                     + nowDate.getMinutes()
-                    + ":" 
+                    + ':' 
                     + nowDate.getSeconds()
                     ;
     }
 
-    function dicerLaunch(topic_id) {
+    function dicerLaunch(topicId) {
         param=$('#dicerParamQuick').val();
         description=$('#dicerDescriptionQuick').val();
 
         $('#waitingQuickLaunch').removeClass('hide');
-        ajaxLaunchDice(topic_id, param, description).
+        ajaxLaunchDice(topicId, param, description).
         done(function(retour){
             $('#resultatDicerQuick').html(retour);
 
@@ -53,7 +53,7 @@ var uiDicerImpl = function() {
             );
         }).
         fail(function() {
-            $('#resultatDicerQuick').html("Une erreur s'est produite.");
+            $('#resultatDicerQuick').html('Une erreur s\'est produite.');
         }).
         always(function() {
             $('#waitingQuickLaunch').addClass('hide');
@@ -63,8 +63,8 @@ var uiDicerImpl = function() {
     }
 
     function dicerModalLaunch() {
-        param=$('#dicerParam').val();
-        description=$('#dicerDescription').val();
+        var param=$('#dicerParam').val();
+        var description=$('#dicerDescription').val();
         $('#waitingLaunch').removeClass('hide');
         ajaxLaunchDice(0, param, description).
         then(function(retour){
@@ -82,7 +82,7 @@ var uiDicerImpl = function() {
                 );
         }).
         fail(function() {
-            $('#resultatDicer').html("Une erreur s'est produite.");
+            $('#resultatDicer').html('Une erreur s\'est produite.');
         }).
         always(function() {
             $('#waitingLaunch').addClass('hide');
@@ -97,4 +97,3 @@ var uiDicerImpl = function() {
 };
 
 var uiDicer = uiDicerImpl();
-//onLoadController.campagnes.push(uiDicer.onLaunchDice);
