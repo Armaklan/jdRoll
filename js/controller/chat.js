@@ -22,18 +22,18 @@ var chatControllerImpl = function() {
 	}
 
 	function initialLoad() {
-		var before = lastMsgs.substring(0, lastMsgs.lastIndexOf("</tr>"));
-		var after = lastMsgs.substring(lastMsgs.lastIndexOf("</tr>") + 5);
-		var msgs = before + "</tr>" + lastMsg + after;
+		var before = lastMsgs.substring(0, lastMsgs.lastIndexOf('</tr>'));
+		var after = lastMsgs.substring(lastMsgs.lastIndexOf('</tr>') + 5);
+		var msgs = before + '</tr>' + lastMsg + after;
 
 
 		lastMsgs = msgs;
 
-		$("#text").html(msgs);
+		$('#text').html(msgs);
 	}
 
 	function appendMsg() {
-		$("#tableChat tr:last").after(lastMsg);
+		$('#tableChat tr:last').after(lastMsg);
 	}
 
 	function deleteMsg(deleted) {
@@ -59,13 +59,13 @@ var chatControllerImpl = function() {
 
 	function getMessages() {
 		$.ajax({
-			type: "GET",
-			url: BASE_PATH + "/chat/last", 
+			type: 'GET',
+			url: BASE_PATH + '/chat/last', 
 			timeout: 5000,
 			data: {isFirst: isFirstLoad, lastId: lastMsgId}
 		}).
 		done(function(msg){
-				if( $("#text").html() != msg ) {
+				if( $('#text').html() != msg ) {
 
 					var completeLoad = true;
 					var container = $('#text');
@@ -114,10 +114,10 @@ var chatControllerImpl = function() {
 
 	function getOnline() {
 		$.ajax({
-		    type: "GET",
-		    url: BASE_PATH + "/chat/users",
+		    type: 'GET',
+		    url: BASE_PATH + '/chat/users',
 		    success: function(msg){
-		    	$("#onlineUsers").html(msg);
+		    	$('#onlineUsers').html(msg);
 		    },
 		    error: function(msg) {
 
@@ -131,8 +131,8 @@ var chatControllerImpl = function() {
             $('#messageChat').val('');
 			to=$('#chatTo').val();
 			$.ajax({
-			    type: "POST",
-			    url: BASE_PATH + "/chat/post",
+			    type: 'POST',
+			    url: BASE_PATH + '/chat/post',
 			    data: {message: textMsg, user: user, to: to},
 			    success: function(msg){
 
@@ -146,10 +146,10 @@ var chatControllerImpl = function() {
 		postMessageMobile : function (user) {
 			textMsg=$('#messageChatMobile').val();
             $('#messageChatMobile').val('');
-            to="";
+            to='';
 			$.ajax({
-			    type: "POST",
-			    url: BASE_PATH + "/chat/post",
+			    type: 'POST',
+			    url: BASE_PATH + '/chat/post',
 			    data: {message: textMsg, user: user, to: to},
 			    success: function(msg){
 
@@ -162,8 +162,8 @@ var chatControllerImpl = function() {
 
 		deleteLastMessages: function() {
 			$.ajax({
-			    type: "POST",
-			    url: BASE_PATH + "/chat/removelast",
+			    type: 'POST',
+			    url: BASE_PATH + '/chat/removelast',
 			    data: {nbToDelete: 30},
 			    success: function(msg){
 
