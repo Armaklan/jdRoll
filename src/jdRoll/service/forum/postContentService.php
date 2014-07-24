@@ -12,11 +12,37 @@ namespace jdRoll\service;
 class PostContentService {
 
     private $session;
-	private $db;
-
-    public function __construct($db,$session) {
+	private $persoService;
+	
+	/**
+	Constants
+	*/
+	
+	// rendering of PNJ tag
+	const TAG_PNJ = "<a href=\"javascript:void()\" onClick=\"persoModalService.openPerso(%d,%d)\">%s</a>";
+	
+	// rendering of POPUP tag
+	const TAG_POPUP = "<a href=\"#!\" rel=\"popover\" data-title=\"%s\" data-content=\"%s\" data-placement=\"bottom\" data-trigger=\"hover\">%s</a>";
+	
+	// rendering of PRV tag header
+	const TAG_PRV_HEADER = "<b><p size=\"small\">Visible par : MJ, %s</p></b>";
+	
+	// Denied access message for PRV tag
+	const TAG_PRV_ACCESS_DENIED = "<br>Une partie de ce message est en privée et ne vous est pas accessible.<br>";
+	
+	//rendering of PRV tag
+	const TAG_PRV_ZONE = "<div style=\"background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px \">%s</div>";
+	
+	// HIDE tag default title
+	const TAG_HIDE_EMPY_TITLE = "Informations masquées";
+	
+	// rendering of HIDE tag
+	const TAG_HIDE = "<div><a href=\"javascript:void()\" onclick=\"if (this.parentNode.getElementsByTagName('div')[0].style.display != '') { this.parentNode.getElementsByTagName('div')[0].style.display = ''; } else { this.parentNode.getElementsByTagName('div')[0].style.display = 'none'; }\"><u>%s</u></a><div style=\"display:none\">%s</div></div>";
+	
+	
+    public function __construct($persoService,$session) {
         $this->session = $session;
-		$this->db = $db;
+		$this->persoService = $persoService;
     }
 	
 	public function transformAllTag(&$post,$perso, $is_mj,$campagne_id)
@@ -33,10 +59,8 @@ class PostContentService {
 		$post['post_content']  = preg_replace_callback('#\[pnj=(.*)\](.*)\[/pnj\]#isU',
 				function ($matches) use($campagne_id) {
 
-					$sql = "SELECT id from personnages where personnages.name = :name and personnages.campagne_id = :campagne";
-
-					$perso_id = $this->db->fetchColumn($sql, array("name" => $matches[1], "campagne" => $campagne_id));
-					return '<a href="javascript:void()" onClick="persoModalService.openPerso(' . $campagne_id . ',' . $perso_id . ')">' . $matches[2] . '</a>';
+					$perso_id = $this->persoService->getPNJInCampagneByName($campagne_id,$matches[1]);
+					return sprintf(self::TAG_PNJ,$campagne_id,$perso_id,$matches[2]);
 
 				},
 				$post['post_content']
@@ -50,9 +74,7 @@ class PostContentService {
 	{
 		$post['post_content']  = preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
 				function ($matches) {
-
-					return '<a href="#!" rel="popover" data-title="' . $matches[1] . '" data-content="' . $matches[3] . '" data-placement="bottom" data-trigger="hover">' . $matches[2] . '</a>';
-
+					return sprintf(self::TAG_POPUP,$matches[1],$matches[3],$matches[2]);
 				},
 				$post['post_content']
 			);
@@ -96,7 +118,7 @@ class PostContentService {
         $post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
         function ($matches) use ($is_mj,$login,$perso,$post,$postSize,$isThereAPrivateForMe){
 
-                $txt = '<b><p size="small">Visible par : MJ, ' . $matches[2] . '</p></b>';
+                $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
                 $ret = '';
                 if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
                 {
@@ -118,7 +140,7 @@ class PostContentService {
                 if(!$isThereAPrivateForMe)
                 {
                         if($postSize == 0)
-                                $ret = $this->_getPrivateZone('<br>Une partie de ce message est en privée et ne vous est pas accessible.<br>');
+                                $ret = $this->_getPrivateZone(self::TAG_PRV_ACCESS_DENIED);
                 }
 
                 return $ret;
@@ -130,7 +152,7 @@ class PostContentService {
 
 
 	private function _getPrivateZone($txt) {
-    return '<div style="background-color: #EBEADD; background-color: rgba(230, 230, 230, 0.4); padding:15px ">'. $txt . '</div>';
+		return sprintf(self::TAG_PRV_ZONE,$txt);
 	}
 
 
@@ -144,14 +166,14 @@ class PostContentService {
 						if($matches[1] != '')
 							$txt = $matches[1];
 						else
-							$txt = 'Informations masquées';
+							$txt = self::TAG_HIDE_EMPY_TITLE;
 
 						if(strpos($matches[2],"[/hide]"))
 							$m = replace_hide($matches[2]);
 						else
 							$m = $matches[2];
 
-						return '<div><a href="javascript:void()" onclick="if (this.parentNode.getElementsByTagName(\'div\')[0].style.display != \'\') { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'\'; } else { this.parentNode.getElementsByTagName(\'div\')[0].style.display = \'none\'; }"><u>' . $txt . '</u></a><div style="display:none">' . $m . '</div></div>';;
+						return sprintf(self::TAG_HIDE,$txt,$m);
 
 					},
 					$post['post_content']
