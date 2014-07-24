@@ -66,5 +66,5 @@ $app['annonceService'] = function ($app) {
     return new AnnonceService($app['db'], $app['monolog']);
 };
 $app['postContentService'] = function ($app) {
-    return new PostContentService($app['db'],$app['session']);
+    return new PostContentService($app['persoService'],$app['session']);
 };
