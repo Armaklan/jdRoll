@@ -60,7 +60,10 @@ class PostContentService {
 				function ($matches) use($campagne_id) {
 
 					$perso_id = $this->persoService->getPNJInCampagneByName($campagne_id,$matches[1]);
-					return sprintf(self::TAG_PNJ,$campagne_id,$perso_id,$matches[2]);
+					if($perso_id == 0)
+						return $matches[2];
+					else
+						return sprintf(self::TAG_PNJ,$campagne_id,$perso_id,$matches[2]);
 
 				},
 				$post['post_content']

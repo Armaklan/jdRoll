@@ -9,58 +9,50 @@
     <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
 
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css?v=20140723_001" type="text/css" media="all">
+	
+	{% block specificCSS %}
+	
+	{% endblock %}
+	
 	
 	<script type="text/javascript">
 		var BASE_PATH = '{{app.request.baseUrl}}';
 	</script>
 
-
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
+	
+	{% block specificJavascript %}
+	
+	{% endblock %}
+	
 	
 	<!-- Application specific controller -->
 	
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/ui.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
+	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/editor.js"></script>
 
 
   	
 </head>
 <body>
-	<div class="col-md-4" >
-		<select class="select2" id="perso_id" name="perso_id" style="min-width: 290px; margin-top:5px;">
-		{% set cat_name = -1 %}
-		{% set is_first = true %}
 	
-		{% for perso in allPerso %}  
-			{% if cat_name != perso.cat_name %}
-				{% set cat_name = perso.cat_name %}
-				<optgroup label="{{cat_name ? cat_name : "Non classé"}}">
-			{% endif %}
-			<option value="{{ perso.name }}">{{ perso.name }}</option>
-			
-		{% endfor %}
-        </select>
-	</div>
+	
+	{% block tagRendering %}
+	
+	{% endblock %}
+		
 								
 	<script type="text/javascript">
 
 		$(document).ready(function() {
-			onLoadController.onLoadGenerals();
-			
-			$('select').select2()
-			.on("select2-close", function() {
-			  $('select').select2("open");
-			});
-			$('select').select2().select2({
-				containerCssClass: "Select2ContainerEditor",
-				dropdownCssClass: "Select2DropDownEditor"
-			}).select2("open");
+		
+		{% block documentReady %}
+	
+		{% endblock %}
 			
 		});
 	</script>					
