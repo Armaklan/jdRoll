@@ -45,15 +45,6 @@ $app['session.storage.handler'] = $app->share(function () use ($app) {
 $app["debug"] = $app['config']['general']['debug'];
 
 
-if($app['config']['log']['level'] == "ERROR") {
-    $app['monolog.level'] = Logger::ERROR;
-} elseif($app['config']['log']['level'] == "INFO") {
-    $app['monolog.level'] = Logger::INFO;
-} else {
-    $app['monolog.level'] = Logger::DEBUG;
-}
-
-
 $app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new \Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS", 'gc_maxlifetime' => 432000)));
 
@@ -69,3 +60,13 @@ $app->register(new \Silex\Provider\HttpCacheServiceProvider(), array(
 $app->register(new \Silex\Provider\MonologServiceProvider(), array(
         'monolog.logfile' => __DIR__.'/development.log',
 ));
+
+
+
+if($app['config']['log']['level'] == "ERROR") {
+    $app['monolog.level'] = Logger::ERROR;
+} elseif($app['config']['log']['level'] == "INFO") {
+    $app['monolog.level'] = Logger::INFO;
+} else {
+    $app['monolog.level'] = Logger::DEBUG;
+}
