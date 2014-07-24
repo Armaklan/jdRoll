@@ -15,6 +15,7 @@ use jdRoll\service\AbsenceService;
 use jdRoll\service\resetPwdService;
 use jdRoll\service\FeedbackService;
 use jdRoll\service\AnnonceService;
+use jdRoll\service\PostContentService;
 
 /*
     Définition des services
@@ -63,4 +64,7 @@ $app['feedbackService'] = function ($app) {
 };
 $app['annonceService'] = function ($app) {
     return new AnnonceService($app['db'], $app['monolog']);
+};
+$app['postContentService'] = function ($app) {
+    return new PostContentService($app['persoService'],$app['session']);
 };

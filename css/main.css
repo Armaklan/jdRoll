@@ -540,3 +540,16 @@ ul.nav-tabs li.active {
     color: #71C;
     font-style: italic;
 }
+
+.Select2ContainerEditor>a
+{
+	font-size:20px;
+	text-align:center;
+	border:none !important;
+	
+}
+
+.Select2DropDownEditor
+{
+	border:none;
+}
