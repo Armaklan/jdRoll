@@ -13,7 +13,7 @@ var uiDicerImpl = function() {
         return $.ajax({
             type: 'POST',
             url: baseUrl + topicId,
-            data: {param: param, description: description},
+            data: {param: param, description: description}
         });
     }
 
