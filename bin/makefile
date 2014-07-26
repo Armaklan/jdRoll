@@ -34,8 +34,8 @@ deploy:
         @echo
         @echo "Deploy new version"
         @echo
-        @rm $(WWW_DIR)/jdRoll2 -f
-        @ln -s $(RELEASE_DIR) $(WWW_DIR)/jdRoll2
+        @rm $(WWW_DIR)/jdRoll -f
+        @ln -s $(RELEASE_DIR) $(WWW_DIR)/jdRoll
 
 restart:
         @echo
