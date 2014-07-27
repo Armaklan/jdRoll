@@ -6,7 +6,9 @@ class ChatService {
 	private $db;
 	private $session;
 
-	public function __construct($db, $session)
+    const TINYMCE_EMOTICONS_IMG = "../../../../vendor/tinymce-release/plugins/emoticons/img/";
+
+    public function __construct($db, $session)
     {
         $this->db = $db;
         $this->session = $session;
@@ -57,14 +59,14 @@ class ChatService {
 			//On remplace la forme HTML du '<' par son �quivalent ascii
 			$text = str_replace("&lt;", "<", $text);
             $text = $this->urllink($text);
-            $text = str_replace(":)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-smile.gif' alt=''>", $text);
-            $text = str_replace(";)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-wink.gif' alt=''>", $text);
-            $text = str_replace(":p", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-tongue-out.gif' alt=''>", $text);
-            $text = str_replace(":X", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-sealed.gif' alt=''>", $text);
-            $text = str_replace(":'(", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-cry.gif' alt=''>", $text);
-            $text = str_replace("8-)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-cool.gif' alt=''>", $text);
-            $text = str_replace("o-)", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-innocent.gif' alt=''>", $text);
-            $text = str_replace(":D", "<img src='../../../../tinymce/plugins/emoticons/img/smiley-laughing.gif' alt=''>", $text);
+            $text = str_replace(":)", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-smile.gif' alt=''>", $text);
+            $text = str_replace(";)", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-wink.gif' alt=''>", $text);
+            $text = str_replace(":p", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-tongue-out.gif' alt=''>", $text);
+            $text = str_replace(":X", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-sealed.gif' alt=''>", $text);
+            $text = str_replace(":'(", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-cry.gif' alt=''>", $text);
+            $text = str_replace("8-)", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-cool.gif' alt=''>", $text);
+            $text = str_replace("o-)", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-innocent.gif' alt=''>", $text);
+            $text = str_replace(":D", "<img src='" . self::TINYMCE_EMOTICONS_IMG . "smiley-laughing.gif' alt=''>", $text);
             $text = str_replace(":mrgreen:", "<img src='../../../../img/smileys-mrgreen.gif' alt=''>", $text);
 			if(!strncasecmp($text,"/me ",4))
 			{
