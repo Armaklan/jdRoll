@@ -41,6 +41,12 @@ BEGIN
     
     IF VERSION_TABLE_EXISTS() = 0 THEN
 
+        CREATE TABLE IF NOT EXISTS version (
+          id int(11) NOT NULL,
+          install_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
         -- --------------------------------------------------------
         --
         -- Structure de la table `absences`
@@ -52,7 +58,7 @@ BEGIN
           `end_date` date DEFAULT NULL,
           `id` int(11) NOT NULL AUTO_INCREMENT,
           PRIMARY KEY (`id`)
-        ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
         -- --------------------------------------------------------
 
@@ -64,7 +70,7 @@ BEGIN
           `campagne_id` int(11) NOT NULL,
           `joueur_id` bigint(20) NOT NULL,
           PRIMARY KEY (`campagne_id`,`joueur_id`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         -- --------------------------------------------------------
 

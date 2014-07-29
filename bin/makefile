@@ -28,7 +28,7 @@ update:
         @echo
         @echo "Update dependencies and database"
         @echo
-        @cd $(RELEASE_DIR) && bin/update.sh
+        @export user=root && export db=jdRoll && cd $(RELEASE_DIR) && bin/update.sh
 
 deploy:
         @echo
