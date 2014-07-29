@@ -98,11 +98,7 @@ class UserService {
 		return $this->getByUsername($request->get('username'));
 	}
 
-	public function subscribeUser($request) {
-
-		if($request->get('password') != $request->get('password2')) {
-			throw new \Exception("Les mots de passes ne correspondent pas");
-		}
+	public function subscribeUser($username, $password, $mail) {
 
 		$sql = "INSERT INTO user
 				(username, password, mail)
@@ -110,9 +106,9 @@ class UserService {
 				(:username,:password,:mail)";
 
 		$stmt = $this->db->prepare($sql);
-		$stmt->bindValue("username", $request->get('username'));
-		$stmt->bindValue("password", md5($request->get('password')));
-		$stmt->bindValue("mail", $request->get('mail'));
+		$stmt->bindValue("username", $username);
+		$stmt->bindValue("password", md5($password));
+		$stmt->bindValue("mail", $mail);
 		$stmt->execute();
 	}
 
