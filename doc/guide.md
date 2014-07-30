@@ -9,8 +9,8 @@ maintenant de vous lancer dans quelques manipulations supplémentaires
 pour peaufiner votre arrivée et faciliter votre intégration à la
 communauté.
 
- La première chose à faire est de vous présenter sur le [topic dédié du
-forum](http://www.jdroll.org/forum/0/71/page/1). Il ne s'agit pas d'y
+ La première chose à faire est de vous présenter sur le [topic "Présentation" dédié du
+forum](http://www.jdroll.org/forum/). Il ne s'agit pas d'y
 raconter sa vie, mais de partager quelques détails afin de mieux vous
 connaître. Votre expérience JdR, vos goûts... Afin de vous accueillir
 comme il se doit et que nous fassions plus ample connaissance !
