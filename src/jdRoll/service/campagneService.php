@@ -316,6 +316,9 @@ class CampagneService {
 		return $campagne;
 	}
 
+	/**
+	 * @param integer $id
+	 */
 	public function isMj($id) {
 		if($this->session->get('user') != null) {
 			if($id == null) {
@@ -406,6 +409,11 @@ class CampagneService {
 		return $this->getMjCampagnesByStatut(0,1,3, $user);
 	}
 
+	/**
+	 * @param integer $statut1
+	 * @param integer $statut2
+	 * @param integer $statut3
+	 */
 	public function getMjCampagnesByStatut($statut1, $statut2, $statut3, $user) {
 		$sql = "SELECT campagne.* ,
 				( SELECT
@@ -455,6 +463,12 @@ class CampagneService {
 	}
 
 
+        /**
+         * @param integer $statut1
+         * @param integer $statut2
+         * @param integer $statut3
+         * @param integer $cpstatut
+         */
         public function getMyPjCampagneByStatut($statut1, $statut2, $statut3, $cpstatut) {
             $sql = "SELECT distinct
 		campagne.*, user.username as username,

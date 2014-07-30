@@ -7,10 +7,6 @@
  * @license MIT
  */
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 $editorController = $app['controllers_factory'];
 $editorController->before($mustBeLogged);
 

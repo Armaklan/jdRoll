@@ -57,6 +57,10 @@ class NotificationService {
             $stmt->execute();
     }
 
+    /**
+     * @param string $title
+     * @param string $type
+     */
     public function insertNotif($user_id, $title, $content, $url, $type, $target_id) {
         $nbNotif = 0;
 
