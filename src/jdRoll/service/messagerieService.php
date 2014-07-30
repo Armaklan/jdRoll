@@ -191,6 +191,9 @@ class MessagerieService {
         $stmt->execute();
     }
 
+    /**
+     * @param integer $statut
+     */
     private function updateStatut($id, $statut) {
         $sql = "UPDATE messages_to
     			SET statut = :statut

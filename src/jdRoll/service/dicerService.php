@@ -59,6 +59,9 @@ class DicerService {
 		return $campagne;
 	}
 
+	/**
+	 * @param string $result
+	 */
 	public function insertDice($campagne_id, $result, $description) {
 		$sql = "INSERT INTO dicer
 				(user_id, campagne_id, result, description)

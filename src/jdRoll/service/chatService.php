@@ -98,6 +98,9 @@ class ChatService {
         return $content;
     }
 
+	/**
+	 * @return string
+	 */
 	private function escapeLowerAngleBracket($str){
 		$find = array('/<([^[:alpha:]])/', '/<$/');
 		return preg_replace($find, '&lt;\\1', $str);
