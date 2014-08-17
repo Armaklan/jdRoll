@@ -38,12 +38,17 @@
 							<input type="hidden" name="from_id" value="{{ app.session.get('user').id }}">
 							<input type="hidden" name="from_username" value="{{ app.session.get('user').login }}">
 							<input type="hidden"  name="title" value="{{ message.title }}">
-					    	<textarea class="wysiwyg" type="text" id="content" name="content" 
+					    	<textarea class="wysiwyg" type="text" id="content" name="content"
 					    		 placeholder="Texte de votre message" rows="10"></textarea>
 				    </div>
-				       
+
 				    <div class="form-group">
 						    <button type="submit" class="btn btn-primary">Répondre</button>
+                {% if message.from_id == app.session.get('user').id %}
+                  <a href="{{ path('messagerie_delete_my', {'id' : message.id}) }}" class="btn btn-danger"><i class="icon-remove"></i> Supprimer</a>
+                {% else %}
+                  <a href="{{ path('messagerie_delete', {'id' : message.id}) }}" class="btn btn-danger"><i class="icon-remove"></i> Supprimer</a>
+                {% endif %}
 					    </div>
 				</form>
 				</td>
@@ -58,6 +63,6 @@
     	    value: [ {% autoescape false %} {{ message.to_usernames_form }} {% endautoescape %}],
     	    data: '{{ list_username }}'
     	});
-         
+
     </script>
 {% endblock %}
