@@ -2,62 +2,74 @@
 
 {% block content %}
 
-	<table class="table table-striped" width="100%">
-			<tr>
-				<td width="100px">De</td>
-				<td>{{ message.from_username }}</td>
-			</tr>
-			<tr>
-				<td width="100px">A</td>
-				<td>{{ message.to_usernames }}</td>
-			</tr>
-			<tr>
-				<td width="100px">Sujet</td>
-				<td>{{ message.title }}</td>
-			</tr>
-			<tr>
-				<td width="100px">Contenu</td>
-				<td>
-				{% autoescape false %}
-					{{ message.content }}
-				{% endautoescape %}
-				</td>
-			</tr>
-                        {% if message.from_id != 0 %}
-			<tr>
-				<td colspan="2">
-				<form role="form" class="form-horizontal" action="{{ path('messagerie_send')  }}" method="POST">
-				    <div class="form-group">
-					    <label class="control-label col-sm-2" for="to_usernames">Destinataires :</label>
-					    <div class="col-sm-10">
-					    	<input class="form-control" type="text" id="to" name="to_usernames" placeholder="">
-					    </div>
-				    </div>
-					<div class="form-group">
-					    	<input type="hidden" name="id" value="">
-							<input type="hidden" name="from_id" value="{{ app.session.get('user').id }}">
-							<input type="hidden" name="from_username" value="{{ app.session.get('user').login }}">
-							<input type="hidden"  name="title" value="{{ message.title }}">
-					    	<textarea class="wysiwyg" type="text" id="content" name="content" 
-					    		 placeholder="Texte de votre message" rows="10"></textarea>
-				    </div>
-				       
-				    <div class="form-group">
-						    <button type="submit" class="btn btn-primary">Répondre</button>
-					    </div>
-				</form>
-				</td>
-			</tr>
-                        {% endif %}
-	</table>
-    <script>
 
-    	$('#to').magicSuggest({
-    	    resultAsString: true,
-    	    width: 500,
-    	    value: [ {% autoescape false %} {{ message.to_usernames_form }} {% endautoescape %}],
-    	    data: '{{ list_username }}'
-    	});
-         
-    </script>
+  <div class="col-sd-12" align="right">
+    {% if message.from_id == app.session.get('user').id %}
+    <a href="{{ path('messagerie_delete_my', {'id' : message.id}) }}" class="btn btn-danger"><i class="icon-remove"></i> Supprimer</a>
+    {% else %}
+    <a href="{{ path('messagerie_delete', {'id' : message.id}) }}" class="btn btn-danger"><i class="icon-remove"></i> Supprimer</a>
+    {% endif %}
+  </div>
+  <p>&nbsp;</p>
+
+  <div class="col-sd-12">
+    <table class="table table-striped" width="100%">
+        <tr>
+          <td width="100px">De</td>
+          <td>{{ message.from_username }}</td>
+        </tr>
+        <tr>
+          <td width="100px">A</td>
+          <td>{{ message.to_usernames }}</td>
+        </tr>
+        <tr>
+          <td width="100px">Sujet</td>
+          <td>{{ message.title }}</td>
+        </tr>
+        <tr>
+          <td width="100px">Contenu</td>
+          <td>
+          {% autoescape false %}
+            {{ message.content }}
+          {% endautoescape %}
+          </td>
+        </tr>
+        {% if message.from_id != 0 %}
+        <tr>
+          <td colspan="2">
+          <form role="form" class="form-horizontal" action="{{ path('messagerie_send')  }}" method="POST">
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="to_usernames">Destinataires :</label>
+                <div class="col-sm-10">
+                  <input class="form-control" type="text" id="to" name="to_usernames" placeholder="">
+                </div>
+              </div>
+            <div class="form-group">
+                  <input type="hidden" name="id" value="">
+                <input type="hidden" name="from_id" value="{{ app.session.get('user').id }}">
+                <input type="hidden" name="from_username" value="{{ app.session.get('user').login }}">
+                <input type="hidden"  name="title" value="{{ message.title }}">
+                  <textarea class="wysiwyg" type="text" id="content" name="content"
+                     placeholder="Texte de votre message" rows="10"></textarea>
+              </div>
+
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Répondre</button>
+                </div>
+          </form>
+          </td>
+        </tr>
+        {% endif %}
+    </table>
+  </div>
+  <script>
+
+    $('#to').magicSuggest({
+      resultAsString: true,
+      width: 500,
+      value: [ {% autoescape false %} {{ message.to_usernames_form }} {% endautoescape %}],
+      data: '{{ list_username }}'
+    });
+
+  </script>
 {% endblock %}
