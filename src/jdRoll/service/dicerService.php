@@ -46,7 +46,7 @@ class DicerService {
 		return $result;
 	}
 
-	public function getDice($campagne_id) {
+	public function getAllDice($campagneId) {
 		$sql = "SELECT dicer.*, user.username as username
 				FROM dicer
 				JOIN user
@@ -55,7 +55,21 @@ class DicerService {
 				WHERE campagne_id = ?
 				ORDER BY id DESC
 				LIMIT 0, 30";
-		$campagne = $this->db->fetchAll($sql, array($campagne_id));
+		$campagne = $this->db->fetchAll($sql, array($campagneId));
+		return $campagne;
+	}
+
+	public function getUserDice($campagneId, $userId) {
+		$sql = "SELECT dicer.*, user.username as username
+				FROM dicer
+				JOIN user
+				ON
+					dicer.user_id = user.id
+				WHERE campagne_id = ?
+                AND user.id = ?
+				ORDER BY id DESC
+				LIMIT 0, 30";
+		$campagne = $this->db->fetchAll($sql, array($campagneId, $userId));
 		return $campagne;
 	}
 
