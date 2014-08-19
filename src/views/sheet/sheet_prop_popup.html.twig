@@ -1,0 +1,32 @@
+<div id="propSheetPopup" class="modal fade">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-name">Propriétés de la fiche de personnage</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4" style="border-width:0 1px 0 0; border-style:solid;" id="propSheetHelp"></div>
+					<div class="col-md-8">
+						
+							<div class="form-group">
+								<input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="EditorToolBarController.switchBackgroundProperty();"/> Utiliser un fond Custom WYSIWIG
+								<input type="radio" id="radImg" name="typeFiche" value="1" onClick="EditorToolBarController.switchBackgroundProperty();"/> Utiliser une image pour le fond
+							</div>
+							<div class="input-group">
+								<input class="form-control" type="text" id="PropImgBG" name="PropImgBG" placeholder="http://" value="{{ config.template_img }}">
+								<span class="input-group-btn">
+									<a id='uploadImg' href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
+								</span>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" onClick="EditorToolBarController.closeModalPropertySheet();" aria-hidden="true" id="CloseBtn" type="button">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>

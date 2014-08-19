@@ -1,69 +1,170 @@
-    <form role="form"
-          id="gameSheetForm"
-          onSubmit="return campagneConfig.saveSheet({{campagne.id}})">
+<style>
+ .container {
+    margin-top: 10px;
+}
+.btn-save {
+    position:absolute;
+    right:2px;
+    top:2px;
+}
 
-    <div class="control-group">
-      <div class="col-sm-12" align="right" style="margin-bottom: 5px;">
-        <button type="submit" class="btn btn-primary" > <i class="icon-save"></i> Sauvegarder</button>
-      </div>
+.panel-heading {
+    position:relative;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+</style>	
+<script type="text/javascript" src="{{app.request.baseUrl}}/js/FDP/fdp_main.js"> </script>
+<script type="text/javascript" src="{{app.request.baseUrl}}/js/FDP/fdp_editor.js"> </script>
+<form role="form" id="gameSheetForm" onSubmit="return campagneConfig.saveSheet({{campagne.id}})">
+
+	<div class="control-group" style="display:none;">
+		<div class="col-sm-12" align="right" style="margin-bottom: 5px;">
+			<button type="submit" class="btn btn-primary" > <i class="icon-save"></i> Sauvegarder</button>
+		</div>
     </div>
-   <div class="col-sm-12">
-      <input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
+	<div class="col-sm-12">
+		<input type="hidden" name="id" id="id" value="{{ campagne['id'] }}">
 
-      <div class="form-group">
-        <label class="control-label" for="template">Template de personnage</label>
-        <textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template"
-                  placeholder="Template de la fiche de personnage" rows="20">{{ config.template }}</textarea>
-        <br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
-      </div>
-
-
-      <div class="form-group" id='zoneFicheCustomControl'>
-        <label class="control-label" for="template">Fiche de personnage</label>
-
-
-        <div id='WYSIWIGBtn'>
-          <input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="changeFicheType(0);"/> Utiliser un fond Custom WYSIWIG
-          <input type="radio" id="radImg" name="typeFiche" value="1" onClick="changeFicheType(1);"/> Utiliser une image pour le fond
-        </div>
-        <br>
-        <input type="button" id='bynEditionMode' value="Ouvrir / Fermer l'éditeur" />
-        <br>
-        <label   id='LbimgBG'>Image de fond : </label>
-        <div class="input-group">
-          <input class="form-control" type="text" id="imgBG" name="imgBG" placeholder="http://" value="{{ config.template_img }}">
-          <span class="input-group-btn">
-            <a id='uploadImg' href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a>
-            <a  href="" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="" id="validBG">OK</a>
-          </span>
-        </div>
-        <label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
-        <div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
-        <div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
-        <div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
-        <div id='zoneFicheCustomWYSIWIG'>
-          <textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
+		<div class="form-group" style="display:none;">
+			<label class="control-label" for="template">Template de personnage</label>
+			<textarea input class="input-xxlarge wysiwyg" type="text" id="template" name="template" placeholder="Template de la fiche de personnage" rows="20">{{ config.template }}</textarea>
+			<br><i>Cette zone sera recopiée dans la section "Description technique" des personnages rejoignant la partie.</i>
+		</div>
+		
+		<div class="form-group" id='zoneFicheCustomControl'>
+			<div style="display:none;">
+				
+				<input type="button" id='bynEditionMode' value="Ouvrir / Fermer l'éditeur" />
+				
+				<label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
+				<div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
+				<div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
+				<div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
+				<div class="JDRollUserControl"><a href="#" id="DivSelect2"  data-type="select2" data-pk="1" data-value="1" >Liste</a></div>
+			</div>
+			<div id='zoneFicheCustomWYSIWIG'>
+				<textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
                     placeholder="Template de la fiche de personnage" rows="20">{% if config.template_img is empty %}{{ config.template_html }}{%endif%}</textarea>
-        </div>
-
-
-        <div class="ui-layout-center" id='zoneFicheCustom'>{% if config.template_img is empty %}{% autoescape false %}{{ config.template_html }}{% endautoescape %}{% autoescape false %}{{ config.template_fields }}{% endautoescape %}{% endif %}</div>
-
-        <div class="ui-layout-center" id='zoneFiche'>
-          <img id='zoneImg' src="{{ config.template_img }}" style="width: {{config.width}}"/>
-          {% if config.template_img is not empty %}
-          {% autoescape false %}{{ config.template_fields }}{% endautoescape %}
-          {% endif %}
-        </div>
-      </div>
-
-    <input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
-    <input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
-
-    </div>
-  </form>
-
-
+			</div>
+		
+			<div class="container">
+				<!-- Static navbar -->
+				<div class="navbar navbar-default" role="navigation">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Editeur</a>
+						</div>
+						<div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Fiche<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li >
+											<a href="#" onclick="EditorToolBarController.openModalPropertySheet()">Propriété de la fiche</a>
+											<a href="#">Visualisation de la fiche</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<ul class="nav navbar-nav">	
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modèle de champs<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li >
+											<a href="#" onclick="EditorToolBarController.openModalTemplateSheet()">Création d'un nouveau modèle</a>
+										</li>
+										<li >
+											<a href="#">Gestion des modèles existants</a>
+										</li>		
+									</ul>
+								</li>
+							</ul>
+							<div class="navbar-right navbar-form">	
+								<button type="submit" class="btn btn-primary" > <i class="icon-save"></i> Sauvegarder</button>
+							</div>
+						</div><!--/.nav-collapse -->
+					</div><!--/.container-fluid -->
+				</div>
+			</div>
+			<fieldset class="titled-box container">
+				<legend>Modèle disponible</legend>
+				<div class="JDRollUserControl" ><a href="#" data-type="text" data-pk="1" >{{fieldsTemplates['name']}}</a></div>
+			</fieldset>
+			<div class="JDRollUserControl"><a href="#" data-type="text" data-pk="1" style="color:red;font-size:15px;">{{fieldsTemplates['name']}}</a></div>
+			<fieldset class="titled-box container">
+				<legend>Fiche de personnage</legend>
+				<div class="JDRollDropZone" id='zoneFiche' style="width: {{config.width}};float:left;background-color:red;">
+					<img id='zoneImg' src="{{ config.template_img }}" style="width: {{config.width}};{% if config.template_img is empty %}display=none;{% endif %}"/>
+					<div {% if config.template_img is empty %}style="display:none;"{% endif %}>
+						{% autoescape false %}{{ config.template_html }}{% endautoescape %}
+					</div>
+					<div {% if config.template_img is empty %}style="display:none;"{% endif %}>
+					{% autoescape false %}{{ config.template_fields }}{% endautoescape %}
+					</div>
+				</div>	
+			</fieldset>
+			<input type="hidden" id="typeFiche" name="typeFiche" value=""/>
+			<input type="hidden" id="imgBG" name="imgBG" value="{{ config.template_img }}"/>
+			<input type="hidden" id='hiddenInput' name='hiddenInput' value=''/>
+			<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
+		</div>
+	</div>
+ </form>
+  
 <script type='text/javascript'>
     var count = 0;
     var mode = 0;
@@ -89,34 +190,13 @@
 
     }
 
-    function changeFicheType(v)
-    {
-      mode = v;
-      if(v == 1)
-      {
-        $('#zoneFicheCustom').css('display','none');
-        $('#bynEditionMode').css('display','none');
-        $('#zoneFiche').css('display','');
-        $('#SaveTemplateWYSIWIG').css('display','none');
-        $('#uploadImg').css('display','');
-        $('#validBG').css('display','');
-        $('#imgBG').css('display','');
-      }
-      else
-      {
-        $('#zoneFiche').css('display','none');
-        $('#bynEditionMode').css('display','block');
-        $('#zoneFicheCustom').css('display','block');
-        $('#SaveTemplateWYSIWIG').css('display','block');
-        $('#uploadImg').css('display','none');
-        $('#validBG').css('display','none');
-        $('#imgBG').css('display','none');
-      }
-    }
-
     $(function() {
 
-      $(".JDRollUserControl").draggable({
+	$.fn.editableform.buttons = 
+	'<button type="submit" class="btn btn-primary btn-sm editable-submit"><i class="glyphicon glyphicon-ok"></i></button>' +
+	'<button type="button" class="btn btn-default btn-sm editable-cancel"><i class="glyphicon glyphicon-remove"></i></button>' + 
+	'<button type="button" class="btn btn-danger btn-sm" style="margin-left:7px;" onclick="pouet(this);"><i class="glyphicon glyphicon-trash"></i></button>';
+      /*$(".JDRollUserControl").draggable({
         helper: 'clone',
         cursor: 'move',
         cancel: null,
@@ -212,8 +292,11 @@
           $('#DivTextArea').css('display','block');
           $('#WYSIWIGBtn').css('display','block');
         }
-      });
+      });*/
 
+	  $('#Divf').click(function(e) {
+        e.preventDefault();
+		});
       $('#saveConfig').click(function(e) {
         e.preventDefault();
         var fieldsValue = '';
@@ -243,21 +326,23 @@
         $('#zoneImg').attr("src",$('#imgBG').val());
 
       });
+	  
+	  
 
-      {% if config.template_img is empty %}
+/*{% if config.template_img is empty %}
           $('#radWYSWIG').attr('checked','checked');
            changeFicheType(0);
       {% else %}
            $('#radImg').attr('checked','checked');
            changeFicheType(1);
       {% endif %}
-
+*/
   });
 
   </script>
 
   <style type='text/css'>
-    .ui-layout-center {
+    .JDRollDropZone {
       position: relative;
       border: 1px solid black;
     }
@@ -277,15 +362,30 @@
     {
       display:none;
     }
+	#left_zone{
+display:inline-block;
+
+float:left;
+}
+#right_zone{
+display:inline-block;
+
+float:left;
+}
   </style>
 
+{% include('sheet/sheet_prop_popup.html.twig') %}
+{% include('sheet/sheet_fields_template_popup.html.twig') %}
 
 <script type='text/javascript'>
 $(function() {
 
-	initFDP($('#zoneFicheCustom'),true);
-	$('.ui-resizable-handle').remove();
+	//initFDP($('#zoneFicheCustom'),true);
 
 });
-
+EditorToolBarController.Init('{{ config.template_img }}');
+FDPController.InitFDP(1);
+//alert($('#propSheetHelp').html());
 </script>
+
+

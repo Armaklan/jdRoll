@@ -34,7 +34,9 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
             $is_mj = $app["campagneService"]->isMj($campagne_id);
             $participants = $app["campagneService"]->getParticipant($campagne_id);
+			$fieldsTemplates = $app['campagneService']->getTemplatesByCampagneId($campagne_id);
             return $app->render('campagne_config_form.html.twig', [
+				'fieldsTemplates' => $fieldsTemplates,
                 'campagne_id' => $campagne_id,
                 'config' => $config,
                 'is_mj' => $is_mj,
@@ -201,6 +203,18 @@ $securedCampagneController->post('/{id}/sheet', function(Request $request) use($
                 return new JsonResponse('Problème durant la mise à jour', 500);
             }
         })->bind("campagne_config_sheet");
+		
+$securedCampagneController->post('/{id}/sheet/AddField', function(Request $request) use($app) {
+            try {
+				
+                $app['campagneService']->addFieldTemplateToSheet($request);
+				
+                return new JsonResponse('Création du modèle effectué', 200);
+            } catch (Exception $e) {
+			
+                return new JsonResponse('Problème durant la création du modèle', 500);
+            }
+        })->bind("campagne_config_sheet_add_field");
 
 $securedCampagneController->post('/{id}/theme', function(Request $request) use($app) {
             try {

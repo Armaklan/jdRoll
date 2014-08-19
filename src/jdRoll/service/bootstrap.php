@@ -16,6 +16,7 @@ use jdRoll\service\resetPwdService;
 use jdRoll\service\FeedbackService;
 use jdRoll\service\AnnonceService;
 use jdRoll\service\PostContentService;
+use jdRoll\service\SheetService;
 
 /*
     Définition des services
@@ -23,6 +24,11 @@ use jdRoll\service\PostContentService;
 $app['dbService'] = function ($app) {
     return new DbService($app['db']);
 };
+
+$app['sheetService'] = function ($app) {
+    return new SheetService($app['db']);
+};
+
 $app['userService'] = function ($app) {
     return new UserService($app['db'], $app['session']);
 };
@@ -30,7 +36,7 @@ $app['persoService'] = function ($app) {
     return new PersoService($app['db'], $app['session']);
 };
 $app['campagneService'] = function ($app) {
-    return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService']);
+    return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService'],$app['sheetService']);
 };
 $app['sectionService'] = function ($app) {
     return new SectionService($app['db'], $app['session']);
@@ -68,3 +74,5 @@ $app['annonceService'] = function ($app) {
 $app['postContentService'] = function ($app) {
     return new PostContentService($app['persoService'],$app['session']);
 };
+
+

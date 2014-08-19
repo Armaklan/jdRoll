@@ -55,10 +55,10 @@ var campagneConfig = (function (tinyMCE) {
 
         var fieldsValue = '';
         var cloneDiv;
-        if(mode == 1)
+        //if(mode == 1)
           cloneDiv = $('#zoneFiche').clone();
-        else
-          cloneDiv = $('#zoneFicheCustom').clone();
+     //   else
+       //   cloneDiv = $('#zoneFicheCustom').clone();
 
         cloneDiv.find('.editable-popup').each(function(){$(this).remove();});
         cloneDiv.find('div[id^="JDRollUserControl_"]').each(function(){
@@ -69,6 +69,7 @@ var campagneConfig = (function (tinyMCE) {
         $('#hiddenInput').val(cloneDiv.html());
         $('#hiddenInputFields').val(fieldsValue);
         var data = $('#gameSheetForm').serialize();
+		alert(data);
         save('sheet', campagne, data).
         done(function() {
             setMsg("success", "Feuille de personnage sauvegardé");

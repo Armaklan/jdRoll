@@ -1,0 +1,50 @@
+<div id="templateSheetPopup" class="modal fade">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-name">Création d'un modèle de champs</h3>
+			</div>
+			<div class="modal-body">
+			<form role="form" id="templateSheetForm">
+				<div class="row">
+					<input type="hidden" name="campagneId" id="campagneId" value="{{campagne.id}}">
+					<div class="col-md-4" style="border-width:0 1px 0 0; border-style:solid;" id="templateSheetHelp"></div>
+					<div class="col-md-8">
+						<div class="form-group">
+						    <label class="control-label col-sm-5" for="templateName">Nom</label>
+						    <div class="col-sm-7">
+						    	<input class="form-control" type="text" id="templateName" name="templateName" placeholder="Nom du modèle" >
+						    </div>
+					    </div>
+						<div class="form-group">
+						    <label class="control-label col-sm-5" for="templateType">Type de champs</label>
+						    <div class="col-sm-7">
+						    	<select class="select2"  name="templateType" id="templateType">
+									<option value="0">Champ de texte</option>
+									<option value="1">Image</option>
+									<option value="2">Liste déroulante</option>
+									<option value="3">Zone de texte</option>
+								</select>
+						    </div>
+					    </div>
+						 <div class="form-group">
+							<label class="control-label col-sm-5" for="templateFontColor">Couleur du texte</label>
+							<div class="col-sm-7">
+								<input type="text"
+									   id="templateFontColor"
+									   name="templateFontColor"
+									   class="form-control colorpicker"
+									   placeholder="#746484">
+							</div>
+						  </div>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" onClick="EditorToolBarController.closeModalTemplateSheet({{campagne.id}});" aria-hidden="true" id="CloseBtn" type="button">Sauvagarder</button>
+			</div>
+		</div>
+	</div>
+</div>

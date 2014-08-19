@@ -16,13 +16,15 @@ class CampagneService {
 	private $session;
 	private $persoService;
 	private $userService;
+	private $sheetService;
 
-	public function __construct($db, $session,$persoService, $userService)
+	public function __construct($db, $session,$persoService, $userService,$sheetService)
     {
         $this->db = $db;
         $this->session = $session;
         $this->persoService = $persoService;
         $this->userService = $userService;
+		$this->sheetService = $sheetService;
     }
 
     public function getNbCampagne($statut) {
@@ -857,5 +859,15 @@ class CampagneService {
     			WHERE id = :campagne";
     	$this->db->executeUpdate($sql, array('campagne' => $campagne, 'state' => $state ));
     }
+	
+	/* Character sheet operations */
+	
+	public function addFieldTemplateToSheet($request) {
+		$this->sheetService->addNewTemplate($request);
+    }
+	
+	public function getTemplatesByCampagneId($id) {
+		return $this->sheetService->getTemplatesByCampagneId($id);
+	}
 }
 ?>
