@@ -43,38 +43,48 @@ var EditorToolBarController = (function(){
 	var getModalTemplateSheet = function() {
         return $("#templateSheetPopup");
     };
+    var getModalVisuSheet = function() {
+        return $("#visuSheetPopup");
+    };
 
+    //Opening property sheet popup
     component.openModalPropertySheet = function() {
         getModalPropertySheet().modal('show');
     };
 		
-	//Fermeture de la fenêtre de propriétés
-	component.closeModalPropertySheet = function(e) {	
-		if($('#radWYSIWYG').prop("checked"))
+	//Closing property sheet popup
+	component.closeModalPropertySheet = function() {
+		if($('#radWYSWIG').prop("checked"))
 		{
-		
+            $('#zoneImg').css('display','none');
+            $('#DivHTMLTemplate').css('display','');
+            $('#typeFiche').attr('value',0);
+            $('#bynEditionMode').css('display','');
 		}
 		else
 		{
-			alert('switch image');
 			$('#zoneImg').attr('src',$('#PropImgBG').val());
+            $('#zoneImg').css('display','');
+            $('#DivHTMLTemplate').css('display','none');
 			$('#imgBG').attr('value',$('#PropImgBG').val());
 			$('#typeFiche').attr('value',1);
+            $('#bynEditionMode').css('display','none');
 		}
         getModalPropertySheet().modal('hide');
     };
-	
+
+    //Opening template management popup
 	component.openModalTemplateSheet = function() {
 		
 		$('#templateSheetHelp').html(PROP_SHEET_OPT_1);
         getModalTemplateSheet().modal('show');
     };
 	
-	//Closing 
-	component.closeModalTemplateSheet = function(campagne) {	
+	//Closing template management popup
+	component.closeModalTemplateSheet = function(campagne) {
 		
 		var data=$('#templateSheetForm').serialize();
-		alert(data);
+
 		save('AddField',campagne,data).
         done(function() {
             setMsg("success", "Création du modèle !");
@@ -87,42 +97,137 @@ var EditorToolBarController = (function(){
         getModalTemplateSheet().modal('hide');
 		 return false;
     };
-	
-    
 
-	//Changement du background de la fiche
+
+    //Opening sheet visualization popup
+    component.openModalVisuSheet = function() {
+
+        var cloneDiv = $('#zoneFiche').clone();
+
+        //Cleaning HTML
+        cloneDiv.find('div[id^="JDRollUserControl"]').each(function(){
+            $(this).removeClass("JDRollDroppedUserControl");
+            $(this).resizable().resizable('destroy');
+        });
+
+
+
+        $('#DivVisuSheet').html(cloneDiv.html());
+
+        //Enable reading mode
+        $('#DivVisuSheet').find('a[id^="JDRollUserControlLink"]').each(function(){
+            $(this).editable('toggleDisabled');
+        });
+        getModalVisuSheet().modal('show');
+    };
+
+    //Close visualization popup
+    component.closeModalVisuSheet = function() {
+
+        //Cleaning visualization area
+        $('#DivVisuSheet').html('');
+
+        getModalVisuSheet().modal('hide');
+        return false;
+    };
+	
+
+	//Change sheet background
 	component.switchBackgroundProperty = function() {
 
         if($("#radWYSWIG").prop("checked"))
 		{
-			$('#imgBG').css('display','none');
+			$('#PropImgBG').css('display','none');
 			$('#uploadImg').css('display','none');
 			$('#propSheetHelp').html(PROP_SHEET_OPT_1);
+
 		}
 		else
 		{
-			$('#imgBG').css('display','');
+			$('#PropImgBG').css('display','');
 			$('#uploadImg').css('display','');
 			$('#propSheetHelp').html(PROP_SHEET_OPT_2);
 		}
         
     };
 	
-	//Initialisation du composant
+	//Initialization
 	component.Init = function(imageTemplate) {
 
        if(imageTemplate == '')
-	   {
+       {
 			$("#radWYSWIG").prop("checked", true);
-			this.switchBackgroundProperty(); 
-	   }
+            $('#bynEditionMode').css('display','');
+       }
 	   else
-	   {
-			$("#radImg").prop("checked", true)
-			this.switchBackgroundProperty(); 
-	   
-	   }
-        
+       {
+			$("#radImg").prop("checked", true);
+           $('#bynEditionMode').css('display','none');
+       }
+
+		this.switchBackgroundProperty();
+
+
+        /* Initialize event callback */
+
+        $('#bynEditionMode').click(function(e){
+
+            if($('#zoneFicheCustomWYSIWIG').is(':hidden'))
+            {
+                $('#zoneFicheCustomWYSIWIG').css('display','block');
+                $('#zoneFiche').css('display','none');
+            }
+            else
+            {
+                var fields = '';
+
+                //get user control
+                $('#zoneFiche').find('div[id^="JDRollUserControl_"]').each(function(){
+                    fields += $(this)[0].outerHTML;
+                });
+
+                $('#DivHTMLTemplate').html(tinymce.get('templatev2').getContent());
+
+                $('#zoneFicheCustomWYSIWIG').css('display','none');
+                $('#zoneFiche').css('display','');
+
+                //Re-enable rezisable functionnality
+                $(".JDRollDroppedUserControl").draggable({
+                    cursor: 'move',
+                    containment: "parent"
+                }).resizable().resizable('destroy');
+                $(".JDRollDroppedUserControl").resizable();
+
+
+
+            }
+        });
+
+        $('#BtnVisuEditMode').click(function(e){
+
+            //Enable editable functionality
+            $('#DivVisuSheet').find('a[id^="JDRollUserControlLink"]').each(function(){
+                $(this).editable('toggleDisabled');
+            });
+
+            //Enable read mode
+            $('#BtnVisuReadMode').css('display','');
+            $(this).css('display','none');
+        });
+
+        $('#BtnVisuReadMode').click(function(e){
+
+            //Disable editable functionality
+            $('#DivVisuSheet').find('a[id^="JDRollUserControlLink"]').each(function(){
+                $(this).editable('toggleDisabled');
+            });
+
+            //Enable edit mode
+            $('#BtnVisuEditMode').css('display','');
+            $(this).css('display','none');
+
+        });
+
     };
 	
     return component;

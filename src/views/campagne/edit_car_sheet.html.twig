@@ -80,21 +80,7 @@
 		</div>
 		
 		<div class="form-group" id='zoneFicheCustomControl'>
-			<div style="display:none;">
-				
-				<input type="button" id='bynEditionMode' value="Ouvrir / Fermer l'éditeur" />
-				
-				<label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
-				<div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
-				<div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
-				<div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
-				<div class="JDRollUserControl"><a href="#" id="DivSelect2"  data-type="select2" data-pk="1" data-value="1" >Liste</a></div>
-			</div>
-			<div id='zoneFicheCustomWYSIWIG'>
-				<textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
-                    placeholder="Template de la fiche de personnage" rows="20">{% if config.template_img is empty %}{{ config.template_html }}{%endif%}</textarea>
-			</div>
-		
+
 			<div class="container">
 				<!-- Static navbar -->
 				<div class="navbar navbar-default" role="navigation">
@@ -115,7 +101,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<li >
 											<a href="#" onclick="EditorToolBarController.openModalPropertySheet()">Propriété de la fiche</a>
-											<a href="#">Visualisation de la fiche</a>
+											<a href="#" onclick="EditorToolBarController.openModalVisuSheet()">Visualisation de la fiche</a>
 										</li>
 									</ul>
 								</li>
@@ -140,21 +126,28 @@
 					</div><!--/.container-fluid -->
 				</div>
 			</div>
+
 			<fieldset class="titled-box container">
 				<legend>Modèle disponible</legend>
 				<div class="JDRollUserControl" ><a href="#" data-type="text" data-pk="1" >{{fieldsTemplates['name']}}</a></div>
 			</fieldset>
 			<div class="JDRollUserControl"><a href="#" data-type="text" data-pk="1" style="color:red;font-size:15px;">{{fieldsTemplates['name']}}</a></div>
 			<fieldset class="titled-box container">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" id="bynEditionMode"> <i class="icon-edit"></i> Editer le fond</button>
+                </div>
 				<legend>Fiche de personnage</legend>
-				<div class="JDRollDropZone" id='zoneFiche' style="width: {{config.width}};float:left;background-color:red;">
-					<img id='zoneImg' src="{{ config.template_img }}" style="width: {{config.width}};{% if config.template_img is empty %}display=none;{% endif %}"/>
-					<div {% if config.template_img is empty %}style="display:none;"{% endif %}>
-						{% autoescape false %}{{ config.template_html }}{% endautoescape %}
-					</div>
-					<div {% if config.template_img is empty %}style="display:none;"{% endif %}>
+                <div id='zoneFicheCustomWYSIWIG'>
+                    <textarea zsinput class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
+                              placeholder="Template de la fiche de personnage" rows="20">{% if config.template_img is empty %}{{ config.template_html }}{%endif%}</textarea>
+                </div>
+				<div class="JDRollDropZone" id='zoneFiche' style="width: {{config.width}};float:left;">
+					<img id='zoneImg' src="{{ config.template_img }}" style="width: {{config.width}};{% if config.template_img is empty %}display:none;{% endif %}"/>
+
+                        <div id="DivHTMLTemplate" {% if config.template_img is not empty %}style="display:none;"{% endif %}>
+						    {% autoescape false %}{{ config.template_html }}{% endautoescape %}
+					    </div>
 					{% autoescape false %}{{ config.template_fields }}{% endautoescape %}
-					</div>
 				</div>	
 			</fieldset>
 			<input type="hidden" id="typeFiche" name="typeFiche" value=""/>
@@ -255,44 +248,7 @@
           }
         }
       });
-
-      $('#bynEditionMode').click(function(e){
-
-        if($('#zoneFicheCustomWYSIWIG').is(':hidden'))
-        {
-          $('#zoneFicheCustom').css('display','none');
-          $('#zoneFicheCustomWYSIWIG').css('display','block');
-          $('#LbCtrl').css('display','none');
-          $('#DivText').css('display','none');
-          $('#DivSelect').css('display','none');
-          $('#DivTextArea').css('display','none');
-          $('#WYSIWIGBtn').css('display','none');
-        }
-        else
-        {
-          var fields = '';
-          $('#zoneFicheCustom').find('div[id^="JDRollUserControl_"]').each(function(){
-
-            fields += $(this)[0].outerHTML;
-
-          });
-          $('#zoneFicheCustom').html(tinymce.get('templatev2').getContent() + fields);
-          $('#zoneFicheCustom').css('display','block');
-          $('#zoneFicheCustomWYSIWIG').css('display','none');
-
-          $(".JDRollDroppedUserControl").draggable({
-            cursor: 'move',
-            containment: "parent"
-          }).resizable().resizable('destroy');
-
-          $(".JDRollDroppedUserControl").resizable();
-          $('#LbCtrl').css('display','block');
-          $('#DivText').css('display','block');
-          $('#DivSelect').css('display','block');
-          $('#DivTextArea').css('display','block');
-          $('#WYSIWIGBtn').css('display','block');
-        }
-      });*/
+*/
 
 	  $('#Divf').click(function(e) {
         e.preventDefault();
@@ -376,6 +332,7 @@ float:left;
 
 {% include('sheet/sheet_prop_popup.html.twig') %}
 {% include('sheet/sheet_fields_template_popup.html.twig') %}
+{% include('sheet/sheet_visu_popup.html.twig') %}
 
 <script type='text/javascript'>
 $(function() {

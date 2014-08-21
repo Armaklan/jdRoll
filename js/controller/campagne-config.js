@@ -50,26 +50,29 @@ var campagneConfig = (function (tinyMCE) {
         return false;
     };
 
+    //Saving character Sheet
     component.saveSheet = function(campagne) {
         tinyMCE.triggerSave();
 
         var fieldsValue = '';
         var cloneDiv;
-        //if(mode == 1)
-          cloneDiv = $('#zoneFiche').clone();
-     //   else
-       //   cloneDiv = $('#zoneFicheCustom').clone();
+        var HTMLTemplate;
 
+        cloneDiv = $('#zoneFiche').clone();
+        HTMLTemplate = $('#DivHTMLTemplate').clone();
+
+        //Clean HTML before saving
         cloneDiv.find('.editable-popup').each(function(){$(this).remove();});
         cloneDiv.find('div[id^="JDRollUserControl_"]').each(function(){
           fieldsValue +=$(this)[0].outerHTML;
           $(this).remove();
         });
 
-        $('#hiddenInput').val(cloneDiv.html());
+        $('#hiddenInput').val(HTMLTemplate.html());
         $('#hiddenInputFields').val(fieldsValue);
         var data = $('#gameSheetForm').serialize();
-		alert(data);
+
+        //save
         save('sheet', campagne, data).
         done(function() {
             setMsg("success", "Feuille de personnage sauvegardé");

@@ -9,10 +9,22 @@
 				<div class="row">
 					<div class="col-md-4" style="border-width:0 1px 0 0; border-style:solid;" id="propSheetHelp"></div>
 					<div class="col-md-8">
-						
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="EditorToolBarController.switchBackgroundProperty();"/>
+                                Utiliser un fond Custom WYSIWIG
+                            </label>
+                         </div>
+                            <div class="radio">
+                            <label>
+                                <input type="radio" id="radImg" name="typeFiche" value="1" onClick="EditorToolBarController.switchBackgroundProperty();"/>
+                                Utiliser une image pour le fond
+                            </label>
+                        </div>
 							<div class="form-group">
-								<input type="radio" id="radWYSWIG" name="typeFiche" value="0" onClick="EditorToolBarController.switchBackgroundProperty();"/> Utiliser un fond Custom WYSIWIG
-								<input type="radio" id="radImg" name="typeFiche" value="1" onClick="EditorToolBarController.switchBackgroundProperty();"/> Utiliser une image pour le fond
+
+
 							</div>
 							<div class="input-group">
 								<input class="form-control" type="text" id="PropImgBG" name="PropImgBG" placeholder="http://" value="{{ config.template_img }}">
