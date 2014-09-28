@@ -326,6 +326,7 @@ class PostService {
             DATE_FORMAT(create_date, '%Y,%m,01') as dat,
             count(*) as cpt
             FROM `posts`
+            WHERE posts.user_id IS NOT NULL
             GROUP BY dat";
 
         return $this->db->fetchAll($sql,
@@ -345,6 +346,7 @@ class PostService {
                 ON sections.id = topics.section_id
             LEFT JOIN campagne
                 ON campagne.id = sections.campagne_id
+            WHERE posts.user_id IS NOT NULL
             GROUP BY game";
 
         return $this->db->fetchAll($sql,
@@ -356,7 +358,9 @@ class PostService {
     public function getTotalGeneralPost() {
         $sql = "SELECT
             count(*) as cpt
-            FROM `posts`";
+            FROM `posts`
+            WHERE posts.user_id IS NOT NULL
+            ";
 
         return $this->db->fetchColumn($sql,
                 array(),
