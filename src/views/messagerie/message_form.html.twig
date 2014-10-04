@@ -14,11 +14,6 @@
 			<input type="hidden" name="from_id" value="{{ message.from_id }}">
 			<input type="hidden" name="from_username" value="{{ message.from_username }}">
 		    <div class="form-group">
-		    	<div class="col-sd-4 col-sd-offset-8" align="right">
-					<button type="submit" class="btn btn-primary">Envoyer</button>
-				</div>
-		    </div>
-		    <div class="form-group">
 			    <label class="control-label col-sm-2" for="to_usernames">Destinataires :</label>
 			    <div class="col-sm-10">
 	                <input class="form-control" type="text" id="to" name="to_usernames" placeholder="">
@@ -37,7 +32,11 @@
 			    		 placeholder="Texte de votre message" rows="10">{{ message.content }}</textarea>
 			    </div>
 		    </div>
-
+            <div class="form-group">
+                <div class="col-sd-4 col-sd-offset-8" align="right">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+            </div>
 	    </form>
     </div>
 

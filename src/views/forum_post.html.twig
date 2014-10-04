@@ -32,15 +32,16 @@
         {% else %}
             <input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
         {% endif %}
-	   	<div class="form-group">
-		    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
-		    	 placeholder="Votre message" rows="15">{{ post.content }}</textarea>
-	    </div>
-	    <div class="form-group">
-			  <a class="btn btn-primary" id="btn-reply" onClick="draftController.ajaxPost()">Enregistrer</a>
-        <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
-        <span id="enregResult"></span>
-	    </div>
+
+        <div class="form-group">
+                <textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
+                 placeholder="Votre message" rows="15">{{ post.content }}</textarea>
+        </div>
+        <div class="form-group" align="right">
+              <a class="btn btn-primary" id="btn-reply" onClick="draftController.ajaxPost()">Enregistrer</a>
+            <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
+            <span id="enregResult"></span>
+        </div>
 
     </form>
   </div>

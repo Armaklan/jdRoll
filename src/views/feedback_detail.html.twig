@@ -77,7 +77,9 @@
       <form action="{{ path('feedback_comment', {'id' : feedback.id}) }}" method="post">
         <h4>Poster un commentaire</h4>
         <textarea name="content" class="wysiwyg"></textarea><br>
-        <input type="submit" class="btn btn-primary" value="Répondre">
+        <div align="right">
+            <input type="submit" class="btn btn-primary" value="Répondre">
+        </div>
       </form>
     </td>
   </tr>
