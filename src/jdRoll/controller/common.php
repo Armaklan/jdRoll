@@ -35,6 +35,12 @@ $commonController->get('/', function() use ($app) {
             'birthDays' => $birthDay,'isAdmin' => $isAdmin]);
 })->bind("homepage");
 
+$commonController->get('/tchat', function() use ($app) {
+    $isAdmin = $app["campagneService"]->IsAdmin();
+    $users = $app['userService']->getAllUsers();
+    return $app->render('chat/fullpage.html.twig', ['isAdmin' => $isAdmin, 'users' => $users]);
+})->bind("tchat");
+
 $commonController->get('/login/{url}', function($url) use($app) {
     return $app->render('login.html.twig', ['error' => "", 'url' => $url]);
 })->bind("login_page");
