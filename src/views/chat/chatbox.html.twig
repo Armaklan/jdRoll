@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 1em; margin-bottom: 0.5em;">
 			<div class="col-md-9 chatbox">
 				<h5 class="categorie">Tchat</h5>
-		        <div id="text" style="height: 300px; overflow: auto;">
+		        <div id="text" style="{% if tchatfull %}height: 600px;{% else %}height: 300px;{% endif %} overflow: auto;">
 		            <div id="loading">
 		                <center>
 		                <span class="info" id="info">Chargement du chat en cours...</span><br />
@@ -12,7 +12,7 @@
 
 		        <div style="text-align: center; margin-top: 1em;">
 		        	{% if (app.session.get('user') != null)  %}
-				        <form role="form" class="form-inline hidden-xs" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
+				        <form role="form" class="form-inline {% if not tchatfull %}hidden-xs{% endif %}" onsubmit="chatController.postMessage('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
                             <div class="col-md-2">
                                 <select class="select2" id="chatTo">
                                     <option value="">Tous</option>
@@ -31,7 +31,7 @@
 	                           </span>                
 							</div>
 						</form>
-						<form role="form" class="form-inline visible-xs" onsubmit="chatController.postMessageMobile('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
+						<form role="form" class="form-inline {% if tchatfull  %}hidden{% else %}visible-xs{% endif %}" onsubmit="chatController.postMessageMobile('{{ app.session.get('user')['login'] }}'); return false;" autocomplete="off">
 					        <div>
 							  <input class="form-control" id="messageChatMobile" type="text" maxlength="300">
 							  <br>

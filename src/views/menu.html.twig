@@ -18,15 +18,17 @@
                     class="dropdown-toggle" data-toggle="dropdown"
   				          {% if nb_msg > 0 %} style='color: #FCFFA6' {% endif %}
   				          ><i class="icon-envelope"></i>
-  				  	       Messagerie ({{nb_msg}})
+  				  	       Communiquer ({{nb_msg}})
                      <b class="caret"></b>
                      </a>
 
                      <ul class="dropdown-menu">
-                       <li><a href="{{ path('messagerie_new') }}">Ecrire un message</a></li>
+                       <li><a href="{{ path('messagerie_new') }}">Ecrire un message privé</a></li>
                        <li class="divider"></li>
                        <li><a href="{{ path('messagerie') }}">Boite de reception</a></li>
                        <li><a href="{{ path('messagerie_sent') }}">Messages envoyés</a></li>
+                       <li class="divider"></li>
+                       <li><a href="{{ path('tchat') }}">Tchat</a></li>
                     </ul>
 
               </li>

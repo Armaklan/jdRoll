@@ -292,7 +292,8 @@
     	</div>
 
     	{% if campagne_id == 0 %}
-    			{% include('chat/chatbox.html.twig') %}
+            {% set tchatfull = false %}
+    		{% include('chat/chatbox.html.twig') %}
         {% else %}
 
             <div class="well" align="center">
