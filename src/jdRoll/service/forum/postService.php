@@ -335,6 +335,25 @@ class PostService {
 
     }
 
+    public function getStatForOnGame($id) {
+        $sql = "SELECT
+            DATE_FORMAT(create_date, '%Y,%m,01') as dat,
+            count(*) as cpt
+            FROM posts
+            JOIN topics
+            ON posts.topic_id = topics.id
+            JOIN sections
+            ON topics.section_id = sections.id
+            WHERE posts.user_id IS NOT NULL
+            AND sections.campagne_id = :campagne
+            GROUP BY dat";
+
+        return $this->db->fetchAll($sql,
+            array('campagne' => $id)
+        );
+
+    }
+
     public function getStatGeneralByGame() {
         $sql = "SELECT
             campagne.name as game,
