@@ -98,6 +98,7 @@ var chatControllerImpl = function() {
 
 	function activateChat() {
 		container = $('#text');
+        msgDivHeight = $('#text').height();
 		getMessages();
 	}
 

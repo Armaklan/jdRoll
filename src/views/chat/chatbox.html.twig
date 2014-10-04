@@ -53,7 +53,7 @@
 			</div>
 			<div class="col-md-3 chatbox">
 				<h5 class="categorie">En ligne</h5>
-				<div style="height: 300px; overflow: auto;" id="onlineUsers">
+				<div style="{% if tchatfull %}height: 600px;{% else %}height: 300px;{% endif %} overflow: auto;" id="onlineUsers">
 		            <div id="loading">
 		                <center>
 		                <span class="info" id="info">Chargement du chat en cours...</span><br />
