@@ -41,8 +41,15 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
     $is_admin = $app["campagneService"]->isAdmin();
     $is_participant = $app["campagneService"]->isParticipant($id);
     $participants = $app["campagneService"]->getParticipant($id);
-    return $app->render('campagne.html.twig', ['campagne' => $campagne, 'participants' => $participants,
-    		'is_mj' => $is_mj, 'is_admin' => $is_admin, 'is_participant' => $is_participant, 'error' => ""]);
+    $stats = $app["postService"]->getStatForOnGame($id);
+    return $app->render('campagne.html.twig', [
+        'campagne' => $campagne,
+        'participants' => $participants,
+    	'is_mj' => $is_mj,
+        'is_admin' => $is_admin,
+        'is_participant' => $is_participant,
+        'stat_post' => $stats,
+        'error' => ""]);
 })->bind("campagne");
 
 $publicCampagneController->get('/config/{id}', function($id) use($app) {
