@@ -16,7 +16,7 @@ $(function() {
 	$('.ui-resizable-handle').remove();
 
 
-	$('#saveBtn').click(function(e){
+	$('.saveSheetBtn').click(function(e){
 		e.preventDefault();
 		var fieldsValue = '';
 		$('#zoneFicheCustom').find('input[id$="hidden"]').each(function(){
@@ -43,7 +43,7 @@ $(function() {
 		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
 
         <div align="right">
-            <button type="submit" class="btn btn-primary" id='saveBtn'>Sauvegarder</button>
+            <button type="submit" class="btn btn-primary saveSheetBtn" id='saveBtn'>Sauvegarder</button>
         </div><br>
       <table class="table table-striped table-hover">
         <tbody>
@@ -195,7 +195,7 @@ $(function() {
       </table>
 
 	    <div align="right">
-			    <button type="submit" class="btn btn-primary pull-right" id='saveBtn'>Sauvegarder</button>
+			    <button type="submit" class="btn btn-primary pull-right saveSheetBtn" id='saveBtnBottom'>Sauvegarder</button>
 	    </div>
 		<input type="hidden" id='hiddenInputFields' name='hiddenInputFields' value=''/>
     </form>
