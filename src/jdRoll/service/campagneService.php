@@ -202,8 +202,9 @@ class CampagneService {
     				description = :description,
                     is_recrutement_open = :recrutement,
     				statut = :statut,
-                                rythme = :rythme,
-                                rp = :rp
+    				rythme = :rythme,
+                    rp = :rp,
+                    is_multi_character = :is_multi_character
     			WHERE
     				id = :id";
 
@@ -218,6 +219,7 @@ class CampagneService {
 		$stmt->bindValue("nb_joueurs", $request->get('nb_joueurs'));
 		$stmt->bindValue("description", $request->get('description'));
 		$stmt->bindValue("recrutement", $request->get('is_recrutement_open'));
+        $stmt->bindValue("is_multi_character", $request->get('is_multi_character'));
 		$stmt->bindValue("id", $request->get('id'));
 		$stmt->execute();
     }
