@@ -52,13 +52,14 @@ class PersoService {
         $stmt->bindValue("campagne", $campagne_id);
         $stmt->bindValue("user", $user_id);
         $stmt->execute();
+        return $this->db->lastInsertId();
     }
 
     public function getPersonnage($createIfNotExist, $campagne_id, $user_id) {
         $sql = "SELECT * FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
 				where campagne_config.campagne_id = :campagne
 				AND 	user_id = :user";
-        $result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
+        $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
         if (empty($result)) {
             $result['id'] = "";
         }

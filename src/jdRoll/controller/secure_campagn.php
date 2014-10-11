@@ -115,7 +115,7 @@ $securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id)
                 $campagne = $app['campagneService']->getCampagne($id);
                 $campagne_name = $campagne['name'];
                 $url_forum = $app->path('forum_campagne', array('campagne_id' => $id));
-                $url_perso = $app->path('perso_edit', array('campagne_id' => $id));
+                $url_perso = $app->path('perso_edit', array('campagne_id' => $id, 'perso_id' => $perso));
                 $content = "
                     <p>Votre inscription à '$campagne_name' a été validée par le MJ.</p>
                     <p>Nous t'invitons à te manifester sur le Mod-Off de la partie.

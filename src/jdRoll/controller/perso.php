@@ -17,23 +17,12 @@
 	$persoController = $app['controllers_factory'];
 	$persoController->before($mustBeLogged);
 
-	$persoController->get('/edit/{campagne_id}', function($campagne_id) use($app) {
-		$player_id = $app['session']->get('user')['id'];
-		$is_mj = $app["campagneService"]->isMj($campagne_id);
-	    $perso = $app['persoService']->getPersonnage(false,$campagne_id, $player_id);
-        $cats = $app['persoService']->getAllPnjCat($campagne_id);
-	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
-	})->bind("perso_edit");
-
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-        if(! $is_mj) {
-            return $app->redirect($app->path('perso_view', ['campagne_id' => $campagne_id, 'perso_id' => $perso_id]));
-        }
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
-	})->bind("perso_edit_mj");
+	})->bind("perso_edit");
 
 	$persoController->get('/view/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);

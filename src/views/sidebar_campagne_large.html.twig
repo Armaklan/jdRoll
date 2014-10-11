@@ -4,9 +4,9 @@
 		</div>
 	    <div class="row">
 	    	<div class="col-md-4">
-				{% if perso.id != '' %}
+				{% if perso|length == 1 %}
 	    		<div align="center">
-    				<img src="{{ perso.avatar }}" width="130px" class="img-rounded" />
+    				<img src="{{ perso[0].avatar }}" width="130px" class="img-rounded" />
     			</div><p/>
     			{% endif %}
     			    <div align="center">
@@ -15,7 +15,7 @@
 					        {% include("composant/my_campagne_btm.html.twig") %}
 							<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class="icon-folder-close"></i></a>
 							{% include("composant/perso_btm.html.twig") %}
-					    	{% if perso.id != '' %}
+					    	{% if perso|length > 0 %}
 								<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 	                            <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
 	                            <a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
@@ -65,9 +65,9 @@
 			<div align="center">
 				<h5>{{ campagne.name }}</h5>
 			</div>
-			{% if perso.id != '' %}
+			{% if perso|length == 1 %}
 			    <div align="center">
-		    		<img src="{{ perso.avatar }}"  width="60%" style="max-width: 130px" class="img-rounded" />
+		    		<img src="{{ perso[0].avatar }}"  width="60%" style="max-width: 130px" class="img-rounded" />
 		        </div>
 	        {% endif %}
 	        <p/>
@@ -76,14 +76,14 @@
 		        <div align="center">
 		            <div class="btn-group btn-group-sm">
 			            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
-			            {% if perso.id != '' %}
+			            {% if perso|length > 0 %}
 				            <a class="btn btn-default iconeBtn sidebarBtn"
 				            	onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 				                title="Mettre une alerte">
 				                    <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
 				            </a>
 			            {% endif %}
-			            {% if perso.id != '' %}
+			            {% if perso|length > 0 %}
 				            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 				            <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
 			            {% endif %}

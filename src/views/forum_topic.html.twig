@@ -93,7 +93,7 @@
         </td>
       </tr>
 			{% if topic.is_closed == 0 or is_mj %}
-				{% if campagne_id == 0 or perso.id != null or is_mj or topic.is_private == 2 %}
+				{% if campagne_id == 0 or perso|length > 0 or is_mj or topic.is_private == 2 %}
 					{% if campagne_id != 0 %}
 					<tr id="quickDicerRow">
 						<td>
@@ -153,7 +153,20 @@
 									</select>
 								</div>
 							{% else %}
-								<input type="hidden" name="perso_id" value="{{ perso.id }}" >
+                                {% if perso|length == 1 %}
+                                    <input type="hidden" name="perso_id" value="{{ perso[0].id }}" >
+                                {% elseif perso|length > 1 %}
+                                    <div class="form-group">
+                                        <label for="perso_id">Poster en tant que...</label>
+                                        <select class="select2" id="perso_id" name="perso_id" style="min-width: 200px">
+                                                {% set firstSelected = 'selected="selected"' %}
+                                                {% for personnage in perso %}
+                                                    <option value="{{ personnage.id }}" {{ firstSelected }}>{{ personnage.name }}</option>
+                                                    {% set firstSelected = ""%}
+                                                {% endfor %}
+                                        </select>
+                                    </div>
+                                {% endif %}
 							{% endif %}
 						   	<div class="form-group">
 							    	<textarea input class="input-xxlarge wysiwyg" type="text" id="content" name="content"
