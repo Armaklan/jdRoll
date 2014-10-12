@@ -63,7 +63,7 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getPersonnage(true,$campagne_id, $player_id);
-		return $app->render('perso_view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
+		return $app->render('perso_view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso[0], 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_view_all");
 
 	$persoController->post('/save/{campagne_id}', function($campagne_id, Request $request) use($app) {
