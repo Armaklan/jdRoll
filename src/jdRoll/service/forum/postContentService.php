@@ -85,26 +85,27 @@ class PostContentService {
 		return $post;
 	}
 	
-	private function _transformPrivateZoneForMessage(&$post, $login, $perso, $is_mj) {
+	private function _transformPrivateZoneForMessage(&$post, $login, $persos, $is_mj) {
         $isThereAPrivateForMe = false;
         $postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-        function ($matches) use($is_mj,$login,$perso,&$isThereAPrivateForMe,$post){
-
-                if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
-                {
-                        $isThereAPrivateForMe = true;
-                }
-                else
-                {
-                        $users = preg_split("#,#", $matches[2]);
-                        foreach($users as $user)
-                        {
-                                if(strcasecmp($login,trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
-                                {
-                                        $isThereAPrivateForMe=true;
-                                        break;
-                                }
-                        }
+        function ($matches) use($is_mj,$login,$persos,&$isThereAPrivateForMe,$post){
+                foreach($persos as $perso) {
+                    if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+                    {
+                            $isThereAPrivateForMe = true;
+                    }
+                    else
+                    {
+                            $users = preg_split("#,#", $matches[2]);
+                            foreach($users as $user)
+                            {
+                                    if(strcasecmp($login,trim($user)) == 0 || strcasecmp($perso['name'],trim($user)) == 0)
+                                    {
+                                            $isThereAPrivateForMe=true;
+                                            break;
+                                    }
+                            }
+                    }
                 }
                 return '';
                 },
