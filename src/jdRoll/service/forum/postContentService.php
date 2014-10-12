@@ -124,9 +124,18 @@ class PostContentService {
 
                 $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
                 $ret = '';
-                if($isThereAPrivateForMe)
-                {
-                    $ret = $this->_getPrivateZone($txt . $matches[3]);
+                foreach($persos as $perso) {
+                    if ($is_mj || !isset($perso['name']) || strcasecmp($perso['name'], $post['perso_name']) == 0) {
+                        $ret = $this->_getPrivateZone($txt . $matches[3]);
+                    } else {
+                        $users = preg_split("#,#", $matches[2]);
+                        foreach ($users as $user) {
+                            if (strcasecmp($login, trim($user)) == 0 || strcasecmp($perso['name'], trim($user)) == 0) {
+                                $ret = $this->_getPrivateZone($txt . $matches[3]);
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 if(!$isThereAPrivateForMe)
