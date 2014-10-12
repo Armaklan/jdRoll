@@ -90,7 +90,7 @@ class PostContentService {
         $postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
         function ($matches) use($is_mj,$login,$persos,&$isThereAPrivateForMe,$post){
                 foreach($persos as $perso) {
-                    if($is_mj || !isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+                    if(!isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
                     {
                             $isThereAPrivateForMe = true;
                     }
@@ -106,6 +106,9 @@ class PostContentService {
                                     }
                             }
                     }
+                }
+                if ($is_mj) {
+                    $isThereAPrivateForMe = true;
                 }
                 return '';
                 },
@@ -125,7 +128,7 @@ class PostContentService {
                 $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
                 $ret = '';
                 foreach($persos as $perso) {
-                    if ($is_mj || !isset($perso['name']) || strcasecmp($perso['name'], $post['perso_name']) == 0) {
+                    if (!isset($perso['name']) || strcasecmp($perso['name'], $post['perso_name']) == 0) {
                         $ret = $this->_getPrivateZone($txt . $matches[3]);
                     } else {
                         $users = preg_split("#,#", $matches[2]);
@@ -136,6 +139,9 @@ class PostContentService {
                             }
                         }
                     }
+                }
+                if ($is_mj) {
+                    $ret = $this->_getPrivateZone($txt . $matches[3]);
                 }
 
                 if(!$isThereAPrivateForMe)
