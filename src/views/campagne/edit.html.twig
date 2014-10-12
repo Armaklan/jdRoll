@@ -59,15 +59,22 @@
 						    </div>
 
 					    </div>
-					    <div class="form-group">
-						    <label class="control-label col-sm-3" for="statut">Statut</label>
-						    <div class="col-sm-9">
-						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation</label>
-						    	<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte</label>
-								<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause</label>
-								<label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé</label>
-						    </div>
-					    </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="statut">Type de campagne</label>
+                            <div class="col-sm-9">
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="is_multi_character" value="0" {% if campagne.is_multi_character == 0 %} checked {% endif %} title="Un seul personnages par joueur"> Mono-personnage</label>
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="is_multi_character" value="1" {% if campagne.is_multi_character == 1 %} checked {% endif %} title="Plusieurs personnages par joueurs."> Multi-personnage</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="statut">Statut</label>
+                            <div class="col-sm-9">
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="3" {% if campagne.statut == 3 %} checked {% endif %} title="Partie non-visible dans le recrutement."> En-Préparation</label>
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="0" {% if campagne.statut == 0 %} checked {% endif %} title="Partie ouverte au recrutement ou en cours de jeu."> Ouverte</label>
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="1" {% if campagne.statut == 1 %} checked {% endif %} title="Partie encore ouverte au recrutement mais plus en cours de jeu (non-visible dans la sidebar)."> En Pause</label>
+                                <label class="radio-inline"><input type="radio" class="iconeBtn" name="statut" value="2" {% if campagne.statut == 2 %} checked {% endif %} title="Partie terminée ou abandonnée"> Archivé</label>
+                            </div>
+                        </div>
               {% if campagne.is_recrutement_open is defined %}
 					    <div class="form-group">
 						    <label class="control-label col-sm-3" for="statut">Recrutement</label>

@@ -45,13 +45,15 @@
     <tr>
       <th colspan="2" style="text-align: right">
         {% if is_mj %}
-        <a href="{{ path('perso_edit_mj', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i></a>
+          <a href="{{ path('perso_edit', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i></a>
           {% if perso.user_id is null %}
             <a href="{{ path('attach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Transférer"><i class="icon-share-alt"></i></a>
             <a href="{{ path('perso_pnj_del', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer le personnage"><i class="icon-remove-sign"></i></a>
+          {% else %}
+              <a href="{{ path('dettach', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Repasser en PNJ"><i class="icon-share-alt"></i></a>
           {% endif %}
         {% else %}
-        <a href="{{ path('perso_edit', {campagne_id: campagne_id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i> Editer</a>
+            <a href="{{ path('perso_edit', {campagne_id: campagne_id, perso_id: perso.id}) }}" class="btn btn-primary iconeBtn sidebarBtn" title="Editer"><i class="icon-edit"></i> Editer</a>
         {% endif %}
 
       </th>

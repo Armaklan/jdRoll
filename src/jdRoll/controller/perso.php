@@ -17,23 +17,12 @@
 	$persoController = $app['controllers_factory'];
 	$persoController->before($mustBeLogged);
 
-	$persoController->get('/edit/{campagne_id}', function($campagne_id) use($app) {
-		$player_id = $app['session']->get('user')['id'];
-		$is_mj = $app["campagneService"]->isMj($campagne_id);
-	    $perso = $app['persoService']->getPersonnage(false,$campagne_id, $player_id);
-        $cats = $app['persoService']->getAllPnjCat($campagne_id);
-	    return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
-	})->bind("perso_edit");
-
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-        if(! $is_mj) {
-            return $app->redirect($app->path('perso_view', ['campagne_id' => $campagne_id, 'perso_id' => $perso_id]));
-        }
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
-	})->bind("perso_edit_mj");
+	})->bind("perso_edit");
 
 	$persoController->get('/view/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
@@ -156,8 +145,25 @@
 		return $app->render('perso_attach_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'users' => $users]);
 	})->bind("attach");
 
+    $persoController->get('/detach/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+        $perso = $app['persoService']->getPersonnageById($perso_id);
+        var_dump($perso);
+        $app['persoService']->detachPersonnageById($campagne_id, $perso_id);
+        $hasNoPerso = $app['persoService']->getPersonnage(false, $campagne_id, $perso["user_id"]);
+        if($hasNoPerso == null) {
+            $user = $app['userService']->getById($perso['user_id']);
+            var_dump($user);
+            $app['persoService']->createPersonnage($campagne_id, $user["id"], $user["username"]);
+        }
+        return $app->redirect($app->path('perso_pnj', ['campagne_id' => $campagne_id]));
+    })->bind("dettach");
+
 	$persoController->post('/save_attach/{campagne_id}', function($campagne_id, Request $request) use($app) {
-		$perso = $app['persoService']->attachPersonnage($campagne_id, $request->get('user_id'), $request->get('perso_id'));
+        $campagne = $app['campagneService']->getCampagne($campagne_id);
+        if($campagne['is_multi_character'] == '0') {
+            $app['persoService']->detachPersonnage($campagne_id, $request->get('user_id'));
+        }
+		$app['persoService']->attachPersonnage($campagne_id, $request->get('user_id'), $request->get('perso_id'));
 		return $app->redirect($app->path('perso_pnj', ['campagne_id' => $campagne_id]));
 	})->bind("save_attach");
 

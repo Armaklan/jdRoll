@@ -12,7 +12,7 @@ BEGIN
 
     SELECT COUNT(*) INTO _exists
     FROM information_schema.TABLES
-    WHERE TABLE_SCHEMA = DATABASE() 
+    WHERE TABLE_SCHEMA = DATABASE()
     AND TABLE_NAME = 'version';
 
     RETURN _exists;
@@ -38,7 +38,7 @@ END$$
 DROP PROCEDURE IF EXISTS `coris_update`;$$
 CREATE PROCEDURE coris_update()
 BEGIN
-    
+
     IF VERSION_TABLE_EXISTS() = 0 THEN
 
         CREATE TABLE IF NOT EXISTS version (
@@ -608,7 +608,7 @@ BEGIN
           ADD CONSTRAINT `FK_NOTIF_01` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 
-        -- 
+        --
         -- Mise à jour de la version en base de donnée
         --
         INSERT INTO version (ID) VALUES (1);
@@ -618,11 +618,25 @@ END$$
 
 CALL coris_update();
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(2) = 0 THEN
+       -- Your update or alter
+      ALTER TABLE campagne
+      ADD `is_multi_character` int(1) NOT NULL DEFAULT '0';
+
+      INSERT INTO version (ID) VALUES (2);
+    END IF;
+END$$
+
+CALL jdroll_update();
+
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple
- 
-DROP PROCEDURE IF EXISTS `coris_update`;$$
-CREATE PROCEDURE coris_update()
+
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
 BEGIN
     -- FIXIT - Change XXXXX by version
     IF VERSION_EXISTS(XXXXX) = 0 THEN
@@ -632,6 +646,6 @@ BEGIN
     END IF;
 END$$
 
-CALL coris_update();
+CALL jdroll_update();
 
 */

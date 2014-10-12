@@ -52,15 +52,16 @@ class PersoService {
         $stmt->bindValue("campagne", $campagne_id);
         $stmt->bindValue("user", $user_id);
         $stmt->execute();
+        return $this->db->lastInsertId();
     }
 
     public function getPersonnage($createIfNotExist, $campagne_id, $user_id) {
         $sql = "SELECT * FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
 				where campagne_config.campagne_id = :campagne
 				AND 	user_id = :user";
-        $result = $this->db->fetchAssoc($sql, array("campagne" => $campagne_id, "user" => $user_id));
+        $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "user" => $user_id));
         if (empty($result)) {
-            $result['id'] = "";
+            return null;
         }
         return $result;
     }
@@ -272,8 +273,22 @@ class PersoService {
         $stmt->execute();
     }
 
+
+    public function detachPersonnageById($campagne_id, $perso_id) {
+        $sql = "UPDATE personnages
+				SET
+				user_id = NULL
+				WHERE
+				id = :perso
+				AND campagne_id = :campagne";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("perso", $perso_id);
+        $stmt->bindValue("campagne", $campagne_id);
+        $stmt->execute();
+    }
+
     public function attachPersonnage($campagne_id, $user_id, $perso_id) {
-        $this->detachPersonnage($campagne_id, $user_id);
 
         $sql = "UPDATE personnages
 				SET
