@@ -120,7 +120,7 @@ class PostContentService {
         $postSize = strlen($postTrim);
 
         $post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-        function ($matches) use ($is_mj,$login,$perso,$post,$postSize,$isThereAPrivateForMe){
+        function ($matches) use ($is_mj,$login,$persos,$post,$postSize,$isThereAPrivateForMe){
 
                 $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
                 $ret = '';
