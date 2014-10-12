@@ -238,8 +238,9 @@ $forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_i
 	$personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
+    $playerPersonnages = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
 	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post,
-			'error' => '', 'is_mj' => $is_mj, 'personnages' => $personnages]);
+			'error' => '', 'is_mj' => $is_mj, 'personnages' => $personnages, 'player_personnages' => $playerPersonnages]);
 })->bind("post_edit");
 
 $forumController->get('/{campagne_id}/post/deletePost/{topic_id}/{post_id}', function($campagne_id, $topic_id, $post_id) use($app) {
