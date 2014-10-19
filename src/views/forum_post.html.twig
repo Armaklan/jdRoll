@@ -30,7 +30,7 @@
             </select>
         </div>
         {% else %}
-            {% if player_personnages|length == 1 %}
+            {% if player_personnages|length <= 1 %}
                 <input type="hidden" name="perso_id" value="{{ post.perso_id }}" >
             {% elseif player_personnages|length > 1 %}
                 <div class="form-group">
