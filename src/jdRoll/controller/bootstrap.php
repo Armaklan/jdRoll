@@ -30,6 +30,7 @@
     }
 
     require("common.php");
+    require("admin.php");
     require("profile.php");
     require("secure_campagn.php");
     require("public_campagn.php");

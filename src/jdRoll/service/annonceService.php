@@ -21,5 +21,12 @@ class AnnonceService {
         return $this->db->fetchAll($sql, array());
     }
 
+    public function all() {;
+        $sql = "SELECT annonce.*
+                FROM annonce
+                ORDER BY create_date DESC";
+        return $this->db->fetchAll($sql, array());
+    }
+
 }
 

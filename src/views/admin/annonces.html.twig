@@ -1,0 +1,65 @@
+{% extends "squelette.html.twig" %}
+
+{% block specificEndJs %}
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/admin.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div ng-app="jdRoll.AdminApp">
+        <div ng-controller="AnnoncesController as AnnoncesCtrl">
+            <div style="text-align: right">
+                <a ng-click="AnnoncesCtrl.add()" class="btn btn-primary"><i class="icon-plus"></i></a>
+            </div>
+            <table class="table table-striped table-condensed">
+                <tr ng-repeat="annonce in AnnoncesCtrl.annonces">
+                    <td ng-bind="annonce.title"></td>
+                    <td ng-bind="annonce.create_date"></td>
+                    <td ng-bind="annonce.end_date"></td>
+                    <td>
+                        <a ng-click="AnnoncesCtrl.edit(annonce)" class="btn btn-link"><i class="icon-edit"></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <script type="text/ng-template" id="annonceModalContent.html">
+                <form class="form" novalidate>
+                <div class="modal-header">
+                    <h3 class="modal-title">Edition d'une annonce</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Titre</label>
+                        <input type="text" name="title" id="title" class="form-control" ng-model="ModalCtrl.annonce.title" ng-required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="create_date">Date de début</label>
+                        <p class="input-group">
+                            <input type="text"
+                                   name="create_date"
+                                   id="create_date"
+                                   class="form-control"
+                                   datepicker-popup="yyyy-mm-dd"
+                                   ng-model="ModalCtrl.annonce.create_date"
+                                   ng-required="true"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Date de fin</label>
+                        <input type="date" name="end_date" id="end_date" class="form-control" ng-model="ModalCtrl.annonce.end_date" ng-required="true"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="ModalCtrl.ok()">OK</button>
+                    <button class="btn btn-warning" ng-click="ModalCtrl.cancel()">Cancel</button>
+                </div>
+                </form>
+            </script>
+        </div>
+    </div>
+{% endblock %}
