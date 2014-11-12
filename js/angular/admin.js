@@ -49,14 +49,17 @@
         };
 
         this.add = function() {
-            openModal({});
+            openModal({
+                create_date : new Date().toISOString(),
+                end_date : new Date().toISOString()
+            });
         };
     };
 
     var modalController = function($modalInstance, AnnoncesService, annonce) {
 
         var toJsDate = function(mysqlDate) {
-          return new Date(mysqlDate).toISOString();
+          return new Date(mysqlDate.replace(' ', 'T')).toISOString();
         };
         this.annonce = annonce;
         this.annonce.create_date = toJsDate(this.annonce.create_date);
@@ -107,7 +110,7 @@
     };
 
     angular
-        .module('jdRoll.AdminApp', ['ui.bootstrap'])
+        .module('jdRoll.AdminApp', ['ui.bootstrap', 'ui.tinymce'])
         .controller('AnnoncesController', annoncesController)
         .controller('ModalAnnonceController', modalController)
         .service('AnnoncesService', annoncesService);

@@ -2,6 +2,7 @@
 
 {% block specificEndJs %}
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/admin.js"></script>
 {% endblock %}
 
@@ -68,6 +69,7 @@
                             </span>
                         </p>
                     </div>
+                    <textarea ui-tinymce ng-model="ModalCtrl.annonce.content"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" ng-click="ModalCtrl.ok()">OK</button>
@@ -78,4 +80,5 @@
         </div>
     </div>
 {% endblock %}
-
+
+

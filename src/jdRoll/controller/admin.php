@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
     Controller de chat
 */
 $adminController = $app['controllers_factory'];
+$adminController->before($mustBeAdmin);
 
 $adminController->get('/annonces', function() use($app) {
     return $app->render('admin/annonces.html.twig', []);

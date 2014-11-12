@@ -55,7 +55,7 @@ class AnnonceService {
 
     public function add($annonce) {
         $sql = "INSERT INTO annonce
-          create_date, end_date, title, content
+          (create_date, end_date, title, content)
           VALUES (
             :begin,
             :end,
