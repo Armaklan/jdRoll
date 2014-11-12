@@ -632,6 +632,48 @@ END$$
 
 CALL jdroll_update();
 
+
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(3) = 0 THEN
+
+        CREATE TABLE IF NOT EXISTS theme (
+          id int(11) NOT NULL AUTO_INCREMENT,
+          title varchar(50) NOT NULL,
+          odd_line_color varchar(10) DEFAULT NULL,
+          even_line_color varchar(10) DEFAULT NULL,
+          sidebar_color varchar(10) DEFAULT NULL,
+          link_color varchar(10) DEFAULT NULL,
+          link_sidebar_color varchar(8) NOT NULL,
+          text_color VARCHAR( 10 ) NULL,
+          dialogue_color VARCHAR( 10 ) NULL,
+          pensee_color VARCHAR( 10 ) NULL,
+          rp1_color VARCHAR( 10 ) NULL,
+          rp2_color VARCHAR( 10 ) NULL,
+          quote_color VARCHAR( 10 ) NULL,
+          PRIMARY KEY (id)
+        );
+
+        /* To insert theme
+
+INSERT INTO theme
+(title, odd_line_color, even_line_color, sidebar_color, link_color, link_sidebar_color, text_color, dialogue_color, pensee_color, rp1_color, rp2_color, quote_color)
+SELECT
+'Rouge Sang',
+odd_line_color, even_line_color, sidebar_color, link_color, link_sidebar_color, text_color, dialogue_color, pensee_color, rp1_color, rp2_color, quote_color
+ FROM campagne_config WHERE campagne_id = 3
+
+        */
+
+      INSERT INTO version (ID) VALUES (3);
+    END IF;
+END$$
+
+CALL jdroll_update();
+
+
+
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple
 

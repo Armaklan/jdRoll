@@ -30,6 +30,7 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
             $campagne = $app['campagneService']->getCampagne($campagne_id);
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $themes = $app['themeService']->all();
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
             $is_mj = $app["campagneService"]->isMj($campagne_id);
             $participants = $app["campagneService"]->getParticipant($campagne_id);
@@ -39,6 +40,7 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
                 'is_mj' => $is_mj,
                 'participants' => $participants,
                 'campagne' => $campagne,
+                'themes' => $themes,
                 'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
         })->bind("campagne_config_edit");
 

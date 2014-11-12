@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
     Page globale (Index, Authentification, ...)
@@ -195,6 +196,11 @@ $commonController->get('/stat', function() use ($app) {
         'feedback' => $feedback,
         'games_data' => $statGame]);
 })->bind("stat");
+
+$commonController->get('/themes/{id}', function($id) use($app) {
+    $data = $app['themeService']->byId($id);
+    return new JsonResponse($data, 200);
+});
 
 $app->mount('/', $commonController);
 

@@ -63,6 +63,14 @@ var themeService = (function () {
         $('.logo_campagne').css('background-image','url(' + value + ')');
     };
 
+    var getTheme = function(id) {
+        return $.ajax({
+            type: "GET",
+            url: BASE_PATH + "/themes/" + id,
+        });
+    };
+
+
     component.refresh = function() {
         updateOdd($('#odd_line_color').val());
         updateEven($('#even_line_color').val());
@@ -77,6 +85,24 @@ var themeService = (function () {
         updateHr();
         updateBann();
         updateQuote($('#quote_color').val());
+    };
+
+    component.apply = function() {
+        var id = $('#theme-choice').val();
+        getTheme(id).done(function(data){
+            $('#odd_line_color').val(data.odd_line_color);
+            $('#even_line_color').val(data.even_line_color);
+            $('#text_color').val(data.text_color);
+            $('#sidebar_color').val(data.sidebar_color);
+            $('#link_color').val(data.link_color);
+            $('#link_sidebar_color').val(data.link_sidebar_color);
+            $('#dialogue_color').val(data.dialogue_color);
+            $('#pensee_color').val(data.pensee_color);
+            $('#rp1_color').val(data.rp1_color);
+            $('#rp2_color').val(data.rp2_color);
+            $('#quote_color').val(data.quote_color);
+            component.refresh();
+        });
     };
 
     return component;
