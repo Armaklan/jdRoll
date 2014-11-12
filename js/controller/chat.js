@@ -52,7 +52,7 @@ var chatControllerImpl = function() {
 
 	function addScrollbar() {
 		if(scrollBar != true) {
-			//container.animate({scrollTop: container[0].scrollHeight},2000);
+			container[0].scrollTop = container[0].scrollHeight;
 			scrollBar = true;
 		}
 	}
