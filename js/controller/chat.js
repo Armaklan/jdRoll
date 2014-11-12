@@ -52,7 +52,7 @@ var chatControllerImpl = function() {
 
 	function addScrollbar() {
 		if(scrollBar != true) {
-			container.animate({scrollTop: container[0].scrollHeight},2000);
+			//container.animate({scrollTop: container[0].scrollHeight},2000);
 			scrollBar = true;
 		}
 	}
@@ -60,7 +60,7 @@ var chatControllerImpl = function() {
 	function getMessages() {
 		$.ajax({
 			type: 'GET',
-			url: BASE_PATH + '/chat/last', 
+			url: BASE_PATH + '/chat/last',
 			timeout: 5000,
 			data: {isFirst: isFirstLoad, lastId: lastMsgId}
 		}).
@@ -72,7 +72,7 @@ var chatControllerImpl = function() {
 					var content = $('#messageContent');
 
 					var isAutoScroll = isAutoScrollOn(content);
-				
+
 					lastMsgId = msg.last_id.trim();
 					lastMsg = msg.last_msg;
 
@@ -80,15 +80,15 @@ var chatControllerImpl = function() {
 						initialLoad();
 					} else {
 						appendMsg();
-						
+
 					}
 					deleteMsg(msg.deleted);
-					
+
 					scrollToBottom(isAutoScroll);
 					addScrollbar();
 
 					isFirstLoad = false;
-					
+
 				}
 		}).
 		always(function() {
@@ -184,7 +184,7 @@ var chatControllerImpl = function() {
 			getOnline();
 			window.setInterval(getOnline, 30000);
 		}
-		
+
 	}
 }
 

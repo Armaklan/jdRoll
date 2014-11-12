@@ -28,5 +28,51 @@ class AnnonceService {
         return $this->db->fetchAll($sql, array());
     }
 
+    public function byId($id) {
+        $this->logger->addInfo('By id ' . $id);
+        $sql = "SELECT annonce.*
+                FROM annonce
+                WHERE annonce.id = ?";
+        return $this->db->fetchAssoc($sql, array($id));
+    }
+
+    public function save($annonce) {
+        $sql = "UPDATE annonce
+                SET create_date = :begin,
+                end_date = :end,
+                title = :title,
+                content = :content
+                WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("begin", $annonce->create_date);
+        $stmt->bindValue("end", $annonce->end_date);
+        $stmt->bindValue("title", $annonce->title);
+        $stmt->bindValue("content", $annonce->content);
+        $stmt->bindValue("id", $annonce->id);
+        $stmt->execute();
+        return $this->byId($annonce->id);
+    }
+
+    public function add($annonce) {
+        $sql = "INSERT INTO annonce
+          create_date, end_date, title, content
+          VALUES (
+            :begin,
+            :end,
+            :title,
+            :content
+          )";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("begin", $annonce->create_date);
+        $stmt->bindValue("end", $annonce->end_date);
+        $stmt->bindValue("title", $annonce->title);
+        $stmt->bindValue("content", $annonce->content);
+        $stmt->execute();
+        return $this->byId($this->db->lastInsertId());
+    }
+
 }
+
+
 

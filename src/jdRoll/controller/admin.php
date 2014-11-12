@@ -24,8 +24,26 @@ $adminController->get('/annonces', function() use($app) {
 $adminController->get('/annonces/list', function() use($app) {
     $data = $app['annonceService']->all();
     return new JsonResponse($data, 200);
-})->bind("annonces_list");
+});
+
+$adminController->put('/annonces', function(Request $request) use($app) {
+    $data = json_decode($request->getContent());
+    $data = $app['annonceService']->save($data);
+    return new JsonResponse($data, 200);
+});
+
+$adminController->post('/annonces', function(Request $request) use($app) {
+    $data = json_decode($request->getContent());
+    $data = $app['annonceService']->add($data);
+    return new JsonResponse($data, 200);
+});
+
+
 
 $app->mount('/admin', $adminController);
 
 ?>
+
+
+
+
