@@ -51,7 +51,15 @@
           <br><i>Image affichée sur les barres de séparation (HR)</i>
         </div>
       </fieldset>
-
+      <fieldset class="titled-box">
+        <legend>Thème pré-existant</legend>
+        <select class="select2" style="min-width: 200px" id="theme-choice">
+          {% for theme in themes %}
+            <option value="{{theme.id}}">{{theme.title}}</option>
+          {% endfor %}
+        </select>
+        <a class="btn btn-primary" onclick="themeService.apply()">Appliquer le thème</a>
+      </fieldset>
       <fieldset class="titled-box">
         <legend>Couleurs Principales </legend>
         <div class="pull-right">
