@@ -89,7 +89,6 @@
         </td>
         <td>
           <span id="previewCell"></span>
-          <div class="alert alert-info">Les balises private, hide, popup, et pnj ne sont pas interprétées par cette prévisualisation</div>
         </td>
       </tr>
 			{% if topic.is_closed == 0 or is_mj %}
@@ -153,8 +152,10 @@
 									</select>
 								</div>
 							{% else %}
-                                {% if perso|length <= 1 %}
+                                {% if perso|length == 1 %}
                                     <input type="hidden" name="perso_id" value="{{ perso[0].id }}" >
+                                {% elseif perso|length == 0 %}
+                                    <input type="hidden" name="perso_id" value="" >
                                 {% elseif perso|length > 1 %}
                                     <div class="form-group">
                                         <label for="perso_id">Poster en tant que...</label>

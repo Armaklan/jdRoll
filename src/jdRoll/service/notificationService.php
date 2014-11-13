@@ -16,13 +16,15 @@ class NotificationService {
     private $topicService;
     private $campagneService;
     private $userService;
+    private $mailer;
 
-    public function __construct($db, $logger, $userService, $topicService, $campagneService) {
+    public function __construct($db, $logger, $userService, $topicService, $campagneService, $mailer) {
         $this->db = $db;
         $this->logger = $logger;
         $this->userService = $userService;
         $this->topicService = $topicService;
         $this->campagneService = $campagneService;
+        $this->mailer = $mailer;
     }
 
     public function getNotifForUser($user_id) {
@@ -105,10 +107,31 @@ class NotificationService {
         }
     }
 
+    public function insertNotifMp($user, $title, $content, $url, $type, $target_id) {
+        try {
+            $message = \Swift_Message::newInstance()
+                ->setSubject('[JdRoll] Notification - ' . $title)
+                ->setFrom(array('contact@jdroll.org'))
+                ->setTo(array($user['mail']))
+                ->setBody($content);
+
+            $this->mailer->send($message);
+        } catch(Exception $e) {
+            // Pas de mail, tant pis...
+        }
+
+    }
+
 	public function alertUserForMp($expediteur, $destinataires, $msgTitle, $url) {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
-			$this->insertNotif($user['id'], "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
+            if($user['notif_mp'] == 1) {
+			    $this->insertNotif($user['id'], "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
+            }
+
+            if($user['mail_mp'] == 1) {
+			    $this->insertNotifMp($user, "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
+            }
 		}
 	}
 
@@ -117,28 +140,68 @@ class NotificationService {
         $campagne = $this->campagneService->getCampagne($campagne_id);
 		$mj = $campagne['mj_id'];
 		if($mj != $user_id) {
-			$this->insertNotif($mj, "Modification de personnage - " . $campagne['name'], "Le personnage <a href='$urlMj'>"
-			   	. $perso['name'] . "</a> a été modifié.", $urlMj, 'PERSO', $campagne_id);
+            $user = $this->userService->getById($mj);
+
+            if($user['notif_perso'] == 1) {
+                $this->insertNotif($mj, "Modification de personnage - " . $campagne['name'], "Le personnage <a href='$urlMj'>"
+                    . $perso['name'] . "</a> a été modifié.", $urlMj, 'PERSO', $campagne_id);
+            }
+            if($user['mail_perso'] == 1) {
+			    $this->insertNotifMp($user, "Modification de personnage - " . $campagne['name'],
+			   	    "Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+            }
 		}
 		if($persoUser != $user_id) {
-			$this->insertNotif($persoUser, "Modification de personnage - " . $campagne['name'],
-			   	"Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+            $user = $this->userService->getById($persoUser);
+
+            if($user['notif_perso'] == 1) {
+			    $this->insertNotif($persoUser, "Modification de personnage - " . $campagne['name'],
+			   	    "Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+            }
+            if($user['mail_perso'] == 1) {
+			    $this->insertNotifMp($user, "Modification de personnage - " . $campagne['name'],
+			   	    "Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+            }
 		}
 	}
 
 	public function alertJoinCampagne($campagne, $joueur, $url) {
 		$user = $campagne['mj_id'];
+        $user_obj = $this->userService->getById($user);
 		$title = "Nouvelle inscription - " . $campagne['name'];
 		$content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>";
-		$this->insertNotif($user, $title, $content, $url, 'JOIN', 0);
+
+        if($user_obj['notif_inscription'] == 1) {
+		    $this->insertNotif($user, $title, $content, $url, 'JOIN', 0);
+        }
+        if($user_obj['mail_inscription'] == 1) {
+            $this->insertNotifMp($user_obj, $title, $content, $url, 'JOIN', 0);
+        }
 	}
 
 	public function alertQuitCampagne($campagne, $joueur, $url) {
 		$user = $campagne['mj_id'];
+        $user_obj = $this->userService->getById($user);
 		$title = "Désinscription - " . $campagne['name'];
 		$content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>";
-		$this->insertNotif($user, $title, $content, $url, 'QUIT', 0);
+
+        if($user_obj['notif_inscription'] == 1) {
+		    $this->insertNotif($user, $title, $content, $url, 'QUIT', 0);
+        }
+        if($user_obj['mail_inscription'] == 1) {
+		    $this->insertNotifMp($user_obj, $title, $content, $url, 'QUIT', 0);
+        }
 	}
+
+    public function insertNotifPost($user_id, $title, $content, $url, $type, $target_id) {
+        $user = $this->userService->getById($user_id);
+        if($user['notif_message'] == 1) {
+		    $this->insertNotif($user_id, $title, $content, $url, $type, $target_id);
+        }
+        if($user_obj['mail_message'] == 1) {
+		    $this->insertNotifMp($user, $title, $content, $url, $type, $target_id);
+        }
+    }
 
     public function alertPostInCampagne($user_id, $campagne_id, $topic_id, $url) {
         if($campagne_id != 0) {
@@ -153,24 +216,24 @@ class NotificationService {
                 // FIXIT Arma - Capitalisation
                 foreach($participants as $participant) {
                     if($user_id != $participant['id']) {
-                        $this->insertNotif($participant['id'], $title, $content, $url, 'MSG', $topic_id);
+                        $this->insertNotifPost($participant['id'], $title, $content, $url, 'MSG', $topic_id);
                     }
                 }
                 foreach($favoris as $participant) {
                     if($user_id != $participant['user_id']) {
-                        $this->insertNotif($participant['user_id'], $title, $content, $url, 'MSG', $topic_id);
+                        $this->insertNotifPost($participant['user_id'], $title, $content, $url, 'MSG', $topic_id);
                     }
                 }
             } else {
                 $participants = $this->topicService->getWhoCanRead($topic_id);
                 foreach($participants as $participant) {
                     if($user_id != $participant['user_id']) {
-                        $this->insertNotif($participant['user_id'], $title, $content, $url, 'MSG', $topic_id);
+                        $this->insertNotifPost($participant['user_id'], $title, $content, $url, 'MSG', $topic_id);
                     }
                 }
             }
             if($user_id != $campagne['mj_id']) {
-                $this->insertNotif($campagne['mj_id'], $title, $content, $url, 'MSG', $topic_id);
+                $this->insertNotifPost($campagne['mj_id'], $title, $content, $url, 'MSG', $topic_id);
             }
 
         }
