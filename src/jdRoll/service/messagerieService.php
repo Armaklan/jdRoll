@@ -64,7 +64,7 @@ class MessagerieService {
         $this->sendMessageWith($from_id, $from_username, $title, $content, $destinataires);
     }
 
-	    public function sendMessageToMailBox($title,$content, $destinataires) {
+	public function sendMessageToMailBox($title,$content, $destinataires) {
 
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
@@ -103,20 +103,6 @@ class MessagerieService {
         foreach ($destinataires as $destinaire) {
             $user = $this->userService->getByUsername($destinaire);
             $this->insertDestinataire($id, $user);
-
-            try {
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('[JdRoll] Notification de MP')
-                    ->setFrom(array('contact@jdroll.org'))
-                    ->setTo(array($user['mail']))
-                    ->setBody("Vous avez reçu un nouveau message privée de la partie de $from_username. \n Titre : $title.");
-
-                $this->mailer->send($message);
-            } catch (Exception $e) {
-                // Pas de mail, tant pis...
-            }
-
-
         }
     }
 
