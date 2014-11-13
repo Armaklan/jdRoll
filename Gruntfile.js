@@ -42,7 +42,6 @@ module.exports = function(grunt) {
                     'js/composant.min.js': [
                         'vendor/bootbox/bootbox.js',
                         'vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
-                        'vendor/magicsuggest/bin/magicsuggest-1.3.1-min.js',
                         'vendor/select2/select2.min.js',
                         'vendor/zeroclipboard/ZeroClipboard.min.js',
                         'js/bootstrap/bootstrap-fileupload.min.js',
