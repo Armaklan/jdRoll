@@ -175,7 +175,7 @@ $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic
 
 
 $forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $topic_id) use($app) {
-$campagne_id = getInterneCampagneNumber($campagne_id);
+    $campagne_id = getInterneCampagneNumber($campagne_id);
 	$posts = $app["postService"]->getAllPostsInTopic($topic_id);
 	$topic = $app["topicService"]->getTopic($topic_id);
 	$perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
@@ -200,6 +200,16 @@ $campagne_id = getInterneCampagneNumber($campagne_id);
 			"last_page" => $last_page, 'actual_page' => 0]);
 })->bind("topic_all");
 
+$forumController->post('/{campagne_id}/preview', function(Request $request, $campagne_id) use($app) {
+    $post = $request->get('content');
+    $campagne_id = getInterneCampagneNumber($campagne_id);
+    $perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
+    $is_mj = $app["campagneService"]->isMj($campagne_id);
+    $transformPost = ['post_content' => $post];
+    $app["postContentService"]->transformAllTag($transformPost,$perso,$is_mj,$campagne_id);
+    return new JsonResponse(array('content' => $transformPost['post_content']), 200);
+});
+
 $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($campagne_id, $topic_id, $no_page) use($app) {
 	$campagne_id = getInterneCampagneNumber($campagne_id);
 	$posts = $app["postService"]->getPostsInTopic($topic_id, $no_page);
@@ -218,7 +228,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
 		$default_perso = $config['default_perso_id'];
 	}
 	$last_page = $app["postService"]->getLastPageOfPost($topic_id);
-	
+
         if($campagne_id > 0) {
             foreach ($posts as &$post){
                      $app["postContentService"]->transformAllTag($post,$perso,$is_mj,$campagne_id);
