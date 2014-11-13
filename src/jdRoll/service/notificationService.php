@@ -202,8 +202,8 @@ class NotificationService {
         if($user['notif_message'] == 1) {
 		    $this->insertNotif($user_id, $title, $content, $url, $type, $target_id);
         }
-        if($user_obj['mail_message'] == 1) {
-		    $this->insertNotifMp($user_obj, $title, $content, 'http://www.jdroll.org' . $url, $type, $target_id);
+        if($user['mail_message'] == 1) {
+		    $this->insertNotifMp($user, $title, $content, 'http://www.jdroll.org' . $url, $type, $target_id);
         }
     }
 
