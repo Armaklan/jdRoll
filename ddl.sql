@@ -672,7 +672,26 @@ END$$
 
 CALL jdroll_update();
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(4) = 0 THEN
 
+      ALTER TABLE user
+      ADD `notif_mp` int(1) NOT NULL DEFAULT '1',
+      ADD `notif_inscription` int(1) NOT NULL DEFAULT '1',
+      ADD `notif_perso` int(1) NOT NULL DEFAULT '1',
+      ADD `notif_message` int(1) NOT NULL DEFAULT '1',
+      ADD `mail_mp` int(1) NOT NULL DEFAULT '0',
+      ADD `mail_inscription` int(1) NOT NULL DEFAULT '0',
+      ADD `mail_perso` int(1) NOT NULL DEFAULT '0',
+      ADD `mail_message` int(1) NOT NULL DEFAULT '1';
+
+      INSERT INTO version (ID) VALUES (4);
+    END IF;
+END$$
+
+CALL jdroll_update();
 
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple

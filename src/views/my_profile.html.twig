@@ -17,10 +17,10 @@
 			{% endif %}
 			<fieldset class="titled-box">
 				<legend>Mes informations</legend>
-				    
+
 				    <div class="pull-right">
 						<button type="submit" class="btn btn-primary">Valider</button>
-				    </div> 
+				    </div>
 				    <div class="form-group">
 					    <label class="control-label" for="login">Login</label>
 					    <input class="form-control" type="text" id="username" name="username" readonly="true" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
@@ -46,7 +46,7 @@
 				    </div>
 				    <div class="form-group">
 					    <label class="control-label" for="description">Votre description</label>
-					    <textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description" 
+					    <textarea input class="input-xxlarge wysiwyg" type="text" id="description" name="description"
 					    	 placeholder="Votre description" rows="10">{{ user['description'] }}</textarea>
 				    </div>
 
@@ -54,31 +54,61 @@
 			</form>
 		</div>
 
-{% if adminUser is not defined %}
+    {% if adminUser is not defined %}
 		<div class="col-md-4">
+
 		    <form role="form" action="{{ path('my_profile_passwd')  }}" method="POST">
-			<fieldset class="titled-box">
-			<legend>Modifier mon mot de passe</legend>
-				    <div class="pull-right">
-						<button type="submit" class="btn btn-danger">Valider</button>
-				    </div> 
-			    <div class="form-group">
-			    	<label class="control-label" for="password">Mot de passe</label>
-			    	<input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe">
-			    </div>
-			    <div class="form-group">
-				    <label class="control-label" for="password2">Mot de passe (ressaisir) </label>
-				    <input class="form-control"  type="password" id="password2" name="password2" placeholder="Mot de passe">
-			    </div>
-			    
-			</fieldset>
+          <fieldset class="titled-box">
+          <legend>Modifier mon mot de passe</legend>
+                <div class="pull-right">
+                <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+              <div class="form-group">
+                <label class="control-label" for="password">Mot de passe</label>
+                <input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="password2">Mot de passe (ressaisir) </label>
+                <input class="form-control"  type="password" id="password2" name="password2" placeholder="Mot de passe">
+              </div>
+
+          </fieldset>
+		    </form>
+      	<form role="form" action="{{ path('my_profile_cfg_save')  }}" method="POST">
+          <fieldset class="titled-box">
+          <legend>Configuration des notifications</legend>
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary">Valider</button>
+              </div>
+              <div class="form-group">
+                <p><label class="control-label">Notification de MP</label></p>
+                <input type="checkbox" id="notif_mp" name="notif_mp" {% if user['notif_mp'] %}checked="true"{% endif %}> Sur le site<br>
+                <input type="checkbox" id="mail_mp" name="mail_mp" {% if user['mail_mp'] %}checked="true"{% endif %}> Par mail
+              </div>
+              <div class="form-group">
+                <p><label class="control-label">Notification de message</label></p>
+                <input type="checkbox" id="notif_message" name="notif_message" {% if user['notif_message'] %}checked="true"{% endif %}> Sur le site<br>
+                <input type="checkbox" id="mail_message" name="mail_message" {% if user['mail_message'] %}checked="true"{% endif %}> Par mail
+              </div>
+              <div class="form-group">
+                <p><label class="control-label">Notification de modification de personnages</label></p>
+                <input type="checkbox" id="notif_perso" name="notif_perso" {% if user['notif_perso'] %}checked="true"{% endif %}> Sur le site<br>
+                <input type="checkbox" id="mail_perso" name="mail_perso" {% if user['mail_perso'] %}checked="true"{% endif %}> Par mail
+              </div>
+              <div class="form-group">
+                <p><label class="control-label">Notification d'inscription/désinscription</label></p>
+                <input type="checkbox" id="notif_inscription" name="notif_inscription" {% if user['notif_inscription'] %}checked="true"{% endif %}> Sur le site<br>
+                <input type="checkbox" id="mail_inscription" name="mail_inscription" {% if user['mail_inscription'] %}checked="true"{% endif %}> Par mail
+              </div>
+
+          </fieldset>
 		    </form>
 		</div>
+    {% endif %}
 	</div>
-{% endif %}
 <script>
-    
-        $(function () { 
+
+        $(function () {
 
         var nowTemp = new Date();
         var startDate = new Date(nowTemp.getFullYear()-90, 12, 0, 0, 0, 0, 0);
@@ -94,7 +124,7 @@
 		//dp.setValue({{ user['birthDate'] }});
 		dp.setEndDate(endDate);
 		dp.setStartDate(startDate);
-		
+
     });
 </script>
 {% endblock %}

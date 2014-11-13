@@ -26,6 +26,11 @@ $profileController->post('/save', function(Request $request) use($app) {
     return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("my_profile_save");
 
+$profileController->post('/save/cfg', function(Request $request) use($app) {
+    $user = $app["userService"]->updateCurrentConfig($request);
+    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
+})->bind("my_profile_cfg_save");
+
 $profileController->post('/passwd', function(Request $request) use($app) {
     $app["userService"]->changePassword($request);
     $user = $app["userService"]->getCurrentUser();
