@@ -113,7 +113,7 @@ class NotificationService {
                 ->setSubject('[JdRoll] Notification - ' . $title)
                 ->setFrom(array('contact@jdroll.org'))
                 ->setTo(array($user['mail']))
-                ->setBody($content);
+                ->setBody($content, 'text/html');
 
             $this->mailer->send($message);
         } catch(Exception $e) {
@@ -130,7 +130,7 @@ class NotificationService {
             }
 
             if($user['mail_mp'] == 1) {
-			    $this->insertNotifMp($user, "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='$url'>$msgTitle</a>", $url, 'MP', 0);
+			    $this->insertNotifMp($user, "Nouveau message privé", "$expediteur a envoyé un mp du titre de <a href='http://www.jdroll.org/$url'>$msgTitle</a>", $url, 'MP', 0);
             }
 		}
 	}
@@ -148,7 +148,7 @@ class NotificationService {
             }
             if($user['mail_perso'] == 1) {
 			    $this->insertNotifMp($user, "Modification de personnage - " . $campagne['name'],
-			   	    "Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+			   	    "Le personnage <a href='http://www.jdroll.org/$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
             }
 		}
 		if($persoUser != $user_id) {
@@ -160,7 +160,7 @@ class NotificationService {
             }
             if($user['mail_perso'] == 1) {
 			    $this->insertNotifMp($user, "Modification de personnage - " . $campagne['name'],
-			   	    "Le personnage <a href='$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
+			   	    "Le personnage <a href='http://www.jdroll.org/$urlPj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.", $urlPj, 'PERSO', $campagne_id);
             }
 		}
 	}
@@ -169,12 +169,14 @@ class NotificationService {
 		$user = $campagne['mj_id'];
         $user_obj = $this->userService->getById($user);
 		$title = "Nouvelle inscription - " . $campagne['name'];
-		$content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>";
+
 
         if($user_obj['notif_inscription'] == 1) {
+            $content = "$joueur s'est inscrit sur <a href='$url'>la partie.</a>";
 		    $this->insertNotif($user, $title, $content, $url, 'JOIN', 0);
         }
         if($user_obj['mail_inscription'] == 1) {
+            $content = "$joueur s'est inscrit sur <a href='http://www.jdroll.org/$url'>la partie.</a>";
             $this->insertNotifMp($user_obj, $title, $content, $url, 'JOIN', 0);
         }
 	}
@@ -183,12 +185,14 @@ class NotificationService {
 		$user = $campagne['mj_id'];
         $user_obj = $this->userService->getById($user);
 		$title = "Désinscription - " . $campagne['name'];
-		$content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>";
+
 
         if($user_obj['notif_inscription'] == 1) {
+            $content = "$joueur s'est désinscrit sur <a href='$url'>la partie.</a>";
 		    $this->insertNotif($user, $title, $content, $url, 'QUIT', 0);
         }
         if($user_obj['mail_inscription'] == 1) {
+            $content = "$joueur s'est désinscrit sur <a href='http://www.jdroll.org/$url'>la partie.</a>";
 		    $this->insertNotifMp($user_obj, $title, $content, $url, 'QUIT', 0);
         }
 	}
@@ -199,7 +203,7 @@ class NotificationService {
 		    $this->insertNotif($user_id, $title, $content, $url, $type, $target_id);
         }
         if($user_obj['mail_message'] == 1) {
-		    $this->insertNotifMp($user, $title, $content, $url, $type, $target_id);
+		    $this->insertNotifMp($user, $title, $content, 'http://www.jdroll.org/' . $url, $type, $target_id);
         }
     }
 
