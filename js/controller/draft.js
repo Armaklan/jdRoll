@@ -65,8 +65,18 @@ var draftControllerImpl = function() {
     function preview() {
         tinyMCE.triggerSave();
         var content = $("#content").val();
-        $("#previewCell").html(content);
-        $("tr#previewRow").removeClass("hide");
+        $.ajax({
+            type: "POST",
+            url: BASE_PATH + "/forum/" + CAMPAGNE_ID + "/preview",
+            data: {
+                content: content
+            },
+            success: function(msg){
+                $("#previewCell").html(msg.content);
+                $("tr#previewRow").removeClass("hide");
+            },
+            error: function(msg) {}
+        });
     }
 
     function ajaxEnreg() {
