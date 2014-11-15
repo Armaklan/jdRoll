@@ -54,7 +54,8 @@ class MessagerieService {
         $from_username = $request->get('from_username');
         $title = $request->get('title');
         $content = $request->get('content');
-        $destinataires = json_decode($request->get('to_usernames'));
+        $destinataires = $request->get('to_usernames');
+        $this->logger->addInfo("Destinataires : " . $destinataires);
         if($destinataires == null or count($destinataires) == 0) {
             throw new \Exception("Veuillez indiquer un destinataire");
         }

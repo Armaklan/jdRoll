@@ -76,9 +76,9 @@ $messagerieController->get('/new_to/{username}', function($username) use($app) {
 $messagerieController->post('/send', function(Request $request) use($app) {
         try {
             $message = $app['messagerieService']->sendMessage($request);
-        		$destinataires = json_decode($request->get('to_usernames'));
-				$app['notificationService']->alertUserForMp($app['session']->get('user')['login'], $destinataires, 
-						$request->get('title'), $app->path('messagerie'));
+        	$destinataires = $request->get('to_usernames');
+			$app['notificationService']->alertUserForMp($app['session']->get('user')['login'], $destinataires,
+                                                        $request->get('title'), $app->path('messagerie'));
             return $app->redirect($app->path('messagerie'));
         } catch (Exception $e) {
             $message = $app['messagerieService']->getFormMessage($request);
