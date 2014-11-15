@@ -66,14 +66,5 @@
         {% endif %}
     </table>
   </div>
-  <script>
 
-    $('#to').magicSuggest({
-      resultAsString: true,
-      width: 500,
-      value: [ {% autoescape false %} {{ message.to_usernames_form }} {% endautoescape %}],
-      data: '{{ list_username }}'
-    });
-
-  </script>
 {% endblock %}

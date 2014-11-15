@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/css/colorpicker.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/jquery-ui/themes/base/all.css" />
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/components-font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/components-font-awesome/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-fileupload.css" type="text/css" media="all">
   <link rel="stylesheet" href="{{app.request.baseUrl}}/css/datepicker.css" type="text/css" media="all">
@@ -36,7 +36,6 @@
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery-form/jquery.form.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery-ui/jquery-ui.min.js"></script>
 
@@ -105,8 +104,10 @@
 
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/tinymce-release/tinymce.min.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-shim.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-sham.min.js"> </script>
+  <!--[if lt IE 9]>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-shim.min.js"> </script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-sham.min.js"> </script>
+  <![endif]-->
 
 
 	<!-- UI Component -->
@@ -157,11 +158,7 @@
     {% endblock %}
 
 	<!-- Graph component -->
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.time.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.pie.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.navigate.min.js"></script>
-
+  <script type="text/javascript" src="{{app.request.baseUrl}}/js/flot.min.js"></script>
 
 <script type="text/javascript">
 

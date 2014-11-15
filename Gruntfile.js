@@ -46,6 +46,12 @@ module.exports = function(grunt) {
                         'vendor/zeroclipboard/ZeroClipboard.min.js',
                         'js/bootstrap/bootstrap-fileupload.min.js',
                         'js/bootstrap/bootstrap-datepicker.js'
+                    ],
+                    'js/flot.min.js': [
+                        'vendor/flot/jquery.flot.js',
+                        'vendor/flot/jquery.flot.time.js',
+                        'vendor/flot/jquery.flot.pie.js',
+                        'vendor/flot/jquery.flot.navigate.js'
                     ]
                 }
             }
