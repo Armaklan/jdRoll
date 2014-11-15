@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-php');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
@@ -46,16 +47,35 @@ module.exports = function(grunt) {
                         'vendor/zeroclipboard/ZeroClipboard.min.js',
                         'js/bootstrap/bootstrap-fileupload.min.js',
                         'js/bootstrap/bootstrap-datepicker.js'
+                    ],
+                    'js/flot.min.js': [
+                        'vendor/flot/jquery.flot.js',
+                        'vendor/flot/jquery.flot.time.js',
+                        'vendor/flot/jquery.flot.pie.js',
+                        'vendor/flot/jquery.flot.navigate.js'
                     ]
                 }
             }
+        },
+        cssmin: {
+          theme: {
+            files: {
+              'css/theme.min.css': [
+                  'vendor/bootstrap-colorpicker/css/colorpicker.css',
+                  'vendor/select2/select2.css',
+                  'css/bootstrap/*.css',
+                  'css/datepicker.css',
+                  'css/main.css'
+              ]
+            }
+          }
         }
 
     });
 
     grunt.registerTask('prepare', ['bower']);
     grunt.registerTask('dev', ['php']);
-    grunt.registerTask('dist', ['uglify']);
+    grunt.registerTask('dist', ['cssmin','uglify']);
     grunt.registerTask('default', ['php']);
 
 };

@@ -36,16 +36,14 @@ var formats = [{
 
 var configBase = {
     plugins: [
-        "link image lists preview hr insertdatetime",
-        "table template textcolor fullscreen",
-        "emoticons code spellchecker"
+        "link image lists hr",
+        "table textcolor fullscreen",
+        "emoticons code"
     ],
     content_css : BASE_PATH + "/css/main.css",
     browser_spellcheck: true,
     convert_urls: false,
-    spellchecker_languages: "+French=fr",
-    spellchecker_rpc_url: "/tinymce/plugins/spellchecker/rpc.php",
-    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons private hide popup perso perso2",
+    toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons private hide popup perso perso2",
     style_formats: formats,
     autosave_ask_before_unload: false,
     setup: function(editor) {
@@ -62,7 +60,7 @@ var configBase = {
                             classes: 'widget btn primary first abs-layout-item',
                             disabled: false,
                             onclick: function(e){
-                              
+
 								var find_src = '/editor/tagPrivate/' + CAMPAGNE_ID;
 								var items = [];
 								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").each(function() {
@@ -122,7 +120,7 @@ var configBase = {
                             classes: 'widget btn primary first abs-layout-item',
                             disabled: false,
                             onclick: function(e){
-                              
+
 								var find_src = '/editor/tagPerso/' + CAMPAGNE_ID;
 								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
 								editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + editor.selection.getContent() + "[/pnj]" );
@@ -144,8 +142,8 @@ configPost.selector = ".wysiwyg";
 
 var configMobile = jQuery.extend(true, {}, configBase);
 configMobile.plugins = [
-    "link image lists preview hr insertdatetime",
-    "table template textcolor fullscreen",
+    "link image lists hr",
+    "table textcolor fullscreen",
     "emoticons code"
 ];
 configMobile.toolbar = "paste | styleselect removeformat | bold italic | hr | link image | code";
@@ -154,7 +152,7 @@ configMobile.min_height = 400;
 configMobile.selector = ".wysiwyg";
 
 var configNote = jQuery.extend(true, {}, configBase);
-configNote.toolbar = "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | preview fullscreen | emoticons",
+configNote.toolbar = "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons";
 configNote.min_height = 160;
 configNote.selector = ".note-wysiwyg";
 
