@@ -546,10 +546,24 @@ ul.nav-tabs li.active {
 	font-size:20px;
 	text-align:center;
 	border:none !important;
-	
+
 }
 
 .Select2DropDownEditor
 {
 	border:none;
+}
+
+.post_name {
+    margin-bottom: 0px;
+}
+
+.post_user_title {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.post_info {
+    font-size: 0.85em;
+    margin-bottom: 0px;
 }

@@ -35,16 +35,16 @@
 				<tr>
 					<td>
 						{% if post.perso_name != null %}
-							<p><a onClick="persoModalService.openPerso({{campagne_id}}, {{post.perso_id}})"><b>{{ post.perso_name }}</b></a></p>
-                            <p><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><i>( {{ post.user_username }} )</i></a></p>
-							<p><i>{{ post.post_date }}</i></p>
-                            <p style="font-size: 0.8em">{{post.perso_concept}}</p>
-							<img src="{{ post.perso_avatar }}" width="80%" />
+							<p class="post_name"><a onClick="persoModalService.openPerso({{campagne_id}}, {{post.perso_id}})"><b>{{ post.perso_name }}</b></a></p>
+              <p class="post_user_title">{{post.perso_concept}}</p>
+							<p class="post_info"><i>Le {{ post.post_date|date("d/m/y H:i") }}</i></p>
+              <p class="post_info">Par <a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><i>{{ post.user_username }}</i></a></p>
+							<img src="{{ post.perso_avatar }}" width="80%" class="img-rounded"/>
 						{% elseif  post.user_username != null %}
-                            <p><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><b>{{ post.user_username }}</b></a></p>
-							<p><i>Le {{ post.post_date }}</i></p>
-                            <p style="font-size: 0.9em"><i>{{post.user_titre}}</i></p>
-							<img src="{{ post.user_avatar }}" width="80%" />
+              <p class="post_name"><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><b>{{ post.user_username }}</b></a></p>
+              <p class="post_user_title"><i>{{post.user_titre}}</i></p>
+							<p class="post_info"><i>Le {{ post.post_date|date("d/m/y H:i") }}</i></p>
+							<img src="{{ post.user_avatar }}" width="80%" class="img-rounded"/>
 						{% endif %}
 					</td>
 					<td>
@@ -63,23 +63,23 @@
 						<a name="post{{ post.post_id }}"></a>
 					</td>
 					<td style="text-align: right">
-						<div class="btn-group btn-group-sm">
-							<a title="Quote" class="btn btn-sm btn-default iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
+						<div class="btn-group btn-group-xs">
+							<a title="Quote" class="btn btn-xs btn-default iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
 							{% if is_mj or (post.user_id == app.session.get('user')['id']) %}
 								{% if post.user_id != null %}
 									<a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
-									title="Editer" class="btn btn-sm btn-primary iconeBtn"><i class="icon-edit"></i></a>
+									title="Editer" class="btn btn-xs btn-primary iconeBtn"><i class="icon-edit"></i></a>
 								{% endif %}
 
 							{% endif %}
 							{% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
 								<a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
-									title="Supprimer" class="btn btn-sm btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+									title="Supprimer" class="btn btn-xs btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
 							{% endif %}
 						</div>
 						<a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
 						<a title="Aller au début de la page" href="#top"><i class="icon-double-angle-up"></i></a>
-                                                <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
+            <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
 
 					</td>
 				</tr>
