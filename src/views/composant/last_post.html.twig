@@ -1,16 +1,18 @@
 	<table class="well table table-striped messageTable" width="100%">
 		<tr>
-			<th colspan="2" style="text-align: center">Derniers posts sur le forum</th>
+			<th colspan="3" style="text-align: center">Derniers posts sur le forum</th>
 		</tr>
-		{% for line in last_posts %} 
+		{% for line in last_posts %}
 			<tr>
 					<td>Dans <a href="{{ path('topic', {campagne_id : 0, topic_id : line.topics_id}) }}#post{{ line.posts_id }}">{{ line.section_title }} > {{ line.topics_title }}</a></td>
-					<td width="30%">
+					<td width="20%">
 						{% if line.posts_date != null %}
-						Par {{ line.user_username }}
-						Le {{ line.posts_date|date("d/m") }}
-						{% endif %}  		
-					</td>
+						  Par {{ line.user_username }}
+            {% endif %}
+          </td>
+          <td width="20%">
+            Le {{ line.posts_date|date("d/m/Y H:i") }}
+          </td>
 			</tr>
 		{% endfor %}
 	</table>

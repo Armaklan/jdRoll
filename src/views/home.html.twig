@@ -27,6 +27,13 @@
         </div>
     </div>
 {% endif %}
+
+{% if app.session.get('user') != null %}
+  <div class="col-xs-12">
+      {% include('composant/last_post.html.twig') %}
+  </div>
+{% endif %}
+{% if app.session.get('user') == null %}
 <div class="row well">
   <div class="col-md-4">
     <h2>Du choix</h2>
@@ -52,6 +59,7 @@
   <p><a class="btn btn-primary" href="{{path('about')}}">Plus d'information &raquo;</a></p>
 </div>
 </div>
+{% endif %}
 <div class="row">
   <div class="col-md-4 col-md-offset-1 game-carousel">
     {{ include('composant/partie_carrousel.html.twig') }}
@@ -106,6 +114,5 @@
 
 {% set tchatfull = false %}
 {% include('chat/chatbox.html.twig') %}
-
 
 {% endblock %}
