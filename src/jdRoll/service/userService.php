@@ -148,6 +148,10 @@ class UserService {
 			throw new \Exception("Les mots de passes ne correspondent pas");
 		}
 
+        if($request->get('password') === "") {
+			throw new \Exception("Le mot de passe ne peut pas être vide.");
+		}
+
 		$sql = "UPDATE user
 				SET
 					password = :password

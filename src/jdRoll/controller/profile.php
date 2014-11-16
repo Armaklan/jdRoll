@@ -32,9 +32,14 @@ $profileController->post('/save/cfg', function(Request $request) use($app) {
 })->bind("my_profile_cfg_save");
 
 $profileController->post('/passwd', function(Request $request) use($app) {
-    $app["userService"]->changePassword($request);
+    $error = "";
+    try {
+        $app["userService"]->changePassword($request);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
     $user = $app["userService"]->getCurrentUser();
-    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
+    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => $error]);
 })->bind("my_profile_passwd");
 
 $profileController->get('/absences', function() use($app) {
