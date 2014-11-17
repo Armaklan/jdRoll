@@ -29,9 +29,11 @@
 {% endif %}
 
 {% if app.session.get('user') != null %}
+<div class="row">
   <div class="col-xs-12">
       {% include('composant/last_post.html.twig') %}
   </div>
+</div>
 {% endif %}
 {% if app.session.get('user') == null %}
 <div class="row well">
