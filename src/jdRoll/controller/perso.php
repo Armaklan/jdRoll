@@ -17,8 +17,64 @@
 	$persoController = $app['controllers_factory'];
 	$persoController->before($mustBeLogged);
 
+    function getWidgets($app, $campagne_id, $persoWidgets) {
+        $config = $app["campagneService"]->getCampagneConfig($campagne_id);
+        $config['widgets'] = json_decode($config['widgets']);
+        $widgets = $config['widgets'];
+        foreach($widgets as &$widget) {
+            $found = false;
+            foreach($persoWidgets as $persoWidget) {
+                if($persoWidget->id == $widget->id) {
+                    if($widget->type == 'jauge') {
+                        $widget->up = $persoWidget->up;
+                        $widget->low = $persoWidget->low;
+                    }
+                    $widget->value = $persoWidget->value;
+                    $found = true;
+                }
+            }
+            if(!$found) {
+                if($widget->type == 'jauge') {
+                    $widget->up = 0;
+                    $widget->low = 0;
+                }
+                $widget->value = 0;
+            }
+        }
+        return $widgets;
+    }
+
+    function getWidgetsFromRequest($app, $campagne_id, $request) {
+        $config = $app["campagneService"]->getCampagneConfig($campagne_id);
+        $widgets = json_decode($config['widgets']);
+        foreach($widgets as &$widget) {
+            $found = false;
+            $index = 0;
+            foreach($request->get('widgetid') as $persoWidget) {
+                if($persoWidget == $widget->id) {
+                    if($widget->type == 'jauge') {
+                        $widget->up = $request->get('widgetup')[$index];
+                        $widget->low = $request->get('widgetlow')[$index];
+                    }
+                    $widget->value = $request->get('widgetvalue')[$index];
+                    $found = true;
+                }
+                $index = $index + 1;
+            }
+            if(!$found) {
+                if($widget->type == 'jauge') {
+                    $widget->up = 0;
+                    $widget->low = 0;
+                }
+                $widget->value = 0;
+            }
+        }
+        return $widgets;
+    }
+
 	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
+        $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
@@ -69,12 +125,14 @@
 	$persoController->post('/save/{campagne_id}', function($campagne_id, Request $request) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
+
 		$perso_id = $request->get('perso_id');
 		try {
 			if ($perso_id != "") {
-
-	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request);
+                $widgets = getWidgetsFromRequest($app, $campagne_id, $request);
+	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request, $widgets);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
+                $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
 	    		if ($perso["user_id"] != null) {
 					$app["notificationService"]->alertModifPerso(
 						$app['session']->get('user')['id'],
@@ -84,17 +142,18 @@
 						$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
 					);
 				}
-
                 $cats = $app['persoService']->getAllPnjCat($campagne_id);
-	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
+	    		return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats, 'config' => $config]);
 			} else {
-				$app['persoService']->insertPNJ($campagne_id, $request);
+                $widgets = getWidgetsFromRequest($app, $campagne_id, $request);
+				$app['persoService']->insertPNJ($campagne_id, $request, $widgets);
 				return $app->redirect($app->path('perso_pnj', ['campagne_id' => $campagne_id]));
 			}
 		} catch(Exception $e) {
 			$perso = $app['persoService']->getPersonnageById($perso_id);
+            $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
             $cats = $app['persoService']->getAllPnjCat($campagne_id);
-			return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'cats' => $cats]);
+			return $app->render('perso_form.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'cats' => $cats, 'config' => $config]);
 		}
 	})->bind("perso_save");
 
@@ -112,6 +171,7 @@
 		$perso = $app['persoService']->getBlankPnj($campagne_id);
         $config = $app['campagneService']->getCampagneConfig($campagne_id);
         $perso['technical'] = $config['template'];
+        $perso['widgets'] = getWidgets($app, $campagne_id,[]);
         $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso_form.html.twig', [
             'campagne_id' => $campagne_id,

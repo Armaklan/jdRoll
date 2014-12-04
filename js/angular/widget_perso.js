@@ -16,7 +16,10 @@
         function add(type) {
             vm.widgets.push({
                 id: guid(),
-                type: type
+                type: type,
+                up: 0,
+                low: 0,
+                value: 0
             });
         }
 
