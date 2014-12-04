@@ -140,6 +140,20 @@ class CampagneService {
     	$stmt->execute();
     }
 
+    public function updateWidgetsConfig($campagne, $widgets) {
+    	$sql = "UPDATE campagne_config
+    			SET
+    			widgets = :widgets
+    			WHERE
+    			campagne_id = :campagne";
+    	$stmt = $this->db->prepare($sql);
+    	$stmt->bindValue("campagne", $campagne);
+        $stmt->bindValue("widgets", $widgets);
+    	$stmt->execute();
+    }
+
+
+
     public function updateCampagneConfigTheme($request) {
     	$sql = "UPDATE campagne_config
     			SET

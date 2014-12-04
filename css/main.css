@@ -579,3 +579,7 @@ div.progress-bar {
     font-size: 9px;
     padding-bottom: 2px;
 }
+
+.ng-invalid {
+    border-color: red;
+}
