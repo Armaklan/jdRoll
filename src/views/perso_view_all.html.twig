@@ -129,6 +129,26 @@
       </td>
     </tr>
 
+
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+              <a data-toggle="collapse" data-target="#widgets" class="collapserLink">
+                  <i class="icon-chevron-sign-down"></i>
+                Information rapide
+              </a>
+            </td>
+          </tr>
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+                <div class="topics collapse in" id="widgets">
+                    {% for widget in perso.widgets %}
+                        {% include('composant/perso_widget.html.twig') %}
+                    {% endfor %}
+                    </table>
+                </div>
+            </td>
+          </tr>
+
     {% if perso.template_html is not empty %}
     <tr>
       <td colspan="2">

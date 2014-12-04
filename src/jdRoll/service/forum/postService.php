@@ -110,7 +110,8 @@ class PostService {
     				perso.id AS perso_id,
     				perso.name AS perso_name,
                     perso.concept AS perso_concept,
-                    perso.avatar AS perso_avatar
+                    perso.avatar AS perso_avatar,
+                    perso.widgets AS perso_widgets
     			FROM posts post
     			JOIN topics topic
     				ON topic.id = post.topic_id
@@ -122,9 +123,13 @@ class PostService {
     			ORDER BY post.id ASC
     			";
 
-    	return $this->db->fetchAll($sql,
-    			array("topic" => $topic_id)
-    		);
+    	$result = $this->db->fetchAll($sql,
+    		array("topic" => $topic_id)
+    	);
+        foreach ($result as &$row){
+            $row['perso_widgets'] = json_decode($row['perso_widgets']);
+        }
+        return $result;
     }
 
     public function getPostsInTopic($topic_id, $page) {
@@ -143,7 +148,8 @@ class PostService {
     				perso.id AS perso_id,
     				perso.name AS perso_name,
                     perso.concept AS perso_concept,
-                    perso.avatar AS perso_avatar
+                    perso.avatar AS perso_avatar,
+                    perso.widgets AS perso_widgets
     			FROM posts post
     			JOIN topics topic
     				ON topic.id = post.topic_id
@@ -156,9 +162,13 @@ class PostService {
     			LIMIT ". $debutPage . ", " . $this->page_size . ") AS posts
                 ORDER BY post_id ASC";
 
-    	return $this->db->fetchAll($sql,
-    			array("topic" => $topic_id)
-    		);
+    	$result = $this->db->fetchAll($sql,
+    		array("topic" => $topic_id)
+    	);
+        foreach ($result as &$row){
+            $row['perso_widgets'] = json_decode($row['perso_widgets']);
+        }
+        return $result;
     }
 
 

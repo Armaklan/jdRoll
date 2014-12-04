@@ -67,9 +67,10 @@ class PersoService {
     }
 
     public function getPersonnageById($perso_id) {
-        $sql = "SELECT * FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
+        $sql = "SELECT *, personnages.widgets as perso_widgets FROM personnages inner join campagne_config on personnages.campagne_id = campagne_config.campagne_id
 				where id = :perso";
         $result = $this->db->fetchAssoc($sql, array("perso" => $perso_id));
+        $result['widgets'] = json_decode($result['perso_widgets']);
         return $result;
     }
 
@@ -81,6 +82,9 @@ class PersoService {
 				AND 	personnages.user_id IS NOT NULL
                                 ";
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+        foreach ($result as &$perso){
+            $perso['widgets'] = json_decode($perso['widgets']);
+        }
         return $result;
     }
 
@@ -131,18 +135,18 @@ class PersoService {
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "is_mj" => $is_mj));
         return $result;
     }
-	
+
 	public function getPNJInCampagneByName($campagne_id,$name)
 	{
-		$sql = "SELECT id 
-				from personnages 
-				where 
-					personnages.name = :name 
-						and 
+		$sql = "SELECT id
+				from personnages
+				where
+					personnages.name = :name
+						and
 						personnages.campagne_id = :campagne";
 		$result = $this->db->fetchColumn($sql, array("name" => $name, "campagne" => $campagne_id));
 		return $result;
-	
+
 	}
 
     public function getAllPersonnagesInCampagne($campagne_id) {
@@ -155,7 +159,7 @@ class PersoService {
         return $result;
     }
 
-    public function updatePersonnage($campagne_id, $perso_id, $request) {
+    public function updatePersonnage($campagne_id, $perso_id, $request, $widgets) {
 
         $sql = "UPDATE personnages
 				SET
@@ -167,9 +171,10 @@ class PersoService {
 				technical = :technical,
 				perso_fields = :perso_fields,
 				statut = :statut,
-                cat_id = :cat_id
+                cat_id = :cat_id,
+                widgets = :widgets
 				WHERE
-					campagne_id = :campagne
+				campagne_id = :campagne
 				AND id = :perso";
 
         $stmt = $this->db->prepare($sql);
@@ -187,6 +192,7 @@ class PersoService {
 		//$stmt->bindValue("cat_id", NULL);
 		//else
 		$stmt->bindValue("cat_id", $request->get('cat_id'));
+        $stmt->bindValue("widgets", json_encode($widgets));
 
         $stmt->execute();
     }
@@ -221,12 +227,12 @@ class PersoService {
     }
 
 
-    public function insertPNJ($campagne_id, $request) {
+    public function insertPNJ($campagne_id, $request, $widgets) {
 
         $sql = "INSERT INTO personnages
-				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id, statut, cat_id,perso_fields)
+				(name, avatar, concept, publicDescription, privateDescription, technical, campagne_id, statut, cat_id,perso_fields, widgets)
 				VALUES
-				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne, :statut, :cat_id,:perso_fields)";
+				(:name, :avatar, :concept, :publicDescription, :privateDescription, :technical, :campagne, :statut, :cat_id,:perso_fields, :widgets)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("campagne", $campagne_id);
@@ -239,6 +245,7 @@ class PersoService {
         $stmt->bindValue("statut", $request->get('statut'));
         $stmt->bindValue("cat_id", $request->get('cat_id'));
 		$stmt->bindValue("perso_fields",$request->get('hiddenInputFields'));
+        $stmt->bindValue("widgets", json_encode($widgets));
         $stmt->execute();
     }
 

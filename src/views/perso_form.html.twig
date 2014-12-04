@@ -164,6 +164,52 @@ $(function() {
             </td>
           </tr>
 
+
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+              <a data-toggle="collapse" data-target="#widgets" class="collapserLink">
+                  <i class="icon-chevron-sign-down"></i>
+                Information rapide
+              </a>
+            </td>
+          </tr>
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+                <div class="topics collapse in" id="widgets">
+                    <table class="table table-condensed table-stripped">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Valeur</th>
+                        <th>Minimum</th>
+                        <th>Maximum</th>
+                    </tr>
+                    {% set row = 0 %}
+                    {% for widget in perso.widgets %}
+                        <tr>
+                            <td>
+                            {{widget.name}}
+                            <input type="hidden" name="widgetname[{{row}}]" value="{{widget.value}}" />
+                            <input type="hidden" name="widgetid[{{row}}]" value="{{widget.id}}" />
+                            </td>
+                            <td>
+                                <input type="text" name="widgetvalue[{{row}}]" value="{{widget.value}}" />
+                            </td>
+                            <td>
+                                <input {% if widget.type == 'jauge' %} type="text" {% else %} type="hidden" {% endif %} name="widgetlow[{{row}}]" value="{{widget.low}}" />
+                            </td>
+                            <td>
+                                <input {% if widget.type == 'jauge' %} type="text" {% else %} type="hidden" {% endif %} name="widgetup[{{row}}]" value="{{widget.up}}" />
+                            </td>
+                        </tr>
+                        {% set row = row + 1 %}
+                    {% endfor %}
+                    </table>
+                </div>
+            </td>
+          </tr>
+
+
+
           {% if perso.template_html is not empty %}
           <tr>
             <td colspan="2">

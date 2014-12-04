@@ -54,6 +54,14 @@ $securedCampagneController->post('/config/save', function(Request $request) use(
             }
         })->bind("campagne_config_save");
 
+$securedCampagneController->post('/{campagne}/perso_widgets', function(Request $request, $campagne) use($app) {
+            try {
+                $app['campagneService']->updateWidgetsConfig($campagne, $request->getContent());
+                return new JsonResponse("");
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage(),500);
+            }
+        });
 
 $securedCampagneController->get('/join/{id}', function($id) use($app) {
             try {

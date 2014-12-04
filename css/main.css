@@ -567,3 +567,19 @@ ul.nav-tabs li.active {
     font-size: 0.85em;
     margin-bottom: 0px;
 }
+
+.progress {
+    height: 15px;
+    margin-bottom: 10px;
+    width: 98%;
+    background-image: linear-gradient(to bottom, #C1C1C1 0px, #DADADA 100%)
+}
+
+div.progress-bar {
+    font-size: 9px;
+    padding-bottom: 2px;
+}
+
+.ng-invalid {
+    border-color: red;
+}

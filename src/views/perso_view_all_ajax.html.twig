@@ -1,9 +1,9 @@
 <script type='text/javascript'>
   $(function() {
 
-    initFDP($('#zoneFicheCustom'),false);
+    initFDP($('#zoneFicheCustomAjax'),false);
 
-    $('#zoneFicheCustom .editable').editable('toggleDisabled');
+    $('#zoneFicheCustomAjax .editable').editable('toggleDisabled');
 
     $('.ui-resizable-handle').remove();
   });
@@ -69,6 +69,7 @@
       <td><img src="{{ perso.avatar }}" width="150px" /></td>
     </tr>
 
+    {% if perso.publicDescription != "" %}
     <tr>
       <td colspan="2">
         <a data-toggle="collapse" data-target="#public" class="collapserLink">
@@ -84,7 +85,9 @@
         </div>
       </td>
     </tr>
+    {% endif %}
 
+    {% if perso.privateDescription != "" %}
     <tr>
       <td  colspan="2">
         <a data-toggle="collapse" data-target="#private" class="collapserLink">
@@ -100,7 +103,9 @@
         </div>
       </td>
     </tr>
+    {% endif %}
 
+    {% if perso.technical != "" %}
     <tr>
       <td colspan="2">
         <a data-toggle="collapse" data-target="#technical" class="collapserLink">
@@ -124,6 +129,26 @@
         </div>
       </td>
     </tr>
+    {% endif %}
+
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+              <a data-toggle="collapse" data-target="#widgets" class="collapserLink">
+                  <i class="icon-chevron-sign-down"></i>
+                Information rapide
+              </a>
+            </td>
+          </tr>
+          <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
+            <td colspan="2">
+                <div class="topics collapse in" id="widgets">
+                    {% for widget in perso.widgets %}
+                        {% include('composant/perso_widget.html.twig') %}
+                    {% endfor %}
+                    </table>
+                </div>
+            </td>
+          </tr>
 
     {% if perso.template_html is not empty %}
     <tr>
@@ -140,7 +165,7 @@
           <div class="form-horizontal" id="FakeTD">
             <div id='zoneFiche'>
               <div>
-                <div class="ui-layout-center" id='zoneFicheCustom'>
+                <div class="ui-layout-center" id='zoneFicheCustomAjax'>
                   {% autoescape false %}{{ perso.template_html }}{% endautoescape %}
                   {% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
                   {% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
