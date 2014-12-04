@@ -699,7 +699,7 @@ BEGIN
     IF VERSION_EXISTS(5) = 0 THEN
 
       ALTER TABLE `personnages` ADD `widgets` MEDIUMTEXT NOT NULL;
-      ALTER TABLE `campagne_config` ADD `widgets` MEDIUMTEXT NOT NULL;
+      ALTER TABLE `campagne_config` ADD `widgets` MEDIUMTEXT NOT NULL DEFAULT '[]';
 
       INSERT INTO version (ID) VALUES (5);
     END IF;
