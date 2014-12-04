@@ -693,6 +693,20 @@ END$$
 
 CALL jdroll_update();
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(5) = 0 THEN
+
+      ALTER TABLE `personnages` ADD `widgets` MEDIUMTEXT NOT NULL;
+      ALTER TABLE `campagne_config` ADD `widgets` MEDIUMTEXT NOT NULL;
+
+      INSERT INTO version (ID) VALUES (5);
+    END IF;
+END$$
+
+CALL jdroll_update();
+
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple
 

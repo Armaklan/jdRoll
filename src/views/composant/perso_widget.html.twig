@@ -1,0 +1,27 @@
+
+                {% if widget.type == "jauge" %}
+                <div class="jauge">
+                    <center><b>{{ widget.name }}</b></center>
+                    <div class="progress">
+                      <div class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="{{ widget.value }}"
+                      aria-valuemin="{{ widget.low }}"
+                      aria-valuemax="{{ widget.up }}"
+                      style="width: {{ (100 * (widget.value - widget.low) ) / (widget.up - widget.low) }}%;">
+                        {{ widget.value }} / {{ widget.up }}
+                      </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if widget.type == "token" %}
+                <div class="token">
+                    <center><b>{{ widget.name }}</b></center>
+                    <center><p>
+                    {% for i in 0..widget.value %}
+                        <span class="icon-circle"></span>
+                    {% endfor %}</p>
+                    </center>
+                </div>
+                {% endif %}

@@ -1,9 +1,9 @@
 <script type='text/javascript'>
   $(function() {
 
-    initFDP($('#zoneFicheCustom'),false);
+    initFDP($('#zoneFicheCustomAjax'),false);
 
-    $('#zoneFicheCustom .editable').editable('toggleDisabled');
+    $('#zoneFicheCustomAjax .editable').editable('toggleDisabled');
 
     $('.ui-resizable-handle').remove();
   });
@@ -140,7 +140,7 @@
           <div class="form-horizontal" id="FakeTD">
             <div id='zoneFiche'>
               <div>
-                <div class="ui-layout-center" id='zoneFicheCustom'>
+                <div class="ui-layout-center" id='zoneFicheCustomAjax'>
                   {% autoescape false %}{{ perso.template_html }}{% endautoescape %}
                   {% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
                   {% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}

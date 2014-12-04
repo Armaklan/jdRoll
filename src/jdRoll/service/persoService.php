@@ -81,6 +81,9 @@ class PersoService {
 				AND 	personnages.user_id IS NOT NULL
                                 ";
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id));
+        foreach ($result as &$perso){
+            $perso['widgets'] = json_decode($perso['widgets']);
+        }
         return $result;
     }
 
@@ -131,18 +134,18 @@ class PersoService {
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "is_mj" => $is_mj));
         return $result;
     }
-	
+
 	public function getPNJInCampagneByName($campagne_id,$name)
 	{
-		$sql = "SELECT id 
-				from personnages 
-				where 
-					personnages.name = :name 
-						and 
+		$sql = "SELECT id
+				from personnages
+				where
+					personnages.name = :name
+						and
 						personnages.campagne_id = :campagne";
 		$result = $this->db->fetchColumn($sql, array("name" => $name, "campagne" => $campagne_id));
 		return $result;
-	
+
 	}
 
     public function getAllPersonnagesInCampagne($campagne_id) {
