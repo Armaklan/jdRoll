@@ -18,10 +18,16 @@
                 {% if widget.type == "token" %}
                 <div class="token">
                     <center><b>{{ widget.name }}</b></center>
-                    <center><p>
-                    {% for i in 1..widget.value %}
-                        <span class="icon-circle"></span>
-                    {% endfor %}</p>
+                    <center>
+                        <p>
+                        {% if widget.value == 0 %}
+                            <i>Aucun</i>
+                        {% else %}
+                            {% for i in 1..widget.value %}
+                                <span class="icon-circle"></span>
+                            {% endfor %}
+                        {% endif %}
+                        </p>
                     </center>
                 </div>
                 {% endif %}

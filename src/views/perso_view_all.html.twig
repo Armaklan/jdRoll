@@ -144,7 +144,6 @@
                     {% for widget in perso.widgets %}
                         {% include('composant/perso_widget.html.twig') %}
                     {% endfor %}
-                    </table>
                 </div>
             </td>
           </tr>
@@ -160,16 +159,14 @@
     </tr>
     <tr>
       <td colspan="2">
-        <div class="topics collapse in" id="sheet">
+        <div class="topics collapse in" id="sheetEdit">
           <div class="form-horizontal" id="FakeTD">
-            <div id='zoneFiche'>
-              <div>
+            <div class="form-group" id='zoneFiche'>
                 <div class="ui-layout-center" id='zoneFicheCustom'>
                   {% autoescape false %}{{ perso.template_html }}{% endautoescape %}
                   {% autoescape false %}{{ perso.template_fields }}{% endautoescape %}
                   {% autoescape false %}{{ perso.perso_fields }}{% endautoescape %}
                 </div>
-              </div>
             </div>
           </div>
         </div>
