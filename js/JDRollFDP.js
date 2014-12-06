@@ -8,13 +8,13 @@ function initFDP(element, showEmpty) {
 
 
         if (element.has("#" + jElt.attr('id') + "_hidden").length > 0) {
-            jElt.text($('#' + jElt.attr('id') + '_hidden').val());
+            jElt.text(element.find('#' + jElt.attr('id') + '_hidden').val());
             jElt.removeClass("editable-empty");
             isEmpty = 0;
         }
 
         jElt.editable({
-            value: $('#' + jElt.attr('id') + '_hidden').val(),
+            value: element.find('#' + jElt.attr('id') + '_hidden').val(),
             success: function(response, newValue) {
                 if (newValue.city) {
                     if (jElt.css('color') == 'rgb(221, 17, 68)')
