@@ -451,7 +451,7 @@ class CampagneService {
                           (can_read.topic_id IS NOT NULL)
                       )
                   ) as activity,
-                   IFNULL(alert.joueur_id, 0) as campagne_alert,
+                   IF (IFNULL(alert.joueur_id, 0) > 0,1,0) as campagne_alert,
                    IF(campagne.mj_id = :user, 1, 0)  as is_mj,
                    IF(fav.user_id > 0, 1, 0)  as is_favoris,
                    IF(campagne.statut < 2, 1, 0)  as is_active
