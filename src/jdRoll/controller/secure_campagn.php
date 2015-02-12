@@ -156,16 +156,7 @@ $securedCampagneController->get('/ban/{id}/{user_id}', function($id, $user_id) u
         })->bind("campagne_ban");
 
 $securedCampagneController->get('/my_list', function() use($app) {
-            $campagnesWithWaitingPj = $app['campagneService']->getMyCampagnesWithWaiting();
-            $campagnes = $app['campagneService']->getMyCampagnes();
-            $campagnesPj = $app['campagneService']->getMyPjCampagnes();
-            $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
-            $campagnesWaiting = $app['campagneService']->getMyWaitingPjCampagnes();
-            $campagnesMjArchive = $app['campagneService']->getMyMjArchiveCampagnes();
-            $campagnesPjArchive = $app['campagneService']->getMyPjArchiveCampagnes();
-            return $app->render('campagne_my_list.html.twig', ['campagnes' => $campagnes, 'campagnes_pj' => $campagnesPj, 'favorised_campagne' => $favorisedCampagne,
-                        'campagnes_mj_archive' => $campagnesMjArchive, 'campagnes_pj_archive' => $campagnesPjArchive,
-                        'campagnes_waiting' => $campagnesWaiting, 'campagnes_with_waiting' => $campagnesWithWaitingPj, 'error' => ""]);
+            return $app->render('campagne_my_list.html.twig', ['error' => ""]);
         })->bind("campagne_my_list");
 
 
