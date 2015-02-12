@@ -20,7 +20,7 @@
       label: "Favorites",
       active: false,
       search: {
-        isFavoris: "1"
+        is_favoris: "1"
       }
     }, {
       label: "En-préparations",

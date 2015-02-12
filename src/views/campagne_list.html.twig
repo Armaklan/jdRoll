@@ -20,21 +20,29 @@
         {% for gamesBox in campagnes %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
             <a href="{{ path('campagne', {id : gamesBox.id}) }}"
-                class="popover-elt"
-                data-placement="bottom"
-                data-trigger="hover"
-                data-toggle="popover"
-                data-html="true"
-                data-title="<h5>{{gamesBox.univers}} par {{gamesBox.username}}</h5>"
-                data-content="<b>Joueurs :</b> {{gamesBox.nb_joueurs_actuel}} / {{gamesBox.nb_joueurs}}">
-                <p>{{ gamesBox.name }}</p>
-                {% if gamesBox.banniere != "" %}
-                  <img class="img-rounded" src="{{gamesBox.banniere}}" />
-                {% else %}
-                  <img class="img-rounded" src="{{app.request.baseUrl}}/img/ban.png"/>
-                {% endif %}
+                    class="popover-elt"
+                    data-placement="bottom"
+                    data-trigger="hover"
+                    data-toggle="popover"
+                    data-html="true"
+                    data-title="<h5>{{gamesBox.univers}} par {{gamesBox.username}}</h5>"
+                    data-content="<b>Joueurs :</b> {{gamesBox.nb_joueurs_actuel}} / {{gamesBox.nb_joueurs}}">
+                <div class="game-vignette-content">
+
+                        <p style="font-size: 0.9em">
+                        {% if gamesBox.univers != gamesBox.name %}
+                            {{ gamesBox.univers }} - <br>
+                        {% endif %}
+                        {{ gamesBox.name }}</p>
+                        {% if gamesBox.banniere != "" %}
+                          <img class="img-rounded" src="{{gamesBox.banniere}}" style="max-width:80%"/>
+                        {% else %}
+                          <img class="img-rounded" src="{{app.request.baseUrl}}/img/ban.png" style="max-width:80%"/>
+                        {% endif %}
+
+                    <input type="hidden" class="filterIndex" value="{{ gamesBox.name }}{{ gamesBox.univers }}{{ gamesBox.systeme }}{{ gamesBox.username }}{{ gamesBox.statut }}">
+            </div>
             </a>
-            <input type="hidden" class="filterIndex" value="{{ gamesBox.name }}{{ gamesBox.univers }}{{ gamesBox.systeme }}{{ gamesBox.username }}{{ gamesBox.statut }}">
         </div>
        {% endfor %}
    </div>

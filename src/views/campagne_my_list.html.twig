@@ -2,14 +2,11 @@
 
 {% block specificEndJs %}
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/my-game/my-game.module.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/my-game/my-game.module.js?v=v2"></script>
 {% endblock %}
 
 
 {% block content %}
-
-<h2>Mes parties !</h2>
-
 <div ng-app="jdRoll.myGame">
     <div ng-controller="GamesController as gamesCtrl" ng-include="'{{app.request.baseUrl}}/js/angular/my-game/my-game.html'">
     </div>

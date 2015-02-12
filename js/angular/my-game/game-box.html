@@ -1,7 +1,10 @@
-<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
     <a ng-href="{{ boxCtrl.urlToForm }}">
-        <div class="game-vignette">
-            {{ gamesBox.name }}<br>
+        <div class="game-vignette-content">
+            <p style="font-size: 0.9em">
+                <span ng-if="gamesBox.name != gamesBox.univers"></span>
+                {{ gamesBox.name }}
+            </p>
             <img ng-src="{{gamesBox.banniere}}" >
         </div>
     </a>
