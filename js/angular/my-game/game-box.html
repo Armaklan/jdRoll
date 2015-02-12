@@ -1,8 +1,11 @@
 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
     <a ng-href="{{ boxCtrl.urlToForm }}">
         <div class="game-vignette-content">
+            <div class="mj" ng-if="gamesBox.is_mj == '1'">
+                <i class="icon-certificate"> </i>
+            </div>
             <p style="font-size: 0.9em">
-                <span ng-if="gamesBox.name != gamesBox.univers"></span>
+                <span ng-if="gamesBox.name != gamesBox.univers">{{ gamesBox.univers }} - </span>
                 {{ gamesBox.name }}
             </p>
             <img ng-src="{{gamesBox.banniere}}" >

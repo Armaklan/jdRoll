@@ -46,13 +46,17 @@ null	    	{{ error }}
                     {% for perso in pjs %}
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
                             <a onclick="persoModalService.openPerso({{campagne_id}}, {{ perso.id }})">
-                                <p>{{ perso.name }}</p>
+                                <div class="game-vignette-content">
 
-                                {% if perso.avatar != "" %}
+                                    <p>{{ perso.name }}</p>
+
+                                    {% if perso.avatar != "" %}
                                     <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
-                                {% else %}
+                                    {% else %}
                                     <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
-                                {% endif %}
+                                    {% endif %}
+
+                                </div>
                             </a>
                         </div>
                     {% endfor %}
@@ -123,15 +127,24 @@ null	    	{{ error }}
                      {% set colorStyle = "style=\"background-color: #DDC7B7\"" %}
             {% endif %}
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
-              <a onclick="persoModalService.openPerso({{campagne_id}}, {{ perso.id }})">
-                <p>{{ perso.name }}</p>
+                <a onclick="persoModalService.openPerso({{campagne_id}}, {{ perso.id }})">
+                    <div class="game-vignette-content">
+                     {% if perso.statut == '2' %}
+                          <div class="mj">
+                              <i class="icon-eye-close"> </i>
+                          </div>
+                     {% endif %}
 
-                {% if perso.avatar != "" %}
-                  <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
-                {% else %}
-                  <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
-                {% endif %}
-              </a>
+                        <p>{{ perso.name }}</p>
+
+                        {% if perso.avatar != "" %}
+                        <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
+                        {% else %}
+                        <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
+                        {% endif %}
+
+                    </div>
+                </a>
             </div>
 
             {% endif %}
