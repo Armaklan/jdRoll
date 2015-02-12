@@ -168,6 +168,7 @@ $securedCampagneController->get('/my_list', function() use($app) {
                         'campagnes_waiting' => $campagnesWaiting, 'campagnes_with_waiting' => $campagnesWithWaitingPj, 'error' => ""]);
         })->bind("campagne_my_list");
 
+
 $securedCampagneController->post('/save', function(Request $request) use($app) {
             try {
                 if ($request->get('id') == '') {

@@ -425,6 +425,57 @@ class CampagneService {
 		return $this->getMjCampagnesByStatut(0,1,3, $user);
 	}
 
+  public function findForUser($user) {
+              $sql = "SELECT distinct
+                  campagne.*,
+                  user.username as username,
+                  ( SELECT
+                      max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
+                      FROM
+                      sections
+                      JOIN topics
+                      ON sections.id = topics.section_id
+                      LEFT JOIN read_post
+                      ON read_post.topic_id = topics.id
+                      AND read_post.user_id = :user
+                      LEFT JOIN can_read
+                      ON can_read.topic_id = topics.id
+                      AND can_read.user_id = :user
+                      WHERE
+                      sections.campagne_id = campagne.id
+                      AND (
+                          (topics.is_private <> 1)
+                          OR
+                          (campagne.mj_id = :user)
+                          OR
+                          (can_read.topic_id IS NOT NULL)
+                      )
+                  ) as activity,
+                   IFNULL(alert.joueur_id, 0) as campagne_alert,
+                   IF(campagne.mj_id = :user, 1, 0)  as is_mj,
+                   IF(fav.user_id > 0, 1, 0)  as is_favoris,
+                   IF(campagne.statut < 2, 1, 0)  as is_active
+          FROM campagne
+          LEFT JOIN campagne_participant as cp
+          ON cp.campagne_id = campagne.id
+          LEFT JOIN campagne_favoris as fav
+          ON fav.campagne_id = campagne.id
+          AND fav.user_id = :user
+          JOIN user
+          ON user.id = campagne.mj_id
+          LEFT JOIN alert
+          ON
+              campagne.id = alert.campagne_id
+          AND alert.joueur_id = :user
+          WHERE
+              cp.user_id = :user
+          OR campagne.mj_id = :user
+          OR fav.user_id = :user
+          ORDER BY campagne.name";
+          $campagne = $this->db->fetchAll($sql, array('user' => $user['id']));
+          return $campagne;
+    }
+
 	/**
 	 * @param integer $statut1
 	 * @param integer $statut2
