@@ -10,9 +10,6 @@
 
     <div align="center">
     	<h2>{{ campagne.name }}</h2><br>
-        {% if campagne.banniere != "" %}
-            <img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 250px;">
-        {% endif %}
     </div>
     <div align="right">
         <div class="btn-group">
@@ -32,69 +29,90 @@
     	{% endif %}
         </div>
     </div>
-    <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
-    <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
-    <p><b>MJ : </b><a href="{{ path('profile',{username: campagne.username} ) }}">{{ campagne.username }}</a></p>
-    <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
-    <p><b>Rythme : </b>
-            {% if campagne.rythme == 0 %}
-                Tortue (1 post / mois)
-            {% elseif campagne.rythme == 1 %}
-                Ralenti (1 post / semaine)
-            {% elseif campagne.rythme == 2 %}
-                Standard (1 post / 3 jours)
-            {% elseif campagne.rythme == 3 %}
-                Intense (1 post par jour)
-            {% elseif campagne.rythme == 4 %}
-                Extrême (Plusieurs posts par jour)
-            {% endif %}
-    </p>
-    <p><b>Exigence : </b>
-            {% if campagne.rp == 0 %}
-                Roman de gare (peu d'exigence en terme de Roleplay)
-            {% elseif campagne.rp == 1 %}
-                Standard (action décrite correctement, quelques pensées, ...)
-            {% elseif campagne.rp == 2 %}
-                Théatre (la description prime, il faudra faire des efforts)
-            {% elseif campagne.rp == 3 %}
-                Cyrano (le roleplay est au centre même de la partie !)
-            {% endif %}
-    </p>
-    <p><b>Description : </b> </p>
-    {% autoescape false %}
-    	<p>{{ campagne.description }}</p>
-    {% endautoescape %}
-    <p></p>
-	<table class="table table-striped table-hover campagneTable">
-			<thead>
-				<tr>
-					<th colspan="2">Joueurs</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for participant in participants %}
-				<tr id="inscription{{participant.id}}">
-					<td>{{ participant.username }}</td>
-					<td width="90px" style="text-align : right" >
-          {% if is_mj and participant.part_statut == 1 %}
-						<button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
-               title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
-          {% else %}
-            {% if is_mj %}
-              <button onClick="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></button>
-              <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
-            {% endif %}
-					{% endif %}
-					</td>
-				<tr>
-				{% endfor %}
-			</tbody>
-	</table>
+    {% if campagne.banniere != "" %}
+    <div class="col-md-3">
+      <center>
+        <img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 95%;">
+      </center>
+    </div>
+    {% endif %}
+    <div class="col-md-9">
+      <div class="col-sm-6">
+        <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
+        <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
+        <p><b>MJ : </b><a href="{{ path('profile',{username: campagne.username} ) }}">{{ campagne.username }}</a></p>
+        <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
+      </div>
+      <div class="col-sm-6">
+        <p><b>Rythme : </b></p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ campagne.rythme }}" aria-valuemin="0" aria-valuemax="4" style="width: {{ campagne.rythme * 25 }}%">
 
+              {% if campagne.rythme == 0 %}
+                Tortue (1 post / mois)
+              {% elseif campagne.rythme == 1 %}
+                Ralenti (1 post / semaine)
+              {% elseif campagne.rythme == 2 %}
+                Standard (1 post / 3 jours)
+              {% elseif campagne.rythme == 3 %}
+                Intense (1 post par jour)
+              {% elseif campagne.rythme == 4 %}
+                Extrême (Plusieurs posts par jour)
+              {% endif %}
+
+          </div>
+        </div>
+        <p><b>Exigence : </b>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ campagne.rythme }}" aria-valuemin="0" aria-valuemax="3" style="width: {{ campagne.rythme * 33.3 }}%">
+              {% if campagne.rp == 0 %}
+                    Roman de gare (peu d'exigence en terme de Roleplay)
+                {% elseif campagne.rp == 1 %}
+                    Standard (action décrite correctement, quelques pensées, ...)
+                {% elseif campagne.rp == 2 %}
+                    Théatre (la description prime, il faudra faire des efforts)
+                {% elseif campagne.rp == 3 %}
+                    Cyrano (le roleplay est au centre même de la partie !)
+                {% endif %}
+          </div>
+        </div>
+
+        </p>
+      </div>
+    </div>
     <div class="col-xs-12">
+      {% autoescape false %}
+        <p>{{ campagne.description }}</p>
+      {% endautoescape %}
+      <div class="col-md-6">
+        <h3>Participants</h3>
+        <table class="table table-striped table-hover campagneTable">
+          <tbody>
+            {% for participant in participants %}
+            <tr id="inscription{{participant.id}}">
+              <td>{{ participant.username }}</td>
+              <td width="90px" style="text-align : right" >
+              {% if is_mj and participant.part_statut == 1 %}
+                <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
+                   title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
+              {% else %}
+                {% if is_mj %}
+                  <button onClick="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></button>
+                  <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
+                {% endif %}
+              {% endif %}
+              </td>
+            <tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
         <h3>Messages au fil du temps, par mois</h3>
         <div id="placeholder" class="col-md-10 col-md-offset-1" style="height: 400px;"></div>
     </div>
+  </div>
+
 
     <script>
 
