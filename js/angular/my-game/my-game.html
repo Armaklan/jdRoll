@@ -8,10 +8,10 @@
 
     <tabset justified="true">
 
-        <tab ng-repeat="tab in gamesCtrl.tabset" heading="{{ tab.label }}" active="tab.active">
+        <tab ng-repeat="tab in gamesCtrl.tabset" heading="{{ tab.label }}" active="tab.active" ng-show="( waitingGames.length + alertGames.length + otherGames.length ) > 0">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <div class="panel panel-success">
+                    <div class="panel panel-success" ng-show="waitingGames.length > 0">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 Parties avec post en attente
@@ -20,11 +20,11 @@
                         </div>
                         <div class="panel-body">
                             <div waiting-img="gamesLoading" />
-                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:gamesCtrl.hasActivity | filter:search" />
+                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:gamesCtrl.hasActivity | filter:search as waitingGames" />
                         </div>
                     </div>
 
-                    <div class="panel panel-success">
+                  <div class="panel panel-success" ng-show="alertGames.length > 0">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                             Parties en alertes
@@ -32,17 +32,17 @@
                         </div>
                         <div class="panel-body">
                             <div waiting-img="gamesLoading" />
-                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1} | filter:search" />
+                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 1} | filter:search as alertGames" />
                         </div>
                     </div>
 
-                    <div class="panel panel-success">
+                    <div class="panel panel-success" ng-show="otherGames.length > 0">
                         <div class="panel-heading">
                             <h3 class="panel-title">Autres parties </h3>
                         </div>
                         <div class="panel-body">
                             <div waiting-img="gamesLoading" />
-                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0} | filter:search" />
+                            <div games-box="game" ng-repeat="game in gamesCtrl.games | filter:tab.search | filter:{activity: '0'} | filter:{campagne_alert: 0} | filter:search as otherGames" />
                         </div>
                     </div>
                 </div>
