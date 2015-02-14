@@ -597,6 +597,11 @@ ul.nav-tabs li.active {
     padding-bottom: 2px;
 }
 
+.progress-bar {
+    color: black;
+    white-space: nowrap;
+}
+
 .ng-invalid {
     border-color: red;
 }
