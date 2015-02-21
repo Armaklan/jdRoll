@@ -107,9 +107,9 @@ class CampagneService {
 
     public function createCampagneConfig($campagne) {
     	$sql = "INSERT INTO campagne_config
-				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_sidebar_color, link_color, text_color, default_perso_id, template, sidebar_text)
+				(campagne_id, banniere, hr, odd_line_color, even_line_color, sidebar_color, link_sidebar_color, link_color, text_color, default_perso_id, template, sidebar_text, widgets)
 				VALUES
-				(:campagne, '', '', '', '', '', '', '', '', '', '', '')";
+				(:campagne, '', '', '', '', '', '', '', '', '', '', '', '[]')";
 
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
@@ -148,7 +148,7 @@ class CampagneService {
     			campagne_id = :campagne";
     	$stmt = $this->db->prepare($sql);
     	$stmt->bindValue("campagne", $campagne);
-        $stmt->bindValue("widgets", $widgets);
+      $stmt->bindValue("widgets", $widgets);
     	$stmt->execute();
     }
 
