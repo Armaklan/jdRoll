@@ -1,18 +1,20 @@
 
                 {% if widget.type == "jauge" %}
-                <div class="jauge">
-                    <center><b>{{ widget.name }}</b></center>
-                    <div class="progress">
-                      <div class="progress-bar"
-                      role="progressbar"
-                      aria-valuenow="{{ widget.value }}"
-                      aria-valuemin="{{ widget.low }}"
-                      aria-valuemax="{{ widget.up }}"
-                      style="width: {{ (100 * (widget.value - widget.low) ) / (widget.up - widget.low) }}%;">
-                        {{ widget.value }} / {{ widget.up }}
+                  {% if (widget.up - widget.low) != 0 %}
+                    <div class="jauge">
+                      <center><b>{{ widget.name }}</b></center>
+                      <div class="progress">
+                        <div class="progress-bar"
+                        role="progressbar"
+                        aria-valuenow="{{ widget.value }}"
+                        aria-valuemin="{{ widget.low }}"
+                        aria-valuemax="{{ widget.up }}"
+                        style="width: {{ (100 * (widget.value - widget.low) ) / (widget.up - widget.low) }}%;">
+                          {{ widget.value }} / {{ widget.up }}
+                        </div>
                       </div>
                     </div>
-                </div>
+                  {% endif %}
                 {% endif %}
 
                 {% if widget.type == "token" %}

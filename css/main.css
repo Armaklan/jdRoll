@@ -586,16 +586,21 @@ ul.nav-tabs li.active {
     margin-bottom: 0px;
 }
 
-.progress {
+.jauge .progress {
     height: 15px;
     margin-bottom: 10px;
     width: 98%;
     background-image: linear-gradient(to bottom, #C1C1C1 0px, #DADADA 100%)
 }
 
-div.progress-bar {
+.jauge div.progress-bar {
     font-size: 9px;
     padding-bottom: 2px;
+}
+
+.progress-bar {
+    color: black;
+    white-space: nowrap;
 }
 
 .ng-invalid {
