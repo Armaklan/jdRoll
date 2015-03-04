@@ -376,6 +376,7 @@ class PostService {
             LEFT JOIN campagne
                 ON campagne.id = sections.campagne_id
             WHERE posts.user_id IS NOT NULL
+            AND campagne.statut = 0
             GROUP BY game";
 
         return $this->db->fetchAll($sql,
