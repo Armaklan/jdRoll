@@ -377,6 +377,7 @@ class PostService {
                 ON campagne.id = sections.campagne_id
             WHERE posts.user_id IS NOT NULL
             AND campagne.statut = 0
+            OR campagne.statut IS NULL
             GROUP BY game";
 
         return $this->db->fetchAll($sql,

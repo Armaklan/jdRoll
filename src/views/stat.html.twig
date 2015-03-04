@@ -145,7 +145,7 @@ $(function () {
     {% set general = 0 %}
     var games_data = [
     {% for line in games_data %}
-      {% if line.cpt > (total / 50) and line.game != '' %}
+      {% if line.cpt > (total / 70) and line.game != '' %}
       {
             label: "{{line.game}}",
             data: {{line.cpt}}
