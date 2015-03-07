@@ -30,4 +30,7 @@ echo "<p> Resultat (2d10q + 4) : " . $dicer->parse("2d10q + 4") . "</p>";
 echo "<p> Resultat (1d10a) : " . $dicer->parse("1d10a") . "</p>";
 echo "<p> Resultat (1du) : " . $dicer->parse("1du") . "</p>";
 echo "<p> Resultat (3du) : " . $dicer->parse("3du") . "</p>";
+echo "<p> Resultat (3D10>6) : " . $dicer->parse("3d10>6") . "</p>";
+echo "<p> Resultat (3D10<3) : " . $dicer->parse("3d10<3") . "</p>";
+echo "<p> Resultat (4Df) : " . $dicer->parse("4df") . "</p>";
 ?>

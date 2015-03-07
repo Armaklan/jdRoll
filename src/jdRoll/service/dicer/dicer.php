@@ -86,6 +86,16 @@ class Dicer {
                 $nbKeepDice = $exprElt[1];
                 $expression = $exprElt[0];
                 $group = new Group("l$nbKeepDice");
+            } elseif (stripos($expression, '>') !== FALSE) {
+                $exprElt = explode(">", $expression);
+                $nbKeepDice = $exprElt[1];
+                $expression = $exprElt[0];
+                $group = new Group(">$nbKeepDice");
+            } elseif (stripos($expression, '<') !== FALSE) {
+                $exprElt = explode("<", $expression);
+                $nbKeepDice = $exprElt[1];
+                $expression = $exprElt[0];
+                $group = new Group("<$nbKeepDice");
             } elseif (stripos($expression, 'q') !== FALSE) {
                 $group = new Group("q");
             } else {

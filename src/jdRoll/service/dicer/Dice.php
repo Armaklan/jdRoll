@@ -12,6 +12,7 @@ class Dice extends JetElt {
     var $resultat;
     var $arsStyle;
     var $ubiquityStyle = false;
+    var $fudgeStyle = false;
     var $explosif = false;
     var $limitedExplosif = true;
 
@@ -19,6 +20,9 @@ class Dice extends JetElt {
         if($expression == "u") {
             $this->type = 2;
             $this->ubiquityStyle = true;
+        } else if($expression == "f") {
+            $this->type = 3;
+            $this->fudgeStyle = true;
         } else {
             $lastCar = substr(trim($expression), -1);
             if ( $lastCar == "E" or $lastCar == "S") {
@@ -47,6 +51,8 @@ class Dice extends JetElt {
             $this->launchArs();
         } elseif ($this->ubiquityStyle) {
             $this->launchUbiquity();
+        } elseif ($this->fudgeStyle) {
+            $this->launchFudge();
         } else {
             $this->launchStandard();
         }
@@ -82,6 +88,10 @@ class Dice extends JetElt {
 
     public function launchUbiquity() {
         $this->resultat = (int) $this->launchOne() - 1;
+    }
+
+    public function launchFudge() {
+        $this->resultat = (int) $this->launchOne() - 2;
     }
 
     private function launchOne() {

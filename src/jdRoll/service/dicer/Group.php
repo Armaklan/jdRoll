@@ -56,6 +56,10 @@ class Group extends JetElt {
             return $this->calculKeepGreatResult();
         } elseif (stripos($this->operateur, 'l') !== FALSE) {
             return $this->calculKeepLessResult();
+        } elseif (stripos($this->operateur, '>') !== FALSE) {
+            return $this->calculKeepIfGreaterResult();
+        } elseif (stripos($this->operateur, '<') !== FALSE) {
+            return $this->calculKeepIfLesserResult();
         } elseif ($this->operateur == 'q') {
             return $this->calculSubstractResult();
         } else {
@@ -92,6 +96,30 @@ class Group extends JetElt {
         }
         return abs($resultat);
 	}
+
+    public function calculKeepIfGreaterResult() {
+      $seuil = explode(">", $this->operateur)[1];
+      $resultats = array();
+      foreach ($this->elements as $elt) {
+        $launch = $elt->getResultat();
+        if($launch > $seuil) {
+          $resultats[count($resultats)] = $launch;
+        }
+      }
+      return count($resultats);
+    }
+
+    public function calculKeepIfLesserResult() {
+      $seuil = explode("<", $this->operateur)[1];
+      $resultats = array();
+      foreach ($this->elements as $elt) {
+        $launch = $elt->getResultat();
+        if($launch < $seuil) {
+          $resultats[count($resultats)] = $launch;
+        }
+      }
+      return count($resultats);
+    }
 
     public function calculKeepGreatResult() {
 
