@@ -1,0 +1,25 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<div class="row">
+		<div class="col-md-2" align="center">
+			<p><b>{{ perso['name'] }}</b></p>
+		    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
+		</div>
+		<div class="col-md-10">
+			<p><b>Concept : </b>{{ perso['concept'] }}</p>
+			<p><b>Description : </b></p>
+			{% autoescape false %}
+		    	<p>{{ perso.publicDescription }}</p>
+		    {% endautoescape %}
+		</div>
+	</div>
+
+{% endblock %}

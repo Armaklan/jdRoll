@@ -1,0 +1,33 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+    <div class="col-md-2" align="center">
+    			<p><b>{{ perso['name'] }}</b></p>
+			    <img src="{{ perso['avatar'] }}" width="150px" class="img-rounded" />
+    		</div>
+	<form role="form" class="form-horizontal" action="{{ path('save_attach', {campagne_id : campagne_id}) }}" method="POST">
+		<input type="hidden" id="perso_id" name="perso_id" value="{{ perso['id'] }}">
+	    <div class="form-group">
+			<label for="user_id">Transféré à : </label>
+			<select name="user_id" >
+			 {% for user in users %}
+				 <option value="{{ user.id }}">{{ user.username }}</option>
+			 {% endfor %}
+			</select>
+		</div>
+	    	    
+	    <div class="form-group">
+		    <div class="form-control">
+			    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+		    </div>
+	    </div>
+    </form>
+
+{% endblock %}

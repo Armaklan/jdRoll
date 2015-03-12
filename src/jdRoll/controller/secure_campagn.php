@@ -308,18 +308,6 @@ $securedCampagneController->post('/notes/update/{campagne_id}', function($campag
             return "";
         })->bind("notes_update");
 
-$securedCampagneController->get('/persoModal/view/popup/{campagne_id}', function($campagne_id) use($app) {
-            $user_id = $app['session']->get('user')['id'];
-            $perso = $app['persoService']->getPersonnage(false,$campagne_id,$user_id);
-            return $app->render('perso_popup.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso]);
-        })->bind("perso_popup");
-
-$securedCampagneController->post('/persoModal/save/popup/{campagne_id}', function($campagne_id,Request $request) use($app) {
-
-            $user_id = $app['session']->get('user')['id'];
-            $app['persoService']->updatePersoFields($campagne_id,$user_id,$request->get('fields'));
-            return "";
-        })->bind("save_perso_popup");
 
 $securedCampagneController->post('/admin_open', function(Request $request) use($app) {
             $id = $request->get('id');

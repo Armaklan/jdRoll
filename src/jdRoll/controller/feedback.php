@@ -30,7 +30,7 @@
         $feedback = $app['feedbackService']->get($id, $user);
         $comments = $app['feedbackService']->getComments($id);
         $isAdmin = $app["campagneService"]->IsAdmin();
-        return $app->render('feedback_detail.html.twig', [
+        return $app->render('feedback/detail.html.twig', [
             'feedback' => $feedback,
             'comments' => $comments,
             'is_admin' => $isAdmin,
@@ -68,7 +68,7 @@
         $lastFeedbacks = $app['feedbackService']->getLastFeedbacks();
         $lastComments = $app['feedbackService']->getLastComments();
         $isAdmin = $app["campagneService"]->IsAdmin();
-        return $app->render('feedbacks.html.twig', [
+        return $app->render('feedback/list.html.twig', [
             'feedbacks' => $feedbacks,
             'last_feedbacks' => $lastFeedbacks,
             'last_comments' => $lastComments,

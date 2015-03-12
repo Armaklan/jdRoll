@@ -95,7 +95,7 @@
    	{% if app.session.get('user') != null %}
 	{% endif %}
     {% include('uploader.html.twig') %}
-    {% include('feedback_popup.html.twig') %}
+    {% include('feedback/add_popup.html.twig') %}
 
   {% if (app.session.get('user') != null)  %}
     <div id="notificationCenter">
