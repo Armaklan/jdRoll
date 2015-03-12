@@ -33,18 +33,19 @@ class CampagneService {
     }
 
     public function getBlankCampagne() {
-		$campagne = array();
-		$campagne['id'] = '';
-		$campagne['nb_joueurs'] = '4';
-		$campagne['name'] = '';
-		$campagne['banniere'] = '';
-		$campagne['systeme'] = '';
-		$campagne['univers'] = '';
-		$campagne['description'] = '';
-		$campagne['statut'] = 3;
-        $campagne['rythme'] = 2;
-        $campagne['rp'] = 1;
-        $campagne['is_admin_open'] = 0;
+      $campagne = array();
+      $campagne['id'] = '';
+      $campagne['nb_joueurs'] = '4';
+      $campagne['name'] = '';
+      $campagne['banniere'] = '';
+      $campagne['systeme'] = '';
+      $campagne['univers'] = '';
+      $campagne['description'] = '';
+      $campagne['statut'] = 3;
+      $campagne['rythme'] = 2;
+      $campagne['rp'] = 1;
+      $campagne['is_admin_open'] = 0;
+      $campagne['is_multi_character'] = 0;
 		return $campagne;
     }
 

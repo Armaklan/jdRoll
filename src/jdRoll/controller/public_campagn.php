@@ -42,7 +42,7 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
     $is_participant = $app["campagneService"]->isParticipant($id);
     $participants = $app["campagneService"]->getParticipant($id);
     $stats = $app["postService"]->getStatForOnGame($id);
-    return $app->render('campagne.html.twig', [
+    return $app->render('game/presentation.html.twig', [
         'campagne' => $campagne,
         'participants' => $participants,
     	'is_mj' => $is_mj,
@@ -54,7 +54,7 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
 
 $publicCampagneController->get('/config/{id}', function($id) use($app) {
 	$campagne = $app['campagneService']->getCampagneConfig($id);
-	return $app->render('campagne_config.html.twig', ['campagne_config' => $campagne, 'error' => ""]);
+	return $app->render('game/config/css.html.twig', ['campagne_config' => $campagne, 'error' => ""]);
 })->bind("campagne_config");
 
 

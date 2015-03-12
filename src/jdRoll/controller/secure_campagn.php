@@ -19,12 +19,12 @@ $securedCampagneController->before($mustBeLogged);
 
 $securedCampagneController->get('/new', function() use($app) {
             $campagne = $app['campagneService']->getBlankCampagne();
-            return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
+            return $app->render('game/config/add.html.twig', ['campagne' => $campagne, 'error' => ""]);
         })->bind("campagne_new");
 
 $securedCampagneController->get('/{id}/edit', function($id) use($app) {
             $campagne = $app['campagneService']->getCampagne($id);
-            return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => ""]);
+            return $app->render('game/config/add.html.twig', ['campagne' => $campagne, 'error' => ""]);
         })->bind("campagne_edit");
 
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
@@ -34,7 +34,7 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
             $is_mj = $app["campagneService"]->isMj($campagne_id);
             $participants = $app["campagneService"]->getParticipant($campagne_id);
-            return $app->render('campagne_config_form.html.twig', [
+            return $app->render('game/config/edit.html.twig', [
                 'campagne_id' => $campagne_id,
                 'config' => $config,
                 'is_mj' => $is_mj,
@@ -50,7 +50,7 @@ $securedCampagneController->post('/config/save', function(Request $request) use(
                 return $app->redirect($app->path('campagne_config_edit', array('campagne_id' => $request->get('campagne_id'))));
             } catch (Exception $e) {
                 $campagne = $app['campagneService']->getFormCampagneConfig($request);
-                return $app->render('campagne_config_form.html.twig', ['campagne_id' => $request->get('campagne_id'), 'campagne' => $campagne, 'is_mj' => true, 'error' => $e->getMessage()]);
+                return $app->render('game/config/edit.html.twig', ['campagne_id' => $request->get('campagne_id'), 'campagne' => $campagne, 'is_mj' => true, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_config_save");
 
@@ -177,7 +177,7 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
                 }
             } catch (Exception $e) {
                 $campagne = $app['campagneService']->getFormCampagne($request);
-                return $app->render('campagne_form.html.twig', ['campagne' => $campagne, 'error' => $e->getMessage()]);
+                return $app->render('game/config/add.html.twig', ['campagne' => $campagne, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_save");
 

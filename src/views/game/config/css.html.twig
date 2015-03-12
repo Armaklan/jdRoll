@@ -1,0 +1,120 @@
+
+<style type="text/css">
+	{% if campagne_config != null %}
+
+
+		{% if campagne_config.text_color != '' %}
+			.container-fluid {
+				color: {{ campagne_config.text_color }};
+			}
+			.modal {
+				color: black;
+			}
+            .editable-click {
+                color: {{ campagne_config.text_color }} !important;
+            }
+		{% endif %}
+
+		{% if campagne_config.dialogue_color != '' %}
+			.container-fluid .dialogue {
+				color: {{ campagne_config.dialogue_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.pensee_color != '' %}
+			.container-fluid .pensee {
+				color: {{ campagne_config.pensee_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.rp1_color != '' %}
+			.container-fluid .rp1 {
+				color: {{ campagne_config.rp1_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.rp2_color != '' %}
+			.container-fluid .rp2 {
+				color: {{ campagne_config.rp2_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.quote_color != '' %}
+			blockquote {
+				color: {{ campagne_config.quote_color }};
+			}
+      blockquote p {
+				color: {{ campagne_config.quote_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.banniere != '' %}
+			.logo_campagne {
+				background: transparent url('{{ campagne_config.banniere }}') no-repeat center top;
+				height: 150px;
+				margin-bottom: 1em;
+			}
+		{% endif %}
+
+		{% if campagne_config.hr != '' %}
+			hr {
+				display: block;
+				border: none;
+				height: 60px;
+				background: transparent url('{{ campagne_config.hr }}') no-repeat center top;
+			}
+		{% endif %}
+
+		{% if campagne_config.odd_line_color != '' %}
+
+			.table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th {
+			    background-color: {{ campagne_config.odd_line_color }};
+			}
+
+		{% endif %}
+
+		{% if campagne_config.even_line_color != '' %}
+
+			.table-striped tbody > tr:nth-child(2n) > td, .table-striped tbody > tr:nth-child(2n) > th {
+			    background-color: {{ campagne_config.even_line_color }};
+			}
+
+		{% endif %}
+
+		{% if campagne_config.sidebar_color != '' %}
+			.categorie {
+				background-color: {{ campagne_config.sidebar_color }};
+			}
+			.sidebar {
+				background-color: {{ campagne_config.sidebar_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.link_color != '' %}
+			a {
+				color: {{ campagne_config.link_color }};
+			}
+		{% endif %}
+
+		{% if campagne_config.link_sidebar_color != '' %}
+			.categorie a {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+			.categorie {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+            a.sidebarBtn {
+                color: black;
+            }
+			.categorie a.btn {
+				color:black;
+			}
+			.sidebar a {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+			.sidebar {
+				color: {{ campagne_config.link_sidebar_color }};
+			}
+		{% endif %}
+	{% endif %}
+</style>

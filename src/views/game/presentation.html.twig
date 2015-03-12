@@ -1,0 +1,200 @@
+{% extends "squelette.html.twig" %}
+
+{% block content %}
+
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+    <div align="center">
+    	<h2>{{ campagne.name }}</h2><br>
+    </div>
+    <div align="right">
+        <div class="btn-group">
+    	<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn btn-default" title="Forum"><i class="icon-globe"></i></a>
+    	{% if is_mj or is_participant %}
+			<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn btn-default" title="Galerie des PNJ"><i class="icon-user"></i></a>
+			{% if is_mj or is_admin %}
+				<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+			{% endif %}
+    	{% else %}
+            {% if is_admin %}
+                <a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+            {% endif %}
+                {% if campagne.is_recrutement_open == 1 %}
+                    <a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>
+                {% endif %}
+    	{% endif %}
+        </div>
+    </div>
+    {% if campagne.banniere != "" %}
+    <div class="col-md-3">
+      <center>
+        <img src="{{ campagne.banniere }}" style="max-height: 200px; max-width: 95%;">
+      </center>
+    </div>
+    {% endif %}
+    <div class="col-md-9">
+      <div class="col-sm-6">
+        <p><b>Univers de la campagne : </b> {{ campagne.univers }}</p>
+        <p><b>Système de jeu : </b> {{ campagne.systeme }}</p>
+        <p><b>MJ : </b><a href="{{ path('profile',{username: campagne.username} ) }}">{{ campagne.username }}</a></p>
+        <p><b>Nombre de joueurs : </b> {{ campagne.nb_joueurs }}</p>
+      </div>
+      <div class="col-sm-6">
+        <p><b>Rythme : </b></p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ campagne.rythme }}" aria-valuemin="0" aria-valuemax="4" style="width: {{ campagne.rythme * 25 }}%">
+
+              {% if campagne.rythme == 0 %}
+                Tortue (1 post / mois)
+              {% elseif campagne.rythme == 1 %}
+                Ralenti (1 post / semaine)
+              {% elseif campagne.rythme == 2 %}
+                Standard (1 post / 3 jours)
+              {% elseif campagne.rythme == 3 %}
+                Intense (1 post par jour)
+              {% elseif campagne.rythme == 4 %}
+                Extrême (Plusieurs posts par jour)
+              {% endif %}
+
+          </div>
+        </div>
+        <p><b>Exigence : </b>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ campagne.rp }}" aria-valuemin="0" aria-valuemax="3" style="width: {{ campagne.rp * 33.3 }}%">
+              {% if campagne.rp == 0 %}
+                    Roman de gare (peu d'exigence en terme de Roleplay)
+                {% elseif campagne.rp == 1 %}
+                    Standard (action décrite correctement, quelques pensées, ...)
+                {% elseif campagne.rp == 2 %}
+                    Théatre (la description prime, il faudra faire des efforts)
+                {% elseif campagne.rp == 3 %}
+                    Cyrano (le roleplay est au centre même de la partie !)
+                {% endif %}
+          </div>
+        </div>
+
+        </p>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      {% autoescape false %}
+        <p>{{ campagne.description }}</p>
+      {% endautoescape %}
+      <div class="col-md-6">
+        <h3>Participants</h3>
+        <table class="table table-striped table-hover campagneTable">
+          <tbody>
+            {% for participant in participants %}
+            <tr id="inscription{{participant.id}}">
+              <td>{{ participant.username }}</td>
+              <td width="90px" style="text-align : right" >
+              {% if is_mj and participant.part_statut == 1 %}
+                <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});"
+                   title="Désinscrire" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
+              {% else %}
+                {% if is_mj %}
+                  <button onClick="campagneConfig.addParticipant({{campagne.id}}, {{participant.id}});" title="Valider l'inscription" class="btn btn-primary iconeBtn"><i class="icon-ok"></i></button>
+                  <button onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{participant.id}});" title="Refuser l'inscription" class="btn btn-danger-ssctrl iconeBtn"><i class="icon-remove"></i></button>
+                {% endif %}
+              {% endif %}
+              </td>
+            <tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Messages au fil du temps, par mois</h3>
+        <div id="placeholder" class="col-md-10 col-md-offset-1" style="height: 400px;"></div>
+    </div>
+  </div>
+
+
+    <script>
+
+
+        $(function () {
+
+            /**
+             * General Graph
+             */
+            function gd(year, month, day) {
+                return new Date(year, month - 1, day).getTime();
+            }
+
+            var data = [
+                {% for line in stat_post %}
+                [ gd({{line.dat}}),{{line.cpt}}],
+                {% endfor %}
+            ];
+
+            $.plot($("#placeholder"),
+                    [{
+                        label: "Messages",
+                        color: "#0062E3",
+                        points: { fillColor: "#0062E3", show: true },
+                        lines: { show: true },
+                        data: data
+                    }],
+                    {
+                        xaxis: {
+                            mode: "time",
+                            timeformat: "%m/%y",
+                            tickSize: [1, "month"]
+                        },
+                        grid: { hoverable: true },
+                        series: {
+                            shadowSize: 5
+                        }
+                    }
+            );
+
+
+            function showTooltip(x, y, contents) {
+                $('<div id="tooltip">' + contents + '</div>').css( {
+                    position: 'absolute',
+                    display: 'none',
+                    top: y + 5,
+                    left: x + 5,
+                    border: '1px solid #fdd',
+                    padding: '2px',
+                    'background-color': '#fee',
+                    opacity: 0.80
+                }).appendTo("body").fadeIn(200);
+            }
+
+
+            var previousPoint = null;
+            $("#placeholder").bind("plothover", function (event, pos, item) {
+
+                if (item) {
+                    if (previousPoint != item.dataIndex) {
+                        previousPoint = item.dataIndex;
+
+                        $("#tooltip").remove();
+                        var x = new Date(item.datapoint[0] * 1),
+                                y = item.datapoint[1];
+
+                        var month = x.getMonth() + 1;
+                        var year = x.getFullYear();
+                        var fulldate = month + "/" + year;
+
+                        showTooltip(item.pageX, item.pageY,
+                                item.series.label + " : " + y + " le " +
+                                fulldate);
+                    }
+                }
+                else {
+                    $("#tooltip").remove();
+                    previousPoint = null;
+                }
+
+            });
+
+          });
+    </script>
+{% endblock %}

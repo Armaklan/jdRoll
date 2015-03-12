@@ -40,7 +40,7 @@ $forumController->get('/', function() use($app) {
 	$isAdmin = $app["campagneService"]->isAdmin();
 	$campagne = $app["campagneService"]->getBlankCampagne();
     $users = $app['userService']->getAllUsers();
-	return $app->render('forum_campagne.html.twig', ['absences' => array(), 'campagne_id' => 0,
+	return $app->render('game/home.html.twig', ['absences' => array(), 'campagne_id' => 0,
                                                      'annonces' => $annonces,
                                                      'topics' => $topics, 'is_mj' => $is_mj, 'error' => '',
                                                      'users' => $users,
@@ -68,7 +68,7 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
     $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
 	$waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
     $isFavoris = $app["campagneService"]->isFavoris($campagne_id, $user_id);
-	return $app->render('forum_campagne.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
+	return $app->render('game/home.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
                                                      'campagne_id' => $campagne_id, 'topics' => $topics,
                                                      'annonces' => $annonces,
                                                      'is_participant' => $isParticipant,
@@ -81,7 +81,7 @@ $forumController->get('/{campagne_id}/section/add', function($campagne_id) use($
 	$section =  $app["sectionService"]->getBlankSection($campagne_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
+	return $app->render('game/forum/section_edit.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("section_add");
 
 $forumController->get('/{campagne_id}/section/edit/{section_id}', function($campagne_id, $section_id) use($app) {
@@ -89,7 +89,7 @@ $forumController->get('/{campagne_id}/section/edit/{section_id}', function($camp
 	$section =  $app["sectionService"]->getSection($section_id);
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
+	return $app->render('game/forum/section_edit.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => '', 'is_mj' => $is_mj]);
 })->bind("section_edit");
 
 $forumController->post('/{campagne_id}/section/save', function($campagne_id, Request $request) use($app) {
@@ -107,7 +107,7 @@ $forumController->post('/{campagne_id}/section/save', function($campagne_id, Req
 		$section =  $app["sectionService"]->getFormSection($campagne_id, $request);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$campagne_id = getExterneCampagneNumber($campagne_id);
-		return $app->render('section_form.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
+		return $app->render('game/forum/section_edit.html.twig', ['campagne_id' => $campagne_id, 'section' => $section, 'error' => $e->getMessage(), 'is_mj' => $is_mj]);
 	}
 })->bind("section_save");
 
@@ -118,7 +118,7 @@ $forumController->get('/{campagne_id}/topic/add/{section_id}', function($campagn
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, 0);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '',
+	return $app->render('game/forum/topic_edit.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '',
 			 'sections' => $sections, 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_add");
 
@@ -129,7 +129,7 @@ $forumController->get('/{campagne_id}/topic/edit/{topic_id}', function($campagne
 	$sections =  $app["sectionService"]->getSections($campagne_id);
 	$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
-	return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '',
+	return $app->render('game/forum/topic_edit.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'error' => '',
 			'sections' => $sections, 'is_mj' => $is_mj, 'persos' => $allPerso]);
 })->bind("topic_edit");
 
@@ -152,7 +152,7 @@ $forumController->post('/{campagne_id}/topic/save', function($campagne_id, Reque
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$campagne_id = getExterneCampagneNumber($campagne_id);
 		$allPerso = $app['persoService']->getPersonnagesInCampagneLinkTopic($campagne_id, $topic_id);
-		return $app->render('topic_form.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'persos' => $allPerso]);
+		return $app->render('game/forum/topic_edit.html.twig', ['campagne_id' => $campagne_id,'topic' => $topic, 'error' => $e->getMessage(), 'is_mj' => $is_mj, 'persos' => $allPerso]);
 	}
 })->bind("topic_save");
 
@@ -195,7 +195,7 @@ $forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $t
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
-	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
+	return $app->render('game/forum/topic_post_list.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
 			"last_page" => $last_page, 'actual_page' => 0]);
 })->bind("topic_all");
@@ -236,7 +236,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
         }
         $campagne_id = getExterneCampagneNumber($campagne_id);
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
-	return $app->render('forum_topic.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
+	return $app->render('game/forum/topic_post_list.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
 			"last_page" => $last_page, 'actual_page' => $no_page]);
 })->bind("topic_page");
@@ -249,7 +249,7 @@ $forumController->get('/{campagne_id}/post/edit/{post_id}', function($campagne_i
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$campagne_id = getExterneCampagneNumber($campagne_id);
     $playerPersonnages = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
-	return $app->render('forum_post.html.twig', ['campagne_id' => $campagne_id, 'post' => $post,
+	return $app->render('game/forum/post_edit.html.twig', ['campagne_id' => $campagne_id, 'post' => $post,
 			'error' => '', 'is_mj' => $is_mj, 'personnages' => $personnages, 'player_personnages' => $playerPersonnages]);
 })->bind("post_edit");
 
@@ -304,7 +304,7 @@ $forumController->get('/{campagne_id}/section/delete/{section_id}', function($ca
 			$campagne = $app["campagneService"]->getCampagne($campagne_id);
 		}
 		$campagne_id = getExterneCampagneNumber($campagne_id);
-		return $app->render('forum_campagne.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error, 'campagne' => $campagne]);
+		return $app->render('game/home.html.twig', ['campagne_id' => $campagne_id, 'topics' => $topics, 'is_mj' => $is_mj, 'error' => $error, 'campagne' => $campagne]);
 	} else {
 		$app["sectionService"]->deleteSection($section_id);
 		return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));

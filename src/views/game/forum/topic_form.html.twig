@@ -1,0 +1,85 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+<div class"col-md-12">
+	{% if (error != "") %}
+	    <div class="alert alert-error">
+	    	{{ error }}
+	    </div>
+    {% endif %}
+
+	<form role="form" class="form-horizontal" action="{{ path('topic_save', {campagne_id : campagne_id}) }}" method="POST">
+
+    <fieldset class="titled-box">
+			<legend>Information principale</legend>
+
+	    <div class="pull-right">
+			<button type="submit" class="btn btn-primary">Sauvegarder</button>
+	    </div>
+
+      <input type="hidden" name="id" value="{{ topic.id }}" >
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="title">Title</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="title" name="title" placeholder="Titre du sujet" value="{{ topic.title }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2"  for="section_id">Catégories</label>
+        <div class="col-sm-10">
+
+          <select name="section_id" class="select2">
+           {% for section in sections %}
+             <option value="{{ section.id }}" {% if section.id == topic.section_id %} SELECTED="SELECTED" {% endif %}>
+              {{ section.title }}</option>
+           {% endfor %}
+          </select>
+        </div>
+      </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="ordre">N°Ordre</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ topic.ordre }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="stickable">Type</label>
+          <div class="col-sm-10">
+            <label class="radio-inline"><input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard</label>
+          <label class="radio-inline"><input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="is_closed">Etat</label>
+          <div class="col-sm-10">
+            <label class="radio-inline"><input type="radio" name="is_closed" value="0" {% if topic.is_closed == 0 %} checked {% endif %}> Ouvert</label>
+          <label class="radio-inline"><input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouiller</label>
+          </div>
+        </div>
+      </fieldset>
+	    <fieldset class="titled-box">
+	    <legend>Accessibilité</legend>
+	  	<div class="form-group">
+		    <label class="control-label col-sm-2" for="is_private">Accessibilité du sujet</label>
+		    <div class="col-sm-10">
+		    	<label class="radio-inline"><input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Public</label>
+				<label class="radio-inline"><input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Privée</label>
+                <label class="radio-inline"><input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> Grand-Public</label>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+			    <select class="form-control" multiple name="list_user[]" />
+			    {% for perso in persos %}
+			    		<option value="{{ perso.user_id }}" {% if perso.cr_user != null %} SELECTED="SELECTED" {% endif %}>
+			    			{{ perso.name }} ({{ perso.username }})
+			    		</option>
+			    {% endfor %}
+			    </select>
+		    </div>
+	    </div>
+	    </fieldset>
+    </form>
+</div>
+{% endblock %}
