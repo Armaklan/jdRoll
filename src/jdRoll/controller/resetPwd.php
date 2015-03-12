@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 $resetPwdController = $app['controllers_factory'];
 $resetPwdController->get('/', function() use($app) {
 
-    return $app->render('resetPwd.html.twig', ['warning' => '','error' => ""]);
+    return $app->render('user/reset_pwd.html.twig', ['warning' => '','error' => ""]);
 })->bind("reset");
 
 $resetPwdController->post('/reset', function(Request $request) use($app) {
@@ -30,7 +30,7 @@ $resetPwdController->post('/reset', function(Request $request) use($app) {
 		$warning = 'Le mot de passe a été changé correctement ! Vous pouvez maintenant vous connecter avec votre nouveau mot de passe';
     else
 		$error = "La réinitialisation du mot de passe a échoué";
-	return $app->render('resetPwd.html.twig', ['warning' => $warning, 'error' => $error]);
+	return $app->render('user/reset_pwd.html.twig', ['warning' => $warning, 'error' => $error]);
 })->bind("reset_pwd");
 
 $resetPwdController->post('/asked', function(Request $request) use($app) {
@@ -45,7 +45,7 @@ $resetPwdController->post('/asked', function(Request $request) use($app) {
 			Si vous n\'aviez pas configuré votre adresse e-mail ou si vous en avez perdu les accès, vous pouvez toujours plaidez votre cause auprès de nos admins bien aimés : contact@jdroll.org.';
     else
 		$error = "Le compte " . $user . " n'existe pas sur la plateforme JDRoll";
-	return $app->render('resetPwd.html.twig', ['warning' => $warning, 'error' => $error]);
+	return $app->render('user/reset_pwd.html.twig', ['warning' => $warning, 'error' => $error]);
 })->bind("reset_asked");
 
 $resetPwdController->get('/{alea}', function($alea) use($app) {
@@ -65,7 +65,7 @@ $resetPwdController->get('/{alea}', function($alea) use($app) {
 			$warning = "Vous pouvez maintenant réinitialiser votre mot de passe.";
 			$changePwd = 1;
 		}
-			return $app->render('resetPwd.html.twig', ['changePwd' => $changePwd,'warning' => $warning, 'error' => $error,'alea' => $alea]);
+			return $app->render('user/reset_pwd.html.twig', ['changePwd' => $changePwd,'warning' => $warning, 'error' => $error,'alea' => $alea]);
 })->bind("reset_ok");
 
 $app->mount('/resetPwd', $resetPwdController);

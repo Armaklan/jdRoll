@@ -18,17 +18,17 @@ $profileController->before($mustBeLogged);
 
 $profileController->get('/', function() use($app) {
     $user = $app["userService"]->getCurrentUser();
-    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
+    return $app->render('user/profile_edit.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("my_profile");
 
 $profileController->post('/save', function(Request $request) use($app) {
     $user = $app["userService"]->updateCurrentUser($request);
-    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
+    return $app->render('user/profile_edit.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("my_profile_save");
 
 $profileController->post('/save/cfg', function(Request $request) use($app) {
     $user = $app["userService"]->updateCurrentConfig($request);
-    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => ""]);
+    return $app->render('user/profile_edit.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("my_profile_cfg_save");
 
 $profileController->post('/passwd', function(Request $request) use($app) {
@@ -39,7 +39,7 @@ $profileController->post('/passwd', function(Request $request) use($app) {
         $error = $e->getMessage();
     }
     $user = $app["userService"]->getCurrentUser();
-    return $app->render('my_profile.html.twig', ['user' => $user, 'error' => $error]);
+    return $app->render('user/profile_edit.html.twig', ['user' => $user, 'error' => $error]);
 })->bind("my_profile_passwd");
 
 $profileController->get('/absences', function() use($app) {
@@ -78,7 +78,7 @@ $profileController->get('/stat', function() use($app) {
     $games = $app['postService']->getStatByGame($user);
     $total = $app['postService']->getTotalPost($user);
 
-    return $app->render('mystat.html.twig', [
+    return $app->render('user/stat.html.twig', [
         'total'=> $total,
         'data' => $data,
         'games_data' => $games]);

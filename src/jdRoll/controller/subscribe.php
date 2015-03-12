@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 $subscribeController = $app['controllers_factory'];
 $subscribeController->get('/', function() use($app) {
     $user = array('username' => '', 'mail' => '');
-    return $app->render('subscribe.html.twig', ['user' => $user, 'error' => ""]);
+    return $app->render('user/signup.html.twig', ['user' => $user, 'error' => ""]);
 })->bind("subscribe");
 
 $subscribeController->post('/save', function(Request $request) use($app) {
@@ -34,7 +34,7 @@ $subscribeController->post('/save', function(Request $request) use($app) {
         return $app->redirect($app->path(markdown, [ 'page' => 'guide']));
     } catch (Exception $e) {
         $user = array("username" => $request->get('username'), "mail" => $request->get('mail'));
-        return $app->render('subscribe.html.twig', ['user' => $user, 'error' => $e->getMessage()]);
+        return $app->render('user/signup.html.twig', ['user' => $user, 'error' => $e->getMessage()]);
     }
 })->bind("subscribe_save");
 

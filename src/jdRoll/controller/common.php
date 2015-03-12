@@ -98,7 +98,7 @@ $commonController->get('/profile/{username}', function($username) use($app) {
     $pjCampagnes = $app['campagneService']->getActivePjCampagnes($user['id']);
     $mjCampagnes = $app['campagneService']->getActiveMjCampagnes($user['id']);
     $absences = $app['absenceService']->getAllAbsence($user['id']);
-    return $app->render('profile.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes,
+    return $app->render('user/profile_view.html.twig', ['error' => "", 'user' => $user, 'pj_campagnes' => $pjCampagnes,
         'mj_campagnes' => $mjCampagnes, 'currentUser' => $currentUser,'isAdmin' => $isAdmin, 'absences' => $absences]);
 })->bind("profile");
 
@@ -110,13 +110,13 @@ $commonController->get('/profile/{username}/edit', function($username) use($app)
 		 return $app->redirect($app->path('my_profile'));
 
 
-    return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
+    return $app->render('user/profile_edit.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
 })->bind("profile_edit");
 
 $commonController->post('/profile/{username}/edit/save', function(Request $request) use($app) {
 	$user = $app["userService"]->updateUser($request);
 	$currentUser = $app["userService"]->getCurrentUser();
-    return $app->render('my_profile.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
+    return $app->render('user/profile_edit.html.twig', ['error' => "", 'user' => $user, 'adminUser' => $currentUser]);
 })->bind("profile_edit_save");
 
 $commonController->get('/about', function() use($app) {
@@ -174,7 +174,7 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 $commonController->get('/users', function(Request $request) use ($app) {
         $users = $app['userService']->getAllUsers();
 		$isAdmin = $app['campagneService']->isAdmin();
-	return $app->render('user_list.html.twig', ['users' => $users,'isAdmin' => $isAdmin]);
+	return $app->render('user/list.html.twig', ['users' => $users,'isAdmin' => $isAdmin]);
 })->bind("user_list");
 
 $commonController->get('/stat', function() use ($app) {
