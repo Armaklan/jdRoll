@@ -45,6 +45,8 @@ if [ "$cont" = "y" ]; then
     cat ddl.sql | mysql -u $user -p$pass -D $db
     echo "Initialisation des données"
     cat bin/data.sql | mysql -u $user -p$pass -D $db
+    echo "Application des mises à jours de structures"
+    cat ddl_update.sql | mysql -u $user -p$pass -D $db
     echo "******** Installation de la configuration ********"
     cp config.dist.yml config.yml
     sed 's\YOUR_USER\'$user'\g' config.yml -i config.yml
