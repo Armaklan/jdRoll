@@ -38,6 +38,7 @@ module.exports = function(grunt) {
                         'js/controller/theme-preview.js',
                         'js/controller/campagne-config.js',
                         'js/controller/feedback.js',
+                        'js/controller/forum.js',
                         'js/tools.js'
                     ],
                     'js/composant.min.js': [
