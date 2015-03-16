@@ -8,6 +8,12 @@
 
 var notifControllerImpl = function() {
 
+    //Declare favicon
+    var favicon = new Favico({
+        type: 'rectangle',
+        animation: 'slide'
+    });
+
 	// Decremente count of notification number
 	var decrementeNbMsg = function() {
 	    var notifZone = $("#notifNumber");
@@ -17,6 +23,7 @@ var notifControllerImpl = function() {
 	    if(nbMsg == 0) {
 	        setToNoMsg();
 	    }
+        updateFavicon();
 	}
 
 	// Clear notification zone
@@ -33,10 +40,30 @@ var notifControllerImpl = function() {
 	        type: "POST",
 	        url: BASE_PATH + "/notification/del",
 	            data: {id: idNotif},
-	        success: function(msg){},
+	        success: function(msg){
+
+            },
 	        error: function(msg) {}
 	    });
 	}
+
+    //Update favicon display
+    var updateFavicon = function(){
+        //Use notifNumber html content
+        var number = parseInt($('#notifNumber').html());
+
+        if(number){
+            //Display notification
+            favicon.badge(number);
+        }
+        else{
+            //If 0 notification, hide it
+            favicon.reset();
+        }
+    }
+
+    //Update favicon on first load
+    updateFavicon();
 
 	function refreshNotif() {
 		$.ajax({
@@ -52,6 +79,7 @@ var notifControllerImpl = function() {
 					$('#notifIndicator').removeClass('btn-notifs');
 					$('#notifIndicator').addClass('btn-default');
 				}
+                updateFavicon();
 		    },
 		    error: function(msg) {
 
