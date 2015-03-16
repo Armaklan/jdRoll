@@ -46,7 +46,6 @@ module.exports = function(grunt) {
                         'vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
                         'vendor/select2/select2.min.js',
                         'vendor/zeroclipboard/ZeroClipboard.min.js',
-                        'vendor/favico.js/favico-0.3.5.min.js',
                         'js/bootstrap/bootstrap-fileupload.min.js',
                         'js/bootstrap/bootstrap-datepicker.js'
                     ],
