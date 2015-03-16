@@ -30,6 +30,7 @@
     <ul class="list-group">
       {% for perso in allPerso %}
           <li class="list-group-item">
+            <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/perso_{{ perso.id }}.png"/>
             <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
               {{ perso.name }} ({{ perso.username }})
             </a>
