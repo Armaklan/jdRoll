@@ -40,6 +40,7 @@ var uiDicerImpl = function() {
         $('#waitingQuickLaunch').removeClass('hide');
         ajaxLaunchDice(topicId, param, description).
         done(function(retour){
+            retour = forumController.beautifyDice(retour);
             $('#resultatDicerQuick').html(retour);
 
             var text = 'Vous avez lancé ' + param + ' et obtenu : ' + retour + '<br>'
@@ -48,7 +49,8 @@ var uiDicerImpl = function() {
             $('#quickDicerRow').before(
                 '<tr>' + 
                 '    <td></td>' +
-                '    <td>' + text + '</td>' + 
+                '    <td><div class="postContent">' + text + '</div></td>' +
+                '    <td>&nbsp;</td>' +
                 '</tr>'
             );
         }).

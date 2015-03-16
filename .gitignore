@@ -13,3 +13,4 @@ files/
 composer.phar
 composer.lock
 config.yml
+/.idea/

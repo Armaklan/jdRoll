@@ -606,3 +606,23 @@ ul.nav-tabs li.active {
 .ng-invalid {
     border-color: red;
 }
+.dice{
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-weight: bold;
+    background-size: 100%;
+
+    background-image: url('../img/dice/d0.png');
+}
+.dice.dice_exploded{color: red;}
+.dice.dice_4{background-image: url('../img/dice/d4.png');}
+.dice.dice_6{background-image: url('../img/dice/d6.png');}
+.dice.dice_3{background-image: url('../img/dice/d6.png');}
+.dice.dice_8{background-image: url('../img/dice/d8.png');}
+.dice.dice_u{background-image: url('../img/dice/d8.png');}
+.dice.dice_10{background-image: url('../img/dice/d10.png');}
+.dice.dice_12{background-image: url('../img/dice/d12.png');}
+.dice.dice_20{background-image: url('../img/dice/d20.png');}
