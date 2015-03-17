@@ -78,9 +78,9 @@
 
             <div class="navbar-right navbar-form">
                   {% if (app.session.get('user') == null)  %}
-                    <a class="btn btn-primary"  href="{{ path('login_page', {url : '!'})  }}">
-                      <i class="icon-user"></i> Connexion</span>
-                    </a>
+                      <a class="btn btn-primary"  href="{{ path('login_page', {url : '!'})  }}">
+                          <i class="icon-user"></i> Connexion</span>
+                      </a>
                   {% else %}
                     {{ render(url('notifications_btn')) }}
                     <button type="button" onclick="feedbackService.openModal()" class="btn btn-default dropdown-toggle">
