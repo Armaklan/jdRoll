@@ -69,7 +69,7 @@ var uiDicerImpl = function() {
         $('#waitingLaunch').removeClass('hide');
         ajaxLaunchDice(0, param, description).
         then(function(retour){
-
+                retour = forumController.beautifyDice(retour);
                 $('#resultatDicer').html(retour);
                 var strDate = getNowDate();
 
