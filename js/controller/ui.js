@@ -57,7 +57,9 @@ var uiControllerImpl = function() {
     }
 
     function activateTooltip() {
-        $('.iconeBtn').tooltip();
+        $('.iconeBtn').tooltip({
+            container: 'body'
+        });
         $('.popover-elt').popover();
     }
 
