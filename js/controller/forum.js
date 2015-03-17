@@ -7,6 +7,7 @@
  */
 
 var forumControllerImpl = function() {
+    "use strict";
 
     /**
      * Returns a beautified dice string
@@ -20,13 +21,13 @@ var forumControllerImpl = function() {
             //Return the replaced string
             return '<span class="dice dice_'+$1+' '+(exploded?'dice_exploded':'')+'">'+$3+'</span>';
         });
-    }
+    };
 
     function onForumLoaded() {
         //Testing regexp
         var reg = /.*? a lancé .*? et a obtenu : (.*?)Description : .*/i;
         //For each post, see if it is a dice roll
-        $('.postContent').each(function(index, post){
+        $('.postDice').each(function(index, post){
             //Look for dices
             var dice = reg.exec(post.innerHTML);
 
@@ -38,7 +39,7 @@ var forumControllerImpl = function() {
             //Change using beautified dices
             post.innerHTML = post.innerHTML.replace(dice[1], beautifyDice(dice[1]));
 
-        })
+        });
     }
 
     return {

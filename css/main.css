@@ -626,3 +626,16 @@ ul.nav-tabs li.active {
 .dice.dice_10{background-image: url('../img/dice/d10.png');}
 .dice.dice_12{background-image: url('../img/dice/d12.png');}
 .dice.dice_20{background-image: url('../img/dice/d20.png');}
+
+.postDice {
+  width: 90%;
+  text-align: left;
+  background-color: rgba(210,210,210,0.2);
+  border: 1px solid rgba(90,90,90,0.5);
+  border-radius: 15px;
+  margin: auto;
+  padding: 20px;
+  padding-right: 40px;
+  padding-left: 130px;
+  background: url('../img/dice/logo.png') no-repeat 0% 50%;
+}

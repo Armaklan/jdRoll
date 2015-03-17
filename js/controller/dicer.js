@@ -20,22 +20,22 @@ var uiDicerImpl = function() {
     function getNowDate() {
         var nowDate = new Date();
         return nowDate.getFullYear()
-                    + '-' 
+                    + '-'
                     + nowDate.getMonth() + 1
-                    + '-' 
+                    + '-'
                     + nowDate.getDate()
                     + ' '
                     + nowDate.getHours()
-                    + ':' 
+                    + ':'
                     + nowDate.getMinutes()
-                    + ':' 
+                    + ':'
                     + nowDate.getSeconds()
                     ;
     }
 
     function dicerLaunch(topicId) {
-        param=$('#dicerParamQuick').val();
-        description=$('#dicerDescriptionQuick').val();
+        var param=$('#dicerParamQuick').val();
+        var description=$('#dicerDescriptionQuick').val();
 
         $('#waitingQuickLaunch').removeClass('hide');
         ajaxLaunchDice(topicId, param, description).
@@ -45,11 +45,10 @@ var uiDicerImpl = function() {
 
             var text = 'Vous avez lancé ' + param + ' et obtenu : ' + retour + '<br>'
                 + 'Description : ' + description;
-                
+
             $('#quickDicerRow').before(
-                '<tr>' + 
-                '    <td></td>' +
-                '    <td><div class="postContent">' + text + '</div></td>' +
+                '<tr>' +
+                '    <td colspan="2"><div class="postDice">' + text + '</div></td>' +
                 '    <td>&nbsp;</td>' +
                 '</tr>'
             );
@@ -75,9 +74,9 @@ var uiDicerImpl = function() {
                 var strDate = getNowDate();
 
                 $('#resultatDicerTable tbody tr:first').before(
-                    '<tr>' + 
+                    '<tr>' +
                     '    <td></td>' +
-                    '    <td>' + strDate + '</td>' + 
+                    '    <td>' + strDate + '</td>' +
                     '    <td>' + description + '</td>' +
                     '    <td>' + retour + '</td>' +
                     '</tr>'
@@ -88,7 +87,7 @@ var uiDicerImpl = function() {
         }).
         always(function() {
             $('#waitingLaunch').addClass('hide');
-        });;
+        });
         return false;
     }
 
