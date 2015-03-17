@@ -6,6 +6,8 @@ echo "******** Mise à jour de l'outillage ********"
 npm install
 echo "******** Mise à jour des dépendances Web ********"
 bower install --allow-root
+echo "******** Regénération des fichiers minifiers ********"
+grunt dist
 echo "******** Mise à jour des dépendances Php ********"
 php composer.phar install
 echo "******** Regénération de l'index autoload ********"
