@@ -609,6 +609,10 @@ ul.nav-tabs li.active {
 .diceLine{
     white-space: nowrap;
 }
+
+/**
+ * Dice display
+ */
 .dice{
     display: inline-block;
     height: 32px;
@@ -642,4 +646,31 @@ ul.nav-tabs li.active {
   padding-right: 40px;
   padding-left: 130px;
   background: url('../img/dice/logo.png') no-repeat 0% 50%;
+}
+
+/**
+ * Reduce navbar display for middle resolution (from 768px to 1180px)
+ */
+@media(max-width: 1180px) and (min-width:768px) {
+    .navbar button, .navbar a:not(.navbar-brand){
+        font-size: 0;
+    }
+    .navbar button{
+        height: 27px;
+    }
+    .navbar .caret{
+        display: block;
+        position: absolute;
+        bottom: 10px;
+    }
+    .navbar i{
+        font-size: 14px;
+        margin-right: 5px;
+    }
+    .navbar .msgNb{
+        font-size: 10px;
+    }
+    .dropdown-menu a, .dropdown-menu button{
+        font-size: 14px !important;
+    }
 }
