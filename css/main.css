@@ -606,6 +606,9 @@ ul.nav-tabs li.active {
 .ng-invalid {
     border-color: red;
 }
+.diceLine{
+    white-space: nowrap;
+}
 .dice{
     display: inline-block;
     height: 32px;
@@ -613,6 +616,7 @@ ul.nav-tabs li.active {
     line-height: 32px;
     text-align: center;
     font-weight: bold;
+    font-style: normal;
     background-size: 100%;
 
     background-image: url('../img/dice/d0.png');
