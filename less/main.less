@@ -1,4 +1,5 @@
 @import "sidebar.less";
+@import "dice.less";
 
 .categorie {
     background-color: #DDDDDD;
@@ -530,67 +531,3 @@ ul.nav-tabs li.active {
     white-space: nowrap;
 }
 
-/**
-* Dice display
-*/
-.dice{
-    display: inline-block;
-    height: 32px;
-    width: 32px;
-    line-height: 32px;
-    text-align: center;
-    font-weight: bold;
-    font-style: normal;
-    background-size: 100%;
-
-    background-image: url('../img/dice/d0.png');
-}
-.dice.dice_exploded{color: red;}
-.dice.dice_4{background-image: url('../img/dice/d4.png');}
-.dice.dice_6{background-image: url('../img/dice/d6.png');}
-.dice.dice_3{background-image: url('../img/dice/d6.png');}
-.dice.dice_8{background-image: url('../img/dice/d8.png');}
-.dice.dice_u{background-image: url('../img/dice/d8.png');}
-.dice.dice_10{background-image: url('../img/dice/d10.png');}
-.dice.dice_12{background-image: url('../img/dice/d12.png');}
-.dice.dice_20{background-image: url('../img/dice/d20.png');}
-
-.postDice {
-    width: 90%;
-    text-align: left;
-    background-color: rgba(210,210,210,0.2);
-    border: 1px solid rgba(90,90,90,0.5);
-    border-radius: 15px;
-    margin: auto;
-    padding: 20px;
-    padding-right: 40px;
-    padding-left: 130px;
-    background: url('../img/dice/logo.png') no-repeat 0% 50%;
-}
-
-/**
-* Reduce navbar display for middle resolution (from 768px to 1180px)
-*/
-@media(max-width: 1180px) and (min-width:768px) {
-    .navbar button, .navbar a:not(.navbar-brand){
-        font-size: 0;
-    }
-    .navbar button{
-        height: 27px;
-    }
-    .navbar .caret{
-        display: block;
-        position: absolute;
-        bottom: 10px;
-    }
-    .navbar i{
-        font-size: 14px;
-        margin-right: 5px;
-    }
-    .navbar .msgNb{
-        font-size: 10px;
-    }
-    .dropdown-menu a, .dropdown-menu button{
-        font-size: 14px !important;
-    }
-}
