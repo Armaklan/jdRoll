@@ -42,5 +42,6 @@
     require("chat.php");
     require("feedback.php");
     require("resetPwd.php");
-	  require("editor.php");
+	require("editor.php");
     require("api/game.php");
+    require("carte.php");
