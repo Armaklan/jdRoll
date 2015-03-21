@@ -1,6 +1,5 @@
 <?php
 namespace jdRoll\service;
-use svay\FaceDetector;
 
 /**
  * Manage information and listing of character

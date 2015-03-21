@@ -62,6 +62,7 @@ module.exports = function(grunt) {
           theme: {
             files: {
               'css/theme.min.css': [
+                  'vendor/leaflet/dist/leaflet.css',
                   'vendor/bootstrap-colorpicker/css/colorpicker.css',
                   'vendor/select2/select2.css',
                   'css/bootstrap/*.css',

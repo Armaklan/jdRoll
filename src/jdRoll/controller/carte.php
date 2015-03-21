@@ -17,11 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 $carteController = $app['controllers_factory'];
 $carteController->before($mustBeLogged);
 
-$carteController->get('/{campagne_id}/display/{carte_id}', function($campagne_id, $carte_id) use($app) {
-    $carte = $app['carteService']->getCarte($carte_id);
-    $is_mj = $app["campagneService"]->isMj($campagne_id);
-    return $app->render('carte/display.html.twig', ['campagne_id' => $campagne_id, 'is_mj'=>$is_mj, 'carte' => $carte, 'carte_json'=>json_encode($carte)]);
-})->bind("carte_display");
-
+$carteController->get('/{carte_id}', function($carte_id) use($app) {
+    return new JsonResponse($app['carteService']->getCarte($carte_id), 200);
+})->bind("carte_json");
 
 $app->mount('/carte', $carteController);

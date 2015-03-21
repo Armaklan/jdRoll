@@ -1,0 +1,38 @@
+<style type="text/css">
+    .logo_campagne{
+        display:none;
+    }
+    html, body, .container-fluid, .container-fluid>.row, #contentDiv{
+        height: 100%;
+        background: #666;
+    }
+    #map{
+        height: 800px;
+        width: 80%;
+    }
+    #map-sidebar{
+        float: left;
+        width: 20%;
+    }
+    .map-perso{
+        float: left;
+        margin: 5px;
+        width: 64px;
+        height: 64px;
+    }
+</style>
+
+
+<div id="map-sidebar">
+    <div class="map-perso" ng-repeat="perso in carte.personnages">
+        <img src="files/thumbnails/perso_{{perso.id}}.png"/>
+    </div>
+</div>
+
+<leaflet
+        id="map"
+        defaults="options.defaults"
+        center="options.center"
+        layers="options.layers"
+        maxBounds="options.maxBounds"
+        ></leaflet>

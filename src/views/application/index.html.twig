@@ -1,0 +1,31 @@
+{% extends "squelette_campagne.html.twig" %}
+
+{% block content %}
+
+<div ng-app="jdroll">
+    <div ng-view></div>
+</div>
+
+{% endblock %}
+
+{% block specificEndJs %}
+
+    <!-- IMPORTANT: all angular URL will base from this -->
+    <base href="{{ path('homepage') }}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
+
+    <!-- Angular dependencies-->
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet-src.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.min.js"></script>
+
+    <!-- Our Application -->
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>
+
+    <!-- Our Controllers -->
+    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/controller/carte.js"></script>
+
+{% endblock %}
