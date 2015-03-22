@@ -1,74 +1,45 @@
-<style type="text/css">
-    .logo_campagne{
-        display:none;
-    }
-    html, body, .container-fluid, .container-fluid>.row, #contentDiv{
-        height: 100%;
-        background: #666;
-    }
-    .leaflet-grid-label{
-        display: none !important;
-    }
-    .map{
-        height: 800px;
-        width: 80%;
-    }
-    .map-sidebar{
-        float: left;
-        width: calc(20% - 10px);
-        margin-right: 10px;
-        background-color: #fff;
-        border-radius: 5px;
-    }
-    .map-perso{
-        float: left;
-        margin: 5px;
-        width: 48px;
-        height: 48px;
-        cursor: pointer;
-        overflow: hidden;
+<div class="map-sidebar {{tabReduce ? 'map-sidebar-reduced':''}}" ng-if="carte.isMj">
+    
+    <ul class="nav nav-pills nav-justified">
+        <li class="{{tab=='perso' ? 'active':''}}" title="Personnages" ng-click="tab='perso'"><a><i class="fa fa-user"></i></a></li>
+        <!--<li class="{{tab=='lieux' ? 'active':''}}" title="Lieux" ng-click="tab='lieux'"><a><i class="fa fa-map-marker"></i></a></li>-->
+        <li class="{{tab=='config' ? 'active':''}}" title="Configuration" ng-click="tab='config'"><a><i class="fa fa-cog"></i></a></li>
+    </ul>
 
-        border-radius: 30px;
-        background-color: #fff;
-        border: 4px solid #666;
+    <div ng-show="tab=='perso'">
+        <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
+             data-drag="true"
+             data-jqyoui-options="{revert: true}"
+             jqyoui-draggable="{animate:true}"
+             ng-show=" ! perso.onMap"
+             ng-repeat="perso in carte.personnages">
+            <img src="files/thumbnails/perso_{{perso.id}}.png"/>
+        </div>
 
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-    }
-    .map-perso-user{
-        border-color: green;
-    }
-    .map-perso img{
-        width: 100%;
-    }
-</style>
-
-
-<div class="map-sidebar">
-    <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
-         data-drag="true"
-         data-jqyoui-options="{revert: true}"
-         jqyoui-draggable="{animate:true}"
-         ng-show=" ! perso.onMap"
-         ng-repeat="perso in carte.personnages">
-        <img src="files/thumbnails/perso_{{perso.id}}.png"/>
+        <div class="map-perso map-custom"
+             data-drag="true"
+             data-jqyoui-options="{revert: true}"
+             jqyoui-draggable="{animate:true}">
+            <i class="fa fa-plus fa-3x"></i>
+        </div>
     </div>
+
+    <div class="fa fa-expand fa-lg fa-flip-horizontal" ng-click="tabReduce=!tabReduce"></div>
 </div>
 
-<div>
+<leaflet
+        class="map"
 
-    <leaflet
-            class="map"
+        data-drop="true"
+        data-jqyoui-options
+        ng-model="list2"
+        jqyoui-droppable="dropOptions"
 
-            data-drop="true"
-            data-jqyoui-options
-            ng-model="list2"
-            jqyoui-droppable="dropOptions"
+        defaults="options.defaults"
+        center="options.center"
+        layers="options.layers"
+        markers="options.markers"
+        maxBounds="options.maxBounds"
+        ></leaflet>
 
-            defaults="options.defaults"
-            center="options.center"
-            layers="options.layers"
-            markers="options.markers"
-            maxBounds="options.maxBounds"
-            ></leaflet>
-
-</div>
+<i class="fa fa-3x fa-circle-o-notch fa-spin" ng-show="tracker.active()"></i>

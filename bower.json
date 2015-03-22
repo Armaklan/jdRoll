@@ -18,9 +18,9 @@
     "angular-leaflet": "~0.7.11",
     "angular-route": "~1.3.15",
     "leaflet-easy-button": "https://github.com/CliffCloud/Leaflet.EasyButton.git#v0",
-    "leaflet-simple-graticule": "https://github.com/ablakey/Leaflet.SimpleGraticule.git#22cc6708d05e2ac563d918a2fc08bd3d9db10e7e",
     "angular-dragdrop": "~1.0.11",
-    "underscore": "~1.8.2"
+    "underscore": "~1.8.2",
+    "angular-promise-tracker": "~2.1.0"
   },
   "devDependencies": {
     "angular-bootstrap": "~0.11.2",

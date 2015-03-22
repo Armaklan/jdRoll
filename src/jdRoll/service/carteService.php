@@ -26,7 +26,12 @@ class CarteService {
      */
     public function getCarte($id){
         //Fetch Carte information
-        $sql = "SELECT * FROM carte WHERE id=?";
+        $sql = "
+            SELECT carte.*, mj_id
+            FROM carte
+            LEFT JOIN campagne ON campagne_id = campagne.id
+            WHERE carte.id=?
+        ";
         $result = $this->db->executeQuery($sql, array($id));
         $carte = $result->fetch(\PDO::FETCH_ASSOC);
 
@@ -35,6 +40,7 @@ class CarteService {
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
         $carte['personnages'] = $result->fetchAll(\PDO::FETCH_ASSOC);
         $carte['config'] = isset($carte['config']) && $carte['config'] ? json_decode($carte['config']):new \stdClass();
+        $carte['isMj'] = $carte['mj_id'] == $this->session->get('user')['id'];
         return $carte;
     }
 

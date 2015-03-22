@@ -5,7 +5,8 @@
 var ngApplication = angular.module('jdroll', [
     'ngRoute',
     'ngDragDrop',
-    'leaflet-directive'
+    'leaflet-directive',
+    'ajoslin.promise-tracker'
 
 ]).config(['$routeProvider',
 function($routeProvider) {
