@@ -4,7 +4,9 @@
 
 var ngApplication = angular.module('jdroll', [
     'ngRoute',
+    'ngDragDrop',
     'leaflet-directive'
+
 ]).config(['$routeProvider',
 function($routeProvider) {
     $routeProvider.

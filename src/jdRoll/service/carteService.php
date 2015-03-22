@@ -26,7 +26,7 @@ class CarteService {
         $carte = $result->fetch(\PDO::FETCH_ASSOC);
 
         //Fetch PNJ
-        $sql = "SELECT id, name FROM personnages WHERE campagne_id=?";
+        $sql = "SELECT id, name, user_id FROM personnages WHERE campagne_id=?";
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
         $carte['personnages'] = $result->fetchAll(\PDO::FETCH_ASSOC);
 
