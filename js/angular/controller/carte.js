@@ -7,7 +7,7 @@
  * https://github.com/CliffCloud/Leaflet.EasyButton/tree/v0
  */
 ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkersHelpers', 'carte',
-    function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMarkersHelpers, carte) {
+function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMarkersHelpers, carte) {
 
     /**
      * **************************
@@ -36,10 +36,19 @@ ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletDa
         }).addTo(map);
     }
 
+    /**
+     * General marker creation
+     * @param id
+     * @param position
+     * @param image
+     * @param title
+     * @param cls
+     * @returns {{lat: (.createBoundsFromArray.northEast.lat|*|.createBoundsFromArray.southWest.lat|c.center.lat|e.northEast.lat|e.southWest.lat), lng: (.createBoundsFromArray.northEast.lng|*|.createBoundsFromArray.southWest.lng|c.center.lng|e.northEast.lng|e.southWest.lng), title: *, icon: {type: string, iconSize: number[], iconAnchor: number[], popupAnchor: number[], html: string, className: string}, draggable: boolean}}
+     */
     var createMarker = function(id, position, image, title, cls){
-        $scope.options.markers[id] = {
-            lat: position.lat,
-            lng: position.lng,
+        return $scope.options.markers[id] = {
+            lat: position[0],
+            lng: position[1],
             title: title,
             icon: {
                 type: 'div',
@@ -52,6 +61,30 @@ ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletDa
             draggable: true
         }
     }
+
+    /**
+     * Shortcut to create a perso marker
+     * @param perso
+     * @param position
+     */
+    var createMarkerPerso = function(perso, position){
+        var marker = createMarker('p' + perso.id, position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-perso-user':'');
+        marker.type = 'perso';
+        marker.id = perso.id;
+        perso.onMap = true;
+    }
+
+    var saveMap = _.debounce(function(){
+        $scope.carte.config.markers = [];
+        _.each($scope.options.markers, function(marker){
+            $scope.carte.config.markers.push({
+                type: marker.type,
+                id: marker.id,
+                position: [marker.lat, marker.lng]
+            })
+        })
+        $http.post('carte/save', $scope.carte);
+    }, 1000)
 
     /**
      * **************************
@@ -99,12 +132,11 @@ ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletDa
         var imageOffset = ui.draggable.width()/2;
         var mapOffset = $($scope.map.getContainer()).offset();
         var perso = ui.draggable.scope().perso;
-        var position = $scope.map.containerPointToLatLng([
+        var p = $scope.map.containerPointToLatLng([
             ui.offset.left - mapOffset.left + imageOffset,
             ui.offset.top - mapOffset.top + imageOffset
         ]);
-        perso.onMap = true;
-        createMarker('p' + perso.id, position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-perso-user':'');
+        var marker = createMarkerPerso(perso, [p.lat, p.lng]);
     }
 
     /**
@@ -113,14 +145,26 @@ ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletDa
      * **************************
      */
     leafletData.getMap().then(onGetMap);
-
+    $scope.$watch(function(){return $scope.options.markers}, function(newValue, oldValue){
+        if( ! _.isEqual(newValue, oldValue)){
+            //Compare object to avoid saving on map initialisation
+            saveMap();
+        }
+    }, true);
 
     /**
      * **************************
      * BOOTSTRAP
      * **************************
      */
-//    $scope.options.controls.custom.push(L.control.sidebar('sidebar'));
+    //If we have some markers to load, do it
+    if($scope.carte.config.markers){
+        $scope.carte.config.markers.forEach(function(marker){
+            if(marker.type == 'perso'){
+                createMarkerPerso(_.findWhere($scope.carte.personnages, {id : marker.id}), marker.position);
+            }
+        });
+    }
 
 
 }]);
