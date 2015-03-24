@@ -54,7 +54,7 @@ class CarteService {
             'published',
             'config'
         );
-
+die();
         //First, we check that the user can save a map for this campaign
         $cId = $data['campagne_id'];
         $sql = "SELECT mj_id FROM campagne WHERE id=?";

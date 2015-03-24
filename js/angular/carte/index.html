@@ -1,12 +1,12 @@
-<div class="map-sidebar {{tabReduce ? 'map-sidebar-reduced':''}}" ng-if="carte.isMj">
+<div class="map-sidebar {{carte.config.tabReduce ? 'map-sidebar-reduced':''}}" ng-if="carte.isMj">
     
     <ul class="nav nav-pills nav-justified">
-        <li class="{{tab=='perso' ? 'active':''}}" title="Personnages" ng-click="tab='perso'"><a><i class="fa fa-user"></i></a></li>
+        <li class="{{carte.config.tab=='perso' ? 'active':''}}" title="Personnages" ng-click="selectTab('perso')"><a><i class="fa fa-user"></i></a></li>
         <!--<li class="{{tab=='lieux' ? 'active':''}}" title="Lieux" ng-click="tab='lieux'"><a><i class="fa fa-map-marker"></i></a></li>-->
-        <li class="{{tab=='config' ? 'active':''}}" title="Configuration" ng-click="tab='config'"><a><i class="fa fa-cog"></i></a></li>
+        <li class="{{carte.config.tab=='config' ? 'active':''}}" title="Configuration" ng-click="selectTab('config')"><a><i class="fa fa-cog"></i></a></li>
     </ul>
 
-    <div ng-show="tab=='perso'">
+    <div ng-show="carte.config.tab=='perso'">
         <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
@@ -24,7 +24,14 @@
         </div>
     </div>
 
-    <div class="fa fa-expand fa-lg fa-flip-horizontal" ng-click="tabReduce=!tabReduce"></div>
+    <div ng-show="carte.config.tab=='config'">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-image"></i></span>
+            <input type="text" class="form-control" ng-model="interface.image">
+        </div>
+    </div>
+
+    <div class="fa fa-expand fa-lg fa-flip-horizontal" ng-click="carte.config.tabReduce=!carte.config.tabReduce"></div>
 </div>
 
 <leaflet

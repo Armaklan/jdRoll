@@ -6,19 +6,14 @@
  * http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/demo.html
  * https://github.com/CliffCloud/Leaflet.EasyButton/tree/v0
  */
-ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkersHelpers', 'promiseTracker', 'carte',
-function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMarkersHelpers, promiseTracker, carte) {
+ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletData', 'leafletLayerHelpers', 'leafletBoundsHelpers', 'leafletMarkersHelpers', 'promiseTracker', 'carte',
+function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoundsHelpers, leafletMarkersHelpers, promiseTracker, carte) {
 
     /**
      * **************************
      * LOCAL VARIABLES
      * **************************
      */
-    var bounds = [
-        [-carte.dimensions.h/2, -carte.dimensions.w/2],
-        [carte.dimensions.h/2, carte.dimensions.w/2]
-    ];
-    var offsetBounds = Math.max(carte.dimensions.h, carte.dimensions.w);
 
     /**
      * **************************
@@ -41,19 +36,8 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
         },
         center: [0, 0],
         markers: {},
-        maxBounds: leafletBoundsHelpers.createBoundsFromArray([
-            [-carte.dimensions.h/2-offsetBounds, -carte.dimensions.w/2-offsetBounds],
-            [carte.dimensions.h/2+offsetBounds, carte.dimensions.w/2+offsetBounds]
-        ]),
         layers: {
             baselayers: {
-                //The map image
-                map: {
-                    name: 'map',
-                    type: 'imageOverlay',
-                    url: $scope.carte.image,
-                    bounds: bounds
-                }
             }
         },
         controls: {
@@ -66,7 +50,12 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
     }
 
     //Default tab shown
-    $scope.tab = 'perso';
+    $scope.carte.config.tab = $scope.carte.config.tab ? 'perso':$scope.carte.config.tab;
+
+    //Interface object, used in the template only
+    $scope.interface = {
+        image: $scope.carte.image
+    };
 
     /**
      * **************************
@@ -76,15 +65,55 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
     var onGetMap = function(map){
         //Put map object in scope
         $scope.map = map;
+        imageSetup();
+    }
+
+    /**
+     * This function can be called once the image dimensions are know.
+     * - It will load the image on the map, removing the one before if necessary
+     * - It will then fit the map to the image
+     */
+    var imageSetup = function(){
+        //Bounds of the map from image dimensions
+        var bounds = [
+            [-$scope.carte.dimensions.h/2, -$scope.carte.dimensions.w/2],
+            [$scope.carte.dimensions.h/2, $scope.carte.dimensions.w/2]
+        ];
+
+        //Offset to allow moving the map to the side
+        var offsetBounds = Math.max($scope.carte.dimensions.h, $scope.carte.dimensions.w);
+
+        //Compute max bounds
+        $scope.options.maxBounds = leafletBoundsHelpers.createBoundsFromArray([
+            [-carte.dimensions.h/2-offsetBounds, -carte.dimensions.w/2-offsetBounds],
+            [carte.dimensions.h/2+offsetBounds, carte.dimensions.w/2+offsetBounds]
+        ]);
+
+        //Remove layers
+        $scope.map.eachLayer(function (layer) {
+            if(layer._image){
+                $scope.map.removeLayer(layer);
+            }
+        });
+
+        //Add the image layer
+        var layer = leafletLayerHelpers.createLayer({
+            name: 'map',
+            type: 'imageOverlay',
+            url: $scope.carte.image,
+            bounds: bounds
+        });
+        $scope.map.addLayer(layer);
 
         //Fit image to the map
         $timeout(function(){
-            map.fitBounds(bounds);
-            map.once('zoomend', function(){
-                map.options.minZoom = map.getZoom();
-                map.options.maxZoom = map.getZoom() + 4;
+            $scope.map.fitBounds(bounds);
+            $scope.map.once('zoomend', function(){
+                $scope.map.options.minZoom = $scope.map.getZoom();
+                $scope.map.options.maxZoom = $scope.map.getZoom() + 4;
             });
         })
+
     }
 
     /**
@@ -164,10 +193,9 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
     }
 
     /**
-     * Save the map
-     * @type {Function}
+     * Serialises the markers of the map on the carte object
      */
-    var saveMap = _.debounce(function(){
+    var updateCarteMarkers = function(){
         //Create marker array
         var markers = [];
         _.each($scope.options.markers, function(marker){
@@ -180,11 +208,35 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
         });
 
         //Save if changes
-        if( ! _.isEqual($scope.carte.config.markers, markers)){
+        if( ! _.isEqual($scope.carte.config.markers, markers) || force){
             $scope.carte.config.markers = markers;
-            var request = $http.post('carte/save', $scope.carte);
-            $scope.tracker.addPromise(request);
         }
+    }
+
+    /**
+     * When changing the image
+     * @param newImage
+     * @param oldImage
+     */
+    var onImageChange = function(newImage, oldImage){
+        if(newImage != oldImage){
+            $scope.getImageDimension(newImage).then(function(dimensions){
+                if(dimensions.w && dimensions.h){
+                    $scope.carte.dimensions = dimensions;
+                    $scope.carte.image = newImage;
+                    imageSetup();
+                }
+            });
+        }
+    }
+
+    /**
+     * Save the map
+     * @type {Function}
+     */
+    var saveMap = _.debounce(function(force){
+        var request = $http.post('carte/save', $scope.carte);
+        $scope.tracker.addPromise(request);
     }, 500);
 
     /**
@@ -225,17 +277,13 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
     }
 
     /**
-     * **************************
-     * EVENTS
-     * **************************
+     * Select a tab
+     * @param tab
      */
-    leafletData.getMap().then(onGetMap);
-    $scope.$watch(function(){return $scope.options.markers}, function(newValue, oldValue){
-        if( ! _.isEqual(newValue, oldValue)){
-            //Compare object to avoid saving on map initialisation
-            saveMap();
-        }
-    }, true);
+    $scope.selectTab = function(tab){
+        $scope.carte.config.tab = tab;
+        $scope.carte.config.tabReduce = false;
+    }
 
     /**
      * **************************
@@ -253,6 +301,21 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
             }
         });
     }
+
+    /**
+     * **************************
+     * EVENTS
+     * **************************
+     */
+    leafletData.getMap().then(onGetMap);
+    $scope.$watch(function(){return $scope.options.markers}, function(newValue, oldValue){
+        if( ! _.isEqual(newValue, oldValue)){
+            //Compare object to avoid saving on map initialisation
+            updateCarteMarkers();
+        }
+    }, true);
+    $scope.$watch(function(){return $scope.carte}, saveMap, true);
+    $scope.$watch(function(){return $scope.interface.image}, onImageChange, true);
 
 
 }]);
