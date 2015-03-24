@@ -10,15 +10,19 @@ ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletDa
 function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoundsHelpers, leafletMarkersHelpers, promiseTracker, carte) {
 
     /**
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      * LOCAL VARIABLES
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      */
 
     /**
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      * SCOPE VARIABLES
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      */
         //Carte received
     $scope.carte = carte;
@@ -58,13 +62,21 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     };
 
     /**
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      * LOCAL METHODS
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
+     */
+
+    /**
+     * Callback once the map has loaded
+     * @param map
      */
     var onGetMap = function(map){
         //Put map object in scope
         $scope.map = map;
+        //Launch setup
         imageSetup();
     }
 
@@ -72,6 +84,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * This function can be called once the image dimensions are know.
      * - It will load the image on the map, removing the one before if necessary
      * - It will then fit the map to the image
+     * @return L.ImageOverlay
      */
     var imageSetup = function(){
         //Bounds of the map from image dimensions
@@ -114,6 +127,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             });
         })
 
+        return layer;
     }
 
     /**
@@ -128,6 +142,9 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @returns {{lat: (.createBoundsFromArray.northEast.lat|*|.createBoundsFromArray.southWest.lat|c.center.lat|e.northEast.lat|e.southWest.lat), lng: (.createBoundsFromArray.northEast.lng|*|.createBoundsFromArray.southWest.lng|c.center.lng|e.northEast.lng|e.southWest.lng), title: *, icon: {type: string, iconSize: number[], iconAnchor: number[], popupAnchor: number[], html: string, className: string}, draggable: boolean}}
      */
     var createMarker = function(id, type, position, image, title, cls, popup){
+        //Unique ID
+        var uniqueId = type + id;
+
         //Create base marker
         var marker = {
             lat: position[0],
@@ -159,7 +176,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         marker.message = "<div class=\"map-popup map-popup-"+type+"\" ng-include src=\"'js/angular/carte/"+popupFile+"'\"></div>";
 
         //Create marker on map
-        $scope.options.markers[id] = marker;
+        $scope.options.markers[uniqueId] = marker;
 
         //Return created information
         return {
@@ -174,10 +191,21 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @param position
      */
     var createMarkerPerso = function(perso, position, popup){
-        var created = createMarker('p' + perso.id, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-perso-user':'', popup);
+        var created = createMarker(perso.id, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-perso-user':'', popup);
         created.marker.id = perso.id;
-        created.scope.perso = perso;
+        created.marker.perso = perso;
         perso.onMap = true;
+    }
+
+    /**
+     * Remove a marker from the map
+     * @param marker
+     */
+    var removeMarker = function(marker){
+        if(marker.type == 'perso'){
+            marker.perso.onMap = false;
+        }
+        delete $scope.options.markers[marker.type+marker.id];
     }
 
     /**
@@ -187,7 +215,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      */
     var createMarkerCustom = function(id, position, popup){
         var id = id ? id:Math.max(_.max(_.pluck(_.where($scope.options.markers, {type: 'custom'}), 'id')), 0)+1;
-        var created = createMarker('custom' + id, 'custom', position, '', 'Marqueur Personnalisé', '', popup);
+        var created = createMarker(id, 'custom', position, '', 'Marqueur Personnalisé', '', popup);
         created.marker.id = id;
         created.scope.id = id;
     }
@@ -208,9 +236,37 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         });
 
         //Save if changes
-        if( ! _.isEqual($scope.carte.config.markers, markers) || force){
+        if( ! _.isEqual($scope.carte.config.markers, markers)){
             $scope.carte.config.markers = markers;
         }
+    }
+
+    /**
+     * Save the map
+     * @type {Function}
+     */
+    var saveMap = _.debounce(function(){
+        var request = $http.post('carte/save', $scope.carte);
+        $scope.tracker.addPromise(request);
+    }, 500);
+
+    /**
+     * When changing markers
+     * @param newValue
+     * @param oldValue
+     */
+    var onMarkersChange = function(newValue, oldValue){
+        if( ! _.isEqual(newValue, oldValue)){
+            //Compare object to avoid saving on map initialisation
+            updateCarteMarkers();
+        }
+    }
+
+    /**
+     * When changing the carte object
+     */
+    var onCarteChange = function(){
+        saveMap();
     }
 
     /**
@@ -222,29 +278,36 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         if(newImage != oldImage){
             $scope.getImageDimension(newImage).then(function(dimensions){
                 if(dimensions.w && dimensions.h){
+                    //Change carte information
                     $scope.carte.dimensions = dimensions;
                     $scope.carte.image = newImage;
-                    imageSetup();
+                    //Launch image setup
+                    var layer = imageSetup();
+                    //Remove markers that are not in the map anymore
+                    var bounds = layer._bounds;
+                    _.each($scope.options.markers, function(marker, id){
+                        if(marker.type == 'perso'){
+
+                        }
+                    });
                 }
             });
         }
     }
 
     /**
-     * Save the map
-     * @type {Function}
-     */
-    var saveMap = _.debounce(function(force){
-        var request = $http.post('carte/save', $scope.carte);
-        $scope.tracker.addPromise(request);
-    }, 500);
-
-    /**
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      * SCOPE METHODS
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      */
-    //Dropping an item on the map
+    
+    /**
+     * Dropping an item on the map
+     * @param event
+     * @param ui
+     */
     $scope.onDropItem = function(event, ui){
         var imageOffset = ui.draggable.width()/2;
         var mapOffset = $($scope.map.getContainer()).offset();
@@ -261,18 +324,13 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         }
     }
 
-    //Removing a perso from the map
-    $scope.removeMarkerPerso = function(perso){
-        if(confirm('Êtes vous sûr(e) de vouloir retirer ce personnage de la carte?')){
-            delete $scope.options.markers['p'+perso.id];
-            perso.onMap = false;
-        }
-    }
-
-    //Removing a custom marker from the map
-    $scope.removeMarkerCustom = function(marker){
-        if(confirm('Êtes vous sûr(e) de vouloir retirer ce marqueur personnalisé de la carte?')){
-            delete $scope.options.markers['custom'+marker.id];
+    /**
+     * Removing a perso from the map
+     * @param perso
+     */
+    $scope.removeMarker = function(marker){
+        if(confirm('Êtes vous sûr(e) de vouloir retirer ce marqueur de la carte?')){
+            removeMarker(marker);
         }
     }
 
@@ -286,11 +344,13 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     }
 
     /**
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      * BOOTSTRAP
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      */
-    //If we have some markers to load, do it
+    //If we have some markers to load on the map, do it
     if($scope.carte.config.markers){
         $scope.carte.config.markers.forEach(function(marker){
             if(marker.type == 'perso'){
@@ -303,18 +363,15 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     }
 
     /**
-     * **************************
-     * EVENTS
-     * **************************
+     * ********************************************************************************************************
+     * ********************************************************************************************************
+     * EVENTS LINKING
+     * ********************************************************************************************************
+     * ********************************************************************************************************
      */
     leafletData.getMap().then(onGetMap);
-    $scope.$watch(function(){return $scope.options.markers}, function(newValue, oldValue){
-        if( ! _.isEqual(newValue, oldValue)){
-            //Compare object to avoid saving on map initialisation
-            updateCarteMarkers();
-        }
-    }, true);
-    $scope.$watch(function(){return $scope.carte}, saveMap, true);
+    $scope.$watch(function(){return $scope.options.markers}, onMarkersChange, true);
+    $scope.$watch(function(){return $scope.carte}, onCarteChange, true);
     $scope.$watch(function(){return $scope.interface.image}, onImageChange, true);
 
 

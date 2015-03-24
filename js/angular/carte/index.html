@@ -6,12 +6,13 @@
         <li class="{{carte.config.tab=='config' ? 'active':''}}" title="Configuration" ng-click="selectTab('config')"><a><i class="fa fa-cog"></i></a></li>
     </ul>
 
-    <div ng-show="carte.config.tab=='perso'">
+    <div class="map-tab" ng-show="carte.config.tab=='perso'">
         <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
              jqyoui-draggable="{animate:true}"
              ng-show=" ! perso.onMap"
+             bs-tooltip="perso.name"
              ng-repeat="perso in carte.personnages">
             <img src="files/thumbnails/perso_{{perso.id}}.png"/>
         </div>
@@ -19,15 +20,20 @@
         <div class="map-perso map-custom"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
+             bs-tooltip="'Ajouter un marqueur personnalisé'"
              jqyoui-draggable="{animate:true}">
             <i class="fa fa-plus fa-3x"></i>
         </div>
     </div>
 
-    <div ng-show="carte.config.tab=='config'">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-image"></i></span>
-            <input type="text" class="form-control" ng-model="interface.image">
+    <div class="map-tab" ng-show="carte.config.tab=='config'">
+        <div class="form-group">
+            <label>Changer l'image de fond</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-image"></i></span>
+                <input type="text" class="form-control" ng-model="interface.image">
+                <a href="#uploaderModal" role="button" data-toggle="modal" class="input-group-addon btn btn-default" title="Uploader une image"><i class="icon-upload"></i></a>
+            </div>
         </div>
     </div>
 

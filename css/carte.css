@@ -52,6 +52,9 @@ a{
     box-shadow: rgba(0, 0, 0, 0.8) 5px 5px 12px 0px;
     transition: height 0.5s ease-in-out;
 }
+.map-sidebar .map-tab{
+    margin: 10px;
+}
 .map-sidebar .nav li:first-child a{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -79,6 +82,11 @@ a{
     border: 4px solid #666;
 
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+
+    text-align: center;
+}
+.map-custom .fa{
+    margin-top: 1px;
 }
 .map-perso .btn{
     float: left;

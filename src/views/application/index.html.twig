@@ -10,9 +10,6 @@
 
 {% block specificEndJs %}
 
-    <!-- IMPORTANT: all angular URL will base from this -->
-    <base href="{{ path('homepage') }}">
-
     <!-- CSS -->
     <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
@@ -23,13 +20,14 @@
 
     <!-- Leaflet plugins -->
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet-simple-graticule/L.SimpleGraticule.js"></script>
 
     <!-- Angular plugins-->
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-dragdrop/src/angular-dragdrop.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.min.js"></script>
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.min.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.min.js"></script>
 
     <!-- Our Application -->
     <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>

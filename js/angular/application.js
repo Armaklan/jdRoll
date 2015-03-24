@@ -1,12 +1,12 @@
 /**
  * Created by Cadrach on 21/03/15.
  */
-
 var ngApplication = angular.module('jdroll', [
     'ngRoute',
     'ngDragDrop',
     'leaflet-directive',
-    'ajoslin.promise-tracker'
+    'ajoslin.promise-tracker',//Promise Tracker
+    'mgcrea.ngStrap' //UI directives
 
 ]).config(['$routeProvider',
 function($routeProvider) {
