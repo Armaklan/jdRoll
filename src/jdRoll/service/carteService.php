@@ -40,7 +40,7 @@ class CarteService {
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
         $carte['personnages'] = $result->fetchAll(\PDO::FETCH_ASSOC);
         $carte['config'] = isset($carte['config']) && $carte['config'] ? json_decode($carte['config']):new \stdClass();
-        $carte['isMj'] = $carte['mj_id'] == $this->session->get('user')['id'];
+        $carte['isMj'] = isset($carte['mj_id']) && $carte['mj_id'] == $this->session->get('user')['id'];
         return $carte;
     }
 

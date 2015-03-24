@@ -12,7 +12,7 @@ var ngApplication = angular.module('jdroll', [
 function($routeProvider) {
     $routeProvider.
         when('/carte/:carteId', {
-            templateUrl: 'templates/carte/index.html',
+            templateUrl: 'js/angular/carte/index.html',
             controller: 'CtrlCarte',
             resolve: {
                 carte: function($route, $http, $q){

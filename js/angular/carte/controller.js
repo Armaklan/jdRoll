@@ -127,7 +127,7 @@ function ($scope, $http, $timeout, leafletData, leafletBoundsHelpers, leafletMar
         marker.getMessageScope = function(){
             return scope;
         };
-        marker.message = "<div class=\"map-popup map-popup-"+type+"\" ng-include src=\"'templates/carte/"+popupFile+"'\"></div>";
+        marker.message = "<div class=\"map-popup map-popup-"+type+"\" ng-include src=\"'js/angular/carte/"+popupFile+"'\"></div>";
 
         //Create marker on map
         $scope.options.markers[id] = marker;
