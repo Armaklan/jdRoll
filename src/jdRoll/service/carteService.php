@@ -19,6 +19,15 @@ class CarteService {
         $this->session = $session;
     }
 
+    protected function _mustBeMj($campagneId){
+        $sql = "SELECT mj_id FROM campagne WHERE id=?";
+        $result = $this->db->executeQuery($sql, array($campagneId));
+        $mjId = $result->fetchColumn(0);
+        if($this->session->get('user')['id'] != $mjId || ! $mjId){
+            throw new \Exception("Vous n'avez pas les droits suffisants pour cette action.");
+        }
+    }
+
     /**
      * Return carte
      * @param $id
@@ -35,6 +44,10 @@ class CarteService {
         $result = $this->db->executeQuery($sql, array($id));
         $carte = $result->fetch(\PDO::FETCH_ASSOC);
 
+        if( ! $carte['published']){
+            $this->_mustBeMj($carte['campagne_id']);
+        }
+
         //Fetch PNJ
         $sql = "SELECT id, name, user_id FROM personnages WHERE campagne_id=?";
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
@@ -44,6 +57,30 @@ class CarteService {
         return $carte;
     }
 
+    /**
+     * Return all cartes from a campagne
+     * @param $campagne_id
+     * @param $withUnpublished
+     * @internal param $id
+     * @return mixed
+     */
+    public function getAllCartes($campagne_id, $withUnpublished=false){
+        //Fetch Carte information
+        $sql = "
+            SELECT id, campagne_id, name, description, image, published
+            FROM carte
+            WHERE campagne_id=? ".($withUnpublished?'':' AND published=1')."
+        ";
+        $result = $this->db->executeQuery($sql, array($campagne_id));
+
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Sauvegarde la carte
+     * @param $data
+     * @throws \Exception
+     */
     public function saveCarte($data){
         //List of savable fields
         $fields = array(
@@ -56,13 +93,7 @@ class CarteService {
         );
 
         //First, we check that the user can save a map for this campaign
-        $cId = $data['campagne_id'];
-        $sql = "SELECT mj_id FROM campagne WHERE id=?";
-        $result = $this->db->executeQuery($sql, array($cId));
-        $mjId = $result->fetchColumn(0);
-        if($this->session->get('user')['id'] != $mjId || ! $mjId){
-            throw new \Exception("Vous n'avez pas les droits suffisants pour cette action.");
-        }
+        $this->_mustBeMj($data['campagne_id']);
 
         //Then, we save the data, INSERT or UPDATE is automatic
         $sql = "
@@ -86,5 +117,19 @@ class CarteService {
 
         //Run it!
         $stmt->execute();
+    }
+
+    /**
+     * Delete a carte
+     * @param $id
+     */
+    public function deleteCarte($id){
+        //Fetch carte
+        $carte = $this->getCarte($id);
+        //Check authorizations
+        $this->_mustBeMj($carte['campagne_id']);
+        //Delete carte
+        $sql = "DELETE FROM carte WHERE id=?";
+        $this->db->executeQuery($sql, array($id));
     }
 }

@@ -21,6 +21,10 @@ $carteController->get('/{carte_id}', function($carte_id) use($app) {
     return new JsonResponse($app['carteService']->getCarte($carte_id), 200);
 })->bind("carte_json");
 
+$carteController->get('/delete/{carte_id}', function($carte_id) use($app) {
+    return new JsonResponse($app['carteService']->deleteCarte($carte_id), 200);
+})->bind("carte_delete");
+
 $carteController->post('/save', function(Request $request) use($app) {
     $data = json_decode($request->getContent(), true);
     $app['carteService']->saveCarte($data);

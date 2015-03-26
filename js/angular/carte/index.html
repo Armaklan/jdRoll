@@ -10,7 +10,7 @@
         <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
-             jqyoui-draggable="{animate:true}"
+             jqyoui-draggable="{animate:true, onDrag:'onDrag'}"
              ng-show=" ! perso.onMap"
              bs-tooltip="perso.name"
              ng-repeat="perso in carte.personnages">
@@ -21,7 +21,7 @@
              data-drag="true"
              data-jqyoui-options="{revert: true}"
              bs-tooltip="'Ajouter un marqueur personnalisé'"
-             jqyoui-draggable="{animate:true}">
+             jqyoui-draggable="{animate:true, onDrag:'onDrag'}">
             <i class="fa fa-plus fa-3x"></i>
         </div>
     </div>
@@ -34,6 +34,11 @@
                 <input type="text" class="form-control" ng-model="interface.image">
                 <a href="#uploaderModal" role="button" data-toggle="modal" class="input-group-addon btn btn-default" title="Uploader une image"><i class="icon-upload"></i></a>
             </div>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="carte.published" ng-true-value="'1'" ng-false-value="'0'"> Visible aux joueurs
+            </label>
         </div>
     </div>
 

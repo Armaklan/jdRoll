@@ -325,6 +325,13 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     }
 
     /**
+     * On dragging
+     */
+    $scope.onDrag = function(){
+        jQuery('.tooltip').hide();
+    }
+
+    /**
      * Removing a perso from the map
      * @param perso
      */

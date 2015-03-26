@@ -539,7 +539,7 @@ BEGIN
           `name` VARCHAR(45) NULL,
           `description` TEXT NULL,
           `image` TEXT NULL,
-          `published` tinyint(1) DEFAULT '0',
+          `published` tinyint(1) DEFAULT '1',
           `config` LONGTEXT NULL,
           PRIMARY KEY (`id`),
           INDEX `campagne` (`campagne_id` ASC)

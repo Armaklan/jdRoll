@@ -35,6 +35,21 @@
 					{% endfor %}
 				</ul>
 			</div>
+
+            <div class="col-md-4">
+                <ul class="nav nav-stacked">
+                    <li><b>Cartes</b></li>
+                    {% for carte in allCarte %}
+                        <li>
+                            <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
+                                <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
+                                {{ carte.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
 			<div class="col-md-4">
 				<div class="page-header" style="padding-left: 1.3em; padding-right: 1.3em;">
 				  <h5>Informations campagnes</h5>
