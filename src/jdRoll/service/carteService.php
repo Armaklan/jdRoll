@@ -14,9 +14,10 @@ class CarteService {
     private $db;
     private $session;
 
-    public function __construct($db, $session) {
+    public function __construct($db, $session, $thumbnailService) {
         $this->db = $db;
         $this->session = $session;
+        $this->thumbnailService = $thumbnailService;
     }
 
     protected function _mustBeMj($campagneId){
@@ -95,28 +96,37 @@ class CarteService {
         //First, we check that the user can save a map for this campaign
         $this->_mustBeMj($data['campagne_id']);
 
+        //Bind the values
+        $usedFields = array();
+        $usedValues = array();
+        foreach($data as $key=>$value){
+            if(in_array($key, $fields)){
+                $usedValues[$key] = is_array($value) ? json_encode($value):$value;
+                $usedFields[] = $key;
+            }
+        }
+
         //Then, we save the data, INSERT or UPDATE is automatic
         $sql = "
             INSERT INTO carte
-            (".implode(',', $fields).")
+            (".implode(',', $usedFields).")
             VALUES
-            (".implode(',', array_map(function($v){return ":$v";}, $fields)).")
+            (".implode(',', array_map(function($v){return ":$v";}, $usedFields)).")
             ON DUPLICATE KEY UPDATE
-            ".implode(',', array_map(function($v){return "$v=:$v";}, $fields))."
+            ".implode(',', array_map(function($v){return "$v=:$v";}, $usedFields))."
         ";
 
         //Prepare SQL
         $stmt = $this->db->prepare($sql);
 
-        //Bind the values
-        foreach($data as $key=>$value){
-            if(in_array($key, $fields)){
-                $stmt->bindValue($key, is_array($value) ? json_encode($value):$value);
-            }
-        }
-
         //Run it!
-        $stmt->execute();
+        $stmt->execute($usedValues);
+
+        if(isset($data['image'])){
+            //If image was passed, we must generate the thumbnail
+            $id = isset($data['id']) ? intval($data['id']):$this->db->lastInsertId();
+            $this->thumbnailService->generateThumbnail('carte', $id, $data['image']);
+        }
     }
 
     /**

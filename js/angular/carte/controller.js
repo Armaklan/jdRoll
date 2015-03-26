@@ -25,7 +25,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * ********************************************************************************************************
      */
         //Carte received
-    $scope.carte = carte;
+    $scope.carte = angular.copy(carte);
     //Tracker to show loading icon
     $scope.tracker = promiseTracker();
     //Map options
@@ -246,7 +246,19 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @type {Function}
      */
     var saveMap = _.debounce(function(){
-        var request = $http.post('carte/save', $scope.carte);
+        //Clone carte
+        var copy = angular.copy($scope.carte);
+        delete copy.personnages;
+
+        if(copy.image == carte.image){
+            //Send image url only if different then original image
+            delete copy.image;
+        }
+        else{
+            //Else new image becomes the original
+            carte.image = $scope.carte.image;
+        }
+        var request = $http.post('carte/save', copy);
         $scope.tracker.addPromise(request);
     }, 500);
 
