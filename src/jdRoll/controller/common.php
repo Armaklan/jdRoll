@@ -202,6 +202,11 @@ $commonController->get('/themes/{id}', function($id) use($app) {
     return new JsonResponse($data, 200);
 });
 
+$commonController->get('/generate-thumbnails', function() use($app) {
+    $app['thumbnailService']->generateThumbnails();
+    return new JsonResponse('OK', 200);
+})->bind("generate_thumbnails");
+
 $app->mount('/', $commonController);
 
-?>
+

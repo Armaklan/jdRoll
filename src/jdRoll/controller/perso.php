@@ -257,10 +257,5 @@
 	    return $app->redirect($app->path('perso_pnj', array('campagne_id' => $campagne_id)));
 	})->bind("pnj_cat_save");
 
-    $persoController->get('/generate-thumbnails', function() use($app) {
-        $app['persoService']->generateThumbnails();
-        return new JsonResponse('OK', 200);
-    })->bind("pnj_generate_thumbnails");
-
 	$app->mount('/perso', $persoController);
 

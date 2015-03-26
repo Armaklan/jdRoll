@@ -17,6 +17,7 @@ use jdRoll\service\FeedbackService;
 use jdRoll\service\AnnonceService;
 use jdRoll\service\ThemeService;
 use jdRoll\service\PostContentService;
+use jdRoll\service\ThumbnailService;
 
 /*
     Définition des services
@@ -27,8 +28,11 @@ $app['dbService'] = function ($app) {
 $app['userService'] = function ($app) {
     return new UserService($app['db'], $app['session']);
 };
+$app['thumbnailService'] = function ($app) {
+    return new ThumbnailService($app['db'], $app['session']);
+};
 $app['persoService'] = function ($app) {
-    return new PersoService($app['db'], $app['session']);
+    return new PersoService($app['db'], $app['session'], $app['thumbnailService']);
 };
 $app['campagneService'] = function ($app) {
     return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService']);
@@ -72,3 +76,4 @@ $app['themeService'] = function ($app) {
 $app['postContentService'] = function ($app) {
     return new PostContentService($app['persoService'],$app['session']);
 };
+
