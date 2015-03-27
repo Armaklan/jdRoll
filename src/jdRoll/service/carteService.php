@@ -80,12 +80,14 @@ class CarteService {
     /**
      * Sauvegarde la carte
      * @param $data
+     * @return array
      * @throws \Exception
      */
     public function saveCarte($data){
         //List of savable fields
         $fields = array(
             'id',
+            'campagne_id',
             'name',
             'description',
             'image',
@@ -95,6 +97,11 @@ class CarteService {
 
         //First, we check that the user can save a map for this campaign
         $this->_mustBeMj($data['campagne_id']);
+
+        //Cannot move the carte from another campagne, if it already exists
+        if(isset($data['campagne_id']) && isset($data['id'])){
+            unset($data['campagne_id']);
+        }
 
         //Bind the values
         $usedFields = array();
@@ -122,11 +129,17 @@ class CarteService {
         //Run it!
         $stmt->execute($usedValues);
 
+        //Get id
+        $id = isset($data['id']) ? intval($data['id']):$this->db->lastInsertId();
+
         if(isset($data['image'])){
             //If image was passed, we must generate the thumbnail
-            $id = isset($data['id']) ? intval($data['id']):$this->db->lastInsertId();
             $this->thumbnailService->generateThumbnail('carte', $id, $data['image']);
         }
+
+        return array(
+            'id' => $id,
+        );
     }
 
     /**

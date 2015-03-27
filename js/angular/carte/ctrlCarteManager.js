@@ -1,13 +1,11 @@
 /**
  * TODO / To check&test
  * https://github.com/SINTEF-9012/Leaflet.MapPaint
- * https://github.com/ablakey/Leaflet.SimpleGraticule <== GRID
  * https://github.com/ubergesundheit/Leaflet.EdgeMarker
  * http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/demo.html
- * https://github.com/CliffCloud/Leaflet.EasyButton/tree/v0
  */
-ngApplication.controller('CtrlCarte', ['$scope', '$http', '$timeout', 'leafletData', 'leafletLayerHelpers', 'leafletBoundsHelpers', 'leafletMarkersHelpers', 'promiseTracker', 'carte',
-function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoundsHelpers, leafletMarkersHelpers, promiseTracker, carte) {
+ngApplication.controller('CtrlCarteManager', ['$scope', '$http', '$timeout', 'leafletData', 'leafletLayerHelpers', 'leafletBoundsHelpers', 'leafletMarkersHelpers', 'carte',
+function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoundsHelpers, leafletMarkersHelpers, carte) {
 
     /**
      * ********************************************************************************************************
@@ -24,10 +22,9 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * ********************************************************************************************************
      * ********************************************************************************************************
      */
-        //Carte received
+    //Carte received
     $scope.carte = angular.copy(carte);
-    //Tracker to show loading icon
-    $scope.tracker = promiseTracker();
+
     //Map options
     $scope.options = {
         defaults: {
@@ -53,12 +50,10 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         onDrop: 'onDropItem'
     }
 
-    //Default tab shown
-    $scope.carte.config.tab = $scope.carte.config.tab ? 'perso':$scope.carte.config.tab;
-
     //Interface object, used in the template only
     $scope.interface = {
-        image: $scope.carte.image
+        image: $scope.carte.image,
+        tab: 'perso'
     };
 
     /**
@@ -259,7 +254,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             carte.image = $scope.carte.image;
         }
         var request = $http.post('carte/save', copy);
-        $scope.tracker.addPromise(request);
+        $scope.loadingTracker.addPromise(request);
     }, 500);
 
     /**
@@ -358,7 +353,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @param tab
      */
     $scope.selectTab = function(tab){
-        $scope.carte.config.tab = tab;
+        $scope.interface.tab = tab;
         $scope.carte.config.tabReduce = false;
     }
 
@@ -389,9 +384,11 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * ********************************************************************************************************
      */
     leafletData.getMap().then(onGetMap);
-    $scope.$watch(function(){return $scope.options.markers}, onMarkersChange, true);
-    $scope.$watch(function(){return $scope.carte}, onCarteChange, true);
-    $scope.$watch(function(){return $scope.interface.image}, onImageChange, true);
+    if($scope.carte.isMj === true){
+        $scope.$watch(function(){return $scope.options.markers}, onMarkersChange, true);
+        $scope.$watch(function(){return $scope.carte}, onCarteChange, true);
+        $scope.$watch(function(){return $scope.interface.image}, onImageChange, true);
+    }
 
 
 }]);

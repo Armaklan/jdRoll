@@ -28,26 +28,39 @@
 	    	</div>
 
 	    	<div class="col-md-4">
-				<ul class="nav nav-stacked">
-					<li><b>Personnages</b></li>
-					{% for perso in allPerso %}
-							<li><a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">{{ perso.name }} ({{ perso.username }})</a></li>
-					{% endfor %}
-				</ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Personnages</b>
+                    </div>
+                    <ul class="nav nav-stacked">
+                        {% for perso in allPerso %}
+                            <li>
+                                <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
+                                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/perso_{{ perso.id }}.png"/>
+                                    {{ perso.name }} ({{ perso.username }})
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
 			</div>
 
             <div class="col-md-4">
-                <ul class="nav nav-stacked">
-                    <li><b>Cartes</b></li>
-                    {% for carte in allCarte %}
-                        <li>
-                            <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
-                                <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
-                                {{ carte.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Cartes</b>
+                    </div>
+                    <ul class="nav nav-stacked">
+                        {% for carte in allCarte %}
+                            <li>
+                                <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
+                                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
+                                    {{ carte.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
 
 			<div class="col-md-4">

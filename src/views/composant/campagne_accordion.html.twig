@@ -39,12 +39,17 @@
     </ul>
   </div>
 
-  {% if allCarte|length %}
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
                 <span class="fa fa-caret-down"></span>
                 Cartes
+                {% if is_mj %}
+                <a class="btn btn-primary btn-xs pull-right" style="color:white" href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/create">
+                    <i class="icon-plus"></i>
+                </a>
+                {% endif %}
             </h3>
         </div>
         <ul class="list-group">
@@ -58,7 +63,6 @@
             {% endfor %}
         </ul>
     </div>
-  {% endif %}
 
   {% if config.sidebar_text != "" %}
   <div class="panel panel-default">

@@ -1,0 +1,58 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">
+            Ajouter une Carte
+
+            <div class="btn btn-success btn-xs pull-right" ng-click="create()">
+                Créer la carte
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label>Nom de la carte</label>
+            <input type="text" class="form-control" ng-model="carte.name">
+        </div>
+        <div class="form-group">
+            <label>Choisir l'image de fond</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-image"></i></span>
+                <input type="text" class="form-control" ng-model="carte.image">
+                <a href="#uploaderModal" role="button" data-toggle="modal" class="input-group-addon btn btn-default" title="Uploader une image"><i class="icon-upload"></i></a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Visibilité</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="carte.published" ng-true-value="'1'" ng-false-value="'0'"> Visible aux joueurs
+                </label>
+            </div>
+        </div>
+
+        <div class="alert alert-danger" ng-show="messages.length">
+            <ul>
+                <li ng-repeat="message in messages">{{message}}</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-info">
+            Fonctionnement:
+            <ul>
+                <li>Votre carte sera sauvegardée <b>à chaque modification automatiquement</b>.</li>
+                <li>Vos joueurs ne peuvent pas modifier la carte, et pourront la voir seulement si la case "Visible aux joueurs" est cochée.</li>
+            </ul>
+            <br/>
+            Quelques idées de cartes:
+            <ul>
+                <li>Une carte du monde, pour placer vos lieux importants et situer votre groupe, sa destination...</li>
+                <li>La carte d'une zone de combat, pour positionner stratégiquement vos PJ & PNJ.</li>
+                <li>La carte de la ville, pour localiser les endroits importants d'une enquêtes par exemple.</li>
+            </ul>
+        </div>
+
+        <div class="btn btn-success pull-right" ng-click="create()">
+            Créer la carte
+        </div>
+    </div>
+</div>
