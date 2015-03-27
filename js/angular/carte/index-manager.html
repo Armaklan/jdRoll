@@ -7,7 +7,7 @@
     </ul>
 
     <div class="map-tab" ng-show="interface.tab=='perso'">
-        <div class="map-perso {{perso.user_id ? 'map-perso-user':''}}"
+        <div class="map-pin map-pin-perso {{perso.user_id ? 'map-pin-perso-user':''}}"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
              jqyoui-draggable="{animate:true, onDrag:'onDrag'}"
@@ -17,12 +17,12 @@
             <img src="files/thumbnails/perso_{{perso.id}}.png"/>
         </div>
 
-        <div class="map-perso map-custom"
+        <div class="map-pin map-pin-custom"
              data-drag="true"
              data-jqyoui-options="{revert: true}"
              bs-tooltip="'Ajouter un marqueur personnalisé'"
-             jqyoui-draggable="{animate:true, onDrag:'onDrag'}">
-            <i class="fa fa-plus fa-3x"></i>
+             jqyoui-draggable="{animate:true, onDrag:'onDrag', onStop:'onDragEnd'}">
+            <img src="img/defaultCustom.png"/>
         </div>
     </div>
 
@@ -64,5 +64,4 @@
         center="options.center"
         layers="options.layers"
         markers="options.markers"
-        maxBounds="options.maxBounds"
         ></leaflet>

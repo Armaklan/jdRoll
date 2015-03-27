@@ -91,8 +91,12 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         //Offset to allow moving the map to the side
         var offsetBounds = Math.max($scope.carte.dimensions.h, $scope.carte.dimensions.w);
 
+        //Rest min & max zoom
+        $scope.map.options.minZoom = -4;
+        $scope.map.options.maxZoom = +4;
+
         //Compute max bounds
-        $scope.options.maxBounds = leafletBoundsHelpers.createBoundsFromArray([
+        $scope.map.setMaxBounds([
             [-carte.dimensions.h/2-offsetBounds, -carte.dimensions.w/2-offsetBounds],
             [carte.dimensions.h/2+offsetBounds, carte.dimensions.w/2+offsetBounds]
         ]);
@@ -152,14 +156,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
                 iconAnchor: [24, 24],
                 popupAnchor:  [0, 0],
                 html: !_.isEmpty(image) ? '<img src="'+image+'"/>':'',
-                className: 'map-' + type + ' ' + cls
+                className: 'map-pin map-pin-' + type + ' ' + cls
             },
             draggable: $scope.carte.isMj ? true:false
         }
 
         //Create popup & its scope
         var scope = $scope.$new();
-        var popupFile = 'popup-'+type+'-'+($scope.carte.isMj === true ? 'mj':'player')+'.html';
+        var popupFile = 'popup-'+($scope.carte.isMj === true ? 'mj':'player')+'-'+type+'.html';
         scope.popup = popup && !_.isArray(popup) ? popup:{};
         scope.marker = marker;
 
@@ -186,7 +190,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @param position
      */
     var createMarkerPerso = function(perso, position, popup){
-        var created = createMarker(perso.id, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-perso-user':'', popup);
+        var created = createMarker(perso.id, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-pin-perso-user':'', popup);
         created.marker.id = perso.id;
         created.marker.perso = perso;
         perso.onMap = true;
@@ -210,9 +214,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      */
     var createMarkerCustom = function(id, position, popup){
         var id = id ? id:Math.max(_.max(_.pluck(_.where($scope.options.markers, {type: 'custom'}), 'id')), 0)+1;
-        var created = createMarker(id, 'custom', position, '', 'Marqueur Personnalisé', '', popup);
+        var created = createMarker(id, 'custom', position, popup.image, 'Marqueur Personnalisé', '', popup);
         created.marker.id = id;
         created.scope.id = id;
+
+        //Watch changes to image to update the icon
+        $scope.$watch(function(){return created.scope.popup.image}, function(){
+            created.marker.icon.html = '<img src="'+created.scope.popup.image+'"/>';
+        }, true)
     }
 
     /**
@@ -290,11 +299,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
                     $scope.carte.image = newImage;
                     //Launch image setup
                     var layer = imageSetup();
-                    //Remove markers that are not in the map anymore
-                    var bounds = layer._bounds;
-                    _.each($scope.options.markers, function(marker, id){
-                        if(marker.type == 'perso'){
 
+                    //Place marker outside the map at the border
+                    var bounds = layer._bounds;
+                    var corner = bounds.getNorthEast();
+                    _.each($scope.options.markers, function(marker, id){
+                        if( ! bounds.contains([marker.lat, marker.lng])){
+                            marker.lat = corner.lat;
+                            marker.lng = corner.lng;
                         }
                     });
                 }
@@ -327,8 +339,9 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             createMarkerPerso(scope.perso, [p.lat, p.lng]);
         }
         else{
-            createMarkerCustom(null, [p.lat, p.lng], {});
+            createMarkerCustom(null, [p.lat, p.lng], {image: 'img/defaultCustom.png'});
         }
+        $scope.onDragEnd();
     }
 
     /**
@@ -336,6 +349,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      */
     $scope.onDrag = function(){
         jQuery('.tooltip').hide();
+        jQuery('.map-sidebar').css('background-color', 'rgba(255,255,255, 0.2)');
+    }
+
+    /**
+     * On drag ending
+     */
+    $scope.onDragEnd = function(){
+        jQuery('.map-sidebar').css('background-color', '#fff');
     }
 
     /**
