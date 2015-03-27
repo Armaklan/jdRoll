@@ -1,23 +1,28 @@
-	<table class="table table-striped table-hover campagneTable">
-			<thead>
-				<tr>
-					<th colspan="3">Cartes</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for carte in cartes %}
-				<tr>
-					<td>{{ carte.name }}</td>
-					<td><i>{{ carte.published ? 'Visible':'Masquée' }}</i></td>
-					<td>
-                        <a class="btn btn-danger-ssctrl pull-right" onclick="campagneConfig.deleteCarte({{carte.id}}, $(this).parents('tr'));" title="Supprimer la carte" >
-                            <i class="icon-remove"></i>
-                        </a>
-                        <a class="btn btn-primary pull-right" style="margin-right:5px" href="{{ path('ng_app', {campagne_id: campagne_id}) }}#/carte/{{ carte.id }}" title="Voir la carte">
-                            <i class="icon-cog"></i>
-                        </a>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-	</table>
+<table class="table table-striped table-hover campagneTable">
+        <thead>
+            <tr>
+                <th colspan="3">
+                    Cartes
+                    <a class="btn btn-success pull-right"  href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/create">
+                        <i class="icon-plus"></i> Ajouter une carte
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carte in cartes %}
+            <tr>
+                <td>{{ carte.name }}</td>
+                <td><i>{{ carte.published ? 'Visible':'Masquée' }}</i></td>
+                <td>
+                    <a class="btn btn-danger-ssctrl pull-right" onclick="campagneConfig.deleteCarte({{carte.id}}, $(this).parents('tr'));" title="Supprimer la carte" >
+                        <i class="icon-remove"></i>
+                    </a>
+                    <a class="btn btn-primary pull-right" style="margin-right:5px" href="{{ path('ng_app', {campagne_id: campagne_id}) }}#/carte/{{ carte.id }}" title="Voir la carte">
+                        <i class="icon-cog"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
