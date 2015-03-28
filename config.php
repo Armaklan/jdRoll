@@ -3,6 +3,10 @@
 use Monolog\Logger;
 use \Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
+
+//Constantes
+define('FOLDER_FILES', __DIR__.'/files/');
+
 /**
  * Config provider
  */

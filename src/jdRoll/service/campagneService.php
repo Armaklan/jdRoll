@@ -17,7 +17,7 @@ class CampagneService {
 	private $persoService;
 	private $userService;
 
-	public function __construct($db, $session,$persoService, $userService)
+	public function __construct($db, $session, $persoService, $userService)
     {
         $this->db = $db;
         $this->session = $session;

@@ -166,7 +166,7 @@ $commonController->post('/upload', function(Request $request) use ($app) {
 		$filename = $file->getClientOriginalName();
 		$ext = explode("/",$file->getClientMimeType())[1];
 		$filename = sha1($filename . microtime()) . "." . $ext;
-		$file->move(__DIR__.'/../../../files/', $filename);
+		$file->move(FOLDER_FILES, $filename);
 	}
 	return $app->path('homepage') . "files/" . $filename;
 })->bind("upload");
@@ -202,6 +202,11 @@ $commonController->get('/themes/{id}', function($id) use($app) {
     return new JsonResponse($data, 200);
 });
 
+$commonController->get('/generate-thumbnails', function() use($app) {
+    $app['thumbnailService']->generateThumbnails();
+    return new JsonResponse('OK', 200);
+})->bind("generate_thumbnails");
+
 $app->mount('/', $commonController);
 
-?>
+

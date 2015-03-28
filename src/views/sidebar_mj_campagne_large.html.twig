@@ -26,7 +26,12 @@
 				<ul class="nav nav-stacked">
 					<li><b>Personnages</b></li>
 					{% for perso in allPerso %}
-						<li><a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">{{ perso.name }} ({{ perso.username }})</a></li>
+						<li>
+                            <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
+                                <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/perso_{{ perso.id }}.png"/>
+                                {{ perso.name }} ({{ perso.username }})
+                            </a>
+                        </li>
 					{% endfor %}
 				</ul>
 			</div>

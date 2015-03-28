@@ -14,9 +14,10 @@ class PersoService {
     private $db;
     private $session;
 
-    public function __construct($db, $session) {
+    public function __construct($db, $session, $thumbnailService) {
         $this->db = $db;
         $this->session = $session;
+        $this->thumbnailService = $thumbnailService;
     }
 
 
@@ -195,6 +196,9 @@ class PersoService {
         $stmt->bindValue("widgets", json_encode($widgets));
 
         $stmt->execute();
+
+        //Generate thumbnail from avatar
+        $this->thumbnailService->generateThumbnail('perso', $perso_id, $request->get('avatar'));
     }
 
     public function setTechnical($perso_id, $template) {
@@ -247,6 +251,9 @@ class PersoService {
 		$stmt->bindValue("perso_fields",$request->get('hiddenInputFields'));
         $stmt->bindValue("widgets", json_encode($widgets));
         $stmt->execute();
+
+        //Generate thumbnail
+        $this->thumbnailService->generateThumbnail('perso', $this->db->lastInsertId(), $request->get('avatar'));
     }
 
     public function deletePersonnage($perso_id) {
@@ -384,7 +391,5 @@ class PersoService {
         $result = $this->db->fetchAll($sql, array("id" => $campagne_id));
         return $result;
     }
-
 }
 
-?>
