@@ -12,30 +12,36 @@
 
 {% block specificEndJs %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/carte.css" type="text/css" media="all">
+    {% if app.debug %}
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/css/carte.css" type="text/css" media="all">
 
-    <!-- Underscore -->
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/underscore/underscore.js"></script>
+        <!-- Underscore -->
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/underscore/underscore.js"></script>
 
-    <!-- Leaflet plugins -->
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.js"></script>
+        <!-- Leaflet plugins -->
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.js"></script>
 
-    <!-- Angular plugins-->
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-dragdrop/src/angular-dragdrop.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.min.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.min.js"></script>
+        <!-- Angular plugins-->
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-dragdrop/src/angular-dragdrop.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.js"></script>
 
-    <!-- Our Application -->
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>
+        <!-- Our Application -->
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>
 
-    <!-- Our Controllers -->
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteCreator.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteManager.js"></script>
+        <!-- Our Controllers -->
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteCreator.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteManager.js"></script>
+    {% else %}
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/css/cadrach.angular.min.css" type="text/css" media="all">
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/cadrach.angular.min.js"></script>
+    {% endif %}
 
 {% endblock %}

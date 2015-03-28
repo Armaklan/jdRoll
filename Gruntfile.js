@@ -22,6 +22,9 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
+			options: {
+				mangle: false
+			},
             my_target: {
                 files: {
                     'js/controller.min.js': [
@@ -54,7 +57,20 @@ module.exports = function(grunt) {
                         'vendor/flot/jquery.flot.time.js',
                         'vendor/flot/jquery.flot.pie.js',
                         'vendor/flot/jquery.flot.navigate.js'
-                    ]
+                    ],
+					'js/cadrach.angular.min.js': [
+						'vendor/underscore/underscore.js',
+						'vendor/leaflet/dist/leaflet.js',
+						'vendor/angular-dragdrop/src/angular-dragdrop.js',
+						'vendor/angular-leaflet/dist/angular-leaflet-directive.js',
+						'vendor/angular-route/angular-route.js',
+						'vendor/angular-promise-tracker/promise-tracker.js',
+						'vendor/angular-strap/dist/angular-strap.js',
+						'vendor/angular-strap/dist/angular-strap.tpl.js',
+						'js/angular/application.js',
+						'js/angular/carte/ctrlCarteCreator.js',
+						'js/angular/carte/ctrlCarteManager.js'
+					]
                 }
             }
         },
@@ -68,7 +84,11 @@ module.exports = function(grunt) {
                   'css/bootstrap/*.css',
                   'css/datepicker.css',
                   'css/main.css'
-              ]
+              ],
+			  'css/cadrach.angular.min.css': [
+				  'vendor/leaflet/dist/leaflet.css',
+				  'css/carte.css'
+			  ]
             }
           }
         }
