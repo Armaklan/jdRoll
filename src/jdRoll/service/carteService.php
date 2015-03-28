@@ -94,7 +94,7 @@ class CarteService {
             'published',
             'config'
         );
-die();
+
         //First, we check that the user can save a map for this campaign
         $this->_mustBeMj($data['campagne_id']);
 
