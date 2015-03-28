@@ -53,7 +53,7 @@ var configBase = {
             onclick: function() {
                 editor.windowManager.open({
                     title: 'Message privé',
-                    url: '/editor/tagPrivate/' + CAMPAGNE_ID,
+                    url: BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID,
 					height: "280",
 					buttons: [{
                             text: 'OK',
@@ -61,7 +61,7 @@ var configBase = {
                             disabled: false,
                             onclick: function(e){
 
-								var find_src = '/editor/tagPrivate/' + CAMPAGNE_ID;
+								var find_src = BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID;
 								var items = [];
 								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").each(function() {
 										   items.push($(this).val());
@@ -113,7 +113,7 @@ var configBase = {
             onclick: function() {
                 editor.windowManager.open({
                     title: 'Lien vers fiche PNJ',
-                    url: '/editor/tagPerso/' + CAMPAGNE_ID,
+                    url: BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID,
 					height: "280",
 					buttons: [{
                             text: 'OK',
@@ -121,9 +121,10 @@ var configBase = {
                             disabled: false,
                             onclick: function(e){
 
-								var find_src = '/editor/tagPerso/' + CAMPAGNE_ID;
+								var find_src = BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID;
 								var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
-								editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + editor.selection.getContent() + "[/pnj]" );
+                                var content = editor.selection.getContent() ? editor.selection.getContent(): val;
+								editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + content + "[/pnj]" );
                                 editor.windowManager.close();
                             }
                         }, {
