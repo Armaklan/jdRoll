@@ -1,0 +1,14 @@
+<div class="map-popup-img">
+    <img ng-src="{{popup.image}}"/>
+    <button class="btn btn-danger pull-left" ng-click="removeMarker(marker)" bs-tooltip="'Supprimer ce marqueur'" data-placement="bottom">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+<input class="form-control" ng-model="popup.name" placeholder="Nom"/>
+<textarea class="form-control pull-left" ng-model="popup.text" placeholder="Description"></textarea>
+<div class="input-group">
+    <span class="input-group-addon"><i class="fa fa-image"></i></span>
+    <input type="text" class="form-control" ng-model="popup.image">
+    <a href="#uploaderModal" role="button" data-toggle="modal" class="input-group-addon btn btn-default" title="Uploader une image"><i class="icon-upload"></i></a>
+</div>
+<div class="clearfix"></div>

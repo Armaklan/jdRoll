@@ -15,13 +15,13 @@
         <div class="btn-group">
     	<a href="{{ path('forum_campagne', {campagne_id: campagne.id}) }}" class="btn iconeBtn btn-default" title="Forum"><i class="icon-globe"></i></a>
     	{% if is_mj or is_participant %}
-			<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn btn-default" title="Galerie des PNJ"><i class="icon-user"></i></a>
+			<a href="{{ path('perso_pnj', {campagne_id: campagne.id}) }}" class="btn iconeBtn btn-default" title="Gallerie des PNJ"><i class="icon-user"></i></a>
 			{% if is_mj or is_admin %}
-				<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+				<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Configurer l'espace de campagne"><i class="icon-wrench"></i></a>
 			{% endif %}
     	{% else %}
             {% if is_admin %}
-                <a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Editer"><i class="icon-edit"></i></a>
+                <a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-primary" title="Configurer l'espace de campagne"><i class="icon-wrench"></i></a>
             {% endif %}
                 {% if campagne.is_recrutement_open == 1 %}
                     <a href="{{ path('campagne_join', {'id' : campagne.id})}}" class="btn btn-primary"><i class="icon-share"></i> Rejoindre la partie</a>

@@ -21,11 +21,16 @@ class ThumbnailService {
      * Generate thumbnail for all required items
      */
     public function generateThumbnails(){
-        //Size of the thumbnail
-        $sql = "SELECT id, avatar FROM personnages WHERE 1";
+        //Personnages
+        $sql = "SELECT id, avatar as image FROM personnages WHERE 1";
+        foreach($this->db->fetchAll($sql) as $item){
+            $this->generateThumbnail('perso', $item['id'], $item['image'], $force=false);
+        }
 
-        foreach($this->db->fetchAll($sql) as $perso){
-            $this->generateThumbnail('perso', $perso['id'], $perso['avatar'], $force=false);
+        //Cartes
+        $sql = "SELECT id, image FROM carte WHERE 1";
+        foreach($this->db->fetchAll($sql) as $item){
+            $this->generateThumbnail('carte', $item['id'], $item['image'], $force=false);
         }
     }
 

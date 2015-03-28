@@ -533,6 +533,17 @@ BEGIN
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+        CREATE TABLE `carte` (
+          `id` INT NOT NULL AUTO_INCREMENT,
+          `campagne_id` INT NULL,
+          `name` VARCHAR(45) NULL,
+          `description` TEXT NULL,
+          `image` TEXT NULL,
+          `published` tinyint(1) DEFAULT '1',
+          `config` LONGTEXT NULL,
+          PRIMARY KEY (`id`),
+          INDEX `campagne` (`campagne_id` ASC)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         --
         -- Contraintes pour les tables exportées
