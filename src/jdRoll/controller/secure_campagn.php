@@ -32,6 +32,7 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $themes = $app['themeService']->all();
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
+            $cartes = $app['carteService']->getAllCartes($campagne_id, true);
             $is_mj = $app["campagneService"]->isMj($campagne_id);
             $participants = $app["campagneService"]->getParticipant($campagne_id);
             return $app->render('game/config/edit.html.twig', [
@@ -41,7 +42,11 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
                 'participants' => $participants,
                 'campagne' => $campagne,
                 'themes' => $themes,
-                'personnages' => $personnages, 'is_mj' => true, 'error' => ""]);
+                'personnages' => $personnages,
+                'cartes' => $cartes,
+                'is_mj' => true,
+                'error' => ""
+            ]);
         })->bind("campagne_config_edit");
 
 $securedCampagneController->post('/config/save', function(Request $request) use($app) {
@@ -238,12 +243,14 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
+            $cartes = $app["carteService"]->getAllCartes($campagne_id);
             return $app->render('sidebar_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'perso' => $perso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
                 'topics' => $topics,
+                        'allCarte' => $cartes,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
                         'config' => $config, 'alert' => $alert, 'is_mj' => false]);
         })->bind("sidebar_campagne_large");
@@ -259,9 +266,11 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
             $config = $app['campagneService']->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
+            $cartes = $app["carteService"]->getAllCartes($campagne_id, true);
             return $app->render('sidebar_mj_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'allPerso' => $allPerso,
+                'allCarte' => $cartes,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
                 'topics' => $topics,

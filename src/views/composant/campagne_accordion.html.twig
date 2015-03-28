@@ -39,6 +39,31 @@
     </ul>
   </div>
 
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="fa fa-caret-down"></span>
+                Cartes
+                {% if is_mj %}
+                <a class="btn btn-primary btn-xs pull-right" style="color:white" href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/create">
+                    <i class="icon-plus"></i>
+                </a>
+                {% endif %}
+            </h3>
+        </div>
+        <ul class="list-group">
+            {% for carte in allCarte %}
+                <li class="list-group-item">
+                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
+                    <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
+                        {{ carte.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
   {% if config.sidebar_text != "" %}
   <div class="panel panel-default">
     <div class="panel-heading">
