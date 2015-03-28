@@ -11,8 +11,11 @@
     			    	<div class="btn-group">
 	    			    	{% set pull_mode = "" %}
 					        {% include("composant/my_campagne_btm.html.twig") %}
-							<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-							<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+							    <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
+                            {% if is_mj or is_admin %}
+                                <a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn btn-default iconeBtn" title="Configurer l'espace de campagne"><i class="icon-wrench"></i></a>
+                            {% endif %}
+							<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
 							<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 	                        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
 	                        <a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
@@ -23,18 +26,42 @@
 				    </div><p/>
 	    	</div>
 	    	<div class="col-md-4">
-				<ul class="nav nav-stacked">
-					<li><b>Personnages</b></li>
-					{% for perso in allPerso %}
-						<li>
-                            <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
-                                <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/perso_{{ perso.id }}.png"/>
-                                {{ perso.name }} ({{ perso.username }})
-                            </a>
-                        </li>
-					{% endfor %}
-				</ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Personnages</b>
+                    </div>
+                    <ul class="nav nav-stacked">
+                        {% for perso in allPerso %}
+                            <li>
+                                <a onClick="persoModalService.openPerso({{campagne_id}}, {{perso.id}})">
+                                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/perso_{{ perso.id }}.png"/>
+                                    {{ perso.name }} ({{ perso.username }})
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
 			</div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Cartes</b>
+                        <a class="btn btn-primary btn-xs pull-right"  href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/create">
+                            <i class="icon-plus"></i> Ajouter une carte
+                        </a>
+                    </div>
+                    <ul class="nav nav-stacked">
+                        {% for carte in allCarte %}
+                            <li>
+                                <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
+                                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
+                                    {{ carte.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
 			<div class="col-md-4" style="padding-left: 1.3em; padding-right: 1.3em;">
 				<div class="page-header">
 				  <h5>Informations campagnes</h5>
@@ -75,7 +102,10 @@
 			            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
 			        </a>
 					<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Forum"><i class="icon-folder-close"></i></a>
-					<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Galerie des PNJ"><i class="icon-group"></i></a>
+                    {#{% if is_mj or is_admin %}#}
+                        {#<a href="{{ path('campagne_config_edit',  {campagne_id : campagne.id}) }}" class="btn iconeBtn btn-default" title="Configurer l'espace de campagne"><i class="icon-wrench"></i></a>#}
+                    {#{% endif %}#}
+					<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
 					<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 			        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
 			        </div>

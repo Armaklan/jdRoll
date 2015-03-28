@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+    <!-- IMPORTANT: all angular URL will base from this -->
+    <base href="{{ path('homepage') }}">
+
 	<title>jdRoll - Jeu de Rôle par Forum</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -23,7 +27,7 @@
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
   {% else %}
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/theme.min.css?v=20150316_001" type="text/css" media="all">
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/theme.min.css?v=20150328_001" type="text/css" media="all">
   {% endif %}
 
 	<script type="text/javascript">
@@ -128,6 +132,8 @@
 
 	<!-- Application specific controller -->
 	{% if app.debug %}
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/tinymce_conf.js?v=20141004_001"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/notification.js"></script>
@@ -143,19 +149,16 @@
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/campagne-config.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/feedback.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.js"></script>
 	{% else %}
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20150316_001"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20150328_001"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
 	{% endif %}
 
 
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollFDP.js?v=1"></script>
 	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
-
 
     {% block specificEndJs %}
 

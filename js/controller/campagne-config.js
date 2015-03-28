@@ -134,5 +134,21 @@ var campagneConfig = (function (tinyMCE) {
         return false;
     };
 
+    component.deleteCarte = function(carte, domObject) {
+        bootbox.confirm("Supprimer cette carte ?", function(confirmed) {
+            if(confirmed) {
+                $.get('carte/delete/' + carte).
+                    done(function() {
+                        setMsg("success", "Carte supprimée");
+                        domObject.remove();
+                    }).
+                    fail(function(err) {
+                        setMsg("danger", err);
+                    });
+            }
+        });
+        return false;
+    };
+
     return component;
 })(tinyMCE);
