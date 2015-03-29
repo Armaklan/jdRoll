@@ -1,0 +1,116 @@
+.sidebar {
+
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-radius: 3px 0 0;
+    bottom: 0;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    position: fixed;
+    right: 0;
+    overflow: scroll;
+
+    li {
+        line-height: 15px;
+    }
+
+    li a {
+        padding: 3px 10px;
+    }
+
+    a {
+        color: black;
+    }
+
+    .nav-pills>li>a {
+        text-shadow: none;
+    }
+
+    #widgets-panel {
+        max-width: 100%;
+        padding: 12px 6px 0 12px;
+
+        .panel-title .fa-caret-down {
+            float: right;
+            right: 10px;
+        }
+
+        .menu-icon {
+            margin-right: 20px;
+        }
+    }
+
+    #tabs-panel .menu-icon {
+        margin-right: 10px;
+    }
+
+    .panel {
+        color: black;
+        font-size: 0.9em !important;
+
+        a {
+            color: #428bca;
+        }
+
+        .icon-bell-alt {
+            color: #F24444;
+        }
+
+    }
+
+    a.iconeBtn {
+        color: black;
+    }
+}
+
+
+.sidebarTop {
+    background-color: #eFeFeF;
+    padding: 1em;
+    border-radius: 15px;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    border: 1px solid #c5c5c5;
+    box-shadow: 1px 1px 8px #888;
+
+    li {
+        line-height: 15px;
+
+        a {
+            padding: 3px 10px;
+        }
+    }
+
+
+    .nav-pills>li>a {
+        text-shadow: none;
+    }
+
+}
+
+
+/**
+* Reduce navbar display for middle resolution (from 768px to 1180px)
+*/
+@media(max-width: 1180px) and (min-width:768px) {
+    .navbar button, .navbar a:not(.navbar-brand){
+        font-size: 0;
+    }
+    .navbar button{
+        height: 27px;
+    }
+    .navbar .caret{
+        display: block;
+        position: absolute;
+        bottom: 10px;
+    }
+    .navbar i{
+        font-size: 14px;
+        margin-right: 5px;
+    }
+    .navbar .msgNb{
+        font-size: 10px;
+    }
+    .dropdown-menu a, .dropdown-menu button{
+        font-size: 14px !important;
+    }
+}
