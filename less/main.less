@@ -1,3 +1,5 @@
+@import "../vendor/bootstrap/less/bootstrap.less";
+@import "../vendor/bootstrap/less/theme.less";
 @import "sidebar.less";
 @import "dice.less";
 
@@ -531,3 +533,25 @@ ul.nav-tabs li.active {
     white-space: nowrap;
 }
 
+.modal-backdrop.am-fade {
+    opacity: .5;
+    transition: opacity .15s linear;
+}
+.modal-backdrop.am-fade.ng-enter {
+    opacity: 0;
+}
+.modal-backdrop.am-fade.ng-enter-active {
+    opacity: .5;
+}
+
+.modal-backdrop.am-fade.ng-leave {
+    opacity: .5;
+}
+.modal-backdrop.am-fade.ng-leave-active {
+    opacity: 0;
+}
+
+.thumb_avatar{
+  width: 32px;
+  border-radius: 3px;
+}

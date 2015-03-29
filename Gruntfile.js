@@ -89,12 +89,12 @@ module.exports = function(grunt) {
       theme: {
         files: {
           'css/theme.min.css': [
+            'css/main.css',
             'vendor/leaflet/dist/leaflet.css',
             'vendor/bootstrap-colorpicker/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
-            'css/datepicker.css',
-            'css/main.css'
+            'css/datepicker.css'
           ],
           'css/cadrach.angular.min.css': [
             'vendor/leaflet/dist/leaflet.css',

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "jdRoll\r ======",
   "main": "Gruntfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-contrib-less": "^1.0.0"
+  },
   "devDependencies": {
     "grunt-php": "~1.4.0",
     "grunt": "~0.4.5",

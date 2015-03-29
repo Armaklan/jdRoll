@@ -14,18 +14,16 @@
 
   	<link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
 
-	  <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
-	  <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" media="all">
 	  <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/components-font-awesome/css/font-awesome.min.css">
       <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/jquery-ui/themes/base/resizable.css">
 
   {% if app.debug %}
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/css/colorpicker.css" type="text/css" media="all">
   	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-fileupload.css" type="text/css" media="all">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/datepicker.css" type="text/css" media="all">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
   {% else %}
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/theme.min.css?v=20150328_001" type="text/css" media="all">
   {% endif %}
