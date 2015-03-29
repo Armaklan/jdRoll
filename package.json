@@ -4,7 +4,9 @@
   "description": "jdRoll\r ======",
   "main": "Gruntfile.js",
   "dependencies": {
-    "grunt-contrib-less": "^1.0.0"
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "devDependencies": {
     "grunt-php": "~1.4.0",

@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   grunt.initConfig({
     php: {
@@ -102,11 +104,20 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    watch: {
+      style: {
+        files: 'less/*.less',
+        tasks: ['less']
+      }
+    },
+    concurrent: {
+        dev: ['watch', 'php'],
     }
   });
 
   grunt.registerTask('prepare', ['bower']);
-  grunt.registerTask('dev', ['less', 'php']);
+  grunt.registerTask('dev', ['less', 'concurrent:dev']);
   grunt.registerTask('dist', ['less', 'cssmin', 'uglify']);
   grunt.registerTask('default', ['dev']);
 
