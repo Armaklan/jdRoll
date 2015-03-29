@@ -8,7 +8,7 @@
     		        <div class="modal-body">
     		        	    <form role="form" class="form-inline">
                                 <div class="form-group">
-    		    			       <input type="text" class="form-control" id="dicerParam" name="dicerParam" placeholder="Ex : 1d6 + 1d4">
+    		    			       <input type="text" class="form-control" id="dicerParam" name="dicerParam" placeholder="Ex : 1d6 + 1d4" value="{{ config.default_dice }}">
                                 </div>
                                 <div class="form-group">
     		    			       <input type="text" class="form-control" id="dicerDescription" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
@@ -16,7 +16,7 @@
     		    			    <button type="submit" class="btn btn-primary" onClick="return uiDicer.dicerModalLaunch();">Lancer les dés</button>
                                 <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingLaunch">
                                 <span id="resultatDicer">
-                
+
                                 </span>
                             </form>
     		    			    <p/>
@@ -43,7 +43,7 @@
     		    					{% endfor %}
     		    					</tbody>
     		    				</table>
-    		    		    
+
     		        </div>
     		        <div class="modal-footer">
     		        	<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Fermer</button>

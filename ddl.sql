@@ -731,6 +731,22 @@ END$$
 
 CALL jdroll_update();
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(7) = 0 THEN
+
+      ALTER TABLE  `campagne_config`
+      ADD  `default_dice` VARCHAR(50) NULL;
+
+      INSERT INTO version (ID) VALUES (7);
+    END IF;
+END$$
+
+CALL jdroll_update();
+
+
+
 
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple

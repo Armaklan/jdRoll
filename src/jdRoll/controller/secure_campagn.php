@@ -279,12 +279,13 @@ $securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Reque
         })->bind("sidebar_campagne_mj_large");
 
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
+            $config = $app['campagneService']->getCampagneConfig($campagne_id);
             if($app["campagneService"]->isMj($campagne_id)) {
                 $jets = $app['dicerService']->getAllDice($campagne_id);
             } else {
                 $jets = $app['dicerService']->getUserDice($campagne_id, $app['session']->get('user')['id']);
             }
-            return $app->render('dicer.html.twig', ['campagne_id' => $campagne_id, 'jets' => $jets]);
+            return $app->render('dicer.html.twig', ['campagne_id' => $campagne_id, 'jets' => $jets, 'config' => $config]);
         })->bind("print_dicer");
 
 $securedCampagneController->post('/dicer/{campagne_id}/{topic_id}', function(Request $request, $campagne_id, $topic_id) use($app) {

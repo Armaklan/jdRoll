@@ -197,7 +197,7 @@ $forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $t
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('game/forum/topic_post_list.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
-			"last_page" => $last_page, 'actual_page' => 0]);
+			"last_page" => $last_page, 'actual_page' => 0, 'config' => $config]);
 })->bind("topic_all");
 
 $forumController->post('/{campagne_id}/preview', function(Request $request, $campagne_id) use($app) {
@@ -238,7 +238,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
         $draft = $app["postService"]->getDraft($topic_id, $app['session']->get('user')['id']);
 	return $app->render('game/forum/topic_post_list.html.twig', ['campagne_id' => $campagne_id, 'topic' => $topic, 'posts' => $posts,
 			'perso' => $perso, 'is_mj' => $is_mj, 'personnages' => $personnages, 'draft' => $draft, 'default_perso' => $default_perso,
-			"last_page" => $last_page, 'actual_page' => $no_page]);
+			"last_page" => $last_page, 'actual_page' => $no_page, 'config' => $config]);
 })->bind("topic_page");
 
 

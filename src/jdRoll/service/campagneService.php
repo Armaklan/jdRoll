@@ -196,7 +196,8 @@ class CampagneService {
     	$sql = "UPDATE campagne_config
     			SET
     			sidebar_text = :sidebar_text,
-    			default_perso_id = :default_perso_id
+    			default_perso_id = :default_perso_id,
+          default_dice = :default_dice
     			WHERE
     			campagne_id = :campagne";
 
@@ -204,6 +205,7 @@ class CampagneService {
     	$stmt->bindValue("campagne", $request->get('campagne_id'));
     	$stmt->bindValue("default_perso_id", $request->get('default_perso_id'));
     	$stmt->bindValue("sidebar_text", $request->get('sidebar_text'));
+      $stmt->bindValue("default_dice", $request->get('default_dice'));
     	$stmt->execute();
     }
 

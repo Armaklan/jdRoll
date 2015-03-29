@@ -24,23 +24,34 @@
       <fieldset class="titled-box">
         <legend>Comportements</legend>
 
-        <div class="form-group">
-          <label for="perso_id">Le MJ poste par défaut en tant que...</label>
-          <select class="select2" name="default_perso_id">
-            <option value="" {% if not config.default_perso_id == '' %} selected="selected" {% endif %}>MJ</option>
-            {% for personnage in personnages %}
-            {% if personnage.user_id != null %}
-            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>
-            {% endif %}
-            {% endfor %}
-            {% for personnage in personnages %}
-            {% if personnage.user_id == null %}
-            <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>
-            {% endif %}
-            {% endfor %}
-          </select>
+        <div class="form-group col-xs-12">
+          <label class="control-label col-xs-4" for="perso_id">Le MJ poste par défaut en tant que...</label>
+          <div class="col-xs-3">
+              <select class="select2" name="default_perso_id">
+                <option value="" {% if not config.default_perso_id == '' %} selected="selected" {% endif %}>MJ</option>
+                {% for personnage in personnages %}
+                {% if personnage.user_id != null %}
+                <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PJ &nbsp;&nbsp;&emsp; {{ personnage.name }}</option>
+                {% endif %}
+                {% endfor %}
+                {% for personnage in personnages %}
+                {% if personnage.user_id == null %}
+                <option value="{{ personnage.id }}" {% if config.default_perso_id == personnage.id %} selected="selected" {% endif %}>PNJ &emsp; {{ personnage.name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
         </div>
+
+          <div class="form-group  col-xs-12">
+            <label class="control-label col-xs-4" for="sidebar_text">Formule de dés par défaut</label>
+            <div class="col-xs-2">
+                <input class="form-control" type="text" id="default_dice" name="default_dice" value="{{ config.default_dice }}">
+            </div>
+          </div>
       </fieldset>
+
+
 
       <div class="form-group">
         <label class="control-label" for="sidebar_text">Information dans la sidebar</label>
