@@ -153,7 +153,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             icon: {
                 type: 'div',
                 iconSize: [48, 48],
-                iconAnchor: [24, 24],
+                iconAnchor: [24, 60],
                 popupAnchor:  [0, 0],
                 html: !_.isEmpty(image) ? '<img src="'+image+'"/>':'',
                 className: 'map-pin map-pin-' + type + ' ' + cls
