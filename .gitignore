@@ -2,6 +2,8 @@
 vendor/
 */logs/*
 */cache/*
+css/*.css
+js/*.min.js
 *.db
 files/*
 *.logs
