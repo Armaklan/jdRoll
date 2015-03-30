@@ -3,6 +3,7 @@
 {% block content %}
 
 <div ng-app="jdroll">
+    <div growl></div>
     <div ng-view></div>
 
     <i class="fa fa-3x fa-circle-o-notch fa-spin" ng-show="loadingTracker.active()"></i>
@@ -16,6 +17,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="{{app.request.baseUrl}}/css/carte.css" type="text/css" media="all">
 
         <!-- Underscore -->
@@ -29,8 +31,10 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker-http-interceptor.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.js"></script>
 
         <!-- Our Application -->
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>
@@ -38,6 +42,7 @@
         <!-- Our Controllers -->
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteCreator.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteManager.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteList.js"></script>
     {% else %}
         <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="{{app.request.baseUrl}}/css/cadrach.angular.min.css" type="text/css" media="all">

@@ -19,10 +19,9 @@ function ($scope, $http, $location) {
             $scope.messages.push('L\'image est obligatoire.')
         }
         if( ! $scope.messages.length){
-            var request = $http.post('carte/save', $scope.carte).success(function(carte){
+            $http.post('carte/save', $scope.carte).success(function(carte){
                 $location.path('/carte/' + carte.id)
             });
-            $scope.loadingTracker.addPromise(request);
         }
     }
 }]);

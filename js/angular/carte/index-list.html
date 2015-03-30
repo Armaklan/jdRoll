@@ -1,0 +1,24 @@
+<table class="table table-condensed table-striped">
+    <thead>
+    <tr>
+        <th colspan="3">
+            Cartes
+            <a class="btn btn-success pull-right" ng-click="create()">
+                <i class="icon-plus"></i> Ajouter une carte
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tr ng-repeat="carte in cartes">
+        <td>{{carte.name}}</td>
+        <td><i>{{carte.published ? 'Visible':'Masquée'}}</i></td>
+        <td>
+            <a class="btn btn-danger-ssctrl pull-right" ng-click="delete(carte);" bs-tooltip="'Supprimer la carte'" >
+                <i class="icon-remove"></i>
+            </a>
+            <a class="btn btn-primary pull-right" style="margin-right:5px" ng-click="open(carte)" bs-tooltip="'Voir la carte'">
+                <i class="icon-cog"></i>
+            </a>
+        </td>
+    </tr>
+</table>
