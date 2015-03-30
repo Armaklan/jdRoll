@@ -262,8 +262,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             //Else new image becomes the original
             carte.image = $scope.carte.image;
         }
-        var request = $http.post('carte/save', copy);
-        $scope.loadingTracker.addPromise(request);
+        $http.post('carte/save', copy);
     }, 500);
 
     /**
@@ -389,7 +388,10 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     if($scope.carte.config.markers){
         $scope.carte.config.markers.forEach(function(marker){
             if(marker.type == 'perso'){
-                createMarkerPerso(_.findWhere($scope.carte.personnages, {id : marker.id}), marker.position, marker.popup);
+                var perso = _.findWhere($scope.carte.personnages, {id : marker.id});
+                if(perso){
+                    createMarkerPerso(perso, marker.position, marker.popup);
+                }
             }
             else if(marker.type == 'custom'){
                 createMarkerCustom(marker.id, marker.position, marker.popup);

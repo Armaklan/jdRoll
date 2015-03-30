@@ -6,14 +6,26 @@ var ngApplication = angular.module('jdroll', [
     'ngDragDrop',
     'leaflet-directive',
     'ajoslin.promise-tracker',//Promise Tracker
-    'mgcrea.ngStrap' //UI directives
+    'mgcrea.ngStrap', //UI directives
+    'angular-growl' //Growl messages
 
-]).config(['$routeProvider',
-function($routeProvider) {
+]).config(['$routeProvider', '$httpProvider', 'growlProvider',
+function($routeProvider, $httpProvider, growlProvider) {
     $routeProvider
         .when('/carte/create', {
             templateUrl: 'js/angular/carte/index-creator.html',
             controller: 'CtrlCarteCreator'
+        })
+        .when('/carte/list', {
+            templateUrl: 'js/angular/carte/index-list.html',
+            controller: 'CtrlCarteList',
+            resolve: {
+                cartes: function($rootScope, $http){
+                    return $http.get('carte/list/' + $rootScope.getCampagneId()).then(function(response){
+                        return response.data;
+                    });
+                }
+            }
         })
         .when('/carte/:carteId', {
             templateUrl: 'js/angular/carte/index-manager.html',
@@ -38,6 +50,30 @@ function($routeProvider) {
             }
         })
     ;
+
+    //Register the interceptor via an anonymous factory
+    //Using "unshift" to get at the head of the interceptors
+    $httpProvider.interceptors.unshift(function($q, growl, $rootScope) {
+        return {
+            'request': function(config){
+                config.tracker = $rootScope.loadingTracker;
+                return config;
+            },
+            'responseError': function(rejection) {
+                // do something on error
+                if(rejection.data.error){
+                    growl.error(rejection.data.error.message);
+//                        alert('ERROR');
+                }
+                return $q.reject(rejection);
+            }
+        };
+    });
+
+    //Setup Growl defaults
+    growlProvider.globalTimeToLive(5000);
+
+    
 }]).run(function($rootScope, $q, promiseTracker){
     /**
      * Promise returning the dimension of an image

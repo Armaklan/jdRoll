@@ -68,11 +68,14 @@ module.exports = function(grunt) {
             'vendor/angular-leaflet/dist/angular-leaflet-directive.js',
             'vendor/angular-route/angular-route.js',
             'vendor/angular-promise-tracker/promise-tracker.js',
+            'vendor/angular-promise-tracker/promise-tracker-http-interceptor.js',
             'vendor/angular-strap/dist/angular-strap.js',
             'vendor/angular-strap/dist/angular-strap.tpl.js',
+            'vendor/angular-growl-v2/build/angular-growl.js',
             'js/angular/application.js',
             'js/angular/carte/ctrlCarteCreator.js',
-            'js/angular/carte/ctrlCarteManager.js'
+            'js/angular/carte/ctrlCarteManager.js',
+            'js/angular/carte/ctrlCarteList.js'
           ]
         }
       }
