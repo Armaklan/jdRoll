@@ -50,7 +50,7 @@ class CarteService {
         }
 
         //Fetch PNJ
-        $sql = "SELECT id, name, user_id FROM personnages WHERE campagne_id=?";
+        $sql = "SELECT id, name, user_id FROM personnages WHERE campagne_id=? AND statut<>1";
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
         $carte['personnages'] = $result->fetchAll(\PDO::FETCH_ASSOC);
         $carte['config'] = isset($carte['config']) && $carte['config'] ? json_decode($carte['config']):new \stdClass();
