@@ -37,7 +37,7 @@ var formats = [{
 var configBase = {
     plugins: [
         "link image lists hr",
-        "table textcolor fullscreen",
+        "table fullscreen",
         "emoticons code"
     ],
     content_css : BASE_PATH + "/css/main.css",
@@ -152,25 +152,20 @@ configMobile.menubar = false;
 configMobile.min_height = 400;
 configMobile.selector = ".wysiwyg";
 
+
 var configNote = jQuery.extend(true, {}, configBase);
 configNote.toolbar = "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons";
 configNote.min_height = 160;
 configNote.selector = ".note-wysiwyg";
 
-var configNoteMobile = jQuery.extend(true, {}, configNote);
-configNoteMobile.min_height = 160;
-configNoteMobile.width = 300;
-configNoteMobile.selector = ".note-wysiwyg";
+
 
 if (navigator.userAgent.indexOf("IE") != -1) {
     tinymce.init(configPost);
-    tinymce.init(configNote);
 } else {
     if (window.matchMedia("(min-width: 600px)").matches) {
         tinymce.init(configPost);
-        tinymce.init(configNote);
     } else {
         tinymce.init(configMobile);
-        tinymce.init(configNoteMobile);
     }
 }

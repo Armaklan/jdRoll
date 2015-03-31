@@ -38,6 +38,7 @@ module.exports = function(grunt) {
             'js/controller/draft.js',
             'js/controller/notification.js',
             'js/controller/ui.js',
+            'js/controller/notes.js',
             'js/controller/dicer.js',
             'js/controller/campagne_modal.js',
             'js/controller/persoPopup.js',
@@ -45,7 +46,8 @@ module.exports = function(grunt) {
             'js/controller/campagne-config.js',
             'js/controller/feedback.js',
             'js/controller/forum.js',
-            'js/tools.js'
+            'js/tools.js',
+            'js/angular/notes/notes.module.js'
           ],
           'js/composant.min.js': [
             'vendor/bootbox/bootbox.js',

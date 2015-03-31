@@ -1,0 +1,22 @@
+<div id="notesModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="notes-app" ng-controller="NotesController as notes">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Bloc Notes</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <textarea
+                        ui-tinymce="notes.tinymceOptions"
+                        ng-model="notes.content">
+                    </textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="notes.update()">Sauvegarder</button>
+                <button class="btn btn-primary" ng-click="notes.update()" data-dismiss="modal" aria-hidden="true">Sauvegarder et Fermer</button>
+            </div>
+		</div>
+	</div>
+</div>

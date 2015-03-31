@@ -305,20 +305,6 @@ $securedCampagneController->post('/dicer/{campagne_id}/{topic_id}', function(Req
             }
         })->bind("dicer");
 
-$securedCampagneController->get('/notes/view/{campagne_id}', function($campagne_id) use($app) {
-            $user_id = $app['session']->get('user')['id'];
-            $content = $app['campagneService']->getNote($campagne_id, $user_id);
-            return $app->render('notes.html.twig', ['campagne_id' => $campagne_id, 'content_notes' => $content]);
-        })->bind("notes_popup");
-
-$securedCampagneController->post('/notes/update/{campagne_id}', function($campagne_id, Request $request) use($app) {
-            $content = $request->get('content');
-            $user_id = $app['session']->get('user')['id'];
-            $app['campagneService']->updateNote($campagne_id, $user_id, $content);
-            return "";
-        })->bind("notes_update");
-
-
 $securedCampagneController->post('/admin_open', function(Request $request) use($app) {
             $id = $request->get('id');
             $state = $request->get('state');
