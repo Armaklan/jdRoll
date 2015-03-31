@@ -15,7 +15,7 @@ var uiNotesImpl = function () {
 
 
     function init() {
-      $('#blocnote-btn').on('click', srv.showModal);
+      $('.blocnote-btn').on('click', srv.showModal);
       srv.notesModal = $('#notesModal');
       srv.notesModalContent = $('#notesModal .modal-content');
     }

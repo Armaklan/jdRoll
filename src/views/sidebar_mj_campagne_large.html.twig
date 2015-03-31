@@ -17,7 +17,7 @@
                             {% endif %}
 							<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
 							<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-	                        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+	                        <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
 	                        <a class="btn btn-default iconeBtn sidebarBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 	                            title="Mettre une alerte">
 	                            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
@@ -114,7 +114,7 @@
                     {#{% endif %}#}
 					<a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
 					<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-			        <a href="#notesModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Bloc-Notes"><i class="icon-book"></i></a>
+			        <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
 			        </div>
 
 		          </div>
