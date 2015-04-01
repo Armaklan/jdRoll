@@ -15,6 +15,7 @@ function ($scope, $http, $location, growl, cartes) {
         bootbox.confirm("Supprimer cette carte ?", function(confirmed) {
             if(confirmed) {
                 $http.get('carte/delete/' + carte.id).then(function(){
+                    $scope.cartes.splice($scope.cartes.indexOf(carte), 1);
                     growl.success('Carte supprimée.');
                 })
             }
