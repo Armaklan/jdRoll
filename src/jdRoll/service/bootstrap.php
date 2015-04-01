@@ -19,6 +19,7 @@ use jdRoll\service\ThemeService;
 use jdRoll\service\PostContentService;
 use jdRoll\service\ThumbnailService;
 use jdRoll\service\CarteService;
+use jdRoll\service\NoteService;
 
 /*
     Définition des services
@@ -80,3 +81,7 @@ $app['postContentService'] = function ($app) {
 $app['carteService'] = function ($app) {
     return new CarteService($app['db'], $app['session'], $app['thumbnailService']);
 };
+$app['noteService'] = function ($app) {
+    return new NoteService($app['db']);
+};
+

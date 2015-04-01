@@ -746,6 +746,19 @@ END$$
 CALL jdroll_update();
 
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+    IF VERSION_EXISTS(8) = 0 THEN
+
+      ALTER TABLE note DROP PRIMARY KEY, ADD INDEX  `IDX_NOTES` (  `campagne_id` ,  `user_id` );
+      ALTER TABLE note ADD id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+      INSERT INTO version (ID) VALUES (8);
+    END IF;
+END$$
+
+CALL jdroll_update();
 
 
 /*

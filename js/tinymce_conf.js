@@ -169,3 +169,4 @@ if (navigator.userAgent.indexOf("IE") != -1) {
         tinymce.init(configMobile);
     }
 }
+tinymce.init(configNote);
