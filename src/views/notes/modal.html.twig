@@ -1,0 +1,49 @@
+<div id="notesModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="notes-app" ng-controller="NotesController as notes">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Bloc Notes</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr class="search">
+                        <td>
+                            <form role="form" class="form-search ng-pristine ng-valid">
+                                <div class="pull-left">
+                                    <a class="btn btn-xs btn-primary" ng-click="notes.add()"><i class="icon-plus"></i></a>
+                                </div>
+                                <div align="right">
+                                    <input type="text" class="input-medium search-query ng-pristine ng-valid ng-touched" placeholder="Recherche" ng-model="search.content" auto-focus="">
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="note" ng-repeat="note in notes.noteslist | filter:search">
+                        <td>
+                            <div ng-if="!note.edit">
+                                <div class="pull-right"><a ng-click="note.edit = true"><i class="icon-pencil"></i></a></div>
+                                <span ng-bind-html="note.content">
+                                </span>
+                            </div>
+                            <div ng-if="note.edit">
+                                <textarea
+                                    ng-if="note.edit"
+                                    ui-tinymce="notes.tinymceOptions"
+                                    ng-model="note.content">
+                                </textarea>
+                                <div class="pull-right">
+                                    <a class="btn btn-xs btn-default" ng-click="notes.remove(note)"><i class="icon-trash"></i> Supprimer</a>
+                                    <a class="btn btn-xs btn-primary" ng-click="notes.update(note)"><i class="icon-save"></i> Sauvegarder</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
+            </div>
+		</div>
+	</div>
+</div>

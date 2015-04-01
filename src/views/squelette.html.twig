@@ -129,9 +129,11 @@
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/favico.js/favico-0.3.5.min.js"> </script>
 
 	<!-- Application specific controller -->
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
+
 	{% if app.debug %}
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/tinymce_conf.js?v=20141004_001"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/notification.js"></script>
@@ -141,16 +143,16 @@
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/forum.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/ui.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/campagne_modal.js"></script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/dicer.js"></script>
+		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/notes.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/dicer.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/persoPopup.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/theme-preview.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/campagne-config.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/feedback.js"></script>
 		<script type="text/javascript" src="{{app.request.baseUrl}}/js/tools.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/notes/notes.module.js"></script>
 	{% else %}
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller.min.js?v=20150328_001"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
 	{% endif %}
 
 

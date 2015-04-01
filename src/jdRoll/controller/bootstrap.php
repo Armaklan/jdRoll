@@ -34,6 +34,7 @@
     require("profile.php");
     require("secure_campagn.php");
     require("public_campagn.php");
+    require("notes.php");
     require("subscribe.php");
     require("perso.php");
     require("messagerie.php");
@@ -42,7 +43,7 @@
     require("chat.php");
     require("feedback.php");
     require("resetPwd.php");
-	require("editor.php");
+	  require("editor.php");
     require("api/game.php");
     require("application.php");
     require("carte.php");
