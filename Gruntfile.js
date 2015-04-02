@@ -32,9 +32,14 @@ module.exports = function(grunt) {
         files: {
           'js/controller.min.js': [
             'js/tinymce_conf.js',
+            'js/controller/onload.js',
             'js/controller/*.js',
             'js/tools.js',
-            'js/angular/notes/notes.module.js'
+            'js/angular/notes/notes.module.js',
+            '!js/controller.min.js',
+            '!js/composant.min.js',
+            '!js/flot.min.js',
+            '!js/jdroll.angular.min.js'
           ],
           'js/composant.min.js': [
             'vendor/bootbox/bootbox.js',
@@ -62,7 +67,7 @@ module.exports = function(grunt) {
             'vendor/angular-strap/dist/angular-strap.tpl.js',
             'vendor/angular-growl-v2/build/angular-growl.js',
             'js/angular/application.js',
-            'js/angular/carte/*.js',
+            'js/angular/carte/*.js'
           ]
         }
       }
