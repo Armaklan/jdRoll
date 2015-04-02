@@ -6,7 +6,7 @@ class ChatService {
 	private $db;
 	private $session;
 
-    const TINYMCE_EMOTICONS_IMG = "../../../../vendor/tinymce-release/plugins/emoticons/img/";
+    const TINYMCE_EMOTICONS_IMG = "../../../../vendor/tinymce/plugins/emoticons/img/";
 
     public function __construct($db, $session)
     {

@@ -32,20 +32,7 @@ module.exports = function(grunt) {
         files: {
           'js/controller.min.js': [
             'js/tinymce_conf.js',
-            'js/controller/onload.js',
-            'js/controller/campagne.js',
-            'js/controller/chat.js',
-            'js/controller/draft.js',
-            'js/controller/notification.js',
-            'js/controller/ui.js',
-            'js/controller/notes.js',
-            'js/controller/dicer.js',
-            'js/controller/campagne_modal.js',
-            'js/controller/persoPopup.js',
-            'js/controller/theme-preview.js',
-            'js/controller/campagne-config.js',
-            'js/controller/feedback.js',
-            'js/controller/forum.js',
+            'js/controller/*.js',
             'js/tools.js',
             'js/angular/notes/notes.module.js'
           ],
@@ -63,7 +50,7 @@ module.exports = function(grunt) {
             'vendor/flot/jquery.flot.pie.js',
             'vendor/flot/jquery.flot.navigate.js'
           ],
-          'js/cadrach.angular.min.js': [
+          'js/jdroll.angular.min.js': [
             'vendor/underscore/underscore.js',
             'vendor/leaflet/dist/leaflet.js',
             'vendor/angular-dragdrop/src/angular-dragdrop.js',
@@ -75,9 +62,7 @@ module.exports = function(grunt) {
             'vendor/angular-strap/dist/angular-strap.tpl.js',
             'vendor/angular-growl-v2/build/angular-growl.js',
             'js/angular/application.js',
-            'js/angular/carte/ctrlCarteCreator.js',
-            'js/angular/carte/ctrlCarteManager.js',
-            'js/angular/carte/ctrlCarteList.js'
+            'js/angular/carte/*.js',
           ]
         }
       }
@@ -102,9 +87,7 @@ module.exports = function(grunt) {
             'vendor/bootstrap-colorpicker/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
-            'css/datepicker.css'
-          ],
-          'css/cadrach.angular.min.css': [
+            'css/datepicker.css',
             'vendor/leaflet/dist/leaflet.css',
             'css/carte.css'
           ]
