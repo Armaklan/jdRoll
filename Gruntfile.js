@@ -92,10 +92,13 @@ module.exports = function(grunt) {
             'vendor/bootstrap-colorpicker/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
-            'css/datepicker.css',
-            'vendor/leaflet/dist/leaflet.css',
-            'css/carte.css'
-          ]
+            'css/datepicker.css'
+          ],
+          'css/jdroll.angular.min.css': [
+             'css/datepicker.css',
+             'vendor/leaflet/dist/leaflet.css',
+             'css/carte.css'
+           ]
         }
       }
     },
