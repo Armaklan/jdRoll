@@ -18,7 +18,7 @@
 	$persoController->before($mustBeLogged);
 
     function getWidgets($app, $campagne_id, $persoWidgets) {
-        $config = $app["campagneService"]->getCampagneConfig($campagne_id);
+        $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
         $config['widgets'] = json_decode($config['widgets']);
         $widgets = $config['widgets'];
         if(is_array($widgets)){
@@ -47,7 +47,7 @@
     }
 
     function getWidgetsFromRequest($app, $campagne_id, $request) {
-        $config = $app["campagneService"]->getCampagneConfig($campagne_id);
+        $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
         $widgets = json_decode($config['widgets']);
         if(is_array($widgets)){
             foreach($widgets as &$widget) {
@@ -173,7 +173,7 @@
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getBlankPnj($campagne_id);
-        $config = $app['campagneService']->getCampagneConfig($campagne_id);
+        $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
         $perso['technical'] = $config['template'];
         $perso['widgets'] = getWidgets($app, $campagne_id,[]);
         $cats = $app['persoService']->getAllPnjCat($campagne_id);

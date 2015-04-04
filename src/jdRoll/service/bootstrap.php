@@ -20,6 +20,7 @@ use jdRoll\service\ThumbnailService;
 use jdRoll\service\CarteService;
 use jdRoll\service\NoteService;
 use jdRoll\service\campagne\CampagneService;
+use jdRoll\service\campagne\CampagneConfigService;
 use jdRoll\service\campagne\FavorisService;
 
 /*
@@ -42,6 +43,9 @@ $app['campagneService'] = function ($app) {
 };
 $app['favorisService'] = function ($app) {
     return new FavorisService($app['db']);
+};
+$app['campagneConfigService'] = function ($app) {
+    return new CampagneConfigService($app['db']);
 };
 $app['sectionService'] = function ($app) {
     return new SectionService($app['db'], $app['session']);

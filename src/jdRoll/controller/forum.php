@@ -181,7 +181,7 @@ $forumController->get('/{campagne_id}/{topic_id}/all', function($campagne_id, $t
   $perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
   $is_mj = $app["campagneService"]->isMj($campagne_id);
   $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
-  $config = $app['campagneService']->getCampagneConfig($campagne_id);
+  $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
   $default_perso = '';
   if($config != null) {
     $default_perso = $config['default_perso_id'];
@@ -222,7 +222,7 @@ $forumController->get('/{campagne_id}/{topic_id}/page/{no_page}', function($camp
   $perso = $app['persoService']->getPersonnage(false, $campagne_id, $app['session']->get('user')['id']);
   $is_mj = $app["campagneService"]->isMj($campagne_id);
   $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
-  $config = $app['campagneService']->getCampagneConfig($campagne_id);
+  $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
   $default_perso = '';
   if($config != null) {
     $default_perso = $config['default_perso_id'];
