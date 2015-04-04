@@ -511,19 +511,6 @@ class CampagneService {
     return $campagne;
   }
 
-  public function getMyCampagnesWithWaiting() {
-    $sql = "SELECT DISTINCT campagne.id, campagne.name
-			FROM campagne
-                        JOIN campagne_participant cp
-                        ON campagne.id = campagne_id
-			WHERE mj_id = :user
-			AND campagne.statut <> 2
-                        AND cp.statut = 0
-			ORDER BY name";
-    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-    return $campagne;
-  }
-
   public function getMyPjCampagnes() {
     return $this->getMyPjCampagneByStatut(0, 1, 3, 1);
   }
@@ -621,74 +608,6 @@ class CampagneService {
     return $campagne;
   }
 
-  public function getMyMjArchiveCampagnes() {
-    $sql = "SELECT * ,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-				) as activity
-				FROM campagne
-				WHERE mj_id = :user
-				AND statut = 2
-				ORDER BY name";
-    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-    return $campagne;
-  }
-
-  public function getMyPjArchiveCampagnes() {
-    $sql = "SELECT
-		campagne.*, user.username as username,
-				( SELECT
-					max((IFNULL(topics.last_post_id, 0) - IFNULL(read_post.post_id, 0)))
-					FROM
-					sections
-					JOIN topics
-					ON sections.id = topics.section_id
-					LEFT JOIN read_post
-					ON read_post.topic_id = topics.id
-					AND read_post.user_id = :user
-					LEFT JOIN can_read
-					ON can_read.topic_id = topics.id
-					AND can_read.user_id = :user
-					WHERE
-					sections.campagne_id = campagne.id
-					AND (
-						(topics.is_private <> 1)
-						OR
-						(campagne.mj_id = :user)
-						OR
-						(can_read.topic_id IS NOT NULL)
-					)
-				) as activity
-		FROM campagne
-		JOIN campagne_participant as cp
-		ON cp.campagne_id = campagne.id
-		JOIN user ON user.id = campagne.mj_id
-		WHERE cp.user_id = :user
-		AND campagne.statut = 2
-		ORDER BY campagne.name";
-    $campagne = $this->db->fetchAll($sql, array('user' => $this->session->get('user')['id']));
-    return $campagne;
-  }
-
   private function incrementeNbJoueur($id) {
     $sql = "UPDATE campagne
 				SET
@@ -755,18 +674,6 @@ class CampagneService {
 				WHERE
 				campagne_id = :campagne
 				AND user_id = :user";
-
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue("campagne", $campagne_id);
-    $stmt->bindValue("user", $user_id);
-    $stmt->execute();
-  }
-
-  private function createPersonnage($campagne_id, $user_id) {
-    $sql = "INSERT INTO campagne_participant
-				(campagne_id, user_id)
-				VALUES
-				(:campagne, :user)";
 
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue("campagne", $campagne_id);
