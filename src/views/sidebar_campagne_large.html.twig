@@ -4,17 +4,25 @@
 		</div>
 	    <div class="row">
 	    	<div class="col-md-4">
-				{% if perso|length == 1 %}
-	    		<div align="center">
-    				<img src="{{ perso[0].avatar }}" width="130px" class="img-rounded" />
-    			</div><p/>
+                {% if is_mj %}
+                    <div align="center">
+                        <img src="{{ app.session.get('user')['avatar'] }}" width="130px" class="img-rounded" />
+                    </div><p/>
+				{% elseif perso|length == 1 %}
+                    <div align="center">
+                        <img src="{{ perso[0].avatar }}" width="130px" class="img-rounded" />
+                    </div><p/>
     			{% endif %}
     			    <div align="center">
 	    			    <div class="btn-group">
 	    			    	{% set pull_mode = "" %}
 					        {% include("composant/my_campagne_btm.html.twig") %}
 							<a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class="icon-folder-close"></i></a>
-							{% include("composant/perso_btm.html.twig") %}
+                            {% if is_mj %}
+                                <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
+                            {% else %}
+                                {% include("composant/perso_btm.html.twig") %}
+                            {% endif %}
 					    	{% if perso|length > 0 %}
 								<a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 	                            <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
@@ -46,24 +54,37 @@
 			</div>
 
             {% if is_mj or allCarte|length>0 %}
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <b>Cartes</b>
-                    </div>
-                    <ul class="nav nav-stacked">
-                        {% for carte in allCarte %}
-                            <li>
-                                <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
-                                    <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
-                                    {{ carte.name }}
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <b>Cartes</b>
+                            {% if is_mj %}
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-primary btn-xs"  href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/list">
+                                    <i class="icon-list"></i> Liste des cartes
                                 </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                                <a class="btn btn-success btn-xs"  href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/create">
+                                    <i class="icon-plus"></i> Ajouter une carte
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <ul class="nav nav-stacked">
+                            {% for carte in allCarte %}
+                                {% if(carte.published) %}
+                                <li>
+                                    <a href="{{ path('ng_app', {campagne_id:campagne_id}) }}#/carte/{{ carte.id }}">
+                                        <img class="thumb_avatar" src="{{ path('homepage') }}files/thumbnails/carte_{{ carte.id }}.png"/>
+                                        {{ carte.name }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
             {% endif %}
+
 
 			<div class="col-md-4">
 				<div class="page-header" style="padding-left: 1.3em; padding-right: 1.3em;">
@@ -96,7 +117,7 @@
 			<div align="center">
 				<h5>{{ campagne.name }}</h5>
 			</div>
-			{% if perso|length == 1 %}
+			{% if not is_mj and perso|length == 1 %}
 			    <div align="center">
 		    		<img src="{{ perso[0].avatar }}"  width="60%" style="max-width: 130px" class="img-rounded" />
 		        </div>
@@ -106,20 +127,25 @@
 			<div id="widgets-panel">
 		        <div align="center">
 		            <div class="btn-group btn-group-sm">
-			            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
-			            {% if perso|length > 0 %}
+			            {% set pull_mode = "pull-right" %}
+                            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
+                        {% if is_mj or perso|length > 0 %}
 				            <a class="btn btn-default iconeBtn sidebarBtn"
 				            	onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
 				                title="Mettre une alerte">
 				                    <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
 				            </a>
 			            {% endif %}
-			            {% if perso|length > 0 %}
+
+			            {% if is_mj or perso|length > 0 %}
 				            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
 				            <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
 			            {% endif %}
-			            {% set pull_mode = "pull-right" %}
-			            {% include("composant/perso_btm.html.twig") %}
+                        {% if not is_mj %}
+			                {% include("composant/perso_btm.html.twig") %}
+                        {% else %}
+                            <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
+                        {% endif %}
 					</div>
 	          	</div>
 	        </div>

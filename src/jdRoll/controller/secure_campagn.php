@@ -244,39 +244,18 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
             $cartes = $app["carteService"]->getAllCartes($campagne_id);
+            $isMj = $app["campagneService"]->isMj($campagne_id);
             return $app->render('sidebar_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'perso' => $perso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
                 'topics' => $topics,
+                'is_mj' => $isMj,
                         'allCarte' => $cartes,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert, 'is_mj' => false]);
+                        'config' => $config, 'alert' => $alert]);
         })->bind("sidebar_campagne_large");
-
-$securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
-            $player_id = $app['session']->get('user')['id'];
-            $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-            $campagne = $app['campagneService']->getCampagne($campagne_id);
-            $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
-            $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-            $prepaCampagnes = $app['campagneService']->getMyActivePrepaCampagnes();
-            $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
-            $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
-            $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
-            $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
-            $cartes = $app["carteService"]->getAllCartes($campagne_id, true);
-            return $app->render('sidebar_mj_campagne_large.html.twig', [
-                'campagne_id' => $campagne_id,
-                'allPerso' => $allPerso,
-                'allCarte' => $cartes,
-                'favorised_campagne' => $favorisedCampagne,
-                'prepa_campagnes' => $prepaCampagnes,
-                'topics' => $topics,
-                        'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert, 'is_mj' => true]);
-        })->bind("sidebar_campagne_mj_large");
 
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
             $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
