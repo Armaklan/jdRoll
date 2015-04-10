@@ -15,15 +15,16 @@
 
 	$feedbackController->post('/', function(Request $request) use($app) {
         $user = $app['session']->get('user');
-        $title = $request->get('title');
-        $content = $request->get('content');
+        $feedback = json_decode($request->getContent());
+        $title = $feedback->title;
+        $content = $feedback->content;
         if(($title == "") || ($content == "")) {
             return new JsonResponse('Merci de saisir un titre et un contenu', 400);
         } else {
 		    $feedback = $app['feedbackService']->create($user, $title, $content);
             return new JsonResponse($feedback, 201);
         }
-	})->bind("feedback_post")->before($mustBeLogged);
+	})->before($mustBeLogged);
 
     $feedbackController->get('/{id}', function($id) use($app) {
         $user = $app['session']->get('user');

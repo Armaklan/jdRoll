@@ -22,7 +22,8 @@
     "angular-promise-tracker": "~2.1.0",
     "angular-strap": "~2.2.1",
     "angular-growl-v2": "0.7.3",
-    "angular-ui-tinymce": "~0.0.5"
+    "angular-ui-tinymce": "~0.0.5",
+    "ui-router": "~0.2.13"
   },
   "devDependencies": {
     "angular-bootstrap": "~0.11.2",

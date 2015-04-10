@@ -4,7 +4,8 @@
   angular
   .module('jdRoll.notes', ['ui.tinymce', 'ngSanitize'])
   .controller('NotesController', NotesController)
-  .service('Note', Note);
+  .service('Note', Note)
+  .config(routeConfig);
 
   function NotesController($http, Note) {
 
@@ -91,5 +92,14 @@
         data: note
       });
     }
+  }
+
+
+  function routeConfig($stateProvider) {
+    $stateProvider.state('notes', {
+      templateUrl: 'js/angular/notes/notes.html',
+      controller: 'NotesController',
+      controllerAs: 'notes'
+    });
   }
 })();

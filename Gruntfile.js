@@ -42,12 +42,22 @@ module.exports = function(grunt) {
             '!js/jdroll.angular.min.js'
           ],
           'js/composant.min.js': [
+            'vendor/angular/angular.min.js',
+            'vendor/angular-sanitize/angular-sanitize.min.js',
             'vendor/bootbox/bootbox.js',
             'vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
             'vendor/select2/select2.min.js',
             'vendor/zeroclipboard/ZeroClipboard.min.js',
             'js/bootstrap/bootstrap-fileupload.min.js',
-            'js/bootstrap/bootstrap-datepicker.js'
+            'js/bootstrap/bootstrap-datepicker.js',
+            'vendor/angular-promise-tracker/promise-tracker.js',
+            'vendor/angular-promise-tracker/promise-tracker-http-interceptor.js',
+            'vendor/angular-growl-v2/build/angular-growl.js',
+            'vendor/underscore/underscore.js',
+            'vendor/ui-router/release/angular-ui-router.js',
+            'vendor/angular-strap/dist/angular-strap.js',
+            'vendor/angular-strap/dist/angular-strap.tpl.js',
+            'vendor/angular-ui-tinymce/src/tinymce.js'
           ],
           'js/flot.min.js': [
             'vendor/flot/jquery.flot.js',
@@ -56,16 +66,10 @@ module.exports = function(grunt) {
             'vendor/flot/jquery.flot.navigate.js'
           ],
           'js/jdroll.angular.min.js': [
-            'vendor/underscore/underscore.js',
             'vendor/leaflet/dist/leaflet.js',
             'vendor/angular-dragdrop/src/angular-dragdrop.js',
             'vendor/angular-leaflet/dist/angular-leaflet-directive.js',
             'vendor/angular-route/angular-route.js',
-            'vendor/angular-promise-tracker/promise-tracker.js',
-            'vendor/angular-promise-tracker/promise-tracker-http-interceptor.js',
-            'vendor/angular-strap/dist/angular-strap.js',
-            'vendor/angular-strap/dist/angular-strap.tpl.js',
-            'vendor/angular-growl-v2/build/angular-growl.js',
             'js/angular/application.js',
             'js/angular/carte/*.js'
           ]
@@ -92,7 +96,8 @@ module.exports = function(grunt) {
             'vendor/bootstrap-colorpicker/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
-            'css/datepicker.css'
+            'css/datepicker.css',
+            '/vendor/angular-growl-v2/build/angular-growl.min.css'
           ],
           'css/jdroll.angular.min.css': [
              'css/datepicker.css',

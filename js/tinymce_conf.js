@@ -153,13 +153,6 @@ configMobile.min_height = 400;
 configMobile.selector = ".wysiwyg";
 
 
-var configNote = jQuery.extend(true, {}, configBase);
-configNote.toolbar = "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons";
-configNote.min_height = 160;
-configNote.selector = ".note-wysiwyg";
-
-
-
 if (navigator.userAgent.indexOf("IE") != -1) {
     tinymce.init(configPost);
 } else {
