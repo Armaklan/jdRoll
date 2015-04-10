@@ -45,18 +45,19 @@ class PostContentService {
     $this->persoService = $persoService;
   }
 
-  public function transformAllTag(&$post,$perso, $is_mj,$campagne_id)
+  public function transformAllTag($postContent, $persoName, $perso, $is_mj,$campagne_id)
   {
-    $this->_transformPrivateZoneForMessage($post, $this->session->get('user')['login'], $perso, $is_mj);
-    $this->_replace_hide($post);
-    $this->_transformPopupZone($post);
-    $this->_transformPNTag($post,$campagne_id);
+    $postContent = $this->_transformPrivateZoneForMessage($postContent, $persoName, $this->session->get('user')['login'], $perso, $is_mj);
+    $postContent = $this->_replace_hide($postContent);
+    $postContent = $this->_transformPopupZone($postContent);
+    $postContent = $this->_transformPNTag($postContent,$campagne_id);
+    return $postContent;
   }
 
-  private function _transformPNTag(&$post,$campagne_id)
+  private function _transformPNTag($postContent,$campagne_id)
   {
 
-    $post['post_content']  = preg_replace_callback('#\[pnj=(.*)\](.*)\[/pnj\]#isU',
+    return preg_replace_callback('#\[pnj=(.*)\](.*)\[/pnj\]#isU',
                                                    function ($matches) use($campagne_id) {
 
                                                      $perso_id = $this->persoService->getPNJInCampagneByName($campagne_id,$matches[1]);
@@ -66,31 +67,28 @@ class PostContentService {
                                                        return sprintf(self::TAG_PNJ,$campagne_id,$perso_id,$matches[2]);
 
                                                    },
-                                                   $post['post_content']
+                                                   $postContent
                                                   );
-
-    return $post;
   }
 
 
-  private function _transformPopupZone(&$post)
+  private function _transformPopupZone($postContent)
   {
-    $post['post_content']  = preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
+    return preg_replace_callback('#\[popup=(.*),(.*)\](.*)\[/popup\]#isU',
                                                    function ($matches) {
                                                      return sprintf(self::TAG_POPUP,$matches[1],$matches[3],$matches[2]);
                                                    },
-                                                   $post['post_content']
+                                                   $postContent
                                                   );
 
-    return $post;
   }
 
-  private function _transformPrivateZoneForMessage(&$post, $login, $persos, $is_mj) {
+  private function _transformPrivateZoneForMessage($postContent, $postPersoName, $login, $persos, $is_mj) {
     $isThereAPrivateForMe = false;
     $postForTest = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-                                         function ($matches) use($is_mj,$login,$persos,&$isThereAPrivateForMe,$post){
+                                         function ($matches) use($is_mj,$login,$persos,&$isThereAPrivateForMe,$postContent, $postPersoName){
                                            foreach($persos as $perso) {
-                                             if(!isset($perso['name']) || strcasecmp($perso['name'],$post['perso_name']) == 0)
+                                             if(!isset($perso['name']) || strcasecmp($perso['name'],$postPersoName) == 0)
                                              {
                                                $isThereAPrivateForMe = true;
                                              }
@@ -112,7 +110,7 @@ class PostContentService {
                                            }
                                            return '';
                                          },
-                                         $post['post_content']
+                                         $postContent
                                         );
 
     $postTrim = strip_tags($postForTest);
@@ -122,13 +120,13 @@ class PostContentService {
 
     $postSize = strlen($postTrim);
 
-    $post['post_content'] = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
-                                                  function ($matches) use ($is_mj,$login,$persos,$post,$postSize,$isThereAPrivateForMe){
+    $postContent = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
+                                                  function ($matches) use ($is_mj,$login,$persos,$postContent,$postPersoName,$postSize,$isThereAPrivateForMe){
 
                                                     $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
                                                     $ret = '';
                                                     foreach($persos as $perso) {
-                                                      if (!isset($perso['name']) || strcasecmp($perso['name'], $post['perso_name']) == 0) {
+                                                      if (!isset($perso['name']) || strcasecmp($perso['name'], $postPersoName) == 0) {
                                                         $ret = $this->_getPrivateZone($txt . $matches[3]);
                                                       } else {
                                                         $users = preg_split("#,#", $matches[2]);
@@ -152,9 +150,9 @@ class PostContentService {
 
                                                     return $ret;
                                                   },
-                                                  $post['post_content']
+                                                  $postContent
                                                  );
-    return $post;
+    return $postContent;
   }
 
 
@@ -163,9 +161,9 @@ class PostContentService {
   }
 
 
-  private function _replace_hide(&$post)
+  private function _replace_hide($postContent)
   {
-    $post['post_content']  = preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
+    return preg_replace_callback('#\[hide(?:=(.*?))?\]((?:(?>[^\[]*)|(?R)|\[)*)\[/hide\]#is',
                                                    function ($matches) {
 
                                                      $txt = '';
@@ -183,10 +181,9 @@ class PostContentService {
                                                      return sprintf(self::TAG_HIDE,$txt,$m);
 
                                                    },
-                                                   $post['post_content']
+                                                   $postContent
                                                   );
 
-    return $post;
   }
 }
 
