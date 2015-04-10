@@ -37,7 +37,7 @@ var formats = [{
 var configBase = {
     plugins: [
         "link image lists hr",
-        "table fullscreen",
+        "table textcolor fullscreen",
         "emoticons code"
     ],
     content_css : BASE_PATH + "/css/main.css",
