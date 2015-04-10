@@ -101,7 +101,7 @@
                             </div>
                             <a title="Aller au bas de la page" href="#bottom" style="margin-left: 2em"><i class="icon-double-angle-down"></i></a>
                             <a title="Aller au début de la page" href="#top"><i class="icon-double-angle-up"></i></a>
-                <a title="Lien permanent" href="#post{{ post.post_id }}"><i class="icon-link"></i></a>
+                <a title="Lien permanent" href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}#post{{ post.post_id }}"><i class="icon-link"></i></a>
 
                         </td>
                     </tr>
