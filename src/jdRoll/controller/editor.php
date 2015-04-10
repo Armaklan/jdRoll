@@ -17,6 +17,11 @@ $editorController->get('/tagPerso/{campagne_id}', function($campagne_id) use ($a
 	return $app->render('editor/editor_tag_perso.html.twig', ['campagne_id' => $campagne_id, 'allPerso' => $allPerso]);
 })->bind("tag_perso");
 
+$editorController->get('/tagCarte/{campagne_id}', function($campagne_id) use ($app) {
+	$allPerso = $app['carteService']->getAllCartes($campagne_id);
+	return $app->render('editor/editor_tag_carte.html.twig', ['campagne_id' => $campagne_id, 'cartes' => $allPerso]);
+})->bind("tag_carte");
+
 $editorController->get('/tagPrivate/{campagne_id}', function($campagne_id) use ($app) {
 	$is_mj = $app["campagneService"]->isMj($campagne_id);
 	$allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id,$is_mj);
