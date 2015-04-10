@@ -45,8 +45,12 @@ class PostContentService {
     $this->persoService = $persoService;
   }
 
-  public function transformAllTag($postContent, $persoName, $perso, $is_mj,$campagne_id)
+  public function transformAllTag($postContent, $persoName, $is_mj,$campagne_id)
   {
+    $perso = $this->persoService->getPersonnage(false, $campagne_id, $this->session->get('user')['id']);
+    if ($perso == null) {
+      $perso = [];
+    }
     $postContent = $this->_transformPrivateZoneForMessage($postContent, $persoName, $this->session->get('user')['login'], $perso, $is_mj);
     $postContent = $this->_replace_hide($postContent);
     $postContent = $this->_transformPopupZone($postContent);
