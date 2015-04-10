@@ -16,3 +16,4 @@ composer.phar
 composer.lock
 config.yml
 /.idea/
+dist
