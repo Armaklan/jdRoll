@@ -5,9 +5,17 @@
     bottom: 0;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
     padding-top: 10px;
-    position: fixed;
-    right: 0;
-    overflow: scroll;
+
+
+    @media (min-width: @screen-md-min) {
+      position: fixed;
+      right: 0;
+      overflow: scroll;
+    }
+
+    @media (max-width: @screen-md-min) {
+
+    }
 
     li {
         line-height: 15px;
