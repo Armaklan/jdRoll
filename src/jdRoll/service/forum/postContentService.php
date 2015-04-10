@@ -21,6 +21,9 @@ class PostContentService {
   // rendering of PNJ tag
   const TAG_PNJ = "<a href=\"javascript:void()\" onClick=\"persoModalService.openPerso(%d,%d)\">%s</a>";
 
+  // rendering of CARTE tag
+  const TAG_CARTE = "<a href=\"app/%d/#/carte/%d\">%s</a>";
+
   // rendering of POPUP tag
   const TAG_POPUP = "<a href=\"#!\" rel=\"popover\" data-title=\"%s\" data-content=\"%s\" data-placement=\"bottom\" data-trigger=\"hover\">%s</a>";
 
@@ -55,6 +58,7 @@ class PostContentService {
     $postContent = $this->_replace_hide($postContent);
     $postContent = $this->_transformPopupZone($postContent);
     $postContent = $this->_transformPNTag($postContent,$campagne_id);
+    $postContent = $this->_transformCarteTag($postContent,$campagne_id);
     return $postContent;
   }
 
@@ -70,6 +74,17 @@ class PostContentService {
                                                      else
                                                        return sprintf(self::TAG_PNJ,$campagne_id,$perso_id,$matches[2]);
 
+                                                   },
+                                                   $postContent
+                                                  );
+  }
+
+  private function _transformCarteTag($postContent,$campagne_id)
+  {
+
+    return preg_replace_callback('#\[carte=(.*)\](.*)\[/carte\]#isU',
+                                                   function ($matches) use($campagne_id) {
+                                                     return sprintf(self::TAG_CARTE,$campagne_id,$matches[1],$matches[2]);
                                                    },
                                                    $postContent
                                                   );
