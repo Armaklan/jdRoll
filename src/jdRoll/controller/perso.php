@@ -103,7 +103,7 @@
     $perso['publicDescription'] = $app["postContentService"]->transformAllTag($perso['publicDescription'],$perso['name'],$isMj,$campagne_id);
     $param = ['campagne_id' => $campagne_id, 'perso' => $perso, 'is_mj' => $isMj];
 		if( $isMj || ($perso["user_id"] == $userId) ) {
-      $perso['privateDescription'] = $app["postContentService"]->transformAllTag($perso['privateDescription'],$perso['name'],$is_mj,$campagne_id);
+      $perso['privateDescription'] = $app["postContentService"]->transformAllTag($perso['privateDescription'],$perso['name'],$isMj,$campagne_id);
 			$template = $app->render('perso/view_all_modal.html.twig', $param);
 		} else {
       $template = $app->render('perso/view_modal.html.twig', $param);
