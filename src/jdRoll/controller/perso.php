@@ -103,6 +103,7 @@
     $perso['publicDescription'] = $app["postContentService"]->transformAllTag($perso['publicDescription'],$perso['name'],$isMj,$campagne_id);
     $param = ['campagne_id' => $campagne_id, 'perso' => $perso, 'is_mj' => $isMj];
 		if( $isMj || ($perso["user_id"] == $userId) ) {
+      $perso['privateDescription'] = $app["postContentService"]->transformAllTag($perso['privateDescription'],$perso['name'],$is_mj,$campagne_id);
 			$template = $app->render('perso/view_all_modal.html.twig', $param);
 		} else {
       $template = $app->render('perso/view_modal.html.twig', $param);
@@ -117,6 +118,7 @@
         }
 		$perso = $app['persoService']->getPersonnageById($perso_id);
     $perso['publicDescription'] = $app["postContentService"]->transformAllTag($perso['publicDescription'],$perso['name'],$is_mj,$campagne_id);
+    $perso['privateDescription'] = $app["postContentService"]->transformAllTag($perso['privateDescription'],$perso['name'],$is_mj,$campagne_id);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		return $app->render('perso/view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_view_all_mj");
@@ -126,6 +128,7 @@
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
 		$perso = $app['persoService']->getPersonnage(true,$campagne_id, $player_id);
     $perso[0]['publicDescription'] = $app["postContentService"]->transformAllTag($perso[0]['publicDescription'],$perso['name'],$is_mj,$campagne_id);
+    $perso[0]['privateDescription'] = $app["postContentService"]->transformAllTag($perso[0]['privateDescription'],$perso['name'],$is_mj,$campagne_id);
 		return $app->render('perso/view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso[0], 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_view_all");
 
