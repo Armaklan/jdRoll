@@ -17,13 +17,15 @@ class NotificationService {
     private $campagneService;
     private $userService;
     private $mailer;
+    private $favorisService;
 
-    public function __construct($db, $logger, $userService, $topicService, $campagneService, $mailer) {
+    public function __construct($db, $logger, $userService, $topicService, $campagneService, $favorisService, $mailer) {
         $this->db = $db;
         $this->logger = $logger;
         $this->userService = $userService;
         $this->topicService = $topicService;
         $this->campagneService = $campagneService;
+        $this->favorisService = $favorisService;
         $this->mailer = $mailer;
     }
 
@@ -212,7 +214,7 @@ class NotificationService {
             $user = $this->userService->getById($user_id);
             $campagne = $this->campagneService->getCampagne($campagne_id);
             $participants = $this->campagneService->getParticipant($campagne_id);
-            $favoris = $this->campagneService->getFavorisInCampagne($campagne_id);
+            $favoris = $this->favorisService->getFavorisInCampagne($campagne_id);
             $topic = $this->topicService->getTopic($topic_id);
             $content = "Nouveau message de " . $user['username'] . " dans le sujet <a href='$url'>" . $topic['title'] . "</a>";
             $title = "Nouveau message - " . $campagne['name'];

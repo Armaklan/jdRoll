@@ -53,7 +53,7 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
 })->bind("campagne");
 
 $publicCampagneController->get('/config/{id}', function($id) use($app) {
-	$campagne = $app['campagneService']->getCampagneConfig($id);
+	$campagne = $app["campagneConfigService"]->getCampagneConfig($id);
 	return $app->render('game/config/css.html.twig', ['campagne_config' => $campagne, 'error' => ""]);
 })->bind("campagne_config");
 
@@ -64,13 +64,13 @@ $publicCampagneController->post('/favoris', function(Request $request) use($app)
             $statut = $request->get("statut");
 
             if($statut == 0) {
-                $app["campagneService"]->removeFavoris($campagne, $joueur);
+                $app["favorisService"]->removeFavoris($campagne, $joueur);
             } else {
-                $app["campagneService"]->addFavoris($campagne, $joueur);
+                $app["favorisService"]->addFavoris($campagne, $joueur);
             }
             return "";
         })->bind("favoris");
-		
+
 
 $app->mount('/campagne', $publicCampagneController);
 

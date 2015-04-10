@@ -3,7 +3,6 @@
 use jdRoll\service\DbService;
 use jdRoll\service\UserService;
 use jdRoll\service\PersoService;
-use jdRoll\service\CampagneService;
 use jdRoll\service\forum\SectionService;
 use jdRoll\service\forum\TopicService;
 use jdRoll\service\forum\PostService;
@@ -20,6 +19,9 @@ use jdRoll\service\PostContentService;
 use jdRoll\service\ThumbnailService;
 use jdRoll\service\CarteService;
 use jdRoll\service\NoteService;
+use jdRoll\service\campagne\CampagneService;
+use jdRoll\service\campagne\CampagneConfigService;
+use jdRoll\service\campagne\FavorisService;
 
 /*
     Définition des services
@@ -38,6 +40,12 @@ $app['persoService'] = function ($app) {
 };
 $app['campagneService'] = function ($app) {
     return new CampagneService($app['db'], $app['session'], $app['persoService'], $app['userService']);
+};
+$app['favorisService'] = function ($app) {
+    return new FavorisService($app['db']);
+};
+$app['campagneConfigService'] = function ($app) {
+    return new CampagneConfigService($app['db']);
 };
 $app['sectionService'] = function ($app) {
     return new SectionService($app['db'], $app['session']);
@@ -58,7 +66,7 @@ $app['messagerieService'] = function ($app) {
     return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
 };
 $app['notificationService'] = function ($app) {
-    return new NotificationService($app['db'], $app['monolog'], $app['userService'], $app['topicService'], $app['campagneService'], $app['mailer']);
+    return new NotificationService($app['db'], $app['monolog'], $app['userService'], $app['topicService'], $app['campagneService'], $app['favorisService'], $app['mailer']);
 };
 $app['absenceService'] = function ($app) {
     return new AbsenceService($app['db'], $app['session']);

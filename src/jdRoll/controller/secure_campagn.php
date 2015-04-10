@@ -29,7 +29,7 @@ $securedCampagneController->get('/{id}/edit', function($id) use($app) {
 
 $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne_id) use($app) {
             $campagne = $app['campagneService']->getCampagne($campagne_id);
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
             $themes = $app['themeService']->all();
             $personnages = $app['persoService']->getAllPersonnagesInCampagne($campagne_id);
             $cartes = $app['carteService']->getAllCartes($campagne_id, true);
@@ -51,17 +51,17 @@ $securedCampagneController->get('/{campagne_id}/config/edit', function($campagne
 
 $securedCampagneController->post('/config/save', function(Request $request) use($app) {
             try {
-                $app['campagneService']->updateCampagneConfig($request);
+                $app['campagneConfigService']->updateCampagneConfig($request);
                 return $app->redirect($app->path('campagne_config_edit', array('campagne_id' => $request->get('campagne_id'))));
             } catch (Exception $e) {
-                $campagne = $app['campagneService']->getFormCampagneConfig($request);
+                $campagne = $app['campagneConfigService']->getFormCampagneConfig($request);
                 return $app->render('game/config/edit.html.twig', ['campagne_id' => $request->get('campagne_id'), 'campagne' => $campagne, 'is_mj' => true, 'error' => $e->getMessage()]);
             }
         })->bind("campagne_config_save");
 
 $securedCampagneController->post('/{campagne}/perso_widgets', function(Request $request, $campagne) use($app) {
             try {
-                $app['campagneService']->updateWidgetsConfig($campagne, $request->getContent());
+                $app['campagneConfigService']->updateWidgetsConfig($campagne, $request->getContent());
                 return new JsonResponse("");
             } catch (Exception $e) {
                 return new JsonResponse($e->getMessage(),500);
@@ -123,7 +123,7 @@ $securedCampagneController->get('/valid/{id}/{user_id}', function($id, $user_id)
                 $app['campagneService']->validJoueur($id, $user_id);
                 $user = $app['userService']->getById($user_id);
                 $perso = $app['persoService']->createPersonnage($id, $user_id, $user['username']);
-                $config = $app['campagneService']->getCampagneConfig($id);
+                $config = $app["campagneConfigService"]->getCampagneConfig($id);
                 $app['persoService']->setTechnical($perso['id'], $config['template']);
 
 
@@ -169,7 +169,7 @@ $securedCampagneController->post('/save', function(Request $request) use($app) {
             try {
                 if ($request->get('id') == '') {
                     $campagne_id = $app['campagneService']->createCampagne($request);
-                    $app['campagneService']->createCampagneConfig($campagne_id);
+                    $app['campagneConfigService']->createCampagneConfig($campagne_id);
                     $app['sectionService']->createSectionWith($campagne_id, "Partie", 1, 0, "");
                     $modoff = $app['sectionService']->createSectionWith($campagne_id, "Mod-Off", 2, 0, "");
                     $app['topicService']->createTopicWith($modoff, "Recrutement", 0, 0, 0, 2);
@@ -201,7 +201,7 @@ $securedCampagneController->post('/{id}/desc', function(Request $request, $id) u
 
 $securedCampagneController->post('/{id}/sheet', function(Request $request) use($app) {
             try {
-                $app['campagneService']->updateCampagneConfigSheet($request);
+                $app['campagneConfigService']->updateCampagneConfigSheet($request);
                 return new JsonResponse('Mise à jour effectuée', 200);
             } catch (Exception $e) {
                 return new JsonResponse('Problème durant la mise à jour', 500);
@@ -210,7 +210,7 @@ $securedCampagneController->post('/{id}/sheet', function(Request $request) use($
 
 $securedCampagneController->post('/{id}/theme', function(Request $request) use($app) {
             try {
-                $app['campagneService']->updateCampagneConfigTheme($request);
+                $app['campagneConfigService']->updateCampagneConfigTheme($request);
                 return new JsonResponse('Mise à jour effectuée', 200);
             } catch (Exception $e) {
                 return new JsonResponse($e->getMessage(), 500);
@@ -219,7 +219,7 @@ $securedCampagneController->post('/{id}/theme', function(Request $request) use($
 
 $securedCampagneController->post('/{id}/divers', function(Request $request) use($app) {
             try {
-                $app['campagneService']->updateCampagneConfigDivers($request);
+                $app['campagneConfigService']->updateCampagneConfigDivers($request);
                 return new JsonResponse('Mise à jour effectuée', 200);
             } catch (Exception $e) {
                 return new JsonResponse($e->getMessage(), 500);
@@ -240,46 +240,25 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
             $prepaCampagnes = $app['campagneService']->getMyActivePrepaCampagnes();
             $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
             $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
             $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
             $cartes = $app["carteService"]->getAllCartes($campagne_id);
+            $isMj = $app["campagneService"]->isMj($campagne_id);
             return $app->render('sidebar_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'perso' => $perso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
                 'topics' => $topics,
+                'is_mj' => $isMj,
                         'allCarte' => $cartes,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert, 'is_mj' => false]);
+                        'config' => $config, 'alert' => $alert]);
         })->bind("sidebar_campagne_large");
 
-$securedCampagneController->get('/sidebarmj_large/{campagne_id}', function(Request $request, $campagne_id) use($app) {
-            $player_id = $app['session']->get('user')['id'];
-            $allPerso = $app['persoService']->getPersonnagesInCampagne($campagne_id);
-            $campagne = $app['campagneService']->getCampagne($campagne_id);
-            $pjCampagnes = $app['campagneService']->getMyActivePjCampagnes();
-            $mjCampagnes = $app['campagneService']->getMyActiveMjCampagnes();
-            $prepaCampagnes = $app['campagneService']->getMyActivePrepaCampagnes();
-            $favorisedCampagne = $app['campagneService']->getFavorisedCampagne();
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
-            $alert = $app['campagneService']->hasAlert($campagne_id, $player_id);
-            $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
-            $cartes = $app["carteService"]->getAllCartes($campagne_id, true);
-            return $app->render('sidebar_mj_campagne_large.html.twig', [
-                'campagne_id' => $campagne_id,
-                'allPerso' => $allPerso,
-                'allCarte' => $cartes,
-                'favorised_campagne' => $favorisedCampagne,
-                'prepa_campagnes' => $prepaCampagnes,
-                'topics' => $topics,
-                        'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,
-                        'config' => $config, 'alert' => $alert, 'is_mj' => true]);
-        })->bind("sidebar_campagne_mj_large");
-
 $securedCampagneController->get('/dicer/view/{campagne_id}', function($campagne_id) use($app) {
-            $config = $app['campagneService']->getCampagneConfig($campagne_id);
+            $config = $app["campagneConfigService"]->getCampagneConfig($campagne_id);
             if($app["campagneService"]->isMj($campagne_id)) {
                 $jets = $app['dicerService']->getAllDice($campagne_id);
             } else {
