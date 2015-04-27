@@ -31,7 +31,8 @@ module.exports = function(grunt) {
       my_target: {
         files: {
           'dist/js/controller.min.js': [
-            'js/*.js',
+            'js/tinymce_conf.js',
+            'js/tools.js',
             'js/controller/onload.js',
             'js/controller/*.js',
             'js/angular/**/*.js'
