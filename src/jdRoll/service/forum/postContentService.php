@@ -68,7 +68,7 @@ class PostContentService {
     return preg_replace_callback('#\[pnj=(.*)\](.*)\[/pnj\]#isU',
                                                    function ($matches) use($campagne_id) {
 
-                                                     $perso_id = $this->persoService->getPNJInCampagneByName($campagne_id,$matches[1]);
+                                                     $perso_id = $this->persoService->getPNJInCampagneByName($campagne_id,html_entity_decode($matches[1]));
                                                      if($perso_id == 0)
                                                        return $matches[2];
                                                      else
