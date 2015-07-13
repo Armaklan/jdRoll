@@ -34,7 +34,7 @@
     function update(note) {
       note.edit = false;
       Note.update(note).then(function(data) {
-        note.id = data.id;
+        note.id = data;
       });
     }
 

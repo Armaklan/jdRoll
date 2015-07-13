@@ -32,8 +32,8 @@ $notesController->get('/{campagne_id}/content', function($campagne_id) use($app)
 $notesController->post('/{campagne_id}', function($campagne_id, Request $request) use($app) {
             $note = json_decode($request->getContent());
             $user_id = $app['session']->get('user')['id'];
-            $app['noteService']->updateNote($campagne_id, $user_id, $note);
-            return new JsonResponse($content);
+            $id = $app['noteService']->updateNote($campagne_id, $user_id, $note);
+            return new JsonResponse($id);
         });
 
 $notesController->delete('/{campagne_id}', function($campagne_id, Request $request) use($app) {
