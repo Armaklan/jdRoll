@@ -167,6 +167,18 @@ $forumController->post('/{campagne_id}/topic/draft', function($campagne_id, Requ
   }
 })->bind("draft_save");
 
+
+$forumController->get('/{campagne_id}/readall', function($campagne_id) use($app) {
+  $campagne_id = getInterneCampagneNumber($campagne_id);
+  $topics = $app["sectionService"]->getAllSectionInCampagne($campagne_id);
+  foreach($topics as &$topic) {
+    if($topic['posts_id'] > 0) {
+      $app["postService"]->markRead($topic['posts_id'], $topic['topics_id']);
+    }
+  }
+  return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
+})->bind("campagne_read_all");
+
 $forumController->get('/{campagne_id}/{topic_id}', function($campagne_id, $topic_id) use($app) {
   //$page = $app["postService"]->getLastPageOfPost($topic_id);
   $page = 1;
