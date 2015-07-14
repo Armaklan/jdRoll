@@ -273,11 +273,21 @@ $securedCampagneController->post('/dicer/{campagne_id}/{topic_id}', function(Req
                 $param = $request->get('param');
                 $description = $request->get('description');
                 $result = $app['dicerService']->launchDice($campagne_id, $param, $description);
+                $url = "";
                 if ($topic_id != 0) {
-                    $player = $app['userService']->getCurrentUser();
-                    $name = $player['username'];
-                    $post_id = $app['postService']->createDicerPost($topic_id, " $name a lancé $param et a obtenu : $result . <br> Description : $description ");
+                  $player = $app['userService']->getCurrentUser();
+                  $name = $player['username'];
+                  $post_id = $app['postService']->createDicerPost($topic_id, " $name a lancé $param et a obtenu : $result . <br> Description : $description ");
+                  $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id))."#post".$post_id;
+                } else {
+                  $url = $app->path('forum_campagne', array('campagne_id' => $campagne_id));
                 }
+                $app["notificationService"]->alertDiceInCampagne(
+                  $app["session"]->get('user')['id'],
+                  $campagne_id,
+                  $topic_id,
+                  $url
+                );
                 return $result;
             } catch (Exception $e) {
                 return $e->getMessage();

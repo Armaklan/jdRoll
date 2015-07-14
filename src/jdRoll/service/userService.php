@@ -94,6 +94,8 @@ class UserService {
                     mail_mp = :mail_mp,
                     notif_message = :notif_message,
                     mail_message = :mail_message,
+                    notif_dice = :notif_dice,
+                    mail_dice = :mail_dice,
                     notif_perso = :notif_perso,
                     mail_perso = :mail_perso,
                     notif_inscription = :notif_inscription,
@@ -107,10 +109,12 @@ class UserService {
         $stmt->bindValue("notif_perso", $request->get('notif_perso') ? 1 : 0);
         $stmt->bindValue("notif_inscription", $request->get('notif_inscription') ? 1 : 0);
         $stmt->bindValue("notif_message", $request->get('notif_message') ? 1 : 0);
+        $stmt->bindValue("notif_dice", $request->get('notif_dice') ? 1 : 0);
         $stmt->bindValue("mail_mp", $request->get('mail_mp') ? 1 : 0);
         $stmt->bindValue("mail_perso", $request->get('mail_perso') ? 1 : 0);
         $stmt->bindValue("mail_inscription", $request->get('mail_inscription') ? 1 : 0);
         $stmt->bindValue("mail_message", $request->get('mail_message') ? 1 : 0);
+        $stmt->bindValue("mail_dice", $request->get('mail_dice') ? 1 : 0);
 		$stmt->execute();
 		return $this->getCurrentUser();
 	}

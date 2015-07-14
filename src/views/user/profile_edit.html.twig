@@ -91,6 +91,11 @@
                 <input type="checkbox" id="mail_message" name="mail_message" {% if user['mail_message'] %}checked="true"{% endif %}> Par mail
               </div>
               <div class="form-group">
+                <p><label class="control-label">Notification de jet de dé</label></p>
+                <input type="checkbox" id="notif_dice" name="notif_dice" {% if user['notif_dice'] %}checked="true"{% endif %}> Sur le site<br>
+                <input type="checkbox" id="mail_dice" name="mail_dice" {% if user['mail_dice'] %}checked="true"{% endif %}> Par mail
+              </div>
+              <div class="form-group">
                 <p><label class="control-label">Notification de modification de personnages</label></p>
                 <input type="checkbox" id="notif_perso" name="notif_perso" {% if user['notif_perso'] %}checked="true"{% endif %}> Sur le site<br>
                 <input type="checkbox" id="mail_perso" name="mail_perso" {% if user['mail_perso'] %}checked="true"{% endif %}> Par mail

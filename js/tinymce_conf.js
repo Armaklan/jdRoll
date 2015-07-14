@@ -34,7 +34,10 @@ var formats = [{
   block: 'blockquote'
 }];
 
-var fontFormat = "Standard=Helvetica Neue, Helvetica, Arial, sans-serif;Police Runique=Runes;Police Elfique=Tengwar";
+var fontFormat = "Standard=Helvetica Neue, Helvetica, Arial, sans-serif;" +
+    "Police Lcd=LiquidCrystal;"+
+    "Police Runique=Runes;"+
+    "Police Elfique=Tengwar";
 
 var configBase = {
   plugins: [
