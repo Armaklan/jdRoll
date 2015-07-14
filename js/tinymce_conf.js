@@ -34,6 +34,8 @@ var formats = [{
   block: 'blockquote'
 }];
 
+var fontFormat = "Standard=Helvetica Neue, Helvetica, Arial, sans-serif;Police Runique=Runes;Police Elfique=Tengwar";
+
 var configBase = {
   plugins: [
     "link image lists hr",
@@ -43,9 +45,10 @@ var configBase = {
   content_css : BASE_PATH + "/css/main.css",
   browser_spellcheck: true,
   convert_urls: false,
-  toolbar: "cut copy paste | styleselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons private hide popup perso perso2 carte",
+  toolbar: "cut copy paste | styleselect fontselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons private hide popup perso perso2 carte",
   style_formats: formats,
   autosave_ask_before_unload: false,
+  font_formats: fontFormat,
   setup: function(editor) {
     editor.addButton('private', {
       text: 'Prv',
