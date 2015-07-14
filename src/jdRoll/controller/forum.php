@@ -176,6 +176,7 @@ $forumController->get('/{campagne_id}/readall', function($campagne_id) use($app)
       $app["postService"]->markRead($topic['posts_id'], $topic['topics_id']);
     }
   }
+  $campagne_id = getExterneCampagneNumber($campagne_id);
   return $app->redirect($app->path('forum_campagne', array('campagne_id' => $campagne_id)));
 })->bind("campagne_read_all");
 
