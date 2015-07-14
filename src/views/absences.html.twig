@@ -7,7 +7,7 @@
 	    	{{ error }}
 	    </div>
     {% endif %}
-    <form role="form" class="form-horizontal" action="{{ path('abs_save') }}" method="POST">    
+    <form role="form" class="form-horizontal" action="{{ path('abs_save') }}" method="POST">
       <fieldset class="titled-box">
         <legend>Créer une absence</legend>
 
@@ -24,7 +24,7 @@
             <div class="col-md-5">
               <div class="form-group">
                 <label class="control-label col-md-6">
-                  Je revient le... 
+                  Je revient le...
                 </label>
                 <div class="col-md-6">
                   <input type="text" class="form-control input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
@@ -64,8 +64,8 @@
 
 
 <script>
-    
-    $(function () { 
+
+    $(function () {
 
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
@@ -74,7 +74,10 @@
           onRender: function(date) {
             return date.valueOf() < now.valueOf() ? 'disabled' : '';
           },
-          format: 'dd/mm/yyyy'
+          format: 'dd/mm/yyyy',
+          language: "fr",
+          orientation: "top auto",
+          autoclose: true
         }).on('changeDate', function(ev) {
           if (ev.date.valueOf() > checkout.date.valueOf()) {
             var newDate = new Date(ev.date)
@@ -88,7 +91,10 @@
           onRender: function(date) {
             return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
           },
-          format: 'dd/mm/yyyy'
+          format: 'dd/mm/yyyy',
+          language: "fr",
+          orientation: "top auto",
+          autoclose: true
         }).on('changeDate', function(ev) {
           checkout.hide();
         }).data('datepicker');

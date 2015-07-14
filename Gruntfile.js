@@ -45,7 +45,8 @@ module.exports = function(grunt) {
             'vendor/select2/select2.min.js',
             'vendor/zeroclipboard/ZeroClipboard.min.js',
             'js/bootstrap/bootstrap-fileupload.min.js',
-            'js/bootstrap/bootstrap-datepicker.js',
+            'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+            'vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js',
             'vendor/angular-promise-tracker/promise-tracker.js',
             'vendor/angular-promise-tracker/promise-tracker-http-interceptor.js',
             'vendor/angular-growl-v2/build/angular-growl.js',
@@ -92,11 +93,11 @@ module.exports = function(grunt) {
             'vendor/bootstrap-colorpicker/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
-            'css/datepicker.css',
+            'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
             '/vendor/angular-growl-v2/build/angular-growl.min.css'
           ],
           'dist/css/jdroll.angular.min.css': [
-             'css/datepicker.css',
+             'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
              'vendor/leaflet/dist/leaflet.css',
              'css/carte.css'
            ]
