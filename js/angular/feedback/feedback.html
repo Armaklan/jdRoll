@@ -23,7 +23,7 @@
     <div class="alert alert-danger" ng-if="feedbackCtrl.msg">{{ feedbackCtrl.msg }}</div>
     <div class="alert alert-success" ng-if="feedbackCtrl.isOk">Merci pour votre contribution !</div>
     <p>
-        Retrouver tous les feedbacks ouvert sur <a href="feedbackCtrl.listurl">cette page.</a>
+        Retrouver tous les feedbacks ouvert sur <a ng-href="{{ feedbackCtrl.listurl }}">cette page.</a>
     </p>
 </div>
 <div class="modal-footer">
