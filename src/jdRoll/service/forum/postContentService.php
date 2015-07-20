@@ -148,7 +148,7 @@ class PostContentService {
                                                       if (!isset($perso['name']) || strcasecmp($perso['name'], $postPersoName) == 0) {
                                                         $ret = $this->_getPrivateZone($txt . $matches[3]);
                                                       } else {
-                                                        $users = preg_split("#,#", $matches[2]);
+                                                        $users = preg_split("#,#", html_entity_decode($matches[2]));
                                                         foreach ($users as $user) {
                                                           if (strcasecmp($login, trim($user)) == 0 || strcasecmp($perso['name'], trim($user)) == 0) {
                                                             $ret = $this->_getPrivateZone($txt . $matches[3]);
