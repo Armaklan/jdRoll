@@ -142,7 +142,7 @@ class PostContentService {
     $postContent = preg_replace_callback('#\[(private|prv)(?:=(.*,?))?\](.*)\[/\1\]#isU',
                                                   function ($matches) use ($is_mj,$login,$persos,$postContent,$postPersoName,$postSize,$isThereAPrivateForMe){
 
-                                                    $txt = sprintf(self::TAG_PRV_HEADER,$matches[2]);;
+                                                    $txt = sprintf(self::TAG_PRV_HEADER,html_entity_decode($matches[2]));
                                                     $ret = '';
                                                     foreach($persos as $perso) {
                                                       if (!isset($perso['name']) || strcasecmp($perso['name'], $postPersoName) == 0) {
