@@ -39,7 +39,11 @@
                         $widget->up = 0;
                         $widget->low = 0;
                     }
-                    $widget->value = 0;
+										if($widget->type == 'text') {
+											$widget->value = "";
+										} else {
+											$widget->value = 0;
+										}
                 }
             }
         }
@@ -76,11 +80,11 @@
         return $widgets;
     }
 
-	$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
+		$persoController->get('/edit/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
 		$perso = $app['persoService']->getPersonnageById($perso_id);
-        $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
+    $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-        $cats = $app['persoService']->getAllPnjCat($campagne_id);
+    $cats = $app['persoService']->getAllPnjCat($campagne_id);
 		return $app->render('perso/edit.html.twig', ['campagne_id' => $campagne_id, 'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 	})->bind("perso_edit");
 
@@ -111,6 +115,7 @@
         return new JsonResponse(['name' => $perso['name'], 'content' => $template->getContent()]);
 	})->bind("perso_view_ajax");
 
+
 	$persoController->get('/view_all_mj/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
         $is_mj = $app["campagneService"]->isMj($campagne_id);
         if(! $is_mj) {
@@ -132,6 +137,24 @@
 		return $app->render('perso/view_all.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso[0], 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_view_all");
 
+	$persoController->post('/ajax/{campagne_id}/widget/{perso_id}', function(Request $request, $campagne_id, $perso_id) use($app) {
+		$userId = $app['session']->get('user')['id'];
+		$widgets = $request->getContent();
+		$app['monolog']->addInfo($widgets);
+		$app['persoService']->updatePersonnageWidgets($campagne_id, $perso_id, $widgets);
+		$perso = $app['persoService']->getPersonnageById($perso_id);
+		if ($perso["user_id"] != null) {
+			$app["notificationService"]->alertModifPerso(
+				$userId,
+				$perso,
+				$campagne_id,
+				$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
+				$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
+			);
+		}
+		return new JsonResponse("OK");
+	});
+
 	$persoController->post('/save/{campagne_id}', function($campagne_id, Request $request) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
@@ -139,19 +162,19 @@
 		$perso_id = $request->get('perso_id');
 		try {
 			if ($perso_id != "") {
-                $widgets = getWidgetsFromRequest($app, $campagne_id, $request);
+          $widgets = getWidgetsFromRequest($app, $campagne_id, $request);
 	    		$app['persoService']->updatePersonnage($campagne_id, $perso_id, $request, $widgets);
 	    		$perso = $app['persoService']->getPersonnageById($perso_id);
-                $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
+          $perso['widgets'] = getWidgets($app, $campagne_id, $perso['widgets']);
 	    		if ($perso["user_id"] != null) {
-					$app["notificationService"]->alertModifPerso(
-						$app['session']->get('user')['id'],
-						$perso,
-    					$campagne_id,
-						$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
-						$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
-					);
-				}
+						$app["notificationService"]->alertModifPerso(
+							$app['session']->get('user')['id'],
+							$perso,
+		    			$campagne_id,
+							$app->path('perso_view_all', ['campagne_id' => $campagne_id]),
+							$app->path('perso_view_all_mj', ['campagne_id' => $campagne_id, 'perso_id' => $perso['id'] ])
+						);
+					}
                 $cats = $app['persoService']->getAllPnjCat($campagne_id);
 	    		return $app->render('perso/edit.html.twig', ['campagne_id' => $campagne_id,'perso' => $perso, 'error' => "", 'is_mj' => $is_mj, 'cats' => $cats]);
 			} else {
@@ -269,4 +292,3 @@
     })->bind("pnj_generate_thumbnails");
 
 	$app->mount('/perso', $persoController);
-

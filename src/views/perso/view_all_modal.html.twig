@@ -142,6 +142,8 @@
           <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
             <td colspan="2">
                 <div class="topics collapse in" id="widgets">
+                    {% set widget_full = true %}
+                    <input type="hidden" id="widget-data" value="{{ perso.widgets|json_encode() }}" />
                     {% for widget in perso.widgets %}
                         {% include('composant/perso_widget.html.twig') %}
                     {% endfor %}
@@ -181,5 +183,3 @@
 
   </tbody>
 </table>
-
-

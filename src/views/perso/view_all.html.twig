@@ -141,6 +141,7 @@
           <tr {% if perso.widgets is empty %} style="display:none" {% endif %}>
             <td colspan="2">
                 <div class="topics collapse in" id="widgets">
+                    {% set widget_full = false %}
                     {% for widget in perso.widgets %}
                         {% include('composant/perso_widget.html.twig') %}
                     {% endfor %}

@@ -3,16 +3,34 @@
                   {% if (widget.up - widget.low) != 0 %}
                     <div class="jauge">
                       <center><b>{{ widget.name }}</b></center>
-                      <div class="progress">
-                        <div class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="{{ widget.value }}"
-                        aria-valuemin="{{ widget.low }}"
-                        aria-valuemax="{{ widget.up }}"
-                        style="width: {{ (100 * (widget.value - widget.low) ) / (widget.up - widget.low) }}%;">
-                          {{ widget.value }} / {{ widget.up }}
-                        </div>
+
+                      {% if widget_full == true %}
+                      <div class="col-xs-1">
+                        <a class="btn btn-primary btn-xs minusWidget" data-widget-id="{{ widget.id }}"><i class="glyphicon glyphicon-minus"></i></a>
                       </div>
+                      <div class="col-xs-10">
+                      {% endif %}
+
+
+                        <div class="progress">
+                          <div class="progress-bar"
+                          data-widget-id="{{ widget.id }}"
+                          role="progressbar"
+                          aria-valuenow="{{ widget.value }}"
+                          aria-valuemin="{{ widget.low }}"
+                          aria-valuemax="{{ widget.up }}"
+                          style="width: {{ (100 * (widget.value - widget.low) ) / (widget.up - widget.low) }}%;">
+                            {{ widget.value }} / {{ widget.up }}
+                          </div>
+                        </div>
+
+                      {% if widget_full == true %}
+                      </div>
+                      <div class="col-xs-1">
+                        <a class="btn btn-primary btn-xs addWidget" data-widget-id="{{ widget.id }}"><i class="glyphicon glyphicon-plus"></i></a>
+                      </div>
+                      {% endif %}
+
                     </div>
                   {% endif %}
                 {% endif %}
@@ -20,7 +38,15 @@
                 {% if widget.type == "token" %}
                 <div class="token">
                     <center><b>{{ widget.name }}</b></center>
-                    <center>
+
+                    {% if widget_full == true %}
+                    <div class="col-xs-1">
+                      <a class="btn btn-primary btn-xs minusWidget" data-widget-id="{{ widget.id }}"><i class="glyphicon glyphicon-minus"></i></a>
+                    </div>
+                    <div class="col-xs-10">
+                    {% endif %}
+
+                    <center class="token-bar" data-widget-id="{{ widget.id }}">
                         <p>
                         {% if widget.value == 0 %}
                             <i>Aucun</i>
@@ -29,6 +55,24 @@
                                 <span class="icon-circle"></span>
                             {% endfor %}
                         {% endif %}
+                        </p>
+                    </center>
+
+                    {% if widget_full == true %}
+                    </div>
+                    <div class="col-xs-1">
+                      <a class="btn btn-primary btn-xs addWidget" data-widget-id="{{ widget.id }}"><i class="glyphicon glyphicon-plus"></i></a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if widget.type == "text" %}
+                <div class="widget-text">
+                    <center><b>{{ widget.name }}</b></center>
+                    <center>
+                        <p>
+                        {{ widget.value | nl2br }}
                         </p>
                     </center>
                 </div>

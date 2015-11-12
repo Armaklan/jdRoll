@@ -185,21 +185,38 @@ $(function() {
                     </tr>
                     {% set row = 0 %}
                     {% for widget in perso.widgets %}
+
                         <tr>
                             <td>
                             {{widget.name}}
                             <input type="hidden" name="widgetname[{{row}}]" value="{{widget.value}}" />
                             <input type="hidden" name="widgetid[{{row}}]" value="{{widget.id}}" />
                             </td>
-                            <td>
-                                <input type="text" name="widgetvalue[{{row}}]" value="{{widget.value}}" />
-                            </td>
-                            <td>
-                                <input {% if widget.type == 'jauge' %} type="text" {% else %} type="hidden" {% endif %} name="widgetlow[{{row}}]" value="{{widget.low}}" />
-                            </td>
-                            <td>
-                                <input {% if widget.type == 'jauge' %} type="text" {% else %} type="hidden" {% endif %} name="widgetup[{{row}}]" value="{{widget.up}}" />
-                            </td>
+														{% if widget.type == 'jauge' %}
+															<td>
+																	<input class="form-control" type="text" name="widgetvalue[{{row}}]" value="{{widget.value}}" />
+															</td>
+															<td>
+																	<input class="form-control" type="text" name="widgetlow[{{row}}]" value="{{widget.low}}" />
+															</td>
+															<td>
+																	<input class="form-control" type="text" name="widgetup[{{row}}]" value="{{widget.up}}" />
+															</td>
+														{% elseif widget.type == 'token' %}
+															<td>
+	                                <input class="form-control" type="text" name="widgetvalue[{{row}}]" value="{{widget.value}}" />
+	                            </td>
+															<td>
+																	<input type="hidden" name="widgetlow[{{row}}]" value="{{widget.low}}" />
+															</td>
+															<td>
+																	<input type="hidden" name="widgetup[{{row}}]" value="{{widget.up}}" />
+															</td>
+															{% elseif widget.type == 'text' %}
+																<td colspan="3">
+		                                <textarea class="form-control" rows="4" type="text" name="widgetvalue[{{row}}]">{{widget.value}}</textarea>
+		                            </td>
+															{% endif %}
                         </tr>
                         {% set row = row + 1 %}
                     {% endfor %}

@@ -13,6 +13,7 @@
                 {{ perso.name }}
               </h3>
             </div>
+            {% set widget_full = false %}
             {% for widget in perso.widgets %}
                 {% include('composant/perso_widget.html.twig') %}
             {% endfor %}

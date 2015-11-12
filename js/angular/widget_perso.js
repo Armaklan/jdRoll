@@ -14,13 +14,22 @@
         }
 
         function add(type) {
-            vm.widgets.push({
-                id: guid(),
-                type: type,
-                up: 0,
-                low: 0,
-                value: 0
-            });
+            if(type === 'text') {
+              vm.widgets.push({
+                  id: guid(),
+                  type: type,
+                  value: ""
+              });
+            } else {
+              vm.widgets.push({
+                  id: guid(),
+                  type: type,
+                  up: 0,
+                  low: 0,
+                  value: 0
+              });
+            }
+
         }
 
         function remove(widget) {

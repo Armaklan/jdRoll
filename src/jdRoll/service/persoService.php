@@ -172,8 +172,8 @@ class PersoService {
 				technical = :technical,
 				perso_fields = :perso_fields,
 				statut = :statut,
-                cat_id = :cat_id,
-                widgets = :widgets
+        cat_id = :cat_id,
+        widgets = :widgets
 				WHERE
 				campagne_id = :campagne
 				AND id = :perso";
@@ -187,18 +187,32 @@ class PersoService {
         $stmt->bindValue("publicDescription", $request->get('publicDescription'));
         $stmt->bindValue("privateDescription", $request->get('privateDescription'));
         $stmt->bindValue("technical", $request->get('technical'));
-		$stmt->bindValue("perso_fields", $request->get('hiddenInputFields'));
+		    $stmt->bindValue("perso_fields", $request->get('hiddenInputFields'));
         $stmt->bindValue("statut", $request->get('statut'));
-		//if($request->get('cat_id') == '')
-		//$stmt->bindValue("cat_id", NULL);
-		//else
-		$stmt->bindValue("cat_id", $request->get('cat_id'));
+		    $stmt->bindValue("cat_id", $request->get('cat_id'));
         $stmt->bindValue("widgets", json_encode($widgets));
 
         $stmt->execute();
 
         //Generate thumbnail from avatar
         $this->thumbnailService->generateThumbnail('perso', $perso_id, $request->get('avatar'));
+    }
+
+    public function updatePersonnageWidgets($campagne_id, $perso_id, $widgets) {
+
+        $sql = "UPDATE personnages
+        SET
+        widgets = :widgets
+        WHERE
+        campagne_id = :campagne
+        AND id = :perso";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue("campagne", $campagne_id);
+        $stmt->bindValue("perso", $perso_id);
+        $stmt->bindValue("widgets", $widgets);
+
+        $stmt->execute();
     }
 
     public function setTechnical($perso_id, $template) {
@@ -226,7 +240,7 @@ class PersoService {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("user", $user_id);
         $stmt->bindValue("fields", $fields);
-		$stmt->bindValue("campagne",$campagne_id);
+		    $stmt->bindValue("campagne",$campagne_id);
         $stmt->execute();
     }
 
@@ -248,7 +262,7 @@ class PersoService {
         $stmt->bindValue("technical", $request->get('technical'));
         $stmt->bindValue("statut", $request->get('statut'));
         $stmt->bindValue("cat_id", $request->get('cat_id'));
-		$stmt->bindValue("perso_fields",$request->get('hiddenInputFields'));
+		    $stmt->bindValue("perso_fields",$request->get('hiddenInputFields'));
         $stmt->bindValue("widgets", json_encode($widgets));
         $stmt->execute();
 
@@ -392,4 +406,3 @@ class PersoService {
         return $result;
     }
 }
-

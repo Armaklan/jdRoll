@@ -47,6 +47,7 @@
 
                                 <p>&nbsp;</p>
                                 {% if is_mj or post.user_id == app.session.get('user')['id'] %}
+																{% set widget_full = false %}
                                 {% for widget in post.perso_widgets %}
                                     {% include('composant/perso_widget.html.twig') %}
                                 {% endfor %}
