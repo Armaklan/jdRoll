@@ -6,7 +6,7 @@ function ($scope, $http, $location) {
     $scope.carte = {
         campagne_id: $scope.getCampagneId(),
         published: '1',
-        markers: [];
+        markers: []
     }
 
     $scope.messages = [];
