@@ -5,7 +5,8 @@ ngApplication.controller('CtrlCarteCreator', ['$scope', '$http', '$location',
 function ($scope, $http, $location) {
     $scope.carte = {
         campagne_id: $scope.getCampagneId(),
-        published: '1'
+        published: '1',
+        markers: [];
     }
 
     $scope.messages = [];
