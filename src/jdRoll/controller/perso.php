@@ -190,10 +190,16 @@
 		}
 	})->bind("perso_save");
 
+
+
 	$persoController->get('/pnj/{campagne_id}', function($campagne_id) use($app) {
 		$player_id = $app['session']->get('user')['id'];
 		$is_mj = $app["campagneService"]->isMj($campagne_id);
-        $pjs = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+    $pjs = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		$app['monolog']->addInfo('perso ' . count($pjs));
+		$pjs = array_filter($pjs, function ($k) {
+			return $k['cat_id'] == 0;
+		});
 		$pnjs = $app['persoService']->getPNJInCampagne($campagne_id, $is_mj);
 		return $app->render('perso/list.html.twig', ['campagne_id' => $campagne_id,'pnjs' => $pnjs, 'pjs' => $pjs, 'error' => "", 'is_mj' => $is_mj]);
 	})->bind("perso_pnj");
@@ -228,7 +234,12 @@
 			$error = "Vous n'êtes pas le MJ de cette partie";
 		}
 		$persos = $app['persoService']->getPNJInCampagne($campagne_id, $is_mj);
-		return $app->render('perso/list.html.twig', ['campagne_id' => $campagne_id,'persos' => $persos, 'error' => $error, 'is_mj' => $is_mj]);
+		$pjs = $app['persoService']->getPersonnagesInCampagne($campagne_id);
+		$pjs = array_filter($pjs, function ($k) {
+			return $k['cat_id'] == 0;
+		});
+		$pnjs = $app['persoService']->getPNJInCampagne($campagne_id, $is_mj);
+		return $app->render('perso/list.html.twig', ['campagne_id' => $campagne_id,'pnjs' => $pnjs, 'pjs' => $pjs, 'error' => $error, 'is_mj' => $is_mj]);
 	})->bind("perso_pnj_del");
 
 	$persoController->get('/attach/{campagne_id}/{perso_id}', function($campagne_id, $perso_id) use($app) {
