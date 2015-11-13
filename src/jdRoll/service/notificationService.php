@@ -260,7 +260,7 @@ class NotificationService {
           }
         }
       } else {
-        $participants = $this->topicService->getWhoCanRead($topic_id);
+        $participants = $this->topicService->getWhoCanRead($topic_id, $campagne_id);
         foreach($participants as $participant) {
           if($user_id != $participant['user_id']) {
             $this->insertNotifPost($participant['user_id'], $title, $content, $url, 'MSG', $topic_id);

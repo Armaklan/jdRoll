@@ -38,7 +38,7 @@ class TopicService {
     }
 
     public function getTopic($topic_id) {
-        $sql = "SELECT topics.*, sections.title as section_title 
+        $sql = "SELECT topics.*, sections.title as section_title
     			FROM topics
     			JOIN sections
     			ON topics.section_id = sections.id
@@ -59,8 +59,8 @@ class TopicService {
     }
 
     public function createTopicWith($section, $title, $ordre, $stickable, $is_closed, $is_private) {
-        $sql = "INSERT INTO topics 
-				(section_id, title, ordre, stickable, is_closed, is_private) 
+        $sql = "INSERT INTO topics
+				(section_id, title, ordre, stickable, is_closed, is_private)
 				VALUES
 				(:section,:title,:ordre,:stickable, :is_closed, :is_private)";
 
@@ -77,7 +77,7 @@ class TopicService {
     }
 
     public function updateTopic($request) {
-        $sql = "UPDATE topics 
+        $sql = "UPDATE topics
     			SET title = :title,
     				ordre = :ordre,
     				stickable = :stickable,
@@ -168,13 +168,16 @@ class TopicService {
             $stmt->execute();
         }
     }
-    
-    public function getWhoCanRead($topic_id) {
-        $sql = "SELECT * 
-    			FROM can_read
-			WHERE topic_id = :topic";
 
-        return $this->db->fetchAll($sql, array("topic" => $topic_id));
+    public function getWhoCanRead($topic_id, $campagne_id) {
+        $sql = "SELECT *
+    			FROM can_read cr
+          JOIN campagne_participant participant
+          ON cr.user_id = participant.user_id
+			    WHERE cr.topic_id = :topic
+          AND participant.campagne_id = :campagne";
+
+        return $this->db->fetchAll($sql, array("topic" => $topic_id, "campagne" => $campagne_id));
     }
 
     public function updateLastPost($topic_id, $post_id) {
