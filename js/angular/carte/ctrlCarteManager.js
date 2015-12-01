@@ -44,11 +44,11 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         controls: {
             custom: []
         }
-    }
+    };
     //Droppable options
     $scope.dropOptions = {
         onDrop: 'onDropItem'
-    }
+    };
 
     //Interface object, used in the template only
     $scope.interface = {
@@ -73,7 +73,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         $scope.map = map;
         //Launch setup
         imageSetup();
-    }
+    };
 
     /**
      * This function can be called once the image dimensions are know.
@@ -124,10 +124,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
                 $scope.map.options.minZoom = $scope.map.getZoom();
                 $scope.map.options.maxZoom = $scope.map.getZoom() + 4;
             });
-        })
+        });
 
         return layer;
-    }
+    };
+
+    var isMarkerDraggable = function(persoFromCurrentUser) {
+        return $scope.carte.isMj || persoFromCurrentUser;
+    };
 
     /**
      * General marker creation
@@ -140,7 +144,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @param popup
      * @returns {{lat: (.createBoundsFromArray.northEast.lat|*|.createBoundsFromArray.southWest.lat|c.center.lat|e.northEast.lat|e.southWest.lat), lng: (.createBoundsFromArray.northEast.lng|*|.createBoundsFromArray.southWest.lng|c.center.lng|e.northEast.lng|e.southWest.lng), title: *, icon: {type: string, iconSize: number[], iconAnchor: number[], popupAnchor: number[], html: string, className: string}, draggable: boolean}}
      */
-    var createMarker = function(id, type, position, image, title, cls, popup){
+    var createMarker = function(id, persoFromCurrentUser, type, position, image, title, cls, popup){
         //Unique ID
         var uniqueId = type + id;
 
@@ -158,8 +162,8 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
                 html: !_.isEmpty(image) ? '<img src="'+image+'"/>':'',
                 className: 'map-pin map-pin-' + type + ' ' + cls
             },
-            draggable: $scope.carte.isMj ? true:false
-        }
+            draggable: isMarkerDraggable(persoFromCurrentUser) ? true:false
+        };
 
         //Create popup & its scope
         var scope = $scope.$new();
@@ -182,7 +186,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             marker: marker,
             scope: scope
         };
-    }
+    };
 
     /**
      * Shortcut to create a perso marker
@@ -190,11 +194,11 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * @param position
      */
     var createMarkerPerso = function(perso, position, popup){
-        var created = createMarker(perso.id, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-pin-perso-user':'', popup);
+        var created = createMarker(perso.id, perso.is_current_user, 'perso', position, 'files/thumbnails/perso_' + perso.id + '.png', perso.name, perso.user_id ? 'map-pin-perso-user':'', popup);
         created.marker.id = perso.id;
         created.marker.perso = perso;
         perso.onMap = true;
-    }
+    };
 
     /**
      * Remove a marker from the map
@@ -205,7 +209,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             marker.perso.onMap = false;
         }
         delete $scope.options.markers[marker.type+marker.id];
-    }
+    };
 
     /**
      * Shortcut to create a custom marker
@@ -214,15 +218,15 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      */
     var createMarkerCustom = function(id, position, popup){
         var id = id ? id:Math.max(_.max(_.pluck(_.where($scope.options.markers, {type: 'custom'}), 'id')), 0)+1;
-        var created = createMarker(id, 'custom', position, popup.image, 'Marqueur Personnalisé', '', popup);
+        var created = createMarker(id, false, 'custom', position, popup.image, 'Marqueur Personnalisé', '', popup);
         created.marker.id = id;
         created.scope.id = id;
 
         //Watch changes to image to update the icon
-        $scope.$watch(function(){return created.scope.popup.image}, function(){
+        $scope.$watch(function(){return created.scope.popup.image;}, function(){
             created.marker.icon.html = '<img src="'+created.scope.popup.image+'"/>';
-        }, true)
-    }
+        }, true);
+    };
 
     /**
      * Serialises the markers of the map on the carte object
@@ -243,7 +247,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         if( ! _.isEqual($scope.carte.config.markers, markers)){
             $scope.carte.config.markers = markers;
         }
-    }
+    };
 
     /**
      * Save the map
@@ -275,14 +279,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             //Compare object to avoid saving on map initialisation
             updateCarteMarkers();
         }
-    }
+    };
 
     /**
      * When changing the carte object
      */
     var onCarteChange = function(){
         saveMap();
-    }
+    };
 
     /**
      * When changing the image
@@ -311,7 +315,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
                 }
             });
         }
-    }
+    };
 
     /**
      * ********************************************************************************************************
@@ -320,7 +324,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * ********************************************************************************************************
      * ********************************************************************************************************
      */
-    
+
     /**
      * Dropping an item on the map
      * @param event
@@ -341,7 +345,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
             createMarkerCustom(null, [p.lat, p.lng], {image: 'img/defaultCustom.png'});
         }
         $scope.onDragEnd();
-    }
+    };
 
     /**
      * On dragging
@@ -349,14 +353,14 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     $scope.onDrag = function(){
         jQuery('.tooltip').hide();
         jQuery('.map-sidebar').css('background-color', 'rgba(255,255,255, 0.2)');
-    }
+    };
 
     /**
      * On drag ending
      */
     $scope.onDragEnd = function(){
         jQuery('.map-sidebar').css('background-color', '#fff');
-    }
+    };
 
     /**
      * Removing a perso from the map
@@ -366,7 +370,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
         if(confirm('Êtes vous sûr(e) de vouloir retirer ce marqueur de la carte?')){
             removeMarker(marker);
         }
-    }
+    };
 
     /**
      * Select a tab
@@ -375,7 +379,7 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
     $scope.selectTab = function(tab){
         $scope.interface.tab = tab;
         $scope.carte.config.tabReduce = false;
-    }
+    };
 
     /**
      * ********************************************************************************************************
@@ -407,10 +411,11 @@ function ($scope, $http, $timeout, leafletData, leafletLayerHelpers, leafletBoun
      * ********************************************************************************************************
      */
     leafletData.getMap().then(onGetMap);
+
+    $scope.$watch(function(){return $scope.options.markers;}, onMarkersChange, true);
+    $scope.$watch(function(){return $scope.carte;}, onCarteChange, true);
     if($scope.carte.isMj === true){
-        $scope.$watch(function(){return $scope.options.markers}, onMarkersChange, true);
-        $scope.$watch(function(){return $scope.carte}, onCarteChange, true);
-        $scope.$watch(function(){return $scope.interface.image}, onImageChange, true);
+        $scope.$watch(function(){return $scope.interface.image;}, onImageChange, true);
     }
 
 

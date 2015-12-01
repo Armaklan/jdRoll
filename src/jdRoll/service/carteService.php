@@ -13,20 +13,36 @@ class CarteService {
 
     private $db;
     private $session;
+    private $campagneService;
+    private $thumbnailService;
 
-    public function __construct($db, $session, $thumbnailService) {
+    public function __construct($db, $session, $thumbnailService, $campagneService) {
         $this->db = $db;
         $this->session = $session;
         $this->thumbnailService = $thumbnailService;
+        $this->campagneService = $campagneService;
     }
 
     protected function _mustBeMj($campagneId){
-        $sql = "SELECT mj_id FROM campagne WHERE id=?";
-        $result = $this->db->executeQuery($sql, array($campagneId));
-        $mjId = $result->fetchColumn(0);
-        if($this->session->get('user')['id'] != $mjId || ! $mjId){
+        if(! $this->isMj($campagneId)){
             throw new \Exception("Vous n'avez pas les droits suffisants pour cette action.");
         }
+    }
+
+    protected function _mustBeMjOrParticipant($campagneId){
+        if($this->isMj($campagneId) || $this->isParticipant($campagneId)) {
+            return true;
+        } else {
+            throw new \Exception("Vous n'avez pas les droits suffisants pour cette action.");
+        }
+    }
+
+    protected function isMj($campagneId){
+        return $this->campagneService->isMj($campagneId);
+    }
+
+    protected function isParticipant($campagneId){
+        return $this->campagneService->isParticipant($campagneId);
     }
 
     /**
@@ -53,6 +69,9 @@ class CarteService {
         $sql = "SELECT id, name, user_id FROM personnages WHERE campagne_id=? AND statut<>1";
         $result = $this->db->executeQuery($sql, array($carte['campagne_id']));
         $carte['personnages'] = $result->fetchAll(\PDO::FETCH_ASSOC);
+        foreach($carte['personnages'] as &$personnage) {
+            $personnage['is_current_user'] = isset($personnage['user_id']) && $personnage['user_id'] == $this->session->get('user')['id'];
+        }
         $carte['config'] = isset($carte['config']) && $carte['config'] ? json_decode($carte['config']):new \stdClass();
         $carte['isMj'] = isset($carte['mj_id']) && $carte['mj_id'] == $this->session->get('user')['id'];
         return $carte;
@@ -96,7 +115,7 @@ class CarteService {
         );
 
         //First, we check that the user can save a map for this campaign
-        $this->_mustBeMj($data['campagne_id']);
+        $this->_mustBeMjOrParticipant($data['campagne_id']);
 
         //Cannot move the carte from another campagne, if it already exists
         if(isset($data['campagne_id']) && isset($data['id'])){

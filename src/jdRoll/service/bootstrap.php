@@ -87,7 +87,7 @@ $app['postContentService'] = function ($app) {
     return new PostContentService($app['persoService'],$app['session']);
 };
 $app['carteService'] = function ($app) {
-    return new CarteService($app['db'], $app['session'], $app['thumbnailService']);
+    return new CarteService($app['db'], $app['session'], $app['thumbnailService'], $app['campagneService']);
 };
 $app['noteService'] = function ($app) {
     return new NoteService($app['db']);
