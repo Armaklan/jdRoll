@@ -151,7 +151,7 @@ class NotificationService {
     $mj = $campagne['mj_id'];
     if($mj != $user_id) {
       $user = $this->userService->getById($mj);
-      $content = "Le personnage <a href='$urlMj'>" . $perso['name'] . "</a> a été modifié par le maître de jeu.";
+      $content = "Le personnage <a href='$urlMj'>" . $perso['name'] . "</a> a été modifié par le joueur.";
 
       if($user['notif_perso'] == 1) {
         $this->sentNotif($mj, $title, $content, $urlMj, 'PERSO', $campagne_id);
