@@ -37,9 +37,9 @@
           </span>
         </div>
         <label  for="DivText" id='LbCtrl'>Liste des controles disponibles (Glissez-déposez sur votre feuille de personnage) : </label>
-        <div class="JDRollUserControl" id='DivTextComponent'><a href="#" id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
-        <div class="JDRollUserControl"><a href="#" id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
-        <div class="JDRollUserControl"><a href="#" id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
+        <div class="JDRollUserControl" id='DivTextComponent'><a id="DivText"  data-type="text" data-pk="1" >Champ text</a></div>
+        <div class="JDRollUserControl"><a id="DivSelect"  data-type="JDRollEditableSelect" data-pk="1" >Liste déroulante</a></div>
+        <div class="JDRollUserControl"><a id="DivTextArea"  data-type="textarea" data-pk="1" >Zone de texte</a></div>
         <div id='zoneFicheCustomWYSIWIG'>
           <textarea input class="input-xxlarge wysiwyg" type="text" id="templatev2" name="templatev2"
                     placeholder="Template de la fiche de personnage" rows="20">{% if config.template_img is empty %}{{ config.template_html }}{%endif%}</textarea>
