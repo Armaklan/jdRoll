@@ -61,12 +61,12 @@
         });
 
         WebSocket.on(DEL_MSG_EVENT, function(msg) {
-            var deletedMsg = ctrl.msgs.find(function(m) {
+            var deletedMsg = srv.msgs.find(function(m) {
                 return m.id === msg.id;
             });
             if(deletedMsg) {
-                var index = ctrl.msgs.indexOf(deletedMsg);
-                ctrl.msgs.splice(index, 1);
+                var index = srv.msgs.indexOf(deletedMsg);
+                srv.msgs.splice(index, 1);
             }
         });
 
