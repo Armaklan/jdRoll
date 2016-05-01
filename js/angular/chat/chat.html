@@ -25,6 +25,27 @@
             </table>
       </div>
     </div>
+    <div class="col-xs-12 no-padding">
+        <form role="form" class="form-inline" autocomplete="off" ng-submit="chatCtrl.send(chatCtrl.message)" ng-if="chatCtrl.canPost">
+            <div class="col-md-2 no-padding">
+                <ui-select ng-model="chatCtrl.message.to" id="chatTo">
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.username"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="user.value as user in (chatCtrl.users | filter:$select.search) track by $index">
+                        <span ng-bind="user.username">
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="input-group col-md-10">
+                <input class="form-control" id="messageChat" type="text" maxlength="300" ng-model="chatCtrl.message.text" ng-change="chatCtrl.changeText(chatCtrl.message.text)">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="Envoyer">
+                    <a class="btn btn-default" ng-if="chatCtrl.canAdmin" ng-click="chatCtrl.deleteLastMessages();">Purger 30 messages</a>
+                </span>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="col-md-3 chatbox">
     <h5 class="categorie">En ligne</h5>
@@ -43,25 +64,4 @@
             </tr>
         </table>
     </div>
-</div>
-<div class="col-xs-12">
-<form role="form" class="form-inline" autocomplete="off" ng-submit="chatCtrl.send(chatCtrl.message)" ng-if="chatCtrl.canPost">
-    <div class="col-md-2 no-padding">
-        <ui-select ng-model="chatCtrl.message.to" id="chatTo">
-            <ui-select-match>
-                <span ng-bind="$select.selected.username"></span>
-            </ui-select-match>
-            <ui-select-choices repeat="user.value as user in (chatCtrl.users | filter:$select.search) track by $index">
-                <span ng-bind="user.username">
-            </ui-select-choices>
-        </ui-select>
-    </div>
-    <div class="input-group col-md-10">
-        <input class="form-control" id="messageChat" type="text" maxlength="300" ng-model="chatCtrl.message.text" ng-change="chatCtrl.changeText(chatCtrl.message.text)">
-        <span class="input-group-btn">
-            <input type="submit" class="btn btn-default" value="Envoyer">
-            <a class="btn btn-default" ng-if="chatCtrl.canAdmin" ng-click="chatCtrl.deleteLastMessages();">Purger 30 messages</a>
-        </span>
-    </div>
-</form>
 </div>

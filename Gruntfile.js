@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             'vendor/angular/angular.min.js',
             'vendor/angular-sanitize/angular-sanitize.min.js',
             'vendor/bootbox/bootbox.js',
-            'vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
+            'vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
             'vendor/select2/select2.min.js',
             'vendor/zeroclipboard/ZeroClipboard.min.js',
             'js/bootstrap/bootstrap-fileupload.min.js',
@@ -131,7 +131,7 @@ module.exports = function(grunt) {
           'dist/css/theme.min.css': [
             'css/main.css',
             'vendor/leaflet/dist/leaflet.css',
-            'vendor/bootstrap-colorpicker/css/colorpicker.css',
+            'vendor/bootstrap-colorpicker/dist/css/colorpicker.css',
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
             'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
