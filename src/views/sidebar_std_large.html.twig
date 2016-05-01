@@ -25,16 +25,26 @@
         <p/>
 
       <div id="widgets-panel">
-
-          <div align="center">
-            <div class="btn-group btn-group-sm">
-            	<a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
-				{{ include("button/forum_btm.html.twig") }}
-	            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
-	            <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
+            <div class="panel panel-default">
+                <ul class="list-group list-group-condensed">
+                    <li class="list-group-item">
+                        <a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-link iconeBtn"><i class="icon-bookmark"></i> Mes Campagnes</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('forum') }}" title="Forum" class="btn btn-link iconeBtn"><i class="icon-folder-open" ></i> Forum</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-link iconeBtn"><i class="icon-envelope"></i> Messagerie</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="btn btn-link iconeBtn blocnote-btn" title="Bloc-Notes">
+                            <i class="icon-book"></i> Bloc-Notes
+                        </a>
+                    </li>
+                </ul>
             </div>
-          </div>
-          <p/>
+        </div>
+        <p/>
 
         {{ include("composant/sidebar_list_partie_std.html.twig") }}
 

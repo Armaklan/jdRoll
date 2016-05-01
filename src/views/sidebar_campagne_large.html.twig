@@ -22,28 +22,44 @@
             <p/>
 
             <div id="widgets-panel">
-                <div align="center">
-                    <div class="btn-group btn-group-sm">
-                        {% set pull_mode = "pull-right" %}
-                        <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn quickLink1" title="Forum"><i class=icon-folder-close></i></a>
+                <div class="panel panel-default">
+                    <ul class="list-group list-group-condensed">
+                        <li class="list-group-item">
+                            <a href="{{ path('forum_campagne', {campagne_id: campagne_id}) }}" class="btn btn-link iconeBtn" title="Forum">
+                                <i class="icon-folder-close"></i> Forum
+                            </a>
+                        </li>
                         {% if is_mj or perso|length > 0 %}
-                        <a class="btn btn-default iconeBtn sidebarBtn"
-                           onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})"
-                           title="Mettre une alerte">
-                            <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i>
-                        </a>
+                        <li class="list-group-item">
+                            <a class="btn btn-link iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})" title="Mettre une alerte">
+                                <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i> Mettre en alerte
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-link iconeBtn" title="Lanceur de dés">
+                                <i class="icon-cogs"></i> Lanceur de dés
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn btn-link iconeBtn blocnote-btn" title="Bloc-Notes">
+                                <i class="icon-book"></i> Bloc-Notes
+                            </a>
+                        </li>
                         {% endif %}
+                        {% if not is_mj and perso|length == 1%}
+                            <li class="list-group-item">
+                                <a class="btn btn-link iconeBtn"" href="{{ path('perso_view_all', {campagne_id: campagne_id}) }}">
+                                    <i class="icon-user"></i> Mon personnage
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-link iconeBtn" title="Gallerie des PNJ">
+                                <i class="icon-group"></i> Gallerie de Perso
+                            </a>
+                        </li>
 
-                        {% if is_mj or perso|length > 0 %}
-                        <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Lanceur de dés"><i class="icon-cogs"></i></a>
-                        <a class="btn btn-default iconeBtn sidebarBtn blocnote-btn" title="Bloc-Notes"><i class="icon-book"></i></a>
-                        {% endif %}
-                        {% if not is_mj %}
-                        {% include("composant/perso_btm.html.twig") %}
-                        {% else %}
-                        <a href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Gallerie des PNJ"><i class="icon-group"></i></a>
-                        {% endif %}
-                    </div>
+                    </ul>
                 </div>
             </div>
             <p/>
@@ -60,13 +76,23 @@
             <p/>
 
             <div id="widgets-panel">
-
-                <div align="center">
-                    <div class="btn-group btn-group-sm">
-                        <a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-default iconeBtn quickLink1"><i class="icon-bookmark"></i></a>
-                        {{ include("button/forum_btm.html.twig") }}
-                        <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-default iconeBtn quickLink3"><i class="icon-envelope"></i></a>
-                    </div>
+                <div class="panel panel-default">
+                    <ul class="list-group list-group-condensed">
+                        <li class="list-group-item">
+                            <a href="{{ path('campagne_my_list') }}" title="Mes Campagnes" class="btn btn-link iconeBtn"><i class="icon-bookmark"></i> Mes Campagnes</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ path('forum') }}" title="Forum" class="btn btn-link iconeBtn"><i class="icon-folder-open" ></i> Forum</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ path('messagerie') }}" title="Messagerie" class="btn btn-link iconeBtn"><i class="icon-envelope"></i> Messagerie</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn btn-link iconeBtn blocnote-btn" title="Bloc-Notes">
+                                <i class="icon-book"></i> Bloc-Notes
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 <p/>
 
