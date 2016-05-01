@@ -2,7 +2,10 @@
 
 {% block content %}
 
-    {% set tchatfull = true %}
-    {% include('chat/chatbox.html.twig') %}
+    <div class="row" style="margin-top: 1em; margin-bottom: 0.5em;">
+        <div ng-app="jdRoll.chat">
+            <div chat height="600"></div>
+        </div>
+    </div>
 
 {% endblock %}
