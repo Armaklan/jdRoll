@@ -24,7 +24,9 @@
     "angular-growl-v2": "0.7.3",
     "angular-ui-tinymce": "~0.0.5",
     "ui-router": "~0.2.13",
-    "bootstrap-datepicker": "~1.4.0"
+    "bootstrap-datepicker": "~1.4.0",
+    "socket.io-client": "~1.4.5",
+    "angular-ui-select": "~0.16.1"
   },
   "devDependencies": {
     "angular-bootstrap": "~0.11.2",

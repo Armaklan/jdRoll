@@ -25,16 +25,21 @@
     <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" type="text/css" media="all">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
     <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.min.css" type="text/css" media="all">
+  	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/angular-ui-select/dist/select.min.css">
   {% else %}
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/dist/css/theme.min.css?v=20150714_004" type="text/css" media="all">
+    <link rel="stylesheet" href="{{app.request.baseUrl}}/dist/css/theme.min.css?v=20160501_001" type="text/css" media="all">
   {% endif %}
 
 	<script type="text/javascript">
 		var CAMPAGNE_ID=0;
 		var BASE_PATH = '{{app.request.baseUrl}}';
 		var AUTHENTICATED = "{{app.session.get('user') != null}}";
+		var AUTHENTICATED = "{{app.session.get('user') != null}}";
 		{% if app.session.get('user') != null %}
-			var USERNAME = "{{ app.session.get('user')['login'] }}'";
+			var USERNAME = "{{ app.session.get('user')['login'] }}";
+      {% if 'profil' in app.session.get('user')|keys %}
+      var ADM = "{{ app.session.get('user')['profil'] > 1}}";
+      {% endif %}
 		{% else %}
 			var USERNAME = "";
 		{% endif %}
@@ -133,9 +138,11 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/ui-router/release/angular-ui-router.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-select/dist/select.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/socket.io-client/socket.io.js"></script>
 	{% else %}
-    <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/composant.min.js?v=20151112_004"> </script>
+    <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/composant.min.js?v=20160501_001"> </script>
 	{% endif %}
     <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/favico.js/favico-0.3.5.min.js"> </script>
 
@@ -160,8 +167,11 @@
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/popup.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/notes/notes.module.js"></script>
         <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/feedback/feedback.module.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/chat/chat.module.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/chat/chat.service.js"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/chat/chat.directive.js"></script>
 	{% else %}
-        <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/controller.min.js?v=20150427_001"></script>
+        <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/controller.min.js?v=20160501_001"></script>
 	{% endif %}
 
 

@@ -7,13 +7,51 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-connect-proxy');
+
 
   grunt.initConfig({
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          base: '.',
+          logger: 'dev',
+          keepalive: true,
+          hostname: 'localhost',
+          middleware: function (connect, options, defaultMiddleware) {
+             var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+             return [
+                // Include the proxy first
+                proxy
+             ].concat(defaultMiddleware);
+          }
+        },
+        proxies: [{
+            context: '/socket.io',
+            host: 'localhost',
+            port: 5000,
+            changeOrigin: false
+        },{
+            context: '/apiv2',
+            host: 'localhost',
+            port: 5000,
+            changeOrigin: false
+        },{
+            context: '/',
+            host: 'localhost',
+            port: 8010,
+            changeOrigin: false
+        }]
+      }
+    },
     php: {
       test: {
         options: {
           keepalive: true,
-          open: true
+          open: false,
+          port:8010
         }
       }
     },
@@ -54,7 +92,9 @@ module.exports = function(grunt) {
             'vendor/ui-router/release/angular-ui-router.js',
             'vendor/angular-strap/dist/angular-strap.js',
             'vendor/angular-strap/dist/angular-strap.tpl.js',
-            'vendor/angular-ui-tinymce/src/tinymce.js'
+            'vendor/angular-ui-select/dist/select.js',
+            'vendor/angular-ui-tinymce/src/tinymce.js',
+            'vendor/socket.io-client/socket.io.js'
           ],
           'dist/js/flot.min.js': [
             'vendor/flot/jquery.flot.js',
@@ -68,7 +108,8 @@ module.exports = function(grunt) {
             'vendor/angular-leaflet/dist/angular-leaflet-directive.js',
             'vendor/angular-route/angular-route.js',
             'js/angular/application.js',
-            'js/angular/carte/*.js'
+            'js/angular/carte/*.js',
+            'js/angular/chat/*.js'
           ]
         }
       }
@@ -94,7 +135,8 @@ module.exports = function(grunt) {
             'vendor/select2/select2.css',
             'css/bootstrap/*.css',
             'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-            '/vendor/angular-growl-v2/build/angular-growl.min.css'
+            'vendor/angular-growl-v2/build/angular-growl.min.css',
+            'vendor/angular-ui-select/dist/select.min.css'
           ],
           'dist/css/jdroll.angular.min.css': [
              'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
@@ -111,10 +153,11 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-        dev: ['watch', 'php'],
+        dev: ['serverp', 'watch', 'php']
     }
   });
 
+  grunt.registerTask('serverp', ['configureProxies:server', 'connect:server']),
   grunt.registerTask('prepare', ['bower']);
   grunt.registerTask('dev', ['less', 'concurrent:dev']);
   grunt.registerTask('dist', ['less', 'cssmin', 'uglify']);

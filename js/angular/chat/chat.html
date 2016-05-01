@@ -1,0 +1,67 @@
+<div class="col-md-9 chatbox">
+    <h5 class="categorie">Tchat</h5>
+    <div id="text" style="height: {{ chatCtrl.height }}px; overflow: auto;">
+      <div id="messageContent">
+            <table class="table-striped table-condensed table-bordered" width="100%" id="tableChat">
+                <tr>
+                    <td width="80px">Date</td>
+                    <td>Auteur</td>
+                    <td>Messages</td>
+                    <td ng-if="chatCtrl.canAdmin">Actions</td>
+                </tr>
+                <tr ng-repeat="msg in chatCtrl.msgs">
+                    <td>{{ msg.time | date:"H:mm:ss" }}</td>
+                    <td style="margin-left: 6px;"">{{ msg.from }}</td>
+                    <td ng-class="{'private': msg.private}">
+                        <span ng-if="msg.to" ng-hide="msg.to == chatCtrl.username">{{msg.to}} =></span>
+                        <span ng-bind-html="msg.text"></span>
+                    </td>
+                    <td ng-if="chatCtrl.canAdmin">
+                        <a class="iconeBtn" title="Supprimer le message" ng-click="chatCtrl.delete(msg)">
+                            <i class="icon-remove-sign" style="color: red"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+      </div>
+    </div>
+</div>
+<div class="col-md-3 chatbox">
+    <h5 class="categorie">En ligne</h5>
+    <div style="height: {{  chatCtrl.height }}px; overflow: auto;" id="onlineUsers">
+        <div id="loading" ng-if="false"">
+            <center>
+                <span class="info" id="info">Chargement du chat en cours...</span><br />
+                <img src="img/ajax-loader.gif" alt="patientez...">
+            </center>
+        </div>
+        <table class="table-striped table-condensed table-bordered" width="100%">
+            <tr ng-repeat="user in chatCtrl.connected">
+                <td>
+                    <a ng-href="profile/{{user.username}}" class="profil{{ user.profil }}">{{ user.username }}</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-xs-12">
+<form role="form" class="form-inline" autocomplete="off" ng-submit="chatCtrl.send(chatCtrl.message)" ng-if="chatCtrl.canPost">
+    <div class="col-md-2 no-padding">
+        <ui-select ng-model="chatCtrl.message.to" id="chatTo">
+            <ui-select-match>
+                <span ng-bind="$select.selected.username"></span>
+            </ui-select-match>
+            <ui-select-choices repeat="user.value as user in (chatCtrl.users | filter:$select.search) track by $index">
+                <span ng-bind="user.username">
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="input-group col-md-10">
+        <input class="form-control" id="messageChat" type="text" maxlength="300" ng-model="chatCtrl.message.text" ng-change="chatCtrl.changeText(chatCtrl.message.text)">
+        <span class="input-group-btn">
+            <input type="submit" class="btn btn-default" value="Envoyer">
+            <a class="btn btn-default" ng-if="chatCtrl.canAdmin" ng-click="chatCtrl.deleteLastMessages();">Purger 30 messages</a>
+        </span>
+    </div>
+</form>
+</div>

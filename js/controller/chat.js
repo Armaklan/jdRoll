@@ -7,185 +7,165 @@
  */
 
 var chatControllerImpl = function() {
+  var wsController = undefined;
 
-	var scrollBar = false;
-	var isFirstLoad = true;
-	var reloadTime = 1500;
-	var lastMsgs = '';
-	var container;
-	var lastMsgId = 0;
-	var msgDivHeight = 300;
-
-
-	function isAutoScrollOn(content) {
-		return container[0].scrollTop == ( content.height() - msgDivHeight );
-	}
-
-	function initialLoad() {
-		var before = lastMsgs.substring(0, lastMsgs.lastIndexOf('</tr>'));
-		var after = lastMsgs.substring(lastMsgs.lastIndexOf('</tr>') + 5);
-		var msgs = before + '</tr>' + lastMsg + after;
+  var scrollBar = false;
+  var isFirstLoad = true;
+  var reloadTime = 1500;
+  var lastMsgs = '';
+  var container;
+  var lastMsgId = 0;
+  var msgDivHeight = 300;
 
 
-		lastMsgs = msgs;
+  function isAutoScrollOn(content) {
+    return container[0].scrollTop == ( content.height() - msgDivHeight );
+  }
 
-		$('#text').html(msgs);
-	}
+  function appendMsg() {
+    $('#tableChat tr:last').after(lastMsg);
+  }
 
-	function appendMsg() {
-		$('#tableChat tr:last').after(lastMsg);
-	}
+  function deleteMsg(deleted) {
+    deleted.forEach(function(rowId) {
+      $('#chat_tr_' + rowId.messageId).remove();
+    });
+  }
 
-	function deleteMsg(deleted) {
-		deleted.forEach(function(rowId) {
-			$('#chat_tr_' + rowId.messageId).remove();
-		});
-	}
+  function scrollToBottom(isAutoScroll) {
+    var height = $('#messages_content').height() - msgDivHeight;
 
-	function scrollToBottom(isAutoScroll) {
-		var height = $('#messages_content').height() - msgDivHeight;
+    if(isAutoScroll === true) {
+      container[0].scrollTop = container[0].scrollHeight;
+    }
+  }
 
-		if(isAutoScroll === true) {
-			container[0].scrollTop = container[0].scrollHeight;
-		}
-	}
+  function addScrollbar() {
+    if(scrollBar !== true) {
+      container[0].scrollTop = container[0].scrollHeight;
+      scrollBar = true;
+    }
+  }
 
-	function addScrollbar() {
-		if(scrollBar != true) {
-			container[0].scrollTop = container[0].scrollHeight;
-			scrollBar = true;
-		}
-	}
+  function getMessages() {
+      if( $('#text').html() != msg ) {
 
-	function getMessages() {
-		$.ajax({
-			type: 'GET',
-			url: BASE_PATH + '/chat/last',
-			timeout: 5000,
-			data: {isFirst: isFirstLoad, lastId: lastMsgId}
-		}).
-		done(function(msg){
-				if( $('#text').html() != msg ) {
+        var isAutoScroll = isAutoScrollOn(content);
 
-					var completeLoad = true;
-					var container = $('#text');
-					var content = $('#messageContent');
+        scrollToBottom(isAutoScroll);
+        addScrollbar();
 
-					var isAutoScroll = isAutoScrollOn(content);
+        isFirstLoad = false;
 
-					lastMsgId = msg.last_id.trim();
-					lastMsg = msg.last_msg;
+      }
+  }
 
-					if(isFirstLoad) {
-						initialLoad();
-					} else {
-						appendMsg();
+  function keyEvent() {
+    $('#messageChat').on('keyup', function(e) {
 
-					}
-					deleteMsg(msg.deleted);
+      if($('#messageChat').val() == '@') {
+        $('#chatTo').select2('open');
+        $('#messageChat').val('');
+      }
 
-					scrollToBottom(isAutoScroll);
-					addScrollbar();
+    });
+  }
 
-					isFirstLoad = false;
+  function getOnline() {
+    $.ajax({
+      type: 'GET',
+    url: BASE_PATH + '/chat/users',
+    success: function(msg){
+      $('#onlineUsers').html(msg);
+    },
+    error: function(msg) {
 
-				}
-		}).
-		always(function() {
-			setTimeout(getMessages,reloadTime);
-		});
-	}
+    }
+    });
+  }
 
-	function activateChat() {
-		container = $('#text');
-        msgDivHeight = $('#text').height();
-		getMessages();
-	}
+  return {
+    postMessage : function (user) {
+      textMsg=$('#messageChat').val();
+      $('#messageChat').val('');
+      to=$('#chatTo').val();
+      wsController.sendMessage({
+        to: to,
+        text: textMsg,
+        from: user
+      });
+    },
 
-    function keyEvent() {
-        $('#messageChat').on('keyup', function(e) {
+    postMessageMobile : function (user) {
+      textMsg=$('#messageChatMobile').val();
+      $('#messageChatMobile').val('');
+      to='';
+      wsController.sendMessage({
+        to: to,
+        text: textMsg,
+        from: user
+      });
+    },
 
-            if(  $('#messageChat').val() == '@') {
-                $('#chatTo').select2('open');
-                $('#messageChat').val('');
-            }
+    deleteLastMessages: function() {
+      // TODO - Chat Event
+    },
 
-        });
+    initMessage: function() {
+      wsController = new ChatWsController();
+      keyEvent();
+    },
+
+    initOnline: function() {
+      getOnline();
+      window.setInterval(getOnline, 30000);
     }
 
-	function getOnline() {
-		$.ajax({
-		    type: 'GET',
-		    url: BASE_PATH + '/chat/users',
-		    success: function(msg){
-		    	$('#onlineUsers').html(msg);
-		    },
-		    error: function(msg) {
+  };
+};
 
-			}
-		});
-	}
+function ChatWsController() {
 
-	return {
-		postMessage : function (user) {
-			textMsg=$('#messageChat').val();
-            $('#messageChat').val('');
-			to=$('#chatTo').val();
-			$.ajax({
-			    type: 'POST',
-			    url: BASE_PATH + '/chat/post',
-			    data: {message: textMsg, user: user, to: to},
-			    success: function(msg){
+  var NEW_MSG_EVENT = 'chat-new-message',
+      INIT_MSG_EVENT = "chat-init-message",
+      USER_LOGON_EVENT = 'user-logon',
+      DEL_MSG_EVENT = 'chat-delete-message';
 
-			    },
-			    error: function(msg) {
-			    	$('#messageChat').val(textMsg);
-				}
-			});
-		},
+  socket.on(NEW_MSG_EVENT, onMessage);
+  socket.on(DEL_MSG_EVENT, onMessageDeleted);
+  socket.on(INIT_MSG_EVENT, onMessageInitialize);
 
-		postMessageMobile : function (user) {
-			textMsg=$('#messageChatMobile').val();
-            $('#messageChatMobile').val('');
-            to='';
-			$.ajax({
-			    type: 'POST',
-			    url: BASE_PATH + '/chat/post',
-			    data: {message: textMsg, user: user, to: to},
-			    success: function(msg){
+  this.sendMessage = sendMessage;
+  this.deleteMessage = deleteMessage;
 
-			    },
-			    error: function(msg) {
-			    	$('#messageChatMobile').val(textMsg);
-				}
-			});
-		},
+  var that = this;
+  var socket = io();
+  logon();
 
-		deleteLastMessages: function() {
-			$.ajax({
-			    type: 'POST',
-			    url: BASE_PATH + '/chat/removelast',
-			    data: {nbToDelete: 30},
-			    success: function(msg){
+  function logon() {
+    socket.emit(USER_LOGON_EVENT, "toto");
+  }
 
-			    },
-			    error: function(msg) {
+  function sendMessage(msg) {
+    socket.emit(NEW_MSG_EVENT, msg)
+      console.log(msg);
+  }
 
-				}
-			});
-		},
+  function deleteMessage(msg) {
+    console.log(msg);
+  }
 
-		initMessage: function() {
-			activateChat();
-            keyEvent();
-		},
+  function onMessage(msg) {
+    console.log(msg);
+  }
 
-		initOnline: function() {
-			getOnline();
-			window.setInterval(getOnline, 30000);
-		}
+  function onMessageDeleted(msg) {
+    console.log(msg);
+  }
 
-	}
+  function onMessageInitialize(msgs) {
+    console.log(msgs);
+  }
 }
 
 var chatController = chatControllerImpl();
