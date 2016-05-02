@@ -32,7 +32,7 @@
                         {% if is_mj or perso|length > 0 %}
                         <li class="list-group-item">
                             <a class="btn btn-link iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})" title="Mettre une alerte">
-                                <i class="alarm-pj icon-bell-alt {% if alert %}alarm-on{% endif %}"></i> Mettre en alerte
+                                <i class="alarm-pj icon-alarm icon-bell-alt {% if alert %}alarm-on{% endif %}"></i> Mettre en alerte
                             </a>
                         </li>
                         <li class="list-group-item">
