@@ -182,12 +182,10 @@ $commonController->get('/stat', function() use ($app) {
     $nbPartiePrep = $app['campagneService']->getNbCampagne(3);
     $nbUser = $app['userService']->getNbUser();
     $nbPost = $app['postService']->getNbPost();
-    $statPost = $app['postService']->getStatGeneralPost();
     $topPost = $app['postService']->getTop10Post();
     $total = $app['postService']->getTotalGeneralPost();
     $topChat = $app['chatService']->getTop10Chat();
     $feedback = $app['feedbackService']->getStats();
-    $statGame = $app['postService']->getStatGeneralByGame();
     return $app->render('stat.html.twig', ['nb_partie' => $nbPartie, 'nb_partie_prep' => $nbPartiePrep, 'nb_user' => $nbUser, 'nb_post' => $nbPost,
         'stat_post' => $statPost,
         'top_post' => $topPost,
