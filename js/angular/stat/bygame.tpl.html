@@ -1,0 +1,10 @@
+<c3chart bindto-id="chart-by-game" ng-if="statCtrl.byGame">
+    <chart-column   ng-repeat="row in statCtrl.byGame"
+                    column-id="by-game-{{$index}}"
+                    column-name="{{row.game}}"
+                    column-values="{{ row.cpt }}"
+                    column-type="donut" />
+    <chart-donut label-format-function="statCtrl.formatLegend"/>
+    <chart-size height="250px">
+    <chart-tooltip value-format-function="statCtrl.formatLabel">
+</c3chart>

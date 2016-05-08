@@ -1,0 +1,15 @@
+<c3chart bindto-id="chart-by-month" ng-if="statCtrl.byMonth.values">
+    <chart-column column-id="period"
+                    column-values="{{ statCtrl.byMonth.period }}" />
+    <chart-column column-id="posts"
+                    column-name="Nombres de Posts"
+                    column-values="{{ statCtrl.byMonth.values }}"
+                    column-type="line" />
+    <chart-axes values-x="period" y="posts" />
+    <chart-axis>
+        <chart-axis-x axis-position="outer-center" axis-label="" axis-type="category" axis-height="50px">
+           <chart-axis-x-tick tick-rotate="-50"/>
+        </chart-axis-x>
+    </chart-axis>
+        
+</c3chart>

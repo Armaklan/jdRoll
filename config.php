@@ -36,8 +36,7 @@ $app['session.db_options'] = array(
 );
 $app['session.storage.handler'] = $app->share(function () use ($app) {
     return new Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
-            $app['db']->
-                getWrappedConnection(),
+            $app['db']->getWrappedConnection(),
             $app['session.db_options'],
             $app['session.storage.options']
     );
@@ -50,7 +49,6 @@ $app["debug"] = $app['config']['general']['debug'];
 
 
 $app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
-$app->register(new \Silex\Provider\SessionServiceProvider(array('cookie_lifetime' => 0, 'name' => "_JDROLL_SESS", 'gc_maxlifetime' => 432000)));
 
 // Registers Swiftmailer extension
 $app->register(new \Silex\Provider\SwiftmailerServiceProvider(), array());

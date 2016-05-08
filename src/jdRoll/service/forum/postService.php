@@ -339,7 +339,7 @@ class PostService {
             WHERE posts.user_id IS NOT NULL
             GROUP BY dat";
 
-        return $this->db->fetchAll($sql,
+        Return $this->db->fetchAll($sql,
                 array()
             );
 

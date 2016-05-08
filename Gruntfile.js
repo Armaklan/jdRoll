@@ -81,6 +81,9 @@ module.exports = function(grunt) {
             'vendor/bootbox/bootbox.js',
             'vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
             'vendor/select2/select2.min.js',
+            'vendor/d3/d3.js',
+            'vendor/c3/c3.js',
+            'vendor/c3-angular/c3-angular.js',
             'vendor/zeroclipboard/ZeroClipboard.min.js',
             'js/bootstrap/bootstrap-fileupload.min.js',
             'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
@@ -109,7 +112,8 @@ module.exports = function(grunt) {
             'vendor/angular-route/angular-route.js',
             'js/angular/application.js',
             'js/angular/carte/*.js',
-            'js/angular/chat/*.js'
+            'js/angular/chat/*.js',
+            'js/angular/stat/*.js'
           ]
         }
       }
@@ -131,8 +135,9 @@ module.exports = function(grunt) {
           'dist/css/theme.min.css': [
             'css/main.css',
             'vendor/leaflet/dist/leaflet.css',
-            'vendor/bootstrap-colorpicker/dist/css/colorpicker.css',
+            'vendor/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css',
             'vendor/select2/select2.css',
+            'vendor/c3/c3.css',
             'css/bootstrap/*.css',
             'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
             'vendor/angular-growl-v2/build/angular-growl.min.css',
