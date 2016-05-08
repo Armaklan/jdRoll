@@ -421,7 +421,7 @@ class PostService {
             WHERE user_id = :user
             GROUP BY dat";
 
-        return $this->db->fetchAll($sql,
+        Return $this->db->fetchAll($sql,
                 array("user" => $user['id'])
             );
 

@@ -99,12 +99,6 @@ module.exports = function(grunt) {
             'vendor/angular-ui-tinymce/src/tinymce.js',
             'vendor/socket.io-client/socket.io.js'
           ],
-          'dist/js/flot.min.js': [
-            'vendor/flot/jquery.flot.js',
-            'vendor/flot/jquery.flot.time.js',
-            'vendor/flot/jquery.flot.pie.js',
-            'vendor/flot/jquery.flot.navigate.js'
-          ],
           'dist/js/jdroll.angular.min.js': [
             'vendor/leaflet/dist/leaflet.js',
             'vendor/angular-dragdrop/src/angular-dragdrop.js',

@@ -41,14 +41,12 @@ $publicCampagneController->get('/{id}', function($id) use($app) {
     $is_admin = $app["campagneService"]->isAdmin();
     $is_participant = $app["campagneService"]->isParticipant($id);
     $participants = $app["campagneService"]->getParticipant($id);
-    $stats = $app["postService"]->getStatForOnGame($id);
     return $app->render('game/presentation.html.twig', [
         'campagne' => $campagne,
         'participants' => $participants,
     	'is_mj' => $is_mj,
         'is_admin' => $is_admin,
         'is_participant' => $is_participant,
-        'stat_post' => $stats,
         'error' => ""]);
 })->bind("campagne");
 
