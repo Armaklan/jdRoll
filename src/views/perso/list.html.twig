@@ -82,7 +82,7 @@ null	    	{{ error }}
 				<th  width="85%" colspan="3" class="categorie">
 
             {% if cat_name is not null %}
-              <a data-toggle="collapse" data-target="#cat{{ perso.cat_id  }}" class="collapserLink">
+              <a data-toggle="collapse" data-target="#cat{{ perso.category  }}" class="collapserLink">
                 {% if perso.cat_default_collapse == 0 %}
                   <i class="icon-chevron-sign-down"></i>
                 {% else %}
@@ -103,9 +103,9 @@ null	    	{{ error }}
                                     <input type="hidden" class="filterIndex" value="HEADER">
                                 </th>
                                 <th  width="15%" class="categorie">
-                                    {% if perso.cat_name is not null and perso.cat_id is not null and perso.cat_id > 0 and is_mj %}
-                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
-                                        <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.cat_id}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer la catégorie"><i class="icon-remove-sign"></i></a>
+                                    {% if perso.cat_name is not null and perso.category is not null and perso.category > 0 and is_mj %}
+                                        <a href="{{ path('pnj_cat', {campagne_id: campagne_id, id: perso.category}) }}" class="btn btn-default iconeBtn sidebarBtn" title="Modifier la catégorie"><i class="icon-edit"></i></a>
+                                        <a href="{{ path('pnj_cat_del', {campagne_id: campagne_id, id: perso.category}) }}" class="btn btn-danger iconeBtn sidebarBtn" title="Supprimer la catégorie"><i class="icon-remove-sign"></i></a>
                                     {% endif %}
                                 </th>
 			</tr>
@@ -114,7 +114,7 @@ null	    	{{ error }}
       <tr>
         <td colspan="4">
           <div class="col-md-12 topics collapse {% if perso.cat_default_collapse == 0 %} in {% else %} out {% endif %}"
-               id="{% if cat_name is not null %}cat{{ perso.cat_id  }}{% else %}catNC{% endif %}">
+               id="{% if cat_name is not null %}cat{{ perso.category  }}{% else %}catNC{% endif %}">
 
 
             {% set is_first = false %}

@@ -107,6 +107,7 @@ class PersoService {
             SELECT perso.* FROM
             (   SELECT pnj.*,
                     cat.name as cat_name,
+                    cat.id as category,
                     cat.default_collapse as cat_default_collapse
 
                 FROM
@@ -122,6 +123,7 @@ class PersoService {
             UNION
                 SELECT pnj.*,
                     cat.name as cat_name,
+                    cat.id as category,
                     cat.default_collapse as cat_default_collapse
                 FROM
                 personnages pnj
