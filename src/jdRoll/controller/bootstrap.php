@@ -11,7 +11,7 @@
     use \Symfony\Component\HttpFoundation\Response;
 
     $mustBeLogged = function (Request $request) use ($app) {
-        if (!isLog($app)) {
+        if (!isLog($app, $request)) {
             $url =  str_replace('/', '!', $request->getUri());
             return $app->redirect($app->path('login_page', array('url' =>  $url)));
         } else {
@@ -25,10 +25,23 @@
         }
     };
 
-    function isLog($app) {
-        return ($app['session']->get('user') != null);
+    $autoLog = function (Request $request) use ($app) {
+        if ($app['session']->get('user') == null) {
+            $cookies = $request->cookies;
+            if($cookies->has("autoLogin")) {
+                $app['userService']->autoLogin($cookies->get('autoLogin'), $cookies->get('autoLoginId'));
+            }
+        }
+    };
+
+    function isLog($app, $request) {
+        if ($app['session']->get('user') != null) {
+            return true;
+        }
+        return false;
     }
 
+    $app->before($autoLog);
     require("common.php");
     require("admin.php");
     require("profile.php");

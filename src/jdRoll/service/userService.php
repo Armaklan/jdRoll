@@ -46,6 +46,21 @@ class UserService {
 	    $this->updateLastActionTime();
 	}
 
+    public function autoLogin($login, $id) {
+		$sql = "SELECT * FROM user WHERE username = ?";
+	    $user = $this->db->fetchAssoc($sql, array($login));
+
+	    if($user == null)  {
+	    	throw new \Exception('Login incorrect');
+	    }
+        if($user['id'] != $id) {
+	    	throw new \Exception('Id incorrect');
+	    }
+
+	    $this->session->set('user', array('id' => $user['id'], 'login' => $user['username'], 'profil' => $user['profil'] ,'avatar' => $user['avatar']));
+	    $this->updateLastActionTime();
+    }
+
 	public function logout() {
 		$this->session->set('user', null);
 	}
@@ -186,7 +201,7 @@ class UserService {
 	    return $user;
 	}
 
-        public function getById($id) {
+    public function getById($id) {
 		$sql = "SELECT * FROM user WHERE id = ?";
 	    $user = $this->db->fetchAssoc($sql, array($id));
 	    return $user;
@@ -228,7 +243,7 @@ class UserService {
 		return $this->db->fetchAll($sql,array(),  0);
 	}
 
-        public function getAllUsers() {
+    public function getAllUsers() {
 		$sql = "SELECT user.*, last_action.time as last_activity
                         FROM user
                         LEFT JOIN last_action

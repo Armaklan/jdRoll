@@ -7,8 +7,10 @@
  * @license MIT
  */
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
@@ -73,6 +75,7 @@ $commonController->post('/login', function(Request $request) use($app) {
 	$login = $request->get('login');
 	$password = $request->get('pass');
 	$url = $request->get('url');
+    $remember = $request->get('remember');
 
     try {
         $app["userService"]->login($login, $password);
@@ -83,6 +86,13 @@ $commonController->post('/login', function(Request $request) use($app) {
 	if ($finalUrl == "/") {
 		$finalUrl = $app->path('homepage');
 	}
+    if($remember == "true") {
+        $user = $app['session']->get('user');
+        $response = new RedirectResponse($finalUrl);
+        $response->headers->setCookie(new Cookie('autoLogin', $login, time() + (3600 * 48)));
+        $response->headers->setCookie(new Cookie('autoLoginId', $user['id'] , time() + (3600 * 48)));
+        return $response;
+    }
     return $app->redirect($finalUrl);
 
 })->bind("login_connect");
@@ -142,7 +152,10 @@ $commonController->get('/md/{page}', function($page, Request $request) use($app)
 
 $commonController->get('/logout', function(Request $request) use($app) {
     $app["userService"]->logout();
-    return $app->redirect($app->path('homepage'));
+    $response = new RedirectResponse($app->path('homepage'));
+    $response->headers->clearCookie('autoLogin');
+    $response->headers->clearCookie('autoLoginId');
+    return $response;
 })->bind("logout");
 
 $commonController->get('/sidebar/std_large', function() use ($app) {
