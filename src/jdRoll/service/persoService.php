@@ -133,6 +133,7 @@ class PersoService {
                 WHERE
                         cat.campagne_id = :campagne
                         and :is_mj = true
+                        AND pnj.id IS NULL
             ) as perso
             ORDER BY perso.cat_name ASC, perso.name ASC";
         $result = $this->db->fetchAll($sql, array("campagne" => $campagne_id, "is_mj" => $is_mj));
