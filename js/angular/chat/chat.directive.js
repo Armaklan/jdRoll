@@ -41,6 +41,7 @@
         }
 
         ctrl.send = function(message) {
+            if(!message.text) return;
             ChatProvider.send(message);
             message.text = "";
         };
