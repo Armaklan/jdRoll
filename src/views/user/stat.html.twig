@@ -4,11 +4,25 @@
 
 <center><h2>Mes Statistiques</h2></center>
 
-<div ng-app="jdRoll.stat" class="col-xs-12">
+<div ng-app="jdRoll.stat" ng-controller="StatCtrl as userStatCtrl" class="col-xs-12">
+    <fieldset class="titled-box">
+        <legend>Periode concernée</legend>
+        <center>
+            <div class="btn-group">
+                <button
+                    ng-repeat="mode in userStatCtrl.mode"
+                    class="btn"
+                    ng-class="{'btn-primary': mode.selected, 'btn-default': !mode.selected}"
+                    ng-click="userStatCtrl.changeMode(mode)">
+                    <div ng-bind="mode.label"></div>
+                </button>
+            </div>
+        </center>
+    </fieldset>
     <h3>Messages cumulé au fil du temps ( total : {{ total }} )</h3>
-    <div jd-stat-user-by-day></div>
+    <div jd-stat-user-by-day begin-date="userStatCtrl.beginDate"></div>
     <h3>Messages par jeux ( total : {{ total }} )</h3>
-    <div jd-stat-user-by-game></div>
+    <div jd-stat-user-by-game begin-date="userStatCtrl.beginDate""></div>
 </div>
 
 {% endblock %}

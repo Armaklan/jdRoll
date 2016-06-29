@@ -85,6 +85,7 @@ module.exports = function(grunt) {
             'vendor/c3/c3.js',
             'vendor/c3-angular/c3-angular.js',
             'vendor/zeroclipboard/ZeroClipboard.min.js',
+            'vendor/moment/min/moment-with-locales.js',
             'js/bootstrap/bootstrap-fileupload.min.js',
             'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
             'vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js',

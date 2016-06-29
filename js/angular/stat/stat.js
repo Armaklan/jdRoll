@@ -2,11 +2,36 @@
     angular
         .module('jdRoll.stat', ['gridshore.c3js.chart'])
         .service('Stat', StatService)
+        .controller('StatCtrl', StatCtrl)
         .directive('jdStatByMonth', statByMonthDirective)
         .directive('jdStatUserByDay', statUserByDayDirective)
         .directive('jdStatByGame', statByGameDirective)
         .directive('jdStatUserByGame', statUserByGameDirective)
         .directive('jdStatByMonthFor', statByMonthForDirective);
+
+    function ModeStat(label, beginDate, selected) {
+        this.label = label;
+        this.beginDate = beginDate;
+        this.selected = selected;
+    }
+
+    function StatCtrl() {
+        var ctrl = this;
+        ctrl.mode = [
+            new ModeStat('Depuis le début', undefined),
+            new ModeStat('Depuis un an', moment().subtract(1, 'years').format('YYYY-MM-DD')),
+            new ModeStat('Depuis 6 mois', moment().subtract(6, 'month').format('YYYY-MM-DD'), true)
+        ];
+        ctrl.beginDate = moment().subtract(6, 'month').format('YYYY-MM-DD');
+
+        ctrl.changeMode = function(mode) {
+            ctrl.mode.forEach(function(currentMode) {
+                currentMode.selected = false;
+            });
+            mode.selected = true;
+            ctrl.beginDate = mode.beginDate;
+        };
+    }
 
     function ByMonthForStatCtrl($scope, Stat) {
         var ctrl = this;
@@ -48,28 +73,34 @@
         var ctrl = this;
         $scope.statCtrl = ctrl;
 
-        Stat.forUser().then(function(data) {
-            var total = 0;
-            ctrl.datas = data.map(function(r) {
-                total = total + parseInt(r.cpt);
-                var dat = r.dat.split('-');
-                r.dat = dat[2] + "/" + dat[1] + "/" + dat[0].substring(2,4);
-                r.cpt = total;
-                return r;
-            });
-            ctrl.columns = [{
-                id: "cpt",
-                name: "Nombre de posts",
-                type: "line"
-            }, {
-                id: "dat"
-            }];
-            ctrl.x = {
-                id: 'dat',
-                name: 'Date'
-            };
+        $scope.$watch('beginDate', function() {
+            refresh();
         });
 
+        ctrl.columns = [{
+            id: "cpt",
+            name: "Nombre de posts",
+            type: "line"
+        }, {
+            id: "dat"
+        }];
+        ctrl.x = {
+            id: 'dat',
+            name: 'Date'
+        };
+
+        function refresh() {
+            Stat.forUser($scope.beginDate).then(function(data) {
+                var total = 0;
+                ctrl.datas = data.map(function(r) {
+                    total = total + parseInt(r.cpt);
+                    var dat = r.dat.split('-');
+                    r.dat = dat[2] + "/" + dat[1] + "/" + dat[0].substring(2,4);
+                    r.cpt = total;
+                    return r;
+                });
+            });
+        }
     }
 
     function UserByGameStatCtrl($scope, Stat) {
@@ -77,20 +108,43 @@
         var total = 0;
         $scope.statCtrl = ctrl;
 
-        Stat.userByGame().then(function(data) {
-            data.forEach(function(elt) {
-                total = total + parseFloat(elt.cpt);
-            });
-            data = data.filter(function(elt) {
-                return elt.game;
-            });
-            data.sort(function(elt1, elt2) {
-                return parseFloat(elt2.cpt) - parseFloat(elt1.cpt);
-            });
-            data.length = 15;
-            ctrl.byGame = data;
-            ctrl.total = total;
+        $scope.$watch('beginDate', function() {
+            refresh();
         });
+
+        function refresh() {
+            Stat.userByGame($scope.beginDate).then(function(data) {
+                data.forEach(function(elt) {
+                    total = total + parseFloat(elt.cpt);
+                });
+                data = data.filter(function(elt) {
+                    return elt.game;
+                });
+                data.sort(function(elt1, elt2) {
+                    return parseFloat(elt2.cpt) - parseFloat(elt1.cpt);
+                });
+                if(data.length > 15) data.length = 15;
+                refreshColumn(data);
+                ctrl.byGame = data;
+                ctrl.total = total;
+            });
+        }
+
+        function refreshColumn(data) {
+            ctrl.columns = data.map(function(elt, index){
+                return {
+                    id: 'bygame' + index,
+                    name: elt.game,
+                    values: elt.cpt,
+                    type: 'donut'
+                };
+            });
+            var datas = {};
+            ctrl.columns.forEach(function(elt){
+                datas[elt.id] = elt.values;
+            });
+            ctrl.datas = [datas];
+        }
 
         ctrl.formatLegend = function(value) {
             var percent = 100 * value / total;
@@ -106,21 +160,42 @@
         var ctrl = this;
         var total = 0;
         $scope.statCtrl = ctrl;
+        refresh();
 
-        Stat.byGame().then(function(data) {
-            data.forEach(function(elt) {
-               total = total + parseFloat(elt.cpt);
+        function refresh() {
+            Stat.byGame().then(function(data) {
+                data.forEach(function(elt) {
+                    total = total + parseFloat(elt.cpt);
+                });
+                data = data.filter(function(elt) {
+                    return elt.game;
+                });
+                data.sort(function(elt1, elt2) {
+                    return parseFloat(elt2.cpt) - parseFloat(elt1.cpt);
+                });
+                if(data.length > 15) data.length = 15;
+                refreshColumn(data);
+                ctrl.byGame = data;
+                ctrl.total = total;
             });
-            data = data.filter(function(elt) {
-                return elt.game;
+        }
+
+        function refreshColumn(data) {
+            ctrl.columns = data.map(function(elt, index){
+                return {
+                    id: 'bygame' + index,
+                    name: elt.game,
+                    values: elt.cpt,
+                    type: 'donut'
+                };
             });
-            data.sort(function(elt1, elt2) {
-                return parseFloat(elt2.cpt) - parseFloat(elt1.cpt);
+            var datas = {};
+            ctrl.columns.forEach(function(elt){
+                datas[elt.id] = elt.values;
             });
-            data.length = 15;
-            ctrl.byGame = data;
-            ctrl.total = total;
-        });
+            ctrl.datas = [datas];
+        }
+
 
         ctrl.formatLegend = function(value) {
             var percent = 100 * value / total;
@@ -162,19 +237,25 @@
             });
         };
 
-        srv.userByGame = function() {
+        srv.userByGame = function(beginDate) {
             return $http({
                 method: 'GET',
-                url: 'apiv2/stats/my/bygame'
+                url: 'apiv2/stats/my/bygame',
+                params: {
+                    beginDate: beginDate
+                }
             }).then(function(res) {
                 return res.data;
             });
         };
 
-        srv.forUser = function() {
+        srv.forUser = function(beginDate) {
             return $http({
                 method: 'GET',
-                url: 'apiv2/stats/my/byday'
+                url: 'apiv2/stats/my/byday',
+                params: {
+                    beginDate: beginDate
+                }
             }).then(function(res) {
                 return res.data;
             });
@@ -195,9 +276,7 @@
             restrict: 'AE',
             templateUrl: 'js/angular/stat/bymonth.tpl.html',
             controller: ByMonthForStatCtrl,
-            scope: {
-                campagne: '='
-            }
+            scope: {}
         };
     }
 
@@ -215,7 +294,9 @@
             restrict: 'AE',
             templateUrl: 'js/angular/stat/user-by-day.tpl.html',
             controller: UserByDayStatCtrl,
-            scope: {}
+            scope: {
+                beginDate:'='
+            }
         };
     }
 
@@ -224,7 +305,9 @@
             restrict: 'AE',
             templateUrl: 'js/angular/stat/bygame.tpl.html',
             controller: UserByGameStatCtrl,
-            scope: {}
+            scope: {
+                beginDate:'='
+            }
         };
     }
 })();
