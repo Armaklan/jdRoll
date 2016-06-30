@@ -1,3 +1,4 @@
+<h4 ng-if="statCtrl.total" ng-if="statCtrl.total">Messages par jeux ( total : {{ statCtrl.total }} )<h4>
 <c3chart bindto-id="chart-by-game" ng-if="statCtrl.datas"
          chart-columns="statCtrl.columns"
          chart-data="statCtrl.datas">

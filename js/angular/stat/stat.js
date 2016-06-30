@@ -20,7 +20,8 @@
         ctrl.mode = [
             new ModeStat('Depuis le début', undefined),
             new ModeStat('Depuis un an', moment().subtract(1, 'years').format('YYYY-MM-DD')),
-            new ModeStat('Depuis 6 mois', moment().subtract(6, 'month').format('YYYY-MM-DD'), true)
+            new ModeStat('Depuis 6 mois', moment().subtract(6, 'month').format('YYYY-MM-DD'), true),
+            new ModeStat('Depuis 1 mois', moment().subtract(1, 'month').format('YYYY-MM-DD'))
         ];
         ctrl.beginDate = moment().subtract(6, 'month').format('YYYY-MM-DD');
 
@@ -54,7 +55,6 @@
     function ByMonthStatCtrl($scope, Stat) {
         var ctrl = this;
         $scope.statCtrl = ctrl;
-
         Stat.byMonth().then(function(data) {
             ctrl.byMonth = {
                 period: data.map(function(r) {
@@ -72,7 +72,7 @@
     function UserByDayStatCtrl($scope, Stat) {
         var ctrl = this;
         $scope.statCtrl = ctrl;
-
+        
         $scope.$watch('beginDate', function() {
             refresh();
         });
@@ -89,16 +89,19 @@
             name: 'Date'
         };
 
+        ctrl.formatFunction = function(d) {
+            return moment(d).format('DD/MM/YYYY');
+        };
+
         function refresh() {
             Stat.forUser($scope.beginDate).then(function(data) {
                 var total = 0;
                 ctrl.datas = data.map(function(r) {
                     total = total + parseInt(r.cpt);
-                    var dat = r.dat.split('-');
-                    r.dat = dat[2] + "/" + dat[1] + "/" + dat[0].substring(2,4);
                     r.cpt = total;
                     return r;
                 });
+                ctrl.total = total;
             });
         }
     }
@@ -113,12 +116,13 @@
         });
 
         function refresh() {
+            total = 0;
             Stat.userByGame($scope.beginDate).then(function(data) {
-                data.forEach(function(elt) {
-                    total = total + parseFloat(elt.cpt);
-                });
                 data = data.filter(function(elt) {
                     return elt.game;
+                });
+                data.forEach(function(elt) {
+                    total = total + parseFloat(elt.cpt);
                 });
                 data.sort(function(elt1, elt2) {
                     return parseFloat(elt2.cpt) - parseFloat(elt1.cpt);
@@ -176,7 +180,6 @@
                 if(data.length > 15) data.length = 15;
                 refreshColumn(data);
                 ctrl.byGame = data;
-                ctrl.total = total;
             });
         }
 
@@ -276,7 +279,9 @@
             restrict: 'AE',
             templateUrl: 'js/angular/stat/bymonth.tpl.html',
             controller: ByMonthForStatCtrl,
-            scope: {}
+            scope: {
+                campagne: '='
+            }
         };
     }
 
