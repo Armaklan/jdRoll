@@ -19,27 +19,9 @@
         <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
         <link rel="stylesheet" href="{{app.request.baseUrl}}/css/carte.css" type="text/css" media="all">
 
-
-        <!-- Leaflet plugins -->
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.js"></script>
-
-        <!-- Angular plugins-->
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-dragdrop/src/angular-dragdrop.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-leaflet/dist/angular-leaflet-directive.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-route/angular-route.js"></script>
-
-
-        <!-- Our Application -->
-        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/application.js"></script>
-
-        <!-- Our Controllers -->
-        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteCreator.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteManager.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/carte/ctrlCarteList.js"></script>
     {% else %}
         <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="{{app.request.baseUrl}}/dist/css/jdroll.angular.min.css" type="text/css" media="all">
-        <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/jdroll.angular.min.js?v=20150112"></script>
     {% endif %}
 
 {% endblock %}
