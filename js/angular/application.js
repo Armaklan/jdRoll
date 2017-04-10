@@ -7,7 +7,8 @@ var ngApplication = angular.module('jdroll', [
     'leaflet-directive',
     'ajoslin.promise-tracker',//Promise Tracker
     'mgcrea.ngStrap', //UI directives
-    'angular-growl' //Growl messages
+    'angular-growl', //Growl messages
+    'jdRoll.forum'
 
 ]).config(['$routeProvider', '$httpProvider', 'growlProvider',
 function($routeProvider, $httpProvider, growlProvider) {

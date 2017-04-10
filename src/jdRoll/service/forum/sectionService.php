@@ -110,6 +110,7 @@ class SectionService {
    		$user_id = $this->session->get('user')['id'];
 		$sql = "SELECT DISTINCT
 					sections.id as section_id,
+					sections.ordre as section_ordre,
 					sections.title as section_title,
 					sections.banniere as section_banniere,
 					sections.default_collapse as default_collapse,
@@ -158,6 +159,7 @@ class SectionService {
 					OR (sections.campagne_id = :campagne)
                 GROUP BY
                     section_id,
+					section_ordre,
                     section_title,
                     section_banniere,
                     default_collapse,

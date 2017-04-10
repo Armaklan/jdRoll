@@ -40,6 +40,28 @@
     </ul>
   </div>
 
+  <div ng-app="jdRoll.sidebar.character" ng-controller="SidebarCharacterController">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="fa fa-caret-down"></span>
+          Personnages - Accès rapide
+        </h3>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <form role="form" class="form-search">
+            <input type="text" class="form-control search" ng-model="search" ng-change="refreshCharacters(search)">
+	        </form>
+        </li>
+        <li class="list-group-item" ng-repeat="character in characters">
+          <div jd-character-link></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+
     {% if is_mj or allCarte|length>0 %}
         <div class="panel panel-default">
             <div class="panel-heading">

@@ -23,7 +23,8 @@ module.exports = function(grunt) {
         'js/angular/application.js',
         'js/angular/carte/*.js',
         'js/angular/chat/*.js',
-        'js/angular/stat/*.js'
+        'js/angular/stat/*.js',
+        'js/angular/sidebar/*.js'
     ];
 
     grunt.initConfig({
