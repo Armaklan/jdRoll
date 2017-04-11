@@ -25,7 +25,8 @@ module.exports = function(grunt) {
         'js/angular/chat/*.js',
         'js/angular/stat/*.js',
         'js/angular/sidebar/*.js',
-        'js/angular/forum/*.js'
+        'js/angular/forum/*.js',
+        'js/angular/forum/**/*.js',
     ];
 
     grunt.initConfig({
