@@ -27,6 +27,8 @@ module.exports = function(grunt) {
         'js/angular/sidebar/*.js',
         'js/angular/forum/*.js',
         'js/angular/forum/**/*.js',
+        'js/angular/notes/*.js',
+        'js/angular/feedback/*.js',
     ];
 
     grunt.initConfig({
