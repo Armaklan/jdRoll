@@ -29,6 +29,7 @@ module.exports = function(grunt) {
         'js/angular/forum/**/*.js',
         'js/angular/notes/*.js',
         'js/angular/feedback/*.js',
+        'js/angular/popup.js'
     ];
 
     grunt.initConfig({
