@@ -24,7 +24,8 @@ module.exports = function(grunt) {
         'js/angular/carte/*.js',
         'js/angular/chat/*.js',
         'js/angular/stat/*.js',
-        'js/angular/sidebar/*.js'
+        'js/angular/sidebar/*.js',
+        'js/angular/forum/*.js'
     ];
 
     grunt.initConfig({
