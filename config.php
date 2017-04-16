@@ -10,7 +10,15 @@ define('FOLDER_FILES', __DIR__.'/files/');
 /**
  * Config provider
  */
-$app->register(new Rpodwika\Silex\YamlConfigServiceProvider(__DIR__.'/config.yml'));
+$app->register(
+        new GeckoPackages\Silex\Services\Config\ConfigServiceProvider(),
+        array(
+            'config.dir' => __DIR__,
+            'config.format' => 'config.yml',
+            'config.env' => 'prod'
+        )
+);
+
 $app->register(new \Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/src/views',
 ));
@@ -21,7 +29,7 @@ $app->register(new \Silex\Provider\HttpFragmentServiceProvider());
  * Database
  */
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-    'db.options' => $app['config']['database']
+    'db.options' => $app['config']['prd']['database']
 ));
 
 
@@ -46,7 +54,7 @@ $app['session.storage.handler'] = function () use ($app) {
 /**
  * General configuration
  */
-$app["debug"] = $app['config']['general']['debug'];
+$app["debug"] = $app['config']['prd']['general']['debug'];
 
 
 $app->register(new \Silex\Provider\RoutingServiceProvider());
@@ -66,9 +74,9 @@ $app->register(new \Silex\Provider\MonologServiceProvider(), array(
 
 
 
-if($app['config']['log']['level'] == "ERROR") {
+if($app['config']['prd']['log']['level'] == "ERROR") {
     $app['monolog.level'] = Logger::ERROR;
-} elseif($app['config']['log']['level'] == "INFO") {
+} elseif($app['config']['prd']['log']['level'] == "INFO") {
     $app['monolog.level'] = Logger::INFO;
 } else {
     $app['monolog.level'] = Logger::DEBUG;

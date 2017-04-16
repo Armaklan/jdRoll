@@ -791,7 +791,7 @@ CALL jdroll_update();
 DROP PROCEDURE IF EXISTS `jdroll_update`;$$
 CREATE PROCEDURE jdroll_update()
 BEGIN
-IF VERSION_EXISTS(10) = 0 THEN
+IF VERSION_EXISTS(11) = 0 THEN
 
 ALTER TABLE absences
 ADD commentaire VARCHAR(200);
