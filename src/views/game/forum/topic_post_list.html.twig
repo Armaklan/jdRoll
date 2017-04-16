@@ -87,7 +87,13 @@
                         {% endif %}
                         <td style="text-align: right">
                             <div class="btn-group btn-group-xs">
-                                <a title="Quote" class="btn btn-xs btn-default iconeBtn" onClick="quote('{{ post.post_id}}')"><i class="icon-quote-left"></i></a>
+                                {% if post.perso_name != null or  post.user_username != null %}
+                                    <a title="Quote" 
+                                        class="btn btn-xs btn-default iconeBtn" 
+                                        onClick="quote('{{ post.post_id}}')">
+                                        <i class="icon-quote-left"></i>
+                                    </a>
+                                {% endif %}
                                 {% if is_mj or (post.user_id == app.session.get('user')['id']) %}
                                     {% if post.user_id != null %}
                                         <a href="{{ path('post_edit', {campagne_id : campagne_id, post_id : post.post_id}) }}"
