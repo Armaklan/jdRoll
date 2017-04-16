@@ -788,6 +788,19 @@ END$$
 
 CALL jdroll_update();
 
+DROP PROCEDURE IF EXISTS `jdroll_update`;$$
+CREATE PROCEDURE jdroll_update()
+BEGIN
+IF VERSION_EXISTS(10) = 0 THEN
+
+ALTER TABLE absences
+ADD commentaire VARCHAR(200);
+
+END IF;
+END$$
+
+CALL jdroll_update();
+
 
 /*
 Bloc exemple à dupliquer dans le cas d'un nouveau Bloc exemple

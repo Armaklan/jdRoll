@@ -81,12 +81,14 @@
                     <tr>
                         <th>Part le... </th>
                         <th>Revient le ...</th>
+                        <th>Commentaire</th>
                     </tr>
 
                     {% for absence in absences %}
                     <tr>
                         <td>{{absence.begin_date}}</td>
                         <td>{{absence.end_date}}</td>
+                        <td>{{absence.commentaire}}</td>
                     </tr>
                     {% endfor %}
                 </table>

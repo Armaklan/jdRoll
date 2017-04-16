@@ -13,7 +13,7 @@
 
         <div class="pull-right"><button type="submit" class="btn btn-primary">Enregister</button></div>
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div class="form-group">
                 <label class="control-label col-md-6" for="begin_date">Je pars le... </label>
                 <div class="col-md-6">
@@ -21,7 +21,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div class="form-group">
                 <label class="control-label col-md-6">
                   Je reviens le...
@@ -29,6 +29,14 @@
                 <div class="col-md-6">
                   <input type="text" class="form-control input-small datepicker" name="end_date" id="dpd2" value="{{absence_form.end_date}}">
                 </div>
+              </div>
+            </div>
+            <div class="">
+              <label for="commentaires" class="control-label col-md-3">
+                Commentaires : 
+              </label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="commentaire" id="commentaire" value="{{ absence_form.commentaire }}">
               </div>
             </div>
           </div>
@@ -43,6 +51,7 @@
             <tr>
                 <th>Date de début</th>
                 <th>Date de fin</th>
+                <th>Commentaire</th>
                 <th width="100px"></th>
             </tr>
         </thead>
@@ -51,6 +60,7 @@
             <tr>
                 <td>{{ absence.begin_date }}</td>
                 <td>{{ absence.end_date }}</td>
+                <td>{{ absence.commentaire }}</td>
                 <td>
                     <a href="{{ path('abs_edit',  {id : absence.id}) }}" title="Modifier l'absence" class="btn btn-default iconeBtn"><i class="icon-edit"></i></a>
                     <a href="{{ path('abs_remove',  {id : absence.id}) }}" title="Supprimer l'absence" class="btn btn-danger iconeBtn"><i class="icon-remove"></i></a>

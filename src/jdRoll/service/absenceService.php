@@ -22,6 +22,7 @@ class AbsenceService {
 
     public function getBlankForm($user_id) {
         $absence['id'] = 0;
+        $absence['commentaire'] = "";
         $absence['begin_date'] = date("j/m/Y");
         $absence['end_date'] = date("j/m/Y");
         $absence['user_id'] = $user_id;
@@ -30,6 +31,7 @@ class AbsenceService {
 
     public function getForm($request) {
         $absence['id'] = $request->get('id');
+        $absence['commentaire'] = "";
         $absence['begin_date'] = $request->get('begin_date');
         $absence['end_date'] = $request->get('end_date');
         $absence['user_id'] = $request->get('user_id');
@@ -38,21 +40,23 @@ class AbsenceService {
 
     public function insertAbsence($request) {
         $sql = "INSERT INTO absences
-				(user_id, begin_date, end_date)
+				(user_id, begin_date, end_date, commentaire)
 				VALUES
-				(:user, STR_TO_DATE(:begin, '%d/%m/%Y'), STR_TO_DATE(:end, '%d/%m/%Y'))";
+				(:user, STR_TO_DATE(:begin, '%d/%m/%Y'), STR_TO_DATE(:end, '%d/%m/%Y'), :commentaire)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue("user", $request->get('user_id'));
         $stmt->bindValue("begin", $request->get('begin_date'));
         $stmt->bindValue("end", $request->get('end_date'));
+        $stmt->bindValue("commentaire", $request->get('commentaire'));
         $stmt->execute();
     }
 
     public function updateAbsence($request) {
         $sql = "UPDATE absences
                 SET begin_date = STR_TO_DATE(:begin, '%d/%m/%Y'),
-                    end_date = STR_TO_DATE(:end, '%d/%m/%Y')
+                    end_date = STR_TO_DATE(:end, '%d/%m/%Y'),
+                    commentaire = :commentaire
                 WHERE
                     id = :id
                 AND user_id = :user;";
@@ -62,6 +66,7 @@ class AbsenceService {
         $stmt->bindValue("user", $request->get('user_id'));
         $stmt->bindValue("begin", $request->get('begin_date'));
         $stmt->bindValue("end", $request->get('end_date'));
+        $stmt->bindValue("commentaire", $request->get('commentaire'));
         $stmt->execute();
     }
 
@@ -77,7 +82,7 @@ class AbsenceService {
 
     public function getAbsence($id) {
         $sql = "SELECT
-		id, user_id,  DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date
+		id, user_id,  DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date, commentaire
 		FROM absences
 		WHERE id = ?
 		ORDER BY begin_date ASC";
@@ -87,7 +92,7 @@ class AbsenceService {
 
     public function getAllAbsence($user_id) {
         $sql = "SELECT
-		id, user_id,  DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date
+		id, user_id,  DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date, commentaire
 		FROM absences
 		WHERE user_id = ?
                 AND end_date >= now()
@@ -98,7 +103,7 @@ class AbsenceService {
 
     public function getFutureAbsenceInCampagn($id_campagne) {
         $sql = "SELECT
-                user.username, DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date
+                user.username, DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date, commentaire
             FROM absences
             JOIN user
             ON user.id = absences.user_id
@@ -118,7 +123,7 @@ class AbsenceService {
             AND cp.campagne_id = :campagne
             UNION
             SELECT
-                user.username, DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date
+                user.username, DATE_FORMAT(begin_date, '%d/%m/%Y') as begin_date, DATE_FORMAT(end_date, '%d/%m/%Y') as end_date, commentaire
             FROM absences
             JOIN user
             ON user.id = absences.user_id
