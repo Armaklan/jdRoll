@@ -90,6 +90,7 @@ class CarteService {
             SELECT id, campagne_id, name, description, image, published
             FROM carte
             WHERE campagne_id=? ".($withUnpublished?'':' AND published=1')."
+            ORDER BY carte.name
         ";
         $result = $this->db->executeQuery($sql, array($campagne_id));
 
