@@ -66,7 +66,7 @@ $app['messagerieService'] = function ($app) {
     return new MessagerieService($app['db'], $app['session'], $app['monolog'], $app['userService'], $app['mailer']);
 };
 $app['notificationService'] = function ($app) {
-    return new NotificationService($app['db'], $app['monolog'], $app['request'], $app['userService'], $app['topicService'], $app['campagneService'], $app['favorisService'], $app['mailer']);
+    return new NotificationService($app['db'], $app['monolog'], $app['request_stack'], $app['userService'], $app['topicService'], $app['campagneService'], $app['favorisService'], $app['mailer']);
 };
 $app['absenceService'] = function ($app) {
     return new AbsenceService($app['db'], $app['session']);

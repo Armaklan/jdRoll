@@ -12,28 +12,28 @@
     <meta name="description" content="Plate-forme de jeu de rôle par forum">
     <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
 
-  	<link rel="shortcut icon" type="image/x-icon" href="{{app.request.baseUrl}}/favicon.ico">
+  	<link rel="shortcut icon" type="image/x-icon" href="{{global.request.baseUrl}}/favicon.ico">
 
-	  <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/components-font-awesome/css/font-awesome.min.css">
-      <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/jquery-ui/themes/base/resizable.css">
+	  <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/components-font-awesome/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/jquery-ui/themes/base/resizable.css">
 
   {% if app.debug %}
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/main.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/dist/css/colorpicker.css" type="text/css" media="all">
-  	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/select2/select2.css">
-  	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/c3/c3.css">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-fileupload.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.min.css" type="text/css" media="all">
-  	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/angular-ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/css/main.css" type="text/css" media="all">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/bootstrap-colorpicker/dist/css/colorpicker.css" type="text/css" media="all">
+  	<link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/select2/select2.css">
+  	<link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/c3/c3.css">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/css/bootstrap/bootstrap-fileupload.css" type="text/css" media="all">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" type="text/css" media="all">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/css/bootstrap/bootstrap-editable.css">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.min.css" type="text/css" media="all">
+  	<link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/angular-ui-select/dist/select.min.css">
   {% else %}
-    <link rel="stylesheet" href="{{app.request.baseUrl}}/dist/css/theme.min.css?v=20160508_001" type="text/css" media="all">
+    <link rel="stylesheet" href="{{global.request.baseUrl}}/dist/css/theme.min.css?v=20160508_001" type="text/css" media="all">
   {% endif %}
 
 	<script type="text/javascript">
 		var CAMPAGNE_ID=0;
-		var BASE_PATH = '{{app.request.baseUrl}}';
+		var BASE_PATH = '{{global.request.baseUrl}}';
 		var AUTHENTICATED = "{{app.session.get('user') != null}}";
 		var AUTHENTICATED = "{{app.session.get('user') != null}}";
 		{% if app.session.get('user') != null %}
@@ -46,13 +46,13 @@
 		{% endif %}
 	</script>
 
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery-form/jquery.form.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery-ui/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/jquery-form/jquery.form.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!--[if lt IE 9]>
-    	<script type="text/javascript" src="{{app.request.baseUrl}}/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    	<script type="text/javascript" src="{{global.request.baseUrl}}/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <![endif]-->
 
 	{% block specificHeader %}
@@ -114,50 +114,50 @@
 
 
 
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/tinymce/tinymce.min.js"></script>
   <!--[if lt IE 9]>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-shim.min.js"> </script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/es5-shim/es5-sham.min.js"> </script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/es5-shim/es5-shim.min.js"> </script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/es5-shim/es5-sham.min.js"> </script>
   <![endif]-->
 
 
 	<!-- UI Component -->
 	{% if app.debug %}
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular/angular.min.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootbox/bootbox.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/d3/d3.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/c3/c3.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/c3-angular/c3-angular.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/moment/min/moment-with-locales.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/js/bootstrap/bootstrap-fileupload.min.js"> </script>
-		<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"> </script>
-  <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js"> </script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/underscore/underscore.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker-http-interceptor.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/ui-router/release/angular-ui-router.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-select/dist/select.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
-        <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/socket.io-client/socket.io.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular/angular.min.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootbox/bootbox.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/d3/d3.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/c3/c3.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/c3-angular/c3-angular.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/moment/min/moment-with-locales.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/select2/select2.min.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/js/bootstrap/bootstrap-fileupload.min.js"> </script>
+		<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"> </script>
+  <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js"> </script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/underscore/underscore.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-promise-tracker/promise-tracker-http-interceptor.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-growl-v2/build/angular-growl.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/ui-router/release/angular-ui-router.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-ui-select/dist/select.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
+        <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/socket.io-client/socket.io.js"></script>
 	{% else %}
-    <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/composant.min.js?v=20160630_001"> </script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/composant.min.js?v=20160630_001"> </script>
 	{% endif %}
-  <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/favico.js/favico-0.3.5.min.js"> </script>
+  <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/favico.js/favico-0.3.5.min.js"> </script>
 
 	<!-- Application specific controller -->
-  <script type="text/javascript" src="{{app.request.baseUrl}}/dist/js/controller.min.js?v=20170410_002"></script>
+  <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/controller.min.js?v=20170410_002"></script>
 
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollFDP.js?v=1"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/js/JDRollFDP.js?v=1"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/js/JDRollEditableSelect.js"></script>
 
     {% block specificEndJs %}
 

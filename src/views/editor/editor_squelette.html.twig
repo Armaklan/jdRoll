@@ -8,7 +8,7 @@
     <meta name="description" content="Plate-forme de jeu de rôle par forum">
     <meta name="keywords" content="PBF, jdr, forum, jeu de rôle">
 
-	<link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all">
 	
 	{% block specificCSS %}
 	
@@ -16,12 +16,12 @@
 	
 	
 	<script type="text/javascript">
-		var BASE_PATH = '{{app.request.baseUrl}}';
+		var BASE_PATH = '{{global.request.baseUrl}}';
 	</script>
 
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"> </script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/jquery/dist/jquery.min.js"> </script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap/dist/js/bootstrap.min.js"> </script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"> </script>
 	
 	{% block specificJavascript %}
 	
@@ -30,10 +30,10 @@
 	
 	<!-- Application specific controller -->
 	
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/onload.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/ui.js"></script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
-	<script type="text/javascript" src="{{app.request.baseUrl}}/js/controller/editor.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/js/controller/onload.js"></script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/js/controller/ui.js"></script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/vendor/zeroclipboard/ZeroClipboard.min.js"> </script>
+	<script type="text/javascript" src="{{global.request.baseUrl}}/js/controller/editor.js"></script>
 
 
   	

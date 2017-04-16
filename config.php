@@ -10,10 +10,11 @@ define('FOLDER_FILES', __DIR__.'/files/');
 /**
  * Config provider
  */
-$app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__.'/config.yml'));
+$app->register(new Rpodwika\Silex\YamlConfigServiceProvider(__DIR__.'/config.yml'));
 $app->register(new \Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/src/views',
 ));
+$app->register(new \Silex\Provider\HttpFragmentServiceProvider());
 
 
 /**
@@ -34,13 +35,13 @@ $app['session.db_options'] = array(
         'db_data_col'   => 'session_value',
         'db_time_col'   => 'session_time',
 );
-$app['session.storage.handler'] = $app->share(function () use ($app) {
+$app['session.storage.handler'] = function () use ($app) {
     return new Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler(
             $app['db']->getWrappedConnection(),
             $app['session.db_options'],
             $app['session.storage.options']
     );
-});
+};
 
 /**
  * General configuration
@@ -48,7 +49,7 @@ $app['session.storage.handler'] = $app->share(function () use ($app) {
 $app["debug"] = $app['config']['general']['debug'];
 
 
-$app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new \Silex\Provider\RoutingServiceProvider());
 
 // Registers Swiftmailer extension
 $app->register(new \Silex\Provider\SwiftmailerServiceProvider(), array());

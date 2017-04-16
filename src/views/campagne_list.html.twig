@@ -37,7 +37,7 @@
                         {% if gamesBox.banniere != "" %}
                           <img class="img-rounded" src="{{gamesBox.banniere}}" style="max-width:80%"/>
                         {% else %}
-                          <img class="img-rounded" src="{{app.request.baseUrl}}/img/ban.png" style="max-width:80%"/>
+                          <img class="img-rounded" src="{{global.request.baseUrl}}/img/ban.png" style="max-width:80%"/>
                         {% endif %}
 
                     <input type="hidden" class="filterIndex" value="{{ gamesBox.name }}{{ gamesBox.univers }}{{ gamesBox.systeme }}{{ gamesBox.username }}{{ gamesBox.statut }}">

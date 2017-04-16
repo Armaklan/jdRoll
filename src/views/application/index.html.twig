@@ -15,13 +15,13 @@
 
     {% if app.debug %}
         <!-- CSS -->
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/css/carte.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/leaflet/dist/leaflet.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{global.request.baseUrl}}/css/carte.css" type="text/css" media="all">
 
     {% else %}
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-        <link rel="stylesheet" href="{{app.request.baseUrl}}/dist/css/jdroll.angular.min.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{global.request.baseUrl}}/vendor/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+        <link rel="stylesheet" href="{{global.request.baseUrl}}/dist/css/jdroll.angular.min.css" type="text/css" media="all">
     {% endif %}
 
 {% endblock %}

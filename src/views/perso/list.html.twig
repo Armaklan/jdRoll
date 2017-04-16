@@ -53,7 +53,7 @@ null	    	{{ error }}
                                     {% if perso.avatar != "" %}
                                     <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
                                     {% else %}
-                                    <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
+                                    <img class="img-rounded" style="max-width: 80%" src="{{global.request.baseUrl}}/img/ban.png"/>
                                     {% endif %}
 
                                 </div>
@@ -140,7 +140,7 @@ null	    	{{ error }}
                         {% if perso.avatar != "" %}
                         <img src="{{perso.avatar}}" class="img-rounded" style="max-width: 80%" />
                         {% else %}
-                        <img class="img-rounded" style="max-width: 80%" src="{{app.request.baseUrl}}/img/ban.png"/>
+                        <img class="img-rounded" style="max-width: 80%" src="{{global.request.baseUrl}}/img/ban.png"/>
                         {% endif %}
 
                     </div>

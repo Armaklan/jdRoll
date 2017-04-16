@@ -19,7 +19,7 @@ class NotificationService {
   private $mailer;
   private $favorisService;
 
-  public function __construct($db, $logger, $request, $userService, $topicService, $campagneService, $favorisService, $mailer) {
+  public function __construct($db, $logger, $requestStack, $userService, $topicService, $campagneService, $favorisService, $mailer) {
     $this->db = $db;
     $this->logger = $logger;
     $this->userService = $userService;
@@ -27,6 +27,7 @@ class NotificationService {
     $this->campagneService = $campagneService;
     $this->favorisService = $favorisService;
     $this->mailer = $mailer;
+    $request = $requestStack->getCurrentRequest();
     $this->baseUrl = $request->getScheme() . '://' . $request->getHttpHost();
   }
 

@@ -1,12 +1,14 @@
 {
     "require": {
-        "silex/silex": "1.2.*",
-        "symfony/monolog-bridge": ">=2.1",
-        "symfony/twig-bridge": ">=2.1",
+        "silex/silex": "2.*",
         "swiftmailer/swiftmailer": "4.1.*",
         "doctrine/dbal": "2.2.*",
-        "deralex/yaml-config-service-provider": "1.0.1",
-        "erusev/parsedown": "1.0.1"
+        "erusev/parsedown": "1.0.1",
+        "monolog/monolog": "^1.22",
+        "twig/twig": "^2.3",
+        "rpodwika/yaml-config-service-provider": "^1.0",
+        "symfony/twig-bridge": "^3.2",
+        "symfony/monolog-bridge": "^3.2"
     },
     "autoload": {
         "psr-4": {

@@ -1,14 +1,14 @@
 {% extends "squelette.html.twig" %}
 
 {% block specificEndJs %}
-    <script type="text/javascript" src="{{app.request.baseUrl}}/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="{{app.request.baseUrl}}/js/angular/my-game/my-game.module.js?v=v2"></script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/js/angular/my-game/my-game.module.js?v=v2"></script>
 {% endblock %}
 
 
 {% block content %}
 <div ng-app="jdRoll.myGame">
-    <div ng-controller="GamesController as gamesCtrl" ng-include="'{{app.request.baseUrl}}/js/angular/my-game/my-game.html'">
+    <div ng-controller="GamesController as gamesCtrl" ng-include="'{{global.request.baseUrl}}/js/angular/my-game/my-game.html'">
     </div>
 <div>
 

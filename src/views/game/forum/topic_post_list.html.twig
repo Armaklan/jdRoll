@@ -131,7 +131,7 @@
 							    	<input type="text" class="form-control" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
 							    </div>
 							    <button type="submit" class="btn btn-default" onClick="return uiDicer.dicerLaunch({{ topic.id }});">Lancer les dés</button>
-							    <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingQuickLaunch">
+							    <img src="{{global.request.baseUrl}}/img/loading.gif" class="hide" id="waitingQuickLaunch">
                                 <br>
                                 <b>Résultats : </b>
 							    <span id="resultatDicerQuick">
@@ -205,7 +205,7 @@
                     <a class="btn btn-default" id="btn-preview" onClick="draftController.preview()">Prévisualiser</a>
                     <a class="btn btn-default" id="btn-enreg" onClick="draftController.ajaxEnreg()">Enregistrer</a>
                   </div>
-                  <img src="{{app.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
+                  <img src="{{global.request.baseUrl}}/img/loading.gif" class="hide" id="waitingPost">
                   <span id="enregResult"></span>
 
 						    </div>
