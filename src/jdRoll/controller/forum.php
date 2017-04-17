@@ -292,12 +292,14 @@ $forumController->post('/{campagne_id}/post/save', function(Request $request, $c
   }
   $campagne_id = getExterneCampagneNumber($campagne_id);
   $url = $app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topicId))."#post".$post_id;
+  $fullUrl = $request->getScheme() . '://' . $request->getHttpHost() . $url;
+
   if($isNew) {
     $app["notificationService"]->alertPostInCampagne(
       $app["session"]->get('user')['id'],
       $campagne_id,
       $topicId,
-      $url
+      $fullUrl
     );
   }
   return new JsonResponse($url);
