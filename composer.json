@@ -3,7 +3,7 @@
         "silex/silex": "2.*",
         "swiftmailer/swiftmailer": "4.1.*",
         "doctrine/dbal": "2.2.*",
-        "erusev/parsedown": "1.0.1",
+        "erusev/parsedown": "1.6.*",
         "monolog/monolog": "^1.22",
         "twig/twig": "^2.3",
         "rpodwika/yaml-config-service-provider": "^1.0",

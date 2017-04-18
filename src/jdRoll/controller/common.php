@@ -143,7 +143,8 @@ $commonController->get('/static/{page}', function($page) use($app) {
 
 $commonController->get('/md/{page}', function($page, Request $request) use($app) {
     $Parsedown = new Parsedown();
-    $content = $Parsedown->text(file_get_contents(__DIR__ . '/../../../doc/' . $page . '.md'));
+    $fileContent = file_get_contents(__DIR__ . '/../../../doc/' . $page . '.md');
+    $content = $Parsedown->text($fileContent);
     $content = str_replace('/img/','/doc/img/', $content);
     return $app->render('md.html.twig', array(
         'content' => $content
