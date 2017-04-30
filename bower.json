@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "tinymce": "~4.1.9",
-    "select2": "~3.4.5",
+    "select2": "~4.0.3",
     "bootstrap": "~3.1.0",
     "bootbox": "~4.1.0",
     "es5-shim": "~2.1.0",

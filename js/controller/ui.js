@@ -22,7 +22,18 @@ var uiControllerImpl = function() {
 
     function activateSelect2() {
 
-       $('.select2').select2({width: 'resolve'});
+       $('.select2').select2({width: 'resolve', templateResult: select2Format, templateSelection: select2Format});
+
+       function select2Format(state) {
+        if(!state.id) return state.text;
+        
+        var urlImage = $(state.element).attr('jd-img');
+        if(urlImage) {
+            return $("<span><img class='option-avatar' src='" + urlImage + "'>" + state.text + "</span>");
+        }
+
+        return state.text;
+       }
 
         $(document).on('keydown', function(e){
             keyIsDown = e.ctrlKey;

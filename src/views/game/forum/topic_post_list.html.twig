@@ -173,14 +173,18 @@
                                         <optgroup label="Personnages Joueurs">
                                         {% for personnage in personnages %}
                                             {% if personnage.user_id != null %}
-                                                <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>{{ personnage.name }}</option>
+                                                <option value="{{ personnage.id }}" jd-img="/files/thumbnails/perso_{{personnage.id}}.png" {% if default_perso == personnage.id %} selected="selected" {% endif %}>
+                                                    {{ personnage.name }}
+                                                </option>
                                             {% endif %}
                                         {% endfor %}
                                         </optgroup>
                                         <optgroup label="Personnages Non-Joueurs">
                                         {% for personnage in personnages %}
                                             {% if personnage.user_id == null %}
-                                                <option value="{{ personnage.id }}" {% if default_perso == personnage.id %} selected="selected" {% endif %}>{{ personnage.name }}</option>
+                                                <option value="{{ personnage.id }}" jd-img="/files/thumbnails/perso_{{personnage.id}}.png" {% if default_perso == personnage.id %} selected="selected" {% endif %}>
+                                                    {{ personnage.name }}
+                                                </option>
                                             {% endif %}
                                         {% endfor %}
                                         </optgroup>
@@ -197,7 +201,9 @@
                                         <select class="select2" id="perso_id" name="perso_id" style="min-width: 200px">
                                                 {% set firstSelected = 'selected="selected"' %}
                                                 {% for personnage in perso %}
-                                                    <option value="{{ personnage.id }}" {{ firstSelected }}>{{ personnage.name }}</option>
+                                                    <option value="{{ personnage.id }}" jd-img="/files/thumbnails/perso_{{personnage.id}}.png" {{ firstSelected }}>
+                                                        {{ personnage.name }}
+                                                    </option>
                                                     {% set firstSelected = ""%}
                                                 {% endfor %}
                                         </select>
