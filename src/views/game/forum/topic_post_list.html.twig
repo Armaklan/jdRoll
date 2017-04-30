@@ -67,7 +67,9 @@
                         <p class="post_user_title">{{post.perso_concept}}</p>
                         <p class="post_info"><i>Le {{ post.post_date|date("d/m/y H:i") }}</i></p>
                         <p class="post_info">Par <a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><i>{{ post.user_username }}</i></a></p>
-                        <img src="{{ post.perso_avatar }}" width="80%" class="img-rounded"/>
+                        <center>
+                            <img src="{{ post.perso_avatar }}" width="80%" class="img-rounded"/>
+                        </center>
 
                         <p>&nbsp;</p>
                         <div class="hidden-xs">
@@ -83,7 +85,9 @@
                         <p class="post_name"><a href="{{ path('profile', {username: post.user_username}) }}" class="profil{{ post.user_profil }}"><b>{{ post.user_username }}</b></a></p>
                         <p class="post_user_title"><i>{{post.user_titre}}</i></p>
                         <p class="post_info"><i>Le {{ post.post_date|date("d/m/y H:i") }}</i></p>
+                        <center>
                         <img src="{{ post.user_avatar }}" width="80%" class="img-rounded"/>
+                        </center>
                     {% endif %}
 
                 </div>
