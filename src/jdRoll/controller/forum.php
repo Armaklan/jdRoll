@@ -8,7 +8,7 @@
  */
 
 
-  use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
@@ -268,8 +268,7 @@ $forumController->get('/{campagne_id}/post/deletePost/{topic_id}/{post_id}', fun
   $campagne_id = getInterneCampagneNumber($campagne_id);
   $app["topicService"]->backwardLastPost($topic_id, $post_id);
   $post =  $app["postService"]->deletePost($post_id);
-  $campagne_id = getExterneCampagneNumber($campagne_id);
-  return $app->redirect($app->path('topic', array('campagne_id' => $campagne_id, 'topic_id' => $topic_id)));
+  return new JsonResponse("Suppression effectué avec succès", 200);
 })->bind("post_delete");
 
 $forumController->post('/{campagne_id}/post/save', function(Request $request, $campagne_id) use($app) {

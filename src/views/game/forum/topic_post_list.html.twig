@@ -51,8 +51,8 @@
 
                     {% endif %}
                     {% if is_mj or ( (post.user_id == app.session.get('user')['id']) and (topic.last_post_id == post.post_id) )  %}
-                        <a href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
-                            title="Supprimer" class="btn btn-xs btn-danger iconeBtn"><i class="icon-remove-sign"></i></a>
+                        <a jd-href="{{ path('post_delete', {campagne_id : campagne_id, post_id : post.post_id, topic_id : post.topic_id}) }}"
+                            title="Supprimer" class="btn btn-xs btn-danger-ssctrl iconeBtn btn-delete-post"><i class="icon-remove-sign"></i></a>
                     {% endif %}
                 </div>
                 <a class="hidden-xs" title="Lien permanent" href="{{ path('topic_all', {'campagne_id' : campagne_id, 'topic_id' : topic.id}) }}#post{{ post.post_id }}"><i class="icon-link"></i></a>

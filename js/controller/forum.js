@@ -47,6 +47,24 @@ var forumControllerImpl = function() {
         $('#resultatDicerTable td:last-child').each(function(index, line){
             line.innerHTML = beautifyDice(line.innerHTML);
         });
+
+        $('.btn-delete-post').on('click', onDeletePost);
+    }
+
+    function onDeletePost(e) {
+        bootbox.confirm('L\'action demandé est une action dangereuse (Suppression, Quitter une partie, ...). Etes-vous sur ? ', function(confirmed) {
+            if(confirmed) {
+                var url = e.currentTarget.attributes['jd-href'].value;
+                $.ajax({
+                    type: "GET",
+                    url: url
+                }).done(function() {
+                    $(e.currentTarget).parents('.post').hide();
+                }).fail(function() {
+                    $(e.currentTarget).parents('.post').before("<div class='alert alert-danger'>Erreur lors de la suppression du message</div>");
+                });
+            }
+        });
     }
 
     return {
