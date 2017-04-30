@@ -547,10 +547,6 @@ ul.nav-tabs li.active {
 .ng-invalid {
     border-color: red;
 }
-.diceLine{
-    white-space: nowrap;
-}
-
 .modal-backdrop.am-fade {
     opacity: .5;
     transition: opacity .15s linear;
@@ -572,4 +568,37 @@ ul.nav-tabs li.active {
 .thumb_avatar{
   width: 32px;
   border-radius: 3px;
+}
+
+div.posts {
+    div.posts-header {
+        div.post-pagination {
+            text-align: right;
+            margin-top: 10px;
+        }
+    }
+    div.posts-footer {
+        div.post-pagination {
+            text-align: right;
+            margin-top: 10px;
+        }
+    }
+    div.posts-footer.categorie {
+        border-radius: 0px;
+    }
+    div.posts-legend.post {
+        font-style: italic;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    div.post {
+        padding: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        div.post-actions {
+            float: right;
+            text-align: right;
+        }
+    }
 }

@@ -47,10 +47,9 @@ var uiDicerImpl = function() {
                 + 'Description : ' + description;
 
             $('#quickDicerRow').before(
-                '<tr>' +
-                '    <td colspan="2"><div class="postDice">' + text + '</div></td>' +
-                '    <td>&nbsp;</td>' +
-                '</tr>'
+                '<div class="col-xs-12 post">' +
+                '    <div class="col-md-10 col-xs-12 post-dice"><div class="postDice">' + text + '</div></div>' +
+                '</div>'
             );
         }).
         fail(function() {

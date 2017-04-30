@@ -73,7 +73,7 @@ var draftControllerImpl = function() {
             },
             success: function(msg){
                 $("#previewCell").html(msg.content);
-                $("tr#previewRow").removeClass("hide");
+                $("div#previewRow").removeClass("hide");
             },
             error: function(msg) {}
         });

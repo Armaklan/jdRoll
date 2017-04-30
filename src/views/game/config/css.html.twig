@@ -66,7 +66,9 @@
 		{% endif %}
 
 		{% if campagne_config.odd_line_color != '' %}
-
+			.posts > div.post:nth-child(2n+1) {
+				background-color: {{ campagne_config.odd_line_color }};
+			}
 			.table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th {
 			    background-color: {{ campagne_config.odd_line_color }};
 			}
@@ -74,6 +76,10 @@
 		{% endif %}
 
 		{% if campagne_config.even_line_color != '' %}
+
+			.posts > div.post:nth-child(2n) {
+				background-color: {{ campagne_config.even_line_color }};
+			}
 
 			.table-striped tbody > tr:nth-child(2n) > td, .table-striped tbody > tr:nth-child(2n) > th {
 			    background-color: {{ campagne_config.even_line_color }};
