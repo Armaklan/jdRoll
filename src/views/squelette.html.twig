@@ -70,7 +70,9 @@
    <div class="container-fluid" id="main">
 
 	    <div class="row">
-				{{ render(url('notifications_btn_mobile')) }}
+				{% if (app.session.get('user') != null)  %}
+					{{ render(url('notifications_btn_mobile')) }}
+				{% endif %}
 
 	    	<div class="col-sm-12 col-xs-12 col-md-9 col-lg-10" id="contentDiv">
 							
