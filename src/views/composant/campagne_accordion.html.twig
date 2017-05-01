@@ -25,7 +25,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">
         <span class="fa fa-caret-down"></span>
-        Personnages
+        Joueurs
       </h3>
     </div>
     <ul class="list-group">
@@ -45,7 +45,19 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           <span class="fa fa-caret-down"></span>
-          Personnages - Accès rapide
+          Personnages
+          {% if is_mj %}
+              <div class="btn-group btn-group-xs pull-right">
+                  <a class="btn btn-primary" style="color:white"
+                      href="{{ path('perso_pnj', {campagne_id: campagne_id}) }}">
+                      <i class="icon-list"></i>
+                  </a>
+                  <a class="btn btn-success" style="color:white"
+                      href="{{ path('perso_pnj_add', {campagne_id: campagne_id}) }}">
+                      <i class="icon-plus"></i>
+                  </a>
+              </div>
+          {% endif %}
         </h3>
       </div>
       <ul class="list-group">
