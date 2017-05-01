@@ -25,6 +25,14 @@ $notificationController->get('/', function() use($app) {
 	return $app->render('notification/btn.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
 })->bind("notifications_btn");
 
+$notificationController->get('/mobile', function() use($app) {
+    $user_id = $app["session"]->get('user')['id'];
+	$notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);
+    $nbNotif = count($notifs);
+    $hasNotif = ($nbNotif > 0);
+	return $app->render('notification/btn-mobile.html.twig', ['notifs' => $notifs, 'has_notif' => $hasNotif, 'nb_notif' => $nbNotif]);
+})->bind("notifications_btn_mobile");
+
 $notificationController->get('/list', function() use($app) {
     $user_id = $app["session"]->get('user')['id'];
     $notifs = $app['notificationService']->getNotifForUser($app["session"]->get('user')['id']);

@@ -612,3 +612,42 @@ div.posts {
 .option-avatar {
     max-height: 20px;
 }
+
+@media (max-width: 767px) {
+
+    /* Mobile */
+    div.posts {
+        div.post {
+            div.post-identite {
+                center {
+                    text-align: left;
+                }
+                img {
+                    max-width: 80px;
+                }
+            }
+        }
+    }
+
+    /* Notification */
+    div#notif {
+        position: fixed;
+        top: 0px;
+        right: auto;
+        width: 98%;
+        height: 96%;
+        min-height: auto;
+        z-index: 9999;
+
+        #notifContent {
+            height: 100%;
+            width: 100%;
+        }
+
+        .arrow-up  {
+            display: none;
+        }
+    }
+
+
+}
