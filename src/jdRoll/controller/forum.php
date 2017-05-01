@@ -68,8 +68,10 @@ $forumController->get('/{campagne_id}', function($campagne_id) use($app) {
   $absences = $app["absenceService"]->getFutureAbsenceInCampagn($campagne_id);
   $waitingUsers = $app["campagneService"]->getParticipantByStatus($campagne_id,0);
   $isFavoris = $app["favorisService"]->isFavoris($campagne_id, $user_id);
-  return $app->render('game/home.html.twig', ['absences' => $absences, 'is_favoris' => $isFavoris,
-                                              'campagne_id' => $campagne_id, 'topics' => $topics,
+  return $app->render('game/home.html.twig', ['absences' => $absences, 
+                                              'is_favoris' => $isFavoris,
+                                              'campagne_id' => $campagne_id, 
+                                              'topics' => $topics,
                                               'annonces' => $annonces,
                                               'is_participant' => $isParticipant,
                                               'users' => $users,

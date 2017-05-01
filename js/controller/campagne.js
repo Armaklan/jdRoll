@@ -60,13 +60,11 @@ var campagneControllerImpl = function() {
                 var campagneId = $(this).attr("data-campagne-id");
                 if ( $("#favorised").hasClass("notFavorised") ) {
                     $("#favorised").removeClass("notFavorised");
-                    $('#favorised i').removeClass("icon-star-empty");
-                    $('#favorised i').addClass("icon-star");
+                    $('#favorised').html("<i class='icon-eye-close'></i> Ne plus observer");
                     favorised(campagneId, 1);
                 } else {
                     $("#favorised").addClass("notFavorised");
-                    $('#favorised i').removeClass("icon-star");
-                    $('#favorised i').addClass("icon-star-empty");
+                    $('#favorised').html("<i class='icon-eye-open'></i> Observer la partie");
                     favorised(campagneId, 0);
                 }
             });

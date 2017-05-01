@@ -27,40 +27,40 @@
 
     {% if (absences is not empty) %}
 	    <div class="alert alert-warning">
-                <ul>
-	    	{% for absence in absences %}
-                    <li>
-                      {{absence.username}} sera absent 
-                      {% if absence.commentaire != '' %}
-                        ( {{ absence.commentaire }} )
-                      {% endif %}
-                      du {{absence.begin_date}} au {{absence.end_date}} 
-                    </li>
-                {% endfor %}
-                </ul>
+        <ul>
+        {% for absence in absences %}
+            <li>
+              {{absence.username}} sera absent 
+              {% if absence.commentaire != '' %}
+                ( {{ absence.commentaire }} )
+              {% endif %}
+              du {{absence.begin_date}} au {{absence.end_date}} 
+            </li>
+        {% endfor %}
+        </ul>
 	    </div>
     {% endif %}
 	  {% if is_mj and waitingUsers is defined %}
       {% for user in waitingUsers %}
           <div class="alert alert-warning" id="inscription{{user.id}}">
-                    <p>L'inscription de
-                      <a href="{{ path('profile', {username: user.username}) }}">
-                         {{user.username}}</a>
-                      est en attente de validation.<p>
-                      <p>Les inscriptions à la partie seront fermées automatiquement quand vous aurez
-                      accepté le nombre de joueurs que vous avez indiqué comme requis.</p>
-                    <p>&nbsp;</p>
-                    <div class="pull-right">
-                      <a onClick="campagneConfig.addParticipant({{campagne.id}}, {{user.id}});">
-                        Accepter
-                      </a>
-                      <a style="margin-left: 2em"
-                         onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{user.id}});">
-                        Refuser
-                      </a>
-                    </div>
-                    <p>&nbsp;</p>
+            <p>L'inscription de
+              <a href="{{ path('profile', {username: user.username}) }}">
+                  {{user.username}}</a>
+              est en attente de validation.<p>
+              <p>Les inscriptions à la partie seront fermées automatiquement quand vous aurez
+              accepté le nombre de joueurs que vous avez indiqué comme requis.</p>
+            <p>&nbsp;</p>
+            <div class="pull-right">
+              <a onClick="campagneConfig.addParticipant({{campagne.id}}, {{user.id}});">
+                Accepter
+              </a>
+              <a style="margin-left: 2em"
+                  onClick="campagneConfig.deleteParticipant({{campagne.id}}, {{user.id}});">
+                Refuser
+              </a>
             </div>
+            <p>&nbsp;</p>
+          </div>
       {% endfor %}
 
     {% endif %}
@@ -88,12 +88,7 @@
           {% if is_participant > 0 %}
             <a href="{{ path('campagne_quit', {id : campagne_id}) }}" title="Quitter" class="btn btn-danger btn-sm iconeBtn"><i class="icon-remove"></i> Quitter la partie</a>
           {% endif %}
-            <a title="Voir la fiche" class="btn btn-sm btn-default iconeBtn" href="{{ path('campagne', {id : campagne_id}) }}"><i class="icon-search"></i></a>
-	        {% if is_favoris %}
-	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn" data-campagne-id="{{campagne_id}}"><i class="icon-star"></i></a>
-	        {% else %}
-	            <a title="Mettre en favoris" id="favorised" class="btn btn-sm btn-default iconeBtn notFavorised" data-campagne-id="{{campagne_id}}"><i class="icon-star-empty"></i></a>
-	        {% endif %}
+          <a title="Voir la fiche" class="btn btn-sm btn-default iconeBtn" href="{{ path('campagne', {id : campagne_id}) }}"><i class="icon-search"></i></a>
 	    {% endif %}
         </div>
 	</div>

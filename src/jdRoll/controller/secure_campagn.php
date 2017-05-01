@@ -245,12 +245,14 @@ $securedCampagneController->get('/sidebar_large/{campagne_id}', function(Request
             $topics = $app["sectionService"]->getQuickAllSectionInCampagne($campagne_id);
             $cartes = $app["carteService"]->getAllCartes($campagne_id);
             $isMj = $app["campagneService"]->isMj($campagne_id);
+            $isFavoris = $app["favorisService"]->isFavoris($campagne_id, $player_id);
             return $app->render('sidebar_campagne_large.html.twig', [
                 'campagne_id' => $campagne_id,
                 'perso' => $perso,
                 'favorised_campagne' => $favorisedCampagne,
                 'prepa_campagnes' => $prepaCampagnes,
                 'topics' => $topics,
+                'is_favoris' => $isFavoris,
                 'is_mj' => $isMj,
                         'allCarte' => $cartes,
                         'allPerso' => $allPerso, 'campagne' => $campagne, 'active_campagnes' => $mjCampagnes, 'active_pj_campagnes' => $pjCampagnes,

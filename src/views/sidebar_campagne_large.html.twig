@@ -29,22 +29,31 @@
                                 <i class="icon-folder-close"></i> Forum
                             </a>
                         </li>
+                        {% if (not is_mj and perso|length == 0) or is_favoris %}
+                            <li class="list-group-item">
+                                {% if is_favoris %}
+                                    <a title="Suivre la partie" id="favorised" class="btn btn-link iconeBtn" data-campagne-id="{{campagne_id}}"><i class="icon-eye-close"></i> Ne plus observer</a>
+                                {% else %}
+                                    <a title="Suivre la partie" id="favorised" class="btn btn-link iconeBtn notFavorised" data-campagne-id="{{campagne_id}}"><i class="icon-eye-open"></i> Observer la partie</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
                         {% if is_mj or perso|length > 0 %}
-                        <li class="list-group-item">
-                            <a class="btn btn-link iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})" title="Mettre une alerte">
-                                <i class="alarm-pj icon-alarm icon-bell-alt {% if alert %}alarm-on{% endif %}"></i> Mettre en alerte
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-link iconeBtn" title="Lanceur de dés">
-                                <i class="icon-cogs"></i> Lanceur de dés
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a class="btn btn-link iconeBtn blocnote-btn" title="Bloc-Notes">
-                                <i class="icon-book"></i> Bloc-Notes
-                            </a>
-                        </li>
+                            <li class="list-group-item">
+                                <a class="btn btn-link iconeBtn" onClick="alarm({{app.session.get('user')['id']}}, {{campagne.id}})" title="Mettre une alerte">
+                                    <i class="alarm-pj icon-alarm icon-bell-alt {% if alert %}alarm-on{% endif %}"></i> Mettre en alerte
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#dicerModal" role="button" data-toggle="modal" class="btn btn-link iconeBtn" title="Lanceur de dés">
+                                    <i class="icon-cogs"></i> Lanceur de dés
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="btn btn-link iconeBtn blocnote-btn" title="Bloc-Notes">
+                                    <i class="icon-book"></i> Bloc-Notes
+                                </a>
+                            </li>
                         {% endif %}
                         {% if not is_mj and perso|length == 1%}
                             <li class="list-group-item">
@@ -58,7 +67,6 @@
                                 <i class="icon-group"></i> Galerie de Perso
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </div>
