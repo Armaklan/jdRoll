@@ -118,14 +118,22 @@ $(function() {
           <tr>
             <td  colspan="2">
               <a data-toggle="collapse" data-target="#privateEdit" class="collapserLink">
-                <i class="icon-chevron-sign-down"></i>
+                {% if perso.privateDescription != "" %}
+                  <i class="icon-chevron-sign-down"></i>
+                {% else %}
+                  <i class="icon-chevron-sign-up"></i>
+                {% endif %}
                 Description privée
               </a>
             </td>
           </tr>
           <tr>
             <td  colspan="2">
-              <div class="topics collapse in" id="privateEdit">
+                {% if perso.privateDescription != "" %}
+                  <div class="topics collapse in" id="privateEdit">
+                {% else %}
+                  <div class="topics collapse out" id="privateEdit">
+                {% endif %}
                 <textarea input class="input-xxlarge wysiwyg"
                           type="text"
                           id="privateDescription"
