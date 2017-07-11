@@ -70,13 +70,13 @@
 		<div class="btn-group">
 		{% if is_mj %}
 
-			<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une section" class="btn btn-sm btn-info iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-plus"></i></a>
+			<a href="{{ path('section_add',  {campagne_id : campagne_id}) }}" title="Ajouter une catégorie" class="btn btn-sm btn-info iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %} "><i class="icon-plus"></i> Ajouter une catégorie</a>
   	  {% if campagne_id > 0 %}
-      			<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn btn-sm btn-default iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %}"><i class="icon-wrench"></i></a>
+      			<a href="{{ path('campagne_config_edit',  {campagne_id : campagne_id}) }}" title="Configurer l'espace campagne" class="btn btn-sm btn-default iconeBtn admIcone {% if campagne.is_admin_open != 1 %} invisible {% endif %}"><i class="icon-wrench"></i> Configurer</a>
 			{% endif %}
 
 			{% if campagne.is_admin_open != 1 %}
-				<a title="Administrer l'espace campagne" id="admMode" class="btn btn-sm iconeBtn btn-primary admDisabled"><i class="icon-eye-open"></i></a>
+				<a title="Administrer l'espace campagne" id="admMode" class="btn btn-sm iconeBtn btn-primary admDisabled"><i class="icon-eye-open"></i> Administrer la campagne</a>
 			{% else %}
 				<a title="Administrer l'espace campagne" id="admMode" class="btn btn-sm iconeBtn btn-primary"><i class="icon-eye-close"></i></a>
 			{% endif %}

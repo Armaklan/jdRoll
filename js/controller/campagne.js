@@ -43,14 +43,12 @@ var campagneControllerImpl = function() {
                 if ( $("#admMode").hasClass("admDisabled") ) {
                     $("#admMode").removeClass("admDisabled");
                     $(".admIcone").removeClass("invisible");
-                    $('#admMode i').removeClass("icon-eye-open");
-                    $('#admMode i').addClass("icon-eye-close");
+                    $('#admMode').html("<i class='icon-eye-close'></i>");
                     updateAdminOpen(1);
                 } else {
                     $("#admMode").addClass("admDisabled");
                     $(".admIcone").addClass("invisible");
-                    $('#admMode i').removeClass("icon-eye-close");
-                    $('#admMode i').addClass("icon-eye-open");
+                    $('#admMode').html("<i class='icon-eye-open'></i> Administrer la campagne");
                     updateAdminOpen(0);
                 }
             });
@@ -68,6 +66,9 @@ var campagneControllerImpl = function() {
                     favorised(campagneId, 0);
                 }
             });
+        },
+        onPrivateSelected : function() {
+            $('input:radio[name="is_private"]').filter('[value="2"]').attr('checked', true);
         }
     };
 };

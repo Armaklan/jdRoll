@@ -10,7 +10,7 @@
 
 	<form role="form" action="{{ path('section_save', {campagne_id : campagne_id}) }}" method="POST">
 		<fieldset class="titled-box">
-			<legend>Information de la campagne</legend>
+			<legend>Information de la catégorie</legend>
 		    <div class="pull-right">
 				<button type="submit" class="btn btn-primary">Sauvegarder</button>
 			</div>
@@ -20,29 +20,30 @@
 			    <input type="text" id="title" name="title" placeholder="Titre de la section" value="{{ section.title }}" class="form-control">
 		    </div>
 		    <div class="form-group">
-			    <label class="control-label" for="banniere">Bannière (500px x 100px)</label>
+			    <label class="control-label" for="banniere">Bannière</label>
 			    <div class="input-group">
 			    	<input type="text" class="form-control" id="banniere" name="banniere" placeholder="Banniere du jeu" value="{{ section.banniere }}" placeholder="http://">
 			    	<span class="input-group-btn"><a href="#uploaderModal" role="button" data-toggle="modal" class="btn btn-default iconeBtn sidebarBtn" title="Uploader une image"><i class="icon-upload"></i></a></span>
 			    </div>
+				<span class="help-block">Cette image remplacera le texte de la catégorie dans la liste des sujets. Taille conseillée : 500px x 100px</span>
 		    </div>
-		    <div class="col-md-5">
-			    <div class="form-group">
-				    <label class="control-label" for="ordre">N°Ordre</label>
-				    <input type="text" class="form-control" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ section.ordre }}">
-			    </div>
-		    </div>
-		 	<div class="col-md-6 col-md-offset-1">
-			    <div class="form-group">
-			     	<label class="control-label" for="default_collapse">Situation par défaut</label>
-			    	<label class="radio-inline">
-			    		<input type="radio" name="default_collapse" value="0" {% if section.default_collapse == 0 %} checked {% endif %}> Déplier
-			    	</label>
-			    	<label class="radio-inline">
-						<input type="radio" name="default_collapse" value="1" {% if section.default_collapse == 1 %} checked {% endif %}> Plier
-					</label>
-			    </div>
-		    </div>
+			<div class="form-group">
+				<label class="control-label" for="ordre">N°Ordre</label>
+				<input type="text" class="form-control" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ section.ordre }}">
+				<span class="help-block">Les catégories sont ordonnées du plus petit au plus grand.</span>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label" for="default_collapse">Situation par défaut</label>
+				<br>
+				<label class="radio-inline">
+					<input type="radio" name="default_collapse" value="0" {% if section.default_collapse == 0 %} checked {% endif %}> Déplier
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="default_collapse" value="1" {% if section.default_collapse == 1 %} checked {% endif %}> Plier
+				</label>
+				<span class="help-block">Définit si les fils rattachés à la catégories sont visible par défaut.</span>
+			</div>
 		</fieldset>
     </form>
 

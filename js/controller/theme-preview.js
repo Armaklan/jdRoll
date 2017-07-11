@@ -70,6 +70,10 @@ var themeService = (function () {
         });
     };
 
+    component.viewAdvancedEdit = function() {
+        $('#theme-advanced').removeClass('hide');
+        $('#theme-advanced-btn').addClass('hide');
+    };
 
     component.refresh = function() {
         updateOdd($('#odd_line_color').val());

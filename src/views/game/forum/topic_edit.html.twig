@@ -20,13 +20,14 @@
 
       <input type="hidden" name="id" value="{{ topic.id }}" >
         <div class="form-group">
-          <label class="control-label col-sm-2" for="title">Title</label>
+          <label class="control-label col-sm-2" for="title">Titre</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" id="title" name="title" placeholder="Titre du sujet" value="{{ topic.title }}">
           </div>
+          <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Titre visible dans la liste des sujets.</span></div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2"  for="section_id">Catégories</label>
+          <label class="control-label col-sm-2"  for="section_id">Catégorie</label>
         <div class="col-sm-10">
 
           <select name="section_id" class="select2">
@@ -36,26 +37,30 @@
            {% endfor %}
           </select>
         </div>
+        <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Catégorie dans laquelle sera rangé le fil.</span></div>
       </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="ordre">N°Ordre</label>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <input class="form-control" type="text" id="ordre" name="ordre" placeholder="Place dans l'ordre" value="{{ topic.ordre }}">
           </div>
+          <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Les sujets sont ordonnées du plus petit au plus grand.</span></div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="stickable">Type</label>
           <div class="col-sm-10">
-            <label class="radio-inline"><input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fils standard</label>
-          <label class="radio-inline"><input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it</label>
+            <label class="radio-inline"><input type="radio" name="stickable" value="0" {% if topic.stickable == 0 %} checked {% endif %}> Fil standard</label>
+            <label class="radio-inline"><input type="radio" name="stickable" value="1" {% if topic.stickable == 1 %} checked {% endif %}> Post-it</label>
           </div>
+          <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Les post-it sont placés en premiers en mis en avant à l'aide d'une épingle.</span></div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="is_closed">Etat</label>
           <div class="col-sm-10">
             <label class="radio-inline"><input type="radio" name="is_closed" value="0" {% if topic.is_closed == 0 %} checked {% endif %}> Ouvert</label>
-          <label class="radio-inline"><input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouiller</label>
+            <label class="radio-inline"><input type="radio" name="is_closed" value="1" {% if topic.is_closed == 1 %} checked {% endif %}> Verrouillé</label>
           </div>
+          <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Seul le MJ peut poster dans un fil vérrouillé.</span></div>
         </div>
       </fieldset>
 	    <fieldset class="titled-box">
@@ -63,21 +68,22 @@
 	  	<div class="form-group">
 		    <label class="control-label col-sm-2" for="is_private">Accessibilité du sujet</label>
 		    <div class="col-sm-10">
-		    	<label class="radio-inline"><input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Public</label>
-				<label class="radio-inline"><input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Privée</label>
-                <label class="radio-inline"><input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> Grand-Public</label>
+		    	<div class="radio"><label><input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Visible par tous. Seuls les joueurs de la partie peuvent poster. </label></div>
+				  <div class="radio"><label><input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Visible par les joueurs selectionnés. </label></div>
+          <div class="radio"><label><input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> Visible par tous. Tous le monde peut poster. </label></div>
 		    </div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 			    <select class="form-control" multiple name="list_user[]" />
 			    {% for perso in persos %}
-			    		<option value="{{ perso.user_id }}" {% if perso.cr_user != null %} SELECTED="SELECTED" {% endif %}>
+			    		<option value="{{ perso.user_id }}" {% if perso.cr_user != null %} SELECTED="SELECTED" {% endif %} onClick="campagneController.onPrivateSelected()">
 			    			{{ perso.name }} ({{ perso.username }})
 			    		</option>
 			    {% endfor %}
 			    </select>
 		    </div>
+        <div class="col-sm-10 col-sm-offset-2"><span class="help-block">Rester appuyer sur Ctrl pour selectionner plusieurs joueurs. </span></div>
 	    </div>
 	    </fieldset>
     </form>
