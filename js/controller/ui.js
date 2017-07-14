@@ -63,10 +63,6 @@ var uiControllerImpl = function() {
        });
     }
 
-    function activateColorpicker() {
-       $('.colorpicker').colorpicker();
-    }
-
     function activateTooltip() {
         $('.iconeBtn').tooltip({
             container: 'body'
@@ -126,7 +122,6 @@ var uiControllerImpl = function() {
             activateTooltip();
             autofocus();
             activateCarousel();
-            activateColorpicker();
         }
     };
 };

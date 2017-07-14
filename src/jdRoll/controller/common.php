@@ -176,13 +176,14 @@ $commonController->get('/sidebar/std_large', function() use ($app) {
 $commonController->post('/upload', function(Request $request) use ($app) {
 	$file = $request->files->get("uploadFile");
 	$filename = $request->get('filename');
+    $campagneId = $request->get('campagneId');
 	if($filename == null || $filename == "") {
 		$filename = $file->getClientOriginalName();
 		$ext = explode("/",$file->getClientMimeType())[1];
 		$filename = sha1($filename . microtime()) . "." . $ext;
-		$file->move(FOLDER_FILES, $filename);
+		$file->move(FOLDER_FILES . $campagneId . '/', $filename);
 	}
-	return $app->path('homepage') . "files/" . $filename;
+	return $app->path('homepage') . "files/" . $campagneId . '/' . $filename;
 })->bind("upload");
 
 $commonController->get('/users', function(Request $request) use ($app) {

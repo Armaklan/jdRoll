@@ -15,6 +15,7 @@
 							<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Enlever</a>
 							<button type="submit" class="btn btn-default" class="fileupload-exist">Envoyer</button>
                             <img src="{{global.request.baseUrl}}/img/loading.gif" class="hide" id="waitingUploader">
+							<input type="hidden" name="campagneId" id="uploader-campagneId" />
 						</form>
 					</div>
 				</div>
@@ -34,35 +35,29 @@
 	</div>
 </div>
 
-    <script> 
-        // wait for the DOM to be loaded 
-        $(document).ready(function() { 
-        
-            // bind 'myForm' and provide a simple callback function 
-            $('#uploaderForm').submit(function(e) {
-                $('#waitingUploader').removeClass('hide');    
-            });
-            $('#uploaderForm').ajaxForm(function(responseText, statusText, xhr, $form) { 
-                $('#urlUploader').val(responseText);
-                $('#waitingUploader').addClass('hide');
-            }); 
-        }); 
-    </script>
-    
-
-<script language="javascript">
-function callUpload() {
-	uploadFile=$('uploadFile').val();
-	$.ajax({
-		type: "POST",
-		url: "{{ path('upload') }}",
-		data: {uploadFile: uploadFile},
-		error: function() { alert("Jet de dé impossible"); },
-		success: function(retour){
-			$('#urlUploader').val(retour);
-			$('#btn-upload-copy').click();
-		}
-	});
-	return false;
-}
+<script> 
+	// wait for the DOM to be loaded 
+	$(document).ready(function() { 
+		
+		var targetField = undefined;
+	
+		// bind 'myForm' and provide a simple callback function 
+		$('#uploaderModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget) // Button that triggered the modal
+			targetField = button.data('field');
+			$('#uploader-campagneId').val(CAMPAGNE_ID);
+		});
+		$('#uploaderForm').submit(function(e) {
+			$('#waitingUploader').removeClass('hide');    
+		});
+		$('#uploaderForm').ajaxForm(function(responseText, statusText, xhr, $form) { 
+			$('#urlUploader').val(responseText);
+			if(targetField) {
+				$(targetField).val(responseText);
+				$('#uploaderModal').modal('hide');
+			}
+			$('#waitingUploader').addClass('hide');
+		}); 
+	}); 
 </script>
+    
