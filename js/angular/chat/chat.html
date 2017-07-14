@@ -27,7 +27,7 @@
     </div>
     <div>
         <form role="form" class="form-inline" autocomplete="off" ng-submit="chatCtrl.send(chatCtrl.message)" ng-if="chatCtrl.canPost">
-            <div class="col-md-2 no-padding">
+            <div class="col-md-3 no-padding">
                 <ui-select ng-model="chatCtrl.message.to" id="chatTo">
                     <ui-select-match>
                         <span ng-bind="$select.selected.username"></span>
@@ -37,9 +37,9 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <div class="input-group col-md-10">
+            <div class="input-group col-md-9">
                 <input class="form-control" id="messageChat" type="text" maxlength="300" ng-model="chatCtrl.message.text" ng-change="chatCtrl.changeText(chatCtrl.message.text)">
-                <span class="input-group-btn">
+                <span class="input-group-btn" style="{{ chatCtrl.canAdmin ? 'width: 30%' : 'width: 10%' }}">
                     <input type="submit" class="btn btn-default" value="Envoyer">
                     <a class="btn btn-default" ng-if="chatCtrl.canAdmin" ng-click="chatCtrl.deleteLastMessages();">Purger 30 messages</a>
                 </span>

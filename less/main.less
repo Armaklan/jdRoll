@@ -1,5 +1,5 @@
-@import "../vendor/bootstrap/less/bootstrap.less";
-@import "../vendor/bootstrap/less/theme.less";
+@import "variables.less";
+@import "bootstrap.less";
 @import "sidebar.less";
 @import "dice.less";
 @import "font.less";
@@ -17,11 +17,24 @@
 }
 
 .categorie {
-    background-color: #DDDDDD;
+    background-color: #337ab7;
     font-weight: bold;
     padding: 0.5em;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    box-shadow: 1px 1px 6px #555;
+    color: white;
+
+    a {
+        color: white;
+    }
+}
+
+.topics {
+    border: 1px solid #337ab7;
+    box-shadow: 1px 1px 6px #555;
+
+    .table {
+        margin-bottom: 0px;
+    }
 }
 
 th.categorie {
