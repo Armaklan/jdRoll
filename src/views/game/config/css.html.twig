@@ -107,7 +107,7 @@
 		{% endif %}
 
 		{% if campagne_config.link_sidebar_color != '' %}
-			.categorie a {
+			.categorie a:not(.btn) {
 				color: {{ campagne_config.link_sidebar_color }};
 			}
 			.categorie {
