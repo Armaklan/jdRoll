@@ -25,21 +25,6 @@
 
     <div id="campagneMsg"></div>
 
-    {% if (absences is not empty) %}
-	    <div class="alert alert-warning">
-        <ul>
-        {% for absence in absences %}
-            <li>
-              {{absence.username}} sera absent 
-              {% if absence.commentaire != '' %}
-                ( {{ absence.commentaire }} )
-              {% endif %}
-              du {{absence.begin_date}} au {{absence.end_date}} 
-            </li>
-        {% endfor %}
-        </ul>
-	    </div>
-    {% endif %}
 	  {% if is_mj and waitingUsers is defined %}
       {% for user in waitingUsers %}
           <div class="alert alert-warning" id="inscription{{user.id}}">
@@ -96,6 +81,26 @@
 	{% set section_id = -1 %}
 	{% set topic_id = -1 %}
 
+  {% if (absences is not empty) %}
+    <div class="categorie">
+      <a>Absences planifiés</a>
+    </div>
+    <div class="topics collapse in">
+      <table class="table table-striped">
+          <tr>
+            <td style="padding-left: 30px;">
+              {% for absence in absences %}
+                <b>{{absence.username}}</b> du <b>{{absence.begin_date}}</b> au <b>{{absence.end_date}}</b>
+                {% if absence.commentaire != '' %}
+                  : {{ absence.commentaire }}
+                {% endif %}
+                <br>
+              {% endfor %}
+            </td>
+          </tr>
+      </table>
+    </div>
+  {% endif %}
 
   <div class="categorie">
     <table width="100%">
@@ -110,8 +115,6 @@
         </td>
       </tr>
     </table>
-
-
   </div>
 
 

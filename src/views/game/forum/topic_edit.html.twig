@@ -68,9 +68,9 @@
 	  	<div class="form-group">
 		    <label class="control-label col-sm-2" for="is_private">Accessibilité du sujet</label>
 		    <div class="col-sm-10">
-		    	<div class="radio"><label><input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> Visible par tous. Seuls les joueurs de la partie peuvent poster. </label></div>
-				  <div class="radio"><label><input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> Visible par les joueurs selectionnés. </label></div>
-          <div class="radio"><label><input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> Visible par tous. Tous le monde peut poster. </label></div>
+		    	<div class="radio"><label><input type="radio" name="is_private" value="0" {% if topic.is_private == 0 %} checked {% endif %}> <b>Public.</b> Visible par tous. Seuls les joueurs de la partie peuvent poster. </label></div>
+				  <div class="radio"><label><input type="radio" name="is_private" value="1" {% if topic.is_private == 1 %} checked {% endif %}> <b>Privé. </b> Visible par les joueurs selectionnés. </label></div>
+          <div class="radio"><label><input type="radio" name="is_private" value="2" {% if topic.is_private == 2 %} checked {% endif %}> <b>Grand public.</b> Visible par tous. Tous le monde peut poster. </label></div>
 		    </div>
 		</div>
 		<div class="form-group">
