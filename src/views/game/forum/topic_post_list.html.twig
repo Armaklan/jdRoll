@@ -138,20 +138,40 @@
                     <div class="col-xs-12 post" id="quickDicerRow">
                         <div class="col-md-10 col-md-offset-2 col-xs-12 post-dice">
                             <b>Lancer les dés</b><a href="#dicerHelp" role="button" data-toggle="modal" class="btn btn-link"><i class="icon-question"></i></a>
-							<form role="form" class="form-inline">
-							    <div class="form-group">
-							    	<input type="text" class="form-control" id="dicerParamQuick" name="dicerParamQuick" placeholder="Ex : 1d6 + 1d4" value="{{ config.default_dice }}">
+							<form role="form" class="form">
+							    <div class="form-group col-md-2">
+                                    <label class="control-label" for="dicerParamQuick">Formule</label>
+                                    <input type="text" 
+                                        class="form-control" 
+                                        id="dicerParamQuick" 
+                                        name="dicerParamQuick" 
+                                        placeholder="Ex : 1d6 + 1d4" 
+                                        value="{{ config.default_dice }}"
+                                        required>
 							    </div>
-							    <div class="form-group">
-							    	<input type="text" class="form-control" id="dicerDescriptionQuick" name="dicerDescription" placeholder="Ex: Crocheter la serrure">
+							    <div class="form-group col-md-4">
+                                    <label class="control-label" for="dicerDescriptionQuick">Description</label>
+							    	<input type="text" 
+                                           class="form-control" 
+                                           id="dicerDescriptionQuick" 
+                                           name="dicerDescription" 
+                                           placeholder="Ex: Crocheter la serrure">
 							    </div>
-							    <button type="submit" class="btn btn-default" onClick="return uiDicer.dicerLaunch({{ topic.id }});">Lancer les dés</button>
-							    <img src="{{global.request.baseUrl}}/img/loading.gif" class="hide" id="waitingQuickLaunch">
-                                <br>
+                                <div class="col-md-3">
+                                    <label class="control-label col-xs-12">&nbsp;</label>
+                                    <div class="col-xs-10">
+                                        <button type="submit" class="btn btn-default form-control" onClick="return uiDicer.dicerLaunch({{ topic.id }});">Lancer les dés</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <img src="{{global.request.baseUrl}}/img/loading.gif" class="hide" id="waitingQuickLaunch">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                <span class="help-block">Consultez l'aide (?) pour plus de détail sur les formules possibles.</span><br>
                                 <b>Résultats : </b>
-							    <span id="resultatDicerQuick">
-
-					   			 </span>
+                                    <span id="resultatDicerQuick"></span>
+                                </div>
+							    
 					   		</form>
                         </div>
                     </div>
