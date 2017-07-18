@@ -11,28 +11,45 @@
   <div class="col-xs-12 col-md-4 col-md-offset-4">
 	<form role="form" class="form" action="{{ path('subscribe_save')  }}" method="POST">
 	    <div class="form-group">
-		    <label class="control-label" for="login">Login</label>
-
-		    	<input class="form-control" type="text" id="username" name="username" placeholder="Nom d'utilisateur" value="{{ user['username'] }}">
-
+		    <label class="control-label" for="login">Nom d'utilisateur</label>
+		    <input class="form-control" 
+					type="text" 
+					id="username" 
+					name="username" 
+					required
+					placeholder="Nom d'utilisateur" 
+					value="{{ user['username'] }}">
+			<span class="help-block">Nom public qui sera votre principal identité sur le site.</span>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="mail">Email</label>
-
-		    	<input class="form-control" type="text" class="input-xxlarge"  id="mail" name="mail" placeholder="Adresse email" value="{{ user['mail'] }}">
-
+		    <input class="form-control" 
+					type="email" 
+					class="input-xxlarge"  
+					id="mail" 
+					name="mail" 
+					placeholder="Adresse email" 
+					value="{{ user['mail'] }}"
+					required>
+			<span class="help-block">Sera visible uniquement des administrateurs. Il sera utilisé uniquement pour vous envoyer des notifications (désactivable).</span>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="password">Mot de passe</label>
-
-		    	<input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe">
-
+		    <input class="form-control" 
+					type="password" 
+					id="password" 
+					name="password" 
+					placeholder="Mot de passe"
+					required>
 	    </div>
 	    <div class="form-group">
 		    <label class="control-label" for="password2">Mot de passe (resaisir) </label>
-
-		    	<input class="form-control" type="password" id="password"2 name="password2" placeholder="Mot de passe">
-
+		    <input class="form-control" 
+					type="password" 
+					id="password2"
+					name="password2" 
+					placeholder="Mot de passe"
+					required>
 	    </div>
 	    <input type="hidden" name="url" value="!" />
 
@@ -40,7 +57,7 @@
           <center>
 			      <button type="submit" class="btn btn-primary">S'enregistrer</button>
           </center>
-		    </div>
+		</div>
 	    </div>
     </form>
   </div>
