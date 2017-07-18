@@ -41,7 +41,7 @@ null	    	{{ error }}
         <tbody>
         <tr>
             <td colspan="4">
-                <div class="col-md-12 topics collapse in"
+                <div class="col-md-12 collapse in"
                      id="catPJ">
                     {% for perso in pjs %}
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 game-vignette">
@@ -113,7 +113,7 @@ null	    	{{ error }}
 		<tbody>
       <tr>
         <td colspan="4">
-          <div class="col-md-12 topics collapse {% if perso.cat_default_collapse == 0 %} in {% else %} out {% endif %}"
+          <div class="col-md-12 collapse {% if perso.cat_default_collapse == 0 %} in {% else %} out {% endif %}"
                id="{% if cat_name is not null %}cat{{ perso.category  }}{% else %}catNC{% endif %}">
 
 
