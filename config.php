@@ -6,6 +6,7 @@ use \Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 //Constantes
 define('FOLDER_FILES', __DIR__.'/files/');
+define('FOLDER_BASE', __DIR__);
 
 /**
  * Config provider

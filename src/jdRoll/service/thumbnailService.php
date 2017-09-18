@@ -67,7 +67,7 @@ class ThumbnailService {
         }
         else if( ! $isRemote){
             //For now, ignore local files as I do not have them
-            $filepath = FOLDER_FILES . '/' . basename($avatarPath);
+            $filepath = FOLDER_BASE . $avatarPath;
             if( ! file_exists($filepath)){
                 $this->_generateDefaultThumbnail($type, $thumbPath);
             }
