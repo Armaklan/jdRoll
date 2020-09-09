@@ -60,6 +60,7 @@ var configBase = {
   ],
   toolbar_mode: "sliding",
   menubar: false,
+  contextmenu: false,
   autoresize: true,
   mobile: {
     min_height: 300,
