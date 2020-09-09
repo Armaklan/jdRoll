@@ -87,28 +87,30 @@ function setupCustomIco(editor) {
     editor.ui.registry.addButton('private', {
       text: 'Prv',
       onAction: function() {
-        editor.windowManager.open({
+        editor.windowManager.openUrl({
           title: 'Message privé',
           url: BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID,
-          height: "280",
+          height: 280,
           buttons: [{
+            type: "custom",
             text: 'OK',
             classes: 'widget btn primary first abs-layout-item',
-            disabled: false,
-            onclick: function(e){
-
-              var find_src = BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID;
-              var items = [];
-              var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").each(function() {
-                items.push($(this).val());
-              });
-              editor.execCommand( 'mceInsertContent', 0, "[private=" + items.join(',') + "]" + editor.selection.getContent() + "[/private]" );
-              editor.windowManager.close();
-            }
+            disabled: false
           }, {
+            type: "cancel",
             text: 'Cancel',
-            onclick: 'close'
-          }]
+            onAction: 'close'
+          }],
+          onAction: function(e){
+
+            var find_src = BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID;
+            var items = [];
+            var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").each(function() {
+              items.push($(this).val());
+            });
+            editor.execCommand( 'mceInsertContent', 0, "[private=" + items.join(',') + "]" + editor.selection.getContent() + "[/private]" );
+            editor.windowManager.close();
+          }
         });
       }
     });
@@ -124,19 +126,34 @@ function setupCustomIco(editor) {
       onAction: function() {
         editor.windowManager.open({
           title: 'Informations Popup',
-          body: [{
-            type: 'textbox',
-            name: 'title',
-            label: 'Titre :'
+          body: {
+            type: 'panel',
+            items: [{
+              type: 'input',
+              name: 'title',
+              label: 'Titre :'
+            },
+            {
+              type: 'input',
+              name: 'link',
+              label: 'Lien affiché :'
+            }]
           },
-                 {
-                   type: 'textbox',
-                   name: 'link',
-                   label: 'Lien affiché :'
-                 }],
-          onsubmit: function(e) {
+          buttons: [{
+            type: "submit",
+            text: 'OK',
+            classes: 'widget btn primary first abs-layout-item',
+            disabled: false
+          }, {
+            type: "cancel",
+            text: 'Cancel',
+            onAction: 'close'
+          }],
+          onSubmit: function(e) {
+            var data = e.getData();
             var content = tinyMCE.activeEditor.selection.getContent();
-            editor.insertContent('[popup=' + e.data.title + ',' + e.data.link + ']' + content + '[/popup]');
+            editor.insertContent('[popup=' + data.title + ',' + data.link + ']' + content + '[/popup]');
+            editor.windowManager.close();
           }
         });
       }
@@ -146,26 +163,28 @@ function setupCustomIco(editor) {
     editor.ui.registry.addButton('perso', {
       text: 'PNJ',
       onAction: function() {
-        editor.windowManager.open({
+        editor.windowManager.openUrl({
           title: 'Lien vers fiche PNJ',
           url: BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID,
-          height: "280",
+          height: 280,
           buttons: [{
+            type: "custom",
             text: 'OK',
             classes: 'widget btn primary first abs-layout-item',
             disabled: false,
-            onclick: function(e){
-
-              var find_src = BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID;
-              var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
-              var content = editor.selection.getContent() ? editor.selection.getContent(): val;
-              editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + content + "[/pnj]" );
-              editor.windowManager.close();
-            }
           }, {
+            type: "cancel",
             text: 'Cancel',
-            onclick: 'close'
-          }]
+            onAction: 'close'
+          }],
+          onAction: function(e){
+
+            var find_src = BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID;
+            var val = $("iframe[src='" + find_src + "']").contents().find("select option:selected").val();
+            var content = editor.selection.getContent() ? editor.selection.getContent(): val;
+            editor.execCommand( 'mceInsertContent', 0, "[pnj=" + val + "]" + content + "[/pnj]" );
+            editor.windowManager.close();
+          }
         });
       }
     });
@@ -174,27 +193,29 @@ function setupCustomIco(editor) {
     editor.ui.registry.addButton('carte', {
       text: 'CARTE',
       onAction: function() {
-        editor.windowManager.open({
+        editor.windowManager.openUrl({
           title: 'Lien vers une carte',
           url: BASE_PATH + '/editor/tagCarte/' + CAMPAGNE_ID,
-          height: "280",
+          height: 280,
           buttons: [{
+            type: "custom",
             text: 'OK',
             classes: 'widget btn primary first abs-layout-item',
-            disabled: false,
-            onclick: function(e){
-
-              var find_src = BASE_PATH + '/editor/tagCarte/' + CAMPAGNE_ID;
-              var selection = $("iframe[src='" + find_src + "']").contents().find("select option:selected");
-              var val = selection.val();
-              var content = editor.selection.getContent() ? editor.selection.getContent(): selection.text();
-              editor.execCommand( 'mceInsertContent', 0, "[carte=" + val + "]" + content + "[/carte]" );
-              editor.windowManager.close();
-            }
+            disabled: false
           }, {
+            type: "cancel",
             text: 'Cancel',
-            onclick: 'close'
-          }]
+            onAction: 'close'
+          }],
+          onAction: function(e){
+
+            var find_src = BASE_PATH + '/editor/tagCarte/' + CAMPAGNE_ID;
+            var selection = $("iframe[src='" + find_src + "']").contents().find("select option:selected");
+            var val = selection.val();
+            var content = editor.selection.getContent() ? editor.selection.getContent(): selection.text();
+            editor.execCommand( 'mceInsertContent', 0, "[carte=" + val + "]" + content + "[/carte]" );
+            editor.windowManager.close();
+          }
         });
       }
     });
