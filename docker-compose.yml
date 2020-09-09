@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 9000:9000
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'jdroll'
+      MYSQL_USER: 'jdroll'
+      MYSQL_PASSWORD: 'devdev'
+      MYSQL_ROOT_PASSWORD: 'devdev'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - jdroll-db:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+volumes:
+  portainer_data:
+  jdroll-db:
