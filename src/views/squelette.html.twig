@@ -153,12 +153,12 @@
         <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/angular-ui-tinymce/src/tinymce.js"></script>
         <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/socket.io-client/socket.io.js"></script>
 	{% else %}
-    <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/composant.min.js?v=20200909_002"> </script>
+    <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/composant.min.js?v=20200909_003"> </script>
 	{% endif %}
   <script type="text/javascript" src="{{global.request.baseUrl}}/vendor/favico.js/favico-0.3.5.min.js"> </script>
 
 	<!-- Application specific controller -->
-  <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/controller.min.js?v=20200909_002"></script>
+  <script type="text/javascript" src="{{global.request.baseUrl}}/dist/js/controller.min.js?v=20200909_003"></script>
 
 	<script type="text/javascript" src="{{global.request.baseUrl}}/js/JDRollBootstrap-editable.js"></script>
 	<script type="text/javascript" src="{{global.request.baseUrl}}/js/JDRollFDP.js?v=1"></script>
@@ -170,20 +170,9 @@
 
 <script type="text/javascript">
 
-
-		$(document).ready(function() {
-			onLoadController.onLoadGenerals();
-		});
-
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-41202193-1']);
-	_gaq.push(['_trackPageview']);
-
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
+	$(document).ready(function() {
+		onLoadController.onLoadGenerals();
+	});
 
 </script>
 </body>

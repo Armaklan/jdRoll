@@ -147,7 +147,7 @@ class AbsenceService {
     }
 
     public function getCurrentAbsence() {
-        $sql = "SELECT
+        $sql = "SELECT DISTINCT
             user.username, user.profil
 	FROM absences
         JOIN user

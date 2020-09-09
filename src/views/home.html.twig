@@ -38,6 +38,13 @@
 {% if app.session.get('user') == null %}
 <div class="row well">
   <div class="col-md-4">
+    <h2>Une communauté</h2>
+    <p>La barrière des distances n'existant pas, vous rencontrerez ici des joueurs/euses venus de tous horizons.
+    </p><p>
+    Une grande communauté francophone est prête à vous accueillir autour du Jeu de Rôle pour partager de bons moments, à toute heure du jour, voire de la nuit. Ouvert même les jours fériés !</p>
+    <p><a class="btn btn-primary" href="{{ path('forum' )}}">Voir la liste des membres &raquo;</a></p>
+  </div>
+  <div class="col-md-4">
     <h2>Du choix</h2>
     <p>Vous êtes fan de science-fiction ? Vous êtes plutôt épée et bouclier contre un vil félon ? Vous préférez cramer du zombie avec des copains ? Ou alors découvrir la dernière sortie indé ?
     </p><p>
@@ -47,15 +54,8 @@
     <p><a class="btn btn-primary" href="{{ path('campagne_list') }}">Voir les parties qui recrutent &raquo;</a></p>
   </div>
   <div class="col-md-4">
-    <h2>Des rencontres</h2>
-    <p>La barrière des distances n'existant pas, vous rencontrerez ici des joueurs/euses venus de tous horizons.
-    </p><p>
-    Une grande communauté francophone est prête à vous accueillir autour du Jeu de Rôle pour partager de bons moments, à toute heure du jour, voire de la nuit. Ouvert même les jours fériés !</p>
-    <p><a class="btn btn-primary" href="{{ path('forum' )}}">Voir la liste des membres &raquo;</a></p>
-  </div>
-  <div class="col-md-4">
     <h2>Une plateforme dediée</h2>
-    <p>jdRoll a été conçu spécialement pour le jeu de rôle. C'est pour cela que vous aurez à votre disposition tout le matériel nécessaire afin d'organiser une partie ou de la jouer : bloc-note, lanceur de dés, fiche de personnage,...
+    <p>jdRoll a été conçu spécialement pour le jeu de rôle par forum. C'est pour cela que vous aurez à votre disposition tout le matériel nécessaire afin d'organiser une partie ou de la jouer : bloc-note, lanceur de dés, fiche de personnage,...
     <p></p>
     <p>Tout ici a été conçu pour le confort des MJ et des joueurs. Et l'endroit est en perpétuelle évolution !</p>
   <p><a class="btn btn-primary" href="{{ path('markdown', {page: 'guide'} ) }}">Plus d'information &raquo;</a></p>
@@ -68,7 +68,7 @@
   </div>
   <div class="col-md-6 col-md-offset-1">
     <fieldset class="titled-box">
-      <legend>Information générales</legend>
+      <legend>Informations générales</legend>
       <p><b>Derniers inscrits :</b>
         {% set isFirst = true %}
         {% for user in last_users %}
@@ -79,7 +79,7 @@
         {% set isFirst = false %}
         {% endfor %}
       </p>
-      <p><b>Connectés durant ses 24 dernières heures ({{connected_24H_users|length}}) : </b>
+      <p><b>Connectés durant ces 24 dernières heures ({{connected_24H_users|length}}) : </b>
         {% set isFirst = true %}
         {% for user in connected_24H_users %}
         {% if not isFirst %}
