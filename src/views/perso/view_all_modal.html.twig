@@ -69,6 +69,36 @@
       <td><img src="{{ perso.avatar }}" width="150px" /></td>
     </tr>
 
+    {% if is_mj %}
+    <tr>
+      <td colspan="2">
+        <a data-toggle="collapse" data-target="#dice-list" class="collapserLink">
+          <i class="icon-chevron-sign-up"></i>
+          Derniers jets de dés
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="topics collapse in" id="dice-list">
+
+          <div class="cardDiceContainer">
+          {% for dice in dices|slice(1, 4) %}
+              <div class="cardDice">
+                <div class="cardTitle">  
+                  <p class="title">{{ dice.description }}</p>
+                  <p class="diceDate">{{ dice.create_date|date("d/m/Y H:i") }}</p>
+                </div>
+                <p class="dice-result">{{ dice.result }}</p>
+              </div>
+          {% endfor %}
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    {% endif %}
+
     {% if perso.publicDescription != "" %}
     <tr>
       <td colspan="2">
@@ -183,3 +213,7 @@
 
   </tbody>
 </table>
+
+<script>
+  forumController.beautifyCardDice();
+</script>

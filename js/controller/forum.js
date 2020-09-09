@@ -25,7 +25,7 @@ var forumControllerImpl = function() {
         return newString != original ? '<span class="diceLine">'+newString+'</span>':original;
     };
 
-    function onForumLoaded() {
+    function beautifyPostDice() {
         //Testing regexp
         var reg = /.*? a lancé .*? et a obtenu : (.*?)Description : .*/i;
 
@@ -42,6 +42,19 @@ var forumControllerImpl = function() {
             //Change using beautified dices
             post.innerHTML = post.innerHTML.replace(dice[1], beautifyDice(dice[1]));
         });
+        
+    }
+
+    function beautifyCardDice() {
+        //For each post, see if it is a dice roll
+        $('.dice-result').each(function(index, line){
+            line.innerHTML = beautifyDice(line.innerHTML);
+        });
+    }
+
+
+    function onForumLoaded() {
+        beautifyPostDice();
 
         //Foreach dicer result
         $('#resultatDicerTable td:last-child').each(function(index, line){
@@ -69,7 +82,9 @@ var forumControllerImpl = function() {
 
     return {
         onForumLoaded : onForumLoaded,
-        beautifyDice: beautifyDice
+        beautifyDice: beautifyDice,
+        beautifyPostDice: beautifyPostDice,
+        beautifyCardDice: beautifyCardDice
     };
 };
 

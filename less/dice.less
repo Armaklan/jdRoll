@@ -35,3 +35,41 @@
     padding-left: 130px;
     background: url('../../img/dice/logo.png') no-repeat 0% 50%;
 }
+
+.cardDiceContainer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+
+    .cardDice {
+        flex: 1 auto;
+        width: 300px;
+        border: 1px solid rgba(90,90,90,0.5);
+        text-align: center;
+        margin-bottom: 1em;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        padding: 0.5em;
+
+        p {
+            margin-bottom: 0px;
+        }
+
+        .cardTitle {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 0.2em;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        .diceDate {
+            text-align: right;
+            margin-right: 1em;
+            color: rgba(140,140,140,0.8);
+        }
+    }
+
+}
