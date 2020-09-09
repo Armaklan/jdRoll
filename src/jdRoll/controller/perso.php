@@ -103,7 +103,7 @@
 		$perso = $app['persoService']->getPersonnageById($perso_id);
     	$isMj = $app["campagneService"]->isMj($campagne_id);
 		$userId = $app['session']->get('user')['id'];
-		$dices = $app['dicerService']->getUserDice($campagne_id, $userId);
+		$dices = $app['dicerService']->getUserDice($campagne_id, $perso["user_id"]);
     	$template = "";
     	$perso['publicDescription'] = $app["postContentService"]->transformAllTag($perso['publicDescription'],$perso['name'],$isMj,$campagne_id);
    		$param = ['campagne_id' => $campagne_id, 'perso' => $perso, 'is_mj' => $isMj, 'dices' => $dices];
