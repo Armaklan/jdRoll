@@ -41,7 +41,7 @@ restart:
         @echo
         @echo "Restart server"
         @echo
-        @service php5-fpm restart
+        @service php7.0-fpm restart
         @service nginx restart
 
 install: prepare clone link getcomposer update deploy restart

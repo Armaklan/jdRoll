@@ -40,6 +40,6 @@
   },
   "resolutions": {
     "angular": "~1.6",
-    "tinymce": "~4.6"
+    "tinymce": "~5.4"
   }
 }
