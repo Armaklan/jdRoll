@@ -54,7 +54,7 @@ var fontFormat = "Standard=Helvetica Neue, Helvetica, Arial, sans-serif;" +
 var configBase = {
   plugins: [
     "link image lists hr",
-    "table textcolor fullscreen",
+    "table fullscreen",
     "emoticons code",
     "autoresize"
   ],
