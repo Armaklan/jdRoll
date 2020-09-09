@@ -68,7 +68,7 @@ var campagneControllerImpl = function() {
             });
         },
         onPrivateSelected : function() {
-            $('input:radio[name="is_private"]').filter('[value="2"]').attr('checked', true);
+            $('input:radio[name="is_private"]').filter('[value="1"]').attr('checked', true);
         }
     };
 };
