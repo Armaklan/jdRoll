@@ -55,8 +55,7 @@ var configBase = {
   plugins: [
     "link image lists hr",
     "table fullscreen",
-    "emoticons code",
-    "autoresize"
+    "emoticons code"
   ],
   toolbar_mode: "sliding",
   menubar: false,
@@ -79,7 +78,7 @@ var configBase = {
 };
 
 var configPost = jQuery.extend(true, {}, configBase);
-configPost.min_height = 240;
+configPost.min_height = 400;
 configPost.selector = ".wysiwyg";
 
 tinymce.init(configPost);

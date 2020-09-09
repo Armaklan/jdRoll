@@ -47,8 +47,8 @@ var uiControllerImpl = function() {
             keyIsDown = e.ctrlKey;
         });
 
-       $('.navigationSelect').on('select2-selecting', function(val, object) {
-           changeLocation(val.val, keyIsDown);
+       $('.navigationSelect').on('select2:select', function(val) {
+           changeLocation(val.params.data.id, keyIsDown);
        });
     }
 
