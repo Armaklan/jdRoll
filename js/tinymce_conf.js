@@ -34,6 +34,18 @@ var formats = {dialogue: {
   block: 'blockquote'
 }};
 
+var style_formats = [
+  formats.dialogue,
+  formats.pensee,
+  formats.rp1,
+  formats.rp2,
+  formats.rp3,
+  formats.t1,
+  formats.t2,
+  formats.t3,
+  formats.blockquote
+];
+
 var fontFormat = "Standard=Helvetica Neue, Helvetica, Arial, sans-serif;" +
     "Police Lcd=LiquidCrystal;"+
     "Police Runique=Runes;"+
@@ -43,48 +55,38 @@ var configBase = {
   plugins: [
     "link image lists hr",
     "table textcolor fullscreen",
-    "emoticons code"
+    "emoticons code",
+    "autoresize"
   ],
+  toolbar_mode: "sliding",
+  menubar: false,
+  autoresize: true,
+  mobile: {
+    min_height: 300,
+    toolbar_mode: "sliding",
+    toolbar: "fullscreen | styleselect removeformat | bold italic | link image | hr | private hide popup perso perso2 carte"
+  },
   content_css : BASE_PATH + "/css/main.css",
   browser_spellcheck: true,
   convert_urls: false,
-  toolbar: "cut copy paste | styleselect fontselect removeformat | bold italic forecolor | alignleft aligncenter alignright alignjustify | hr | bullist numlist outdent indent | link image | fullscreen | emoticons private hide popup perso perso2 carte",
-  style_formats: formats,
+  toolbar: "undo redo | styleselect fontselect removeformat | bold italic forecolor | link image | fullscreen | emoticons private hide popup perso perso2 carte | hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table code",
   formats: formats,
+  style_formats: style_formats,
   autosave_ask_before_unload: false,
   font_formats: fontFormat,
   setup: setupCustomIco
 };
 
 var configPost = jQuery.extend(true, {}, configBase);
-configPost.min_height = 160;
+configPost.min_height = 240;
 configPost.selector = ".wysiwyg";
 
-var configMobile = jQuery.extend(true, {}, configBase);
-configMobile.plugins = [
-  "link image lists hr",
-  "textcolor fullscreen"
-];
-configMobile.toolbar = "styleselect removeformat | bold italic | link image | hr | private hide popup perso perso2 carte";
-configMobile.menubar = false;
-configMobile.min_height = 400;
-configMobile.selector = ".wysiwyg";
-
-if (navigator.userAgent.indexOf("IE") != -1) {
-  tinymce.init(configPost);
-} else {
-  if (window.matchMedia("(min-width: 600px)").matches) {
-    tinymce.init(configPost);
-  } else {
-    tinymce.init(configMobile);
-  }
-}
+tinymce.init(configPost);
 
 function setupCustomIco(editor) {
-    editor.addButton('private', {
+    editor.ui.registry.addButton('private', {
       text: 'Prv',
-      icon: false,
-      onclick: function() {
+      onAction: function() {
         editor.windowManager.open({
           title: 'Message privé',
           url: BASE_PATH + '/editor/tagPrivate/' + CAMPAGNE_ID,
@@ -110,18 +112,16 @@ function setupCustomIco(editor) {
         });
       }
     });
-    editor.addButton('hide', {
+    editor.ui.registry.addButton('hide', {
       text: 'Hid',
-      icon: false,
-      onclick: function() {
+      onAction: function() {
         var content = tinyMCE.activeEditor.selection.getContent();
         editor.insertContent('[hide]' + content + '[/hide]');
       }
     });
-    editor.addButton('popup', {
+    editor.ui.registry.addButton('popup', {
       text: 'Pop',
-      icon: false,
-      onclick: function() {
+      onAction: function() {
         editor.windowManager.open({
           title: 'Informations Popup',
           body: [{
@@ -143,10 +143,9 @@ function setupCustomIco(editor) {
     });
 
 
-    editor.addButton('perso', {
+    editor.ui.registry.addButton('perso', {
       text: 'PNJ',
-      icon: false,
-      onclick: function() {
+      onAction: function() {
         editor.windowManager.open({
           title: 'Lien vers fiche PNJ',
           url: BASE_PATH + '/editor/tagPerso/' + CAMPAGNE_ID,
@@ -172,10 +171,9 @@ function setupCustomIco(editor) {
     });
 
 
-    editor.addButton('carte', {
+    editor.ui.registry.addButton('carte', {
       text: 'CARTE',
-      icon: false,
-      onclick: function() {
+      onAction: function() {
         editor.windowManager.open({
           title: 'Lien vers une carte',
           url: BASE_PATH + '/editor/tagCarte/' + CAMPAGNE_ID,
