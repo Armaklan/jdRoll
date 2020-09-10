@@ -69,7 +69,7 @@ var configBase = {
   content_css : BASE_PATH + "/css/main.css",
   browser_spellcheck: true,
   convert_urls: false,
-  toolbar: "undo redo | styleselect fontselect removeformat | bold italic forecolor | link image | fullscreen | emoticons private hide popup perso perso2 carte | hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table code",
+  toolbar: "undo redo | styleselect fontselect removeformat | bold italic forecolor | link image | fullscreen | emoticons private hide popup perso perso2 carte | hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | underline strikethrough | superscript subscript | table code",
   formats: formats,
   style_formats: style_formats,
   autosave_ask_before_unload: false,
@@ -78,7 +78,7 @@ var configBase = {
 };
 
 var configPost = jQuery.extend(true, {}, configBase);
-configPost.min_height = 400;
+configPost.min_height = 240;
 configPost.selector = ".wysiwyg";
 
 tinymce.init(configPost);
