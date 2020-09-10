@@ -10,8 +10,11 @@ var ngApplication = angular.module('jdroll', [
     'angular-growl', //Growl messages
     'jdRoll.forum'
 
-]).config(['$routeProvider', '$httpProvider', 'growlProvider',
-function($routeProvider, $httpProvider, growlProvider) {
+]).config(['$locationProvider', '$routeProvider', '$httpProvider', 'growlProvider',
+function($locationProvider, $routeProvider, $httpProvider, growlProvider) {
+
+    $locationProvider.hashPrefix('');
+
     $routeProvider
         .when('/carte/create', {
             templateUrl: 'js/angular/carte/index-creator.html',
