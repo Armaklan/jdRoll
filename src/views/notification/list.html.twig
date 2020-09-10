@@ -26,9 +26,9 @@
                             {% endautoescape %}
                             {% if notif.nb > 1 %}
                                 {{ notif.nb }} notifications concernées.
-                                <div align="right">À {{ notif.last_update|date("H") }}h{{ notif.last_update|date("i") }}</div>
+                                <div align="right">Le {{ notif.last_update|date("d/m") }} à {{ notif.last_update|date("H") }}h{{ notif.last_update|date("i") }}. </div>
                             {% else %}
-                                <div align="right">À {{ notif.last_update|date("H") }}h{{ notif.last_update|date("i") }}</div>
+                                <div align="right">Le {{ notif.last_update|date("d/m") }} à {{ notif.last_update|date("H") }}h{{ notif.last_update|date("i") }}.</div>
                             {% endif %}
                            
                         </div>    
