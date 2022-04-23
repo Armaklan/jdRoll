@@ -35,4 +35,4 @@ var onLoadControllerImpl = function() {
 
 }
 
-var onLoadController = onLoadControllerImpl()
+window.onLoadController = onLoadControllerImpl()

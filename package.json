@@ -1,27 +1,35 @@
 {
-  "name": "jdRoll",
+  "name": "jdroll",
   "version": "1.0.0",
   "description": "jdRoll\r ======",
   "main": "Gruntfile.js",
   "dependencies": {
+    "lit": "^2.2.2"
+  },
+  "devDependencies": {
+    "bower": "^1.8.14",
+    "grunt": "^0.4.5",
+    "grunt-bower-task": "~0.4",
+    "grunt-cli": "^1.4.3",
     "grunt-concurrent": "^1.0.0",
     "grunt-connect": "^0.2.0",
     "grunt-connect-proxy": "^0.2.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-cssmin": "~0.12.2",
     "grunt-contrib-less": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-php": "^1.4.0"
-  },
-  "devDependencies": {
-    "grunt-php": "~1.4.0",
-    "grunt": "~0.4.5",
-    "grunt-bower-task": "~0.4",
     "grunt-contrib-uglify": "=0.8.0",
-    "grunt-contrib-cssmin": "~0.12.2"
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-php": "~1.4.0",
+    "grunt-rollup": "^11.9.0",
+    "less": "^4.1.2",
+    "rollup": "^2.70.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install",
+    "build": "npm run build:web && npm run build:less",
+    "build:web": "rollup web/index.js --file dist/js/controller.min.js --format iife --sourcemap && rollup web/vendor.js --file dist/js/composant.min.js --format iife --sourcemap",
+    "build:less": "lessc --source-map web/theme.less dist/css/theme.min.css && lessc --source-map web/jdroll.angular.less dist/css/jdroll.angular.min.css"
   },
   "repository": "",
   "author": "",
