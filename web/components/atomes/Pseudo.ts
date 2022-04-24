@@ -7,6 +7,7 @@ export class Pseudo extends LitElement {
     a {
       text-decoration: none;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: var(--font-size);
     }
 
     .user {

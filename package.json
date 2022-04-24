@@ -4,8 +4,11 @@
   "description": "jdRoll\r ======",
   "dependencies": {
     "@open-wc/building-rollup": "^2.0.1",
+    "@types/luxon": "^2.3.1",
     "css-loader": "^5.2.7",
+    "dayjs": "^1.11.1",
     "lit": "^2.2.2",
+    "luxon": "^2.3.2",
     "style-loader": "^2.0.0",
     "ts-loader": "8.3.0"
   },
@@ -30,6 +33,7 @@
     "build": "npm run build:web && npm run build:less",
     "build:web": "rollup -c rollup-index.config.js && rollup -c rollup-vendor.config.js",
     "build:less": "lessc --source-map web/theme.less dist/css/theme.min.css && lessc --source-map web/jdroll.angular.less dist/css/jdroll.angular.min.css",
+    "watch:js": "rollup -c rollup-index.config.js --watch",
     "composer": "docker-compose exec php composer install && docker-compose exec php composer dump-autoload -o",
     "sqldata": "docker-compose exec db sh /sql/load-data.sh",
     "env": "docker-compose up -d",

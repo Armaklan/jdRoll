@@ -2459,6 +2459,11 @@
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.11.tgz"
   "version" "7.0.11"
 
+"@types/luxon@^2.3.1":
+  "integrity" "sha512-nAPUltOT28fal2eDZz8yyzNhBjHw1NEymFBP7Q9iCShqpflWPybxHbD7pw/46jQmT+HXOy1QN5hNTms8MOTlOQ=="
+  "resolved" "https://registry.npmjs.org/@types/luxon/-/luxon-2.3.1.tgz"
+  "version" "2.3.1"
+
 "@types/mdast@^3.0.0":
   "integrity" "sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA=="
   "resolved" "https://registry.npmjs.org/@types/mdast/-/mdast-3.0.10.tgz"
@@ -4355,6 +4360,11 @@
   "integrity" "sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk="
   "resolved" "https://registry.npmjs.org/cyclist/-/cyclist-1.0.1.tgz"
   "version" "1.0.1"
+
+"dayjs@^1.11.1":
+  "integrity" "sha512-ER7EjqVAMkRRsxNCC5YqJ9d9VQYuWdGt7aiH2qA5R5wt8ZmWaP2dLUSIK6y/kVzLMlmh1Tvu5xUf4M/wdGJ5KA=="
+  "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.11.1.tgz"
+  "version" "1.11.1"
 
 "debug@^2.2.0":
   "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
@@ -6775,6 +6785,11 @@
   "version" "6.0.0"
   dependencies:
     "yallist" "^4.0.0"
+
+"luxon@^2.3.2":
+  "integrity" "sha512-MlAQQVMFhGk4WUA6gpfsy0QycnKP0+NlCBJRVRNPxxSIbjrCbQ65nrpJD3FVyJNZLuJ0uoqL57ye6BmDYgHaSw=="
+  "resolved" "https://registry.npmjs.org/luxon/-/luxon-2.3.2.tgz"
+  "version" "2.3.2"
 
 "magic-string@^0.25.0", "magic-string@^0.25.7":
   "integrity" "sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ=="
