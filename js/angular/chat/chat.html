@@ -1,7 +1,9 @@
 <div class="col-md-9 chatbox">
     <h5 class="categorie">Tchat</h5>
     <div id="text" style="height: {{ chatCtrl.height }}px; overflow: auto;">
+      
       <div id="messageContent">
+            <jd-chat messages="{{ chatCtrl.msgs | json }}"></jd-chat>
             <table class="table-striped table-condensed table-bordered" width="100%" id="tableChat">
                 <tr>
                     <td width="80px">Date</td>
