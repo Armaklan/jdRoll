@@ -5,31 +5,17 @@ Opensource platform of Roleplaying Game by Forum. Use to build [this site](http:
 MIT License - Use it (the site, or the source) and enjoy it !
 
 
-Contribute using Manual Installation
+Contribute using Docker
 ------------------------------------
 
 ### Requirment
 
-- PHP 5.4 with Openssl module
-- Mysql database
-- Node
-
-In Windows Environment, we recommend to use Git Bash to launch sh script.
-
+- Docker and docker-compose
 ### Instruction
 
 - Clone this repository
-- Launch ```bin/bootstrap.sh``` (Download composer, install php and web dependencies, initialize database)
-- Launch ```grunt dev```
+- Launch ```npm run env``` (Build all docker container)
+- Launch ```npm run composer``` (Launcher composer in docker env)
+- Launch ```npm run sqldata``` (Initialize local data with 2 users (Admin, User))
+- Launch ```npm run build``` (To build js and css files)
 - Access to http://localhost:8000
-
-Update your environment
------------------------
-
-To update automaticaly you're environment, launch ```bin/update.sh```.
-
-This script :
- - Update git repository (pull)
- - Update dependencies (tools, php, js)
-
-Enjoy ! :)
