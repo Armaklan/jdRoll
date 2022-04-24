@@ -1,1 +1,1 @@
-import './components/Button';
+import './components/atomes/Button';
