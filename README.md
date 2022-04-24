@@ -4,18 +4,6 @@ jdRoll
 Opensource platform of Roleplaying Game by Forum. Use to build [this site](http://jdroll.org).
 MIT License - Use it (the site, or the source) and enjoy it !
 
-Contribute using Vagrant
-------------------------
-
-### Requirment
-
-Vagrant must be installed and correctly configure
-
-### Instruction
-
- - Run ```vagrant up``` (Initialize VM and do provisionning)
- - Access to http://localhost:8080
-
 
 Contribute using Manual Installation
 ------------------------------------
