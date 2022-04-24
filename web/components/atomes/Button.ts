@@ -1,5 +1,7 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators';
 
+@customElement('jd-button')
 export class Button extends LitElement {
   static styles = css`
     .storybook-button {
@@ -20,12 +22,9 @@ export class Button extends LitElement {
       padding: 11px 20px;
     }
   `;
-
-  static properties = {
-    label: {}
-  };
-
-  label: string;
+  
+  @property({type: String})
+  label: string = '';
 
   render() {
     return html`
@@ -39,4 +38,8 @@ export class Button extends LitElement {
   }
 }
 
-customElements.define('jd-button', Button);
+declare global {
+  interface HTMLElementTagNameMap {
+    "jd-button": Button;
+  }
+}
