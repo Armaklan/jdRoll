@@ -28,8 +28,11 @@
   "scripts": {
     "postinstall": "bower install",
     "build": "npm run build:web && npm run build:less",
-    "build:web": "rollup web/index.js --file dist/js/controller.min.js --format iife --sourcemap && rollup web/vendor.js --file dist/js/composant.min.js --format iife --sourcemap",
-    "build:less": "lessc --source-map web/theme.less dist/css/theme.min.css && lessc --source-map web/jdroll.angular.less dist/css/jdroll.angular.min.css"
+    "build:web": "rollup web/index.js --context window --file dist/js/controller.min.js --format iife --sourcemap && rollup web/vendor.js --context window --file dist/js/composant.min.js --format iife --sourcemap",
+    "build:less": "lessc --source-map web/theme.less dist/css/theme.min.css && lessc --source-map web/jdroll.angular.less dist/css/jdroll.angular.min.css",
+    "composer": "docker-compose exec php composer install && docker-compose exec php composer dump-autoload -o",
+    "sqldata": "docker-compose exec db sh /sql/load-data.sh",
+    "env": "docker-compose up -d"
   },
   "repository": "",
   "author": "",
