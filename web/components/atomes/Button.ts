@@ -25,6 +25,8 @@ export class Button extends LitElement {
     label: {}
   };
 
+  label: string;
+
   render() {
     return html`
       <button

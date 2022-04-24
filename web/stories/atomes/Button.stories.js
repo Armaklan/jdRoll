@@ -1,8 +1,8 @@
 import { html } from 'lit';
-import '../components/Button';
+import '../../components/atomes/Button';
 
 export default {
-  title: 'jdRoll/Button',
+  title: 'jdRoll/Atomes/Button',
   argTypes: {},
 };
 
