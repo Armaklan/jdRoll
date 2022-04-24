@@ -1,0 +1,12 @@
+JdRoll API V2
+=============
+
+New API for jdRoll website (from Php to Node migration).
+
+How Run
+-------
+
+```
+npm install
+node app.js
+```

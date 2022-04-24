@@ -46,5 +46,9 @@ services:
       - ./:/code
     ports:
       - "8080:80"
+  server:
+    build: server
+    ports:
+      - "8082:5000"
 volumes:
   jdroll-db:
