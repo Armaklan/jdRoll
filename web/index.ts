@@ -36,3 +36,4 @@ import "../js/angular/forum/index/index.module";
 import '../js/angular/notes/notes.module';
 import '../js/angular/feedback/feedback.module';
 import '../js/angular/popup';
+import "./library";
