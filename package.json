@@ -1,27 +1,26 @@
 {
-  "name": "jdRoll",
+  "name": "jdroll",
   "version": "1.0.0",
   "description": "jdRoll\r ======",
-  "main": "Gruntfile.js",
   "dependencies": {
-    "grunt-concurrent": "^1.0.0",
-    "grunt-connect": "^0.2.0",
-    "grunt-connect-proxy": "^0.2.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "^0.11.2",
-    "grunt-contrib-less": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-php": "^1.4.0"
+    "@open-wc/building-rollup": "^2.0.1",
+    "lit": "^2.2.2"
   },
   "devDependencies": {
-    "grunt-php": "~1.4.0",
-    "grunt": "~0.4.5",
-    "grunt-bower-task": "~0.4",
-    "grunt-contrib-uglify": "=0.8.0",
-    "grunt-contrib-cssmin": "~0.12.2"
+    "@rollup/plugin-typescript": "^8.3.2",
+    "bower": "^1.8.14",
+    "less": "^4.1.2",
+    "rollup": "^2.70.2",
+    "typescript": "^4.6.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install",
+    "build": "npm run build:web && npm run build:less",
+    "build:web": "rollup -c rollup-index.config.js && rollup -c rollup-vendor.config.js",
+    "build:less": "lessc --source-map web/theme.less dist/css/theme.min.css && lessc --source-map web/jdroll.angular.less dist/css/jdroll.angular.min.css",
+    "composer": "docker-compose exec php composer install && docker-compose exec php composer dump-autoload -o",
+    "sqldata": "docker-compose exec db sh /sql/load-data.sh",
+    "env": "docker-compose up -d"
   },
   "repository": "",
   "author": "",

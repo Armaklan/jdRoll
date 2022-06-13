@@ -11,11 +11,11 @@ use jdRoll\service\ChatService;
 use jdRoll\service\MessagerieService;
 use jdRoll\service\NotificationService;
 use jdRoll\service\AbsenceService;
-use jdRoll\service\resetPwdService;
+use jdRoll\service\ResetPwdService;
 use jdRoll\service\FeedbackService;
 use jdRoll\service\AnnonceService;
 use jdRoll\service\ThemeService;
-use jdRoll\service\PostContentService;
+use jdRoll\service\forum\PostContentService;
 use jdRoll\service\ThumbnailService;
 use jdRoll\service\CarteService;
 use jdRoll\service\NoteService;
@@ -72,7 +72,7 @@ $app['absenceService'] = function ($app) {
     return new AbsenceService($app['db'], $app['session']);
 };
 $app['resetPwdService'] = function ($app) {
-    return new resetPwdService($app['db'], $app['session'],$app['messagerieService']);
+    return new ResetPwdService($app['db'], $app['session'],$app['messagerieService']);
 };
 $app['feedbackService'] = function ($app) {
     return new FeedbackService($app['db'], $app['monolog']);

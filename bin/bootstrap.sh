@@ -17,10 +17,10 @@ if [ "$cont" = "y" ]; then
     php composer.phar dumpautoload -o
     echo "******** Installation des outils ********"
     if [ "$1" = "-q" ]; then
-        npm install -g bower grunt grunt-cli;
+        npm install -g bower;
     else
         echo "Mots de passe root nécessaire (sudo)"
-        sudo npm install -g bower grunt grunt-cli
+        sudo npm install -g bower
     fi
     npm install
     echo "******** Installation des dependances Web ********"

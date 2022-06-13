@@ -1,7 +1,7 @@
 /**
  * Created by Cadrach on 21/03/15.
  */
-var ngApplication = angular.module('jdroll', [
+window.ngApplication = angular.module('jdroll', [
     'ngRoute',
     'ngDragDrop',
     'leaflet-directive',

@@ -4,10 +4,8 @@ echo "******** Mise à jour de Git ********"
 git pull
 echo "******** Mise à jour de l'outillage ********"
 npm install
-echo "******** Mise à jour des dépendances Web ********"
-node_modules/bower/bin/bower install --allow-root
-echo "******** Regénération des fichiers minifiers ********"
-grunt dist
+echo "******** Build des fichiers JS et less ********"
+npm run build
 echo "******** Mise à jour des dépendances Php ********"
 php composer.phar install
 echo "******** Regénération de l'index autoload ********"

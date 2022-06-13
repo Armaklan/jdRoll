@@ -122,7 +122,7 @@ var notifControllerImpl = function() {
 					var evt = window.event || arguments[0];
     				var src = evt.target || evt.srcElement;
 
-					if(  (src.id.indexOf("notif") == -1) && 
+					if(  (src.id && src.id.indexOf("notif") == -1) && 
 							($(src).parents("#notificationCenter").length == 0) ) { 
 					    var oElem = e ? e.target : event.srcElement;
 						if(oElem !== oDiv) {
